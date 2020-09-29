@@ -1,2 +1,1 @@
-# brms_tools
-helper functions for brms
+functions and data for 205
