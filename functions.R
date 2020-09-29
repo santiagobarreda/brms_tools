@@ -31,3 +31,32 @@ brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE,
   }
 }
 
+
+
+'%+%' = function (x, y){
+  if (length(x)==1 & length(y)==1) paste (x,y,sep='')
+  if (length(x)==1 & length(y)==1) paste (x,y,sep='')
+  if (length(x)==1 & length(y)==1) paste (x,y,sep='')
+}
+
+ztop = function (z) 1 / (1 + exp (-z) )
+
+ptoz = function (p) log(p) - log(1-p)
+
+mae = function (x) mean (abs(x))
+
+
+HDI = function( x , mass = 0.95 ) {
+  x = sort( x )
+  points = ceiling( mass * length( x ) )
+  
+  steps = length( x ) - points
+  width = rep( 0 , steps )
+  for ( i in 1:steps ) {
+    width[ i ] = x[ i + points ] - x[ i ]
+  }
+  HDImin = x[ which.min( width ) ]
+  HDImax = x[ which.min( width ) + points ]
+  HDI = as.numeric(c( HDImin , HDImax ))
+  return( HDI )
+}
