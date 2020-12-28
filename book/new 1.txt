@@ -1,0 +1,46 @@
+Object id: 39304
+Object type: LinearRegression
+Object name: regression
+Date: Fri Dec 04 20:27:10 2020
+
+Factors:
+   Number of factors: 12
+   Factor 1: v1
+   Factor 2: v2
+   Factor 3: v3
+   Factor 4: v4
+   Factor 5: v5
+   Factor 6: v6
+   Factor 7: v7
+   Factor 8: v8
+   Factor 9: v9
+   Factor 10: v10
+   Factor 11: v11
+   Factor 12: v12
+Fitted coefficients:
+   Intercept: 6.570639125787764
+   Coefficient of factor v1: 0.7117875308202731
+   Coefficient of factor v2: 0.6480427248615985
+   Coefficient of factor v3: 0.5123030959097167
+   Coefficient of factor v4: 0.6706965801188582
+   Coefficient of factor v5: 0.6781282096036907
+   Coefficient of factor v6: 0.4354362100361504
+   Coefficient of factor v7: 0.6105534017339214
+   Coefficient of factor v8: 0.650431147405027
+   Coefficient of factor v9: 0.4055135685616653
+   Coefficient of factor v10: 0.3968995773145818
+   Coefficient of factor v11: 0.5413223267436748
+   Coefficient of factor v12: 0.30952475267860796
+Ranges of values:
+   Range of factor v1: minimum 0, maximum 1
+   Range of factor v2: minimum 0, maximum 1
+   Range of factor v3: minimum 0, maximum 1
+   Range of factor v4: minimum 0, maximum 1
+   Range of factor v5: minimum 0, maximum 1
+   Range of factor v6: minimum 0, maximum 1
+   Range of factor v7: minimum 0, maximum 1
+   Range of factor v8: minimum 0, maximum 1
+   Range of factor v9: minimum 0, maximum 1
+   Range of factor v10: minimum 0, maximum 1
+   Range of factor v11: minimum 0, maximum 1
+   Range of factor v12: minimum 0, maximum 1
