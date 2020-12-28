@@ -7,7 +7,7 @@ bookdown::gitbook:
       before: |
         <li><a href="./">Stat Class</a></li>
       after: |
-        <li><a href="https://santiago.barreda.com" target="blank">Written by Santiago Barreda</a></li>
+        <li><a href="https://santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex

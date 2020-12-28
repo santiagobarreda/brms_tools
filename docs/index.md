@@ -11,6 +11,9 @@ description: "An Quick Introduction to Multilevel Bayesian Models"
 
 # Introduction {-}
 
-This book will focus on a conceptual introduction to multilevel Bayesian models. I am going to talk about math as possible and as a result I am going to avoid details, proofs, etc. I am just going to try to convey some of the more important and useful concepts necessary to begin to understand these models and to use them in your own work. 
+This book will focus on a conceptual introduction to multilevel Bayesian models. I am going to talk about math as little as possible, so I am going to avoid giving details unless necessary. My goal is to convey some of the more important and useful concepts necessary to begin to understand these models and to use them in your own work. I hope to set you up in a position to 'fill in the blanks' as necessary later. 
 
-I am purposely skipping a lot of details and being slightly hazy, or potentially even slightly inaccurate, in the interests of keeping things simple. The thing is, there are a million resources for learning abut these topics in a rigorous manner. What I am trying to provide here is a quick conceptual explanation that will allow you to understand common research designs, their associated statistical models, and how these can be implemented in a Bayesian multilevel model. 
+I am going to try to provide intuitive explanations for statistical models that rely on understanding the figures we use represent and interpret them. The book assumes a reasonable understanding of R, but none of statistics. I don't really 'explain' many basic things, for example, how to calculate a standard deviation? Why is it calculated like it is? The reason for this is that first, there are many better resources for that. And second, I am trying to make this quick, to go from 0 to understanding and interpreting Bayesian multilevel models in 10 weeks. 
+
+
+
