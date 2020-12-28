@@ -1,0 +1,6 @@
+book_filename: "bookdown-start"
+chapter_name: "Chapter "
+repo: https://github.com/santiagobarreda/stats-class
+output_dir: docs
+clean: [packages.bib, bookdown.bbl]
+new_session: yes

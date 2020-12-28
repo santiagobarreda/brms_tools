@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 Inspecting a single sample of values | An Quick Introduction to Multilevel Bayesian Models</title>
+  <meta name="description" content="Chapter 1 Inspecting a single sample of values | An Quick Introduction to Multilevel Bayesian Models" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 Inspecting a single sample of values | An Quick Introduction to Multilevel Bayesian Models" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://santiagobarreda.com" />
+  
+  <meta property="og:description" content="Chapter 1 Inspecting a single sample of values | An Quick Introduction to Multilevel Bayesian Models" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 Inspecting a single sample of values | An Quick Introduction to Multilevel Bayesian Models" />
+  
+  <meta name="twitter:description" content="Chapter 1 Inspecting a single sample of values | An Quick Introduction to Multilevel Bayesian Models" />
+  
+
+<meta name="author" content="Santiago Bareda" />
+
+
+<meta name="date" content="2020-12-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Stat Class</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="inspecting-a-single-sample-of-values.html"><a href="inspecting-a-single-sample-of-values.html"><i class="fa fa-check"></i><b>1</b> Inspecting a single sample of values</a><ul>
+<li class="chapter" data-level="1.1" data-path="inspecting-a-single-sample-of-values.html"><a href="inspecting-a-single-sample-of-values.html#data-and-research-questions"><i class="fa fa-check"></i><b>1.1</b> Data and research questions</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="inspecting-a-single-sample-of-values.html"><a href="inspecting-a-single-sample-of-values.html#inspecting-the-central-location-and-spread-of-values"><i class="fa fa-check"></i><b>1.1.1</b> Inspecting the central location and spread of values</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="inspecting-a-single-sample-of-values.html"><a href="inspecting-a-single-sample-of-values.html#probability-distributions"><i class="fa fa-check"></i><b>1.2</b> Probability Distributions</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="inspecting-a-single-sample-of-values.html"><a href="inspecting-a-single-sample-of-values.html#the-normal-distribution"><i class="fa fa-check"></i><b>1.2.1</b> The normal distribution</a></li>
+<li class="chapter" data-level="1.2.2" data-path="inspecting-a-single-sample-of-values.html"><a href="inspecting-a-single-sample-of-values.html#referring-to-the-normal-distribution-to-make-inferences"><i class="fa fa-check"></i><b>1.2.2</b> Referring to the normal distribution to make inferences</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="inspecting-a-single-sample-of-values.html"><a href="inspecting-a-single-sample-of-values.html#probabilities-of-events-and-likelihoods-of-parameters"><i class="fa fa-check"></i><b>1.3</b> Probabilities of events and likelihoods of parameters</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="inspecting-a-single-sample-of-values.html"><a href="inspecting-a-single-sample-of-values.html#making-inferences-using-likelihoods"><i class="fa fa-check"></i><b>1.3.1</b> Making inferences using likelihoods</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="inspecting-a-single-sample-of-values.html"><a href="inspecting-a-single-sample-of-values.html#bayesian-models"><i class="fa fa-check"></i><b>1.4</b> Bayesian models</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="inspecting-a-single-sample-of-values.html"><a href="inspecting-a-single-sample-of-values.html#what-are-regression-models"><i class="fa fa-check"></i><b>1.4.1</b> What are regression models?</a></li>
+<li class="chapter" data-level="1.4.2" data-path="inspecting-a-single-sample-of-values.html"><a href="inspecting-a-single-sample-of-values.html#whats-bayesian-about-these-models"><i class="fa fa-check"></i><b>1.4.2</b> What’s ‘Bayesian’ about these models?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="inspecting-a-single-sample-of-values.html"><a href="inspecting-a-single-sample-of-values.html#posterior-distributions"><i class="fa fa-check"></i><b>1.5</b> Posterior distributions</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="inspecting-a-single-sample-of-values.html"><a href="inspecting-a-single-sample-of-values.html#sampling-from-the-posterior"><i class="fa fa-check"></i><b>1.5.1</b> Sampling from the posterior</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://santiago.barreda.com" target="blank">Written by Santiago Barreda</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">An Quick Introduction to Multilevel Bayesian Models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="inspecting-a-single-sample-of-values" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Inspecting a single sample of values</h1>
+<div id="data-and-research-questions" class="section level2">
+<h2><span class="header-section-number">1.1</span> Data and research questions</h2>
+<p>Voice fundamental frequency (f0, related to pitch) is a very important cue in speech communication. It relates to phoneme identification, prosody, and to the communication of social and indexical information (speaker gender, age, …etc.).</p>
+<p>We are going use a well-known data set, the Hillenbrand et al. (1995) data of Michigan English. We are going to focus on a single vector (f0), representing the f0 produced by a set of female speakers.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="inspecting-a-single-sample-of-values.html#cb1-1"></a>url1 =<span class="st"> &quot;https://raw.githubusercontent.com/santiagobarreda&quot;</span></span>
+<span id="cb1-2"><a href="inspecting-a-single-sample-of-values.html#cb1-2"></a>url2 =<span class="st"> &quot;/stats-class/master/data/h95_vowel_data.csv&quot;</span></span>
+<span id="cb1-3"><a href="inspecting-a-single-sample-of-values.html#cb1-3"></a><span class="co">## read data from my Github page</span></span>
+<span id="cb1-4"><a href="inspecting-a-single-sample-of-values.html#cb1-4"></a>h95 =<span class="st"> </span><span class="kw">read.csv</span> (<span class="kw">url</span>(<span class="kw">paste0</span> (url1, url2)))</span>
+<span id="cb1-5"><a href="inspecting-a-single-sample-of-values.html#cb1-5"></a><span class="co"># select the &#39;f0&#39; vector, for women only (speaker type = &#39;w&#39;)</span></span>
+<span id="cb1-6"><a href="inspecting-a-single-sample-of-values.html#cb1-6"></a>f0s =<span class="st"> </span>h95[[<span class="st">&#39;f0&#39;</span>]][h95<span class="op">$</span>type <span class="op">==</span><span class="st"> &#39;w&#39;</span>]</span></code></pre></div>
+<p>These speakers represent a sample from a larger population. The sample is a finite set of observations that you actually have. The population is the larger group of possible observations that you are <em>actually</em> interested in. For example, Hillenbrand et al. collected this data not to study these speakers in particular, but instead to make inferences about Michigan speakers more generally.</p>
+<p>Similarly, we want to answer a few basic questions about the population of female speakers from Michigan, not about the sample itself:</p>
+<ol style="list-style-type: decimal">
+<li><p>What is the average f0 of the whole <em>population</em> likely to be?</p></li>
+<li><p>Can we set bounds on likely mean f0 values based on the data we collected?</p></li>
+</ol>
+<p>The second point is crucial. First, our sample will never exactly match the population. But it should be <em>representative</em> of it, meaning it should not be <em>too</em> far off from the real mean (otherwise, it is likely not a good sample from that population). For example, the mean f0 in the data we will discuss below is 220 Hz. This seems to suggest that, for example, a <em>true</em> mean of 100 Hz is unlikely. Is a true mean of 150 Hz also unlikely? What about 190 Hz?</p>
+<p>Below we will discuss how to measure the spread and location of a set of numbers, and how to establish likely and credible values for the variable.</p>
+<div id="inspecting-the-central-location-and-spread-of-values" class="section level3">
+<h3><span class="header-section-number">1.1.1</span> Inspecting the central location and spread of values</h3>
+<p>On the left, values are plotted according to the order they appear in the vector. This is not very useful. On the right, the same values have been ordered from low to high.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="inspecting-a-single-sample-of-values.html#cb2-1"></a><span class="kw">par</span> (<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb2-2"><a href="inspecting-a-single-sample-of-values.html#cb2-2"></a><span class="kw">plot</span> (f0s, <span class="dt">xaxt=</span><span class="st">&#39;n&#39;</span>,<span class="dt">xlab=</span><span class="st">&#39;&#39;</span>, <span class="dt">ylab =</span> <span class="st">&#39;f0&#39;</span>)</span>
+<span id="cb2-3"><a href="inspecting-a-single-sample-of-values.html#cb2-3"></a><span class="kw">plot</span> ( <span class="kw">sort</span> ( f0s ) , <span class="dt">xaxt=</span><span class="st">&#39;n&#39;</span>,<span class="dt">xlab=</span><span class="st">&#39;&#39;</span>,<span class="dt">ylab=</span><span class="st">&#39;f0 (sorted)&#39;</span>)</span></code></pre></div>
+<p><img src="week-1_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>We can easily find descriptive statistics like the sample mean (<span class="math inline">\(\bar{x}\)</span>), the sample standard deviation (<span class="math inline">\(s_x\)</span>), and important quantiles for this sample of values. The quantiles below correspond to the values of ordered observations, like in the right plot above. The 0% quantile is the smallest observation, while 100% is the highest. Any other quantile is found by ordering the observations and selecting the observation that is higher than x% of the sample values. For example, the 50% quantile (the median) is higher than 50% of values, and the 25% quantile is higher than 1/4 of the values in the sample.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="inspecting-a-single-sample-of-values.html#cb3-1"></a><span class="kw">mean</span> (f0s)</span></code></pre></div>
+<pre><code>## [1] 220.401</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="inspecting-a-single-sample-of-values.html#cb5-1"></a><span class="kw">sd</span> (f0s)</span></code></pre></div>
+<pre><code>## [1] 23.22069</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="inspecting-a-single-sample-of-values.html#cb7-1"></a><span class="kw">quantile</span> (f0s)</span></code></pre></div>
+<pre><code>##     0%    25%    50%    75%   100% 
+## 149.00 207.00 220.00 236.25 307.00</code></pre>
+<p>We can look at the distribution of speakers. In the top row, points indicate individual productions, and are jittered along the y axis to make them easier to see. In the middle row we see a histogram of the same data. The histogram gives you the count of observations in each bin. In the bottom row we see a box plot of the same data. The edges of the box correspond to the 25 and 75% quantiles of the distribution, and the line in the middle of it corresponds to the median. As a result, 50% of observations are contained in the box.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="inspecting-a-single-sample-of-values.html#cb9-1"></a><span class="kw">par</span> (<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">1</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">oma =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb9-2"><a href="inspecting-a-single-sample-of-values.html#cb9-2"></a></span>
+<span id="cb9-3"><a href="inspecting-a-single-sample-of-values.html#cb9-3"></a><span class="kw">plot</span> (f0s, <span class="kw">jitter</span> (<span class="kw">rep</span>(<span class="dv">1</span>,<span class="kw">length</span>(f0s))), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">140</span>, <span class="dv">320</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(.<span class="dv">95</span>,<span class="fl">1.05</span>),<span class="dt">yaxt=</span><span class="st">&#39;n&#39;</span>,<span class="dt">ylab=</span><span class="st">&#39;&#39;</span>)</span>
+<span id="cb9-4"><a href="inspecting-a-single-sample-of-values.html#cb9-4"></a><span class="kw">hist</span> (f0s,<span class="dt">main=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb9-5"><a href="inspecting-a-single-sample-of-values.html#cb9-5"></a><span class="kw">boxplot</span> (f0s, <span class="dt">horizontal =</span> <span class="ot">TRUE</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">140</span>, <span class="dv">320</span>))</span>
+<span id="cb9-6"><a href="inspecting-a-single-sample-of-values.html#cb9-6"></a><span class="kw">mtext</span> (<span class="dt">side =</span><span class="dv">1</span>, <span class="dt">outer =</span> <span class="ot">TRUE</span>, <span class="dt">text =</span> <span class="st">&quot;f0&quot;</span>, <span class="dt">line =</span> <span class="fl">2.5</span>)</span></code></pre></div>
+<p><img src="week-1_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+</div>
+<div id="probability-distributions" class="section level2">
+<h2><span class="header-section-number">1.2</span> Probability Distributions</h2>
+<p>Histograms are particularly useful to understand because of how they relate to probability distributions. For our purposes, the probability is the number of times an event is expected to occur, out of all the other observed events and outcomes. This can also be thought of as the <em>percent</em> of times an event is expected to occur.</p>
+<p>The total probability of all events is always equal to 1. This is like using 100 to communicate percent, its just easier that way. As a result of this convention, you know that a probability of 0.5 means something is expected to occur half the time (i.e., on 50% of trials). For example, suppose we want to know the probability of being an adult female in our sample who produces an f0 under 175 Hz. Finding the probability of observing this event is easy:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="inspecting-a-single-sample-of-values.html#cb10-1"></a><span class="co"># the evaluation in the parenthesis will return 1 if true, 0 if false</span></span>
+<span id="cb10-2"><a href="inspecting-a-single-sample-of-values.html#cb10-2"></a><span class="kw">sum</span> (f0s <span class="op">&lt;</span><span class="st"> </span><span class="dv">175</span>)  <span class="co">## number of observations the fall below threshold</span></span></code></pre></div>
+<pre><code>## [1] 22</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="inspecting-a-single-sample-of-values.html#cb12-1"></a><span class="kw">sum</span> (f0s <span class="op">&lt;</span><span class="st"> </span><span class="dv">175</span>) <span class="op">/</span><span class="st"> </span><span class="kw">length</span> (f0s)  <span class="co">## divided by total number of events</span></span></code></pre></div>
+<pre><code>## [1] 0.03819444</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="inspecting-a-single-sample-of-values.html#cb14-1"></a><span class="kw">mean</span> (f0s <span class="op">&lt;</span><span class="st"> </span><span class="dv">175</span>) <span class="co">## a shortcut to calculate probability, mean = total/length</span></span></code></pre></div>
+<pre><code>## [1] 0.03819444</code></pre>
+<p>The top value is the frequency of the occurrence. This is not so useful because this number can mean different things given different sample sizes (e.g., 22/23, 22/10000). The middle and bottom values have been divided by the total number of observations. As a result, these now represent a proportion, or probability.</p>
+<p>Histograms can also show this difference between total counts and probabilities. Below, the histogram on the left shows the number of observations in each bin. The histogram on the right shows <em>density</em> on the y axis. When you see <em>density</em> on the y axis, that means that y axis values have been scaled to make the area under the curve equal to 1. This has two benefits:</p>
+<ol style="list-style-type: decimal">
+<li>It lets you compare the distribution of values across different sample sizes.</li>
+<li>It makes the histogram more comparable to a probability distribution.</li>
+</ol>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="inspecting-a-single-sample-of-values.html#cb16-1"></a><span class="kw">par</span> (<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb16-2"><a href="inspecting-a-single-sample-of-values.html#cb16-2"></a></span>
+<span id="cb16-3"><a href="inspecting-a-single-sample-of-values.html#cb16-3"></a><span class="kw">hist</span> (f0s, <span class="dt">main=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb16-4"><a href="inspecting-a-single-sample-of-values.html#cb16-4"></a><span class="kw">hist</span> (f0s, <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="week-1_files/figure-html/unnamed-chunk-6-1.png" width="576" /></p>
+<p>The density is just the thickness of the distribution at a certain location. In probability theory, the sum of the probabilities of all possible outcomes is 1, by definition. So, the fact that the area under the curve of a density is equal to 1 means that the density contains all your <em>stuff</em>, all the possible outcomes of the variable we are discussing.</p>
+<p>Imagine a circle like in a Venn diagram that contains all possible productions of female f0. This circle has an area of 1 since it contains all possible instances of the variable. Imagine we spread out this circle along the x axis so that its shape reflected the relative frequencies of different values of the variable. For example, if some outcomes were 5 times more probable than others, the shape should be 5 times taller there, and so on. If we managed to do this, the height (or ‘density’) of this shape would exactly correspond to a probability distribution like that seen in the right plot above.</p>
+<p>Below I’ve repeated the data, doubling the counts. Notice that the y axis in the right panel does not change. This is because increasing the number of observations changes your counts but not the relative frequencies of observations. For instance, increasing the number of coin flips will not change the fact that 50% will be heads, but it will change the number of heads observed.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="inspecting-a-single-sample-of-values.html#cb17-1"></a><span class="kw">par</span> (<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb17-2"><a href="inspecting-a-single-sample-of-values.html#cb17-2"></a></span>
+<span id="cb17-3"><a href="inspecting-a-single-sample-of-values.html#cb17-3"></a><span class="kw">hist</span> (<span class="kw">c</span>(f0s,f0s), <span class="dt">breaks =</span> <span class="dv">10</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb17-4"><a href="inspecting-a-single-sample-of-values.html#cb17-4"></a><span class="kw">hist</span> (<span class="kw">c</span>(f0s,f0s), <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">breaks =</span> <span class="dv">10</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="week-1_files/figure-html/unnamed-chunk-7-1.png" width="576" /></p>
+<div id="the-normal-distribution" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> The normal distribution</h3>
+<p>The distribution of many variables (including f0) follows what is called a <a href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution</a>. This means if you take a random sample of a variable and arrange observations into bins, they will tend to resemble the shape of a normal distribution. This distribution is also called a Gaussian distribution and has a familiar, bell-shaped curve.</p>
+<p>The normal distribution has the following important characteristics.</p>
+<ol style="list-style-type: decimal">
+<li><p>The distribution is approximately symmetrical - i.e., producing a higher or lower than average f0 is about equally likely.</p></li>
+<li><p>The probability of observing a given value decreases as you get further from the mean.</p></li>
+<li><p>It is easy to work with, very well understood, and naturally arises in basically all domains.</p></li>
+</ol>
+<p>Normal distributions have two parameters. This means they vary from each other in only two ways. These parameters are:</p>
+<ol style="list-style-type: decimal">
+<li><p>A mean, <span class="math inline">\(\mu\)</span>, which determines where the distribution is located along the x axis. The mean is the 50% halfway point of the ‘mass’ of the distribution. If the distribution were an physical object, its mean would be its center of gravity.</p></li>
+<li><p>A standard deviation, <span class="math inline">\(\sigma\)</span>, that determines its <em>spread</em> along the x axis. Since every distribution has an area under the curve equal to one (they all have the same ‘volume’), the smaller the variance the higher the peak of the density along the y axis must be.</p></li>
+</ol>
+<p>Below, I compare the histogram of f0 values to the density of a normal distribution with a mean equal to our sample mean (<span class="math inline">\(\mu = \bar{x}\)</span>) and a standard deviation equal to our sample standard deviation (<span class="math inline">\(\sigma = s_x\)</span>). The density was drawn using the <code>dnorm</code> function. This function will help draw a curve representing the shape of a theoretical normal distribution with a given mean and standard deviation.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="inspecting-a-single-sample-of-values.html#cb18-1"></a><span class="kw">par</span> (<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb18-2"><a href="inspecting-a-single-sample-of-values.html#cb18-2"></a><span class="kw">hist</span> (f0s, <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">breaks =</span> <span class="dv">20</span>)</span>
+<span id="cb18-3"><a href="inspecting-a-single-sample-of-values.html#cb18-3"></a><span class="kw">abline</span> (<span class="dt">v =</span> <span class="fl">63.8</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">3</span>)</span>
+<span id="cb18-4"><a href="inspecting-a-single-sample-of-values.html#cb18-4"></a><span class="co">## plots the normal density (red line) using stats calculated form our sample. </span></span>
+<span id="cb18-5"><a href="inspecting-a-single-sample-of-values.html#cb18-5"></a><span class="kw">curve</span> (<span class="kw">dnorm</span> (x, <span class="kw">mean</span>(f0s), <span class="kw">sd</span>(f0s)), <span class="dt">from =</span> <span class="dv">100</span>, <span class="dt">to =</span> <span class="dv">300</span>, </span>
+<span id="cb18-6"><a href="inspecting-a-single-sample-of-values.html#cb18-6"></a>       <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="week-1_files/figure-html/unnamed-chunk-8-1.png" width="576" /></p>
+<p>When you are dealing with normally-distributed data, summary statistics can tell you a lot about the shape of your distribution, and about where you can expect the bulk of the density/distribution to lie. The left panel shows the locations of quantiles (0%, 25%, 50%, 75%, 100%), the right panel shows you the mean and standard deviations from the mean (-3, -2, 0, +1, +2, +3). Notice that ±2 standard deviations enclose most of the distribution (around 95%), and ±3 standard deviations enclose almost all of it (99%).</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="inspecting-a-single-sample-of-values.html#cb19-1"></a><span class="kw">par</span> (<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb19-2"><a href="inspecting-a-single-sample-of-values.html#cb19-2"></a></span>
+<span id="cb19-3"><a href="inspecting-a-single-sample-of-values.html#cb19-3"></a><span class="kw">hist</span> (f0s, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb19-4"><a href="inspecting-a-single-sample-of-values.html#cb19-4"></a><span class="kw">abline</span> (<span class="dt">v =</span> <span class="kw">quantile</span> (f0s), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">2</span>)</span>
+<span id="cb19-5"><a href="inspecting-a-single-sample-of-values.html#cb19-5"></a><span class="kw">hist</span> (<span class="kw">c</span>(f0s,f0s), <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">breaks =</span> <span class="dv">10</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb19-6"><a href="inspecting-a-single-sample-of-values.html#cb19-6"></a><span class="kw">abline</span> (<span class="dt">v =</span> <span class="kw">seq</span> (<span class="kw">mean</span>(f0s)<span class="op">-</span><span class="dv">3</span><span class="op">*</span><span class="kw">sd</span>(f0s),<span class="kw">mean</span>(f0s)<span class="op">+</span><span class="dv">3</span><span class="op">*</span><span class="kw">sd</span>(f0s),<span class="kw">sd</span>(f0s)), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="week-1_files/figure-html/unnamed-chunk-9-1.png" width="576" /></p>
+</div>
+<div id="referring-to-the-normal-distribution-to-make-inferences" class="section level3">
+<h3><span class="header-section-number">1.2.2</span> Referring to the normal distribution to make inferences</h3>
+<p>In general, it is impossible to know what the ‘true’ data distribution is, so that <em>perfect</em> inference is not possible. As a result, scientists often use theoretical probability distributions to make inferences about real-life populations and observations. Notice that our real life measurements follow the ‘shape’ predicted by the theoretical normal distribution. This suggests that we may be able to use the characteristics of an appropriate normal distribution to make inferences about female f0 (and other variables).</p>
+<p>Using a normal distribution to make inferences about your data is like using a mathematical model for spheres to understand the behavior of billiard balls. In reality the balls are not perfect spheres. However, their shapes will be spherical enough to allow us to make useful predictions based on the simplified model. In general, it is useful to keep in mind that reality will never exactly conform to our model. This can result in unpredictable errors in our conclusions, which can cause errors to occur. In general, the things you don’t know you don’t know are the things that will cause the most problems.</p>
+<p>So, since we expect the distribution of f0 values to have the shape of the normal distribution, we can use the shape of the normal distribution to make inferences about the distribution of f0 values, even the ones we did not observe. For example, we can use the theoretical normal density to estimate the probability of observing a female production with an f0 of under 175 Hz, from among <em>all</em> possible observable productions of f0 in this <em>population</em>.</p>
+<p>We do this by referring to the proportion of values expected to be less 175 Hz in the normal distribution. This can be found by finding the area under the curve of the probability density to the left of that point (the red area below). Since the <em>total</em> area is always equal to 1, the area of the red portion below corresponds to a percentage/probability.</p>
+<p>Below, I use the function <code>pnorm</code> to find the proportion of values that are expected to be greater/less than 175 Hz. I use the parameters estimated form our sample to run the <code>pnorm</code>function, as these are our best guesses of the population parameters. As we can see, this value is reasonably close to our empirical proportion, which was 0.038 (3.8%).</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="inspecting-a-single-sample-of-values.html#cb20-1"></a><span class="kw">par</span> (<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb20-2"><a href="inspecting-a-single-sample-of-values.html#cb20-2"></a><span class="kw">hist</span> (f0s, <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">breaks =</span> <span class="dv">20</span>)</span>
+<span id="cb20-3"><a href="inspecting-a-single-sample-of-values.html#cb20-3"></a><span class="kw">abline</span> (<span class="dt">v =</span> <span class="dv">175</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">3</span>)</span>
+<span id="cb20-4"><a href="inspecting-a-single-sample-of-values.html#cb20-4"></a><span class="co">## plots the normal density (red line) using stats calculated form our sample. </span></span>
+<span id="cb20-5"><a href="inspecting-a-single-sample-of-values.html#cb20-5"></a><span class="kw">curve</span> (<span class="kw">dnorm</span> (x, <span class="kw">mean</span>(f0s), <span class="kw">sd</span>(f0s)),<span class="dt">from=</span><span class="dv">100</span>, <span class="dt">to=</span><span class="dv">300</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)</span>
+<span id="cb20-6"><a href="inspecting-a-single-sample-of-values.html#cb20-6"></a></span>
+<span id="cb20-7"><a href="inspecting-a-single-sample-of-values.html#cb20-7"></a>x =<span class="st"> </span><span class="kw">c</span>(<span class="dv">140</span>,<span class="kw">seq</span>(<span class="dv">140</span>,<span class="dv">175</span>,<span class="dt">length.out =</span> <span class="dv">100</span>),<span class="dv">175</span>)</span>
+<span id="cb20-8"><a href="inspecting-a-single-sample-of-values.html#cb20-8"></a>y =<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="kw">dnorm</span>(<span class="kw">seq</span>(<span class="dv">140</span>,<span class="dv">175</span>,<span class="dt">length.out =</span> <span class="dv">100</span>), <span class="kw">mean</span> (f0s), <span class="kw">sd</span> (f0s)),<span class="dv">0</span>)</span>
+<span id="cb20-9"><a href="inspecting-a-single-sample-of-values.html#cb20-9"></a><span class="kw">polygon</span>(x, y, <span class="dt">col=</span><span class="st">&#39;2&#39;</span>)</span>
+<span id="cb20-10"><a href="inspecting-a-single-sample-of-values.html#cb20-10"></a><span class="kw">abline</span> (<span class="dt">v =</span> <span class="fl">63.8</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">3</span>); <span class="kw">abline</span> (<span class="dt">v =</span> <span class="dv">70</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">3</span>)</span></code></pre></div>
+<p><img src="week-1_files/figure-html/unnamed-chunk-10-1.png" width="480" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="inspecting-a-single-sample-of-values.html#cb21-1"></a><span class="co">## probability of observing a production below 175 Hz</span></span>
+<span id="cb21-2"><a href="inspecting-a-single-sample-of-values.html#cb21-2"></a><span class="kw">pnorm</span> (<span class="dv">175</span>, <span class="kw">mean</span> (f0s), <span class="kw">sd</span>(f0s))</span></code></pre></div>
+<pre><code>## [1] 0.02527988</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="inspecting-a-single-sample-of-values.html#cb23-1"></a><span class="co">## probability of observing a production greater than 175 Hz</span></span>
+<span id="cb23-2"><a href="inspecting-a-single-sample-of-values.html#cb23-2"></a><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span> (<span class="dv">175</span>, <span class="kw">mean</span> (f0s), <span class="kw">sd</span>(f0s))</span></code></pre></div>
+<pre><code>## [1] 0.9747201</code></pre>
+<p>Imagine you had 1 pound of clay and I asked you to make a shape <strong>exactly</strong> like the normal density (red curve) above with a constant depth. The ‘area under the curve’ would just correspond to the amount of clay in a certain area. So, if you made the density just right and I took a knife and cut the shape left of 175 Hz (the red part) and we weighed it, it should weigh 2.5% of a pound. So, the area under the curve, the probability, is just the amount of the <em>stuff</em> in the density that falls below/above a certain point, or between two points.</p>
+<p>Since the total number of observations is always one. This helps us compare across many different actual numbers of observations. The probability above suggests the following:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="inspecting-a-single-sample-of-values.html#cb25-1"></a><span class="co">## probability of observing a production with an f0 under 175 Hz</span></span>
+<span id="cb25-2"><a href="inspecting-a-single-sample-of-values.html#cb25-2"></a><span class="kw">pnorm</span> (<span class="dv">175</span>, <span class="kw">mean</span> (f0s), <span class="kw">sd</span>(f0s)) </span></code></pre></div>
+<pre><code>## [1] 0.02527988</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="inspecting-a-single-sample-of-values.html#cb27-1"></a><span class="co">## expected count</span></span>
+<span id="cb27-2"><a href="inspecting-a-single-sample-of-values.html#cb27-2"></a><span class="kw">pnorm</span> (<span class="dv">175</span>, <span class="kw">mean</span> (f0s), <span class="kw">sd</span>(f0s)) <span class="op">*</span><span class="st"> </span><span class="kw">length</span> (f0s)</span></code></pre></div>
+<pre><code>## [1] 14.56121</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="inspecting-a-single-sample-of-values.html#cb29-1"></a><span class="co">## actual count</span></span>
+<span id="cb29-2"><a href="inspecting-a-single-sample-of-values.html#cb29-2"></a><span class="kw">sum</span> (f0s <span class="op">&lt;</span><span class="st"> </span><span class="dv">175</span>)</span></code></pre></div>
+<pre><code>## [1] 22</code></pre>
+<p>We can also use this theoretical distribution to think about other possible outcomes:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="inspecting-a-single-sample-of-values.html#cb31-1"></a><span class="kw">min</span> (f0s)</span></code></pre></div>
+<pre><code>## [1] 149</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="inspecting-a-single-sample-of-values.html#cb33-1"></a><span class="kw">pnorm</span> (<span class="dv">149</span>, <span class="kw">mean</span> (f0s), <span class="kw">sd</span>(f0s)) <span class="co"># probability of observing our smallest value</span></span></code></pre></div>
+<pre><code>## [1] 0.001052907</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="inspecting-a-single-sample-of-values.html#cb35-1"></a><span class="kw">pnorm</span> (<span class="dv">140</span>, <span class="kw">mean</span> (f0s), <span class="kw">sd</span>(f0s)) <span class="co"># probability of observing a smaller value</span></span></code></pre></div>
+<pre><code>## [1] 0.0002676171</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="inspecting-a-single-sample-of-values.html#cb37-1"></a><span class="co">## predicted number of tokens below 175 Hz if we was had 5500 observations</span></span>
+<span id="cb37-2"><a href="inspecting-a-single-sample-of-values.html#cb37-2"></a><span class="kw">pnorm</span> (<span class="dv">175</span>, <span class="kw">mean</span> (f0s), <span class="kw">sd</span>(f0s)) <span class="op">*</span><span class="st"> </span><span class="dv">5500</span></span></code></pre></div>
+<pre><code>## [1] 139.0394</code></pre>
+</div>
+</div>
+<div id="probabilities-of-events-and-likelihoods-of-parameters" class="section level2">
+<h2><span class="header-section-number">1.3</span> Probabilities of events and likelihoods of parameters</h2>
+<p>We are going to switch from talking about <em>probabilities</em> to talking about <em>likelihoods</em>. A probability is the odds of observing some event/outcome, given some parameter(s). A likelihood is the odds of observing a parameter given some observed data. In both cases, these terms assume that you are referring to some probability distribution.</p>
+<p>Every parameter for every probability distribution has a likelihood function, given some data. I am only going to talk about the likelihood of the normal mean parameter, <span class="math inline">\(\mu\)</span>, in detail.</p>
+<p>The <em>likelihood function</em> is a curve showing the relative likelihoods of different parameter values, given a fixed set of data. The likelihood function tells you what values are <em>believable</em> given your data. If a value is very unlikely, that means that it is not supported by your data. In other words, unlikely parameter estimates represent conclusions that your data is rejecting as not viable.</p>
+<p>Here are three useful properties of the likelihood functions of <span class="math inline">\(\mu\)</span>, the mean parameter of the normal distribution:</p>
+<ol style="list-style-type: decimal">
+<li><p>The likelihood function of <span class="math inline">\(\mu\)</span> will tend to be a normal distribution.</p></li>
+<li><p>The mean (and peak) of the likelihood function of <span class="math inline">\(\mu\)</span> given some sample <span class="math inline">\(x\)</span> is equal to the arithmetic mean of the sample (<span class="math inline">\(\bar{x}\)</span>).</p></li>
+<li><p>The standard deviation of the likelihood of <span class="math inline">\(\mu\)</span> is equal to the standard deviation of the data (<span class="math inline">\(s_x\)</span>), divided by the square root of N (the sample size).</p></li>
+</ol>
+<p>The first point tells us that we can use the normal distribution to make inferences about likely, and unlikely values for means, given some data.</p>
+<p>The second point says that if you are wondering what the best (most likely) estimate of <span class="math inline">\(\mu\)</span> is given your sample, the answer is the arithmetic mean of your sample (<span class="math inline">\(\bar{x}\)</span>).</p>
+<p>The third point means that the likelihood function for <span class="math inline">\(\mu\)</span> will tend to be <em>much</em> narrower than the distribution of our original data. This is because a mean based on, for example, 50 samples will contains many positive and negative deviations from the average that will tend to cancel out. As a result, the more data you have the more <em>precise</em> your estimates are, and the less <em>uncertainty</em> is associated with any estimate.</p>
+<p>The left panel below shows the likelihood function for <span class="math inline">\(\mu\)</span> based on the first 10 observations of our f0 vector, shown by the blue points at the bottom of the plot. I chose this small sample just to make this example clearer. Notice that the most likely mean values for these points like over the bulk of the sampled values. The vertical dotted lines show three possible mean values that will be highlighted.</p>
+<p>The likelihood of any parameter estimate (e.g., <span class="math inline">\(\mu\)</span> = 175 Hz in the right panel below) is equal to the product of the density of each observation in the sample, if we assume that the estimate were true. For example, to calculate the likelihood that <span class="math inline">\(\mu\)</span>, we:</p>
+<ol style="list-style-type: decimal">
+<li><p>assume that the data is generated by a normal distribution with a <span class="math inline">\(\mu\)</span> equal to x, and <span class="math inline">\(\sigma\)</span> equal to the sample standard deviation (<span class="math inline">\(s_x\)</span>).</p></li>
+<li><p>Find the the height of the curve of the probability distribution (the density) over each point (indicated by lines in the right panel below).</p></li>
+<li><p>The likelihood is the product of all of these densities. In practice, the logarithms of the individual probabilities are added together, yielding the <em>log-likelihood</em>. This is because multiplying together too many fractions can lead to numbers so small computers have a hard time representing them.</p></li>
+</ol>
+<p>Imagine I follow the steps above for each position along the x axis, recording the likelihood values I calculate. I then plot the product of the densities for each x value: I have just plotted a likelihood function for <span class="math inline">\(\mu\)</span> given our data.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="inspecting-a-single-sample-of-values.html#cb39-1"></a>x =<span class="st"> </span>f0s[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]   <span class="co">## tiny sub sample for exampls</span></span>
+<span id="cb39-2"><a href="inspecting-a-single-sample-of-values.html#cb39-2"></a><span class="kw">mean</span>(x)  <span class="co">## sample mean</span></span></code></pre></div>
+<pre><code>## [1] 220.2</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="inspecting-a-single-sample-of-values.html#cb41-1"></a><span class="kw">sd</span> (x)   <span class="co">## sample standard deviation</span></span></code></pre></div>
+<pre><code>## [1] 21.86219</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="inspecting-a-single-sample-of-values.html#cb43-1"></a><span class="kw">par</span> (<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb43-2"><a href="inspecting-a-single-sample-of-values.html#cb43-2"></a><span class="kw">plot</span> (x,<span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">10</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,.<span class="dv">08</span>), <span class="dt">pch=</span><span class="dv">16</span>,<span class="dt">col=</span><span class="dv">4</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">150</span>,<span class="dv">300</span>), </span>
+<span id="cb43-3"><a href="inspecting-a-single-sample-of-values.html#cb43-3"></a>      <span class="dt">ylab=</span><span class="st">&#39;Density&#39;</span>, <span class="dt">main =</span> <span class="st">&#39;Likelihood of mean&#39;</span>,<span class="dt">xlab=</span><span class="st">&#39;f0&#39;</span>,<span class="dt">cex.main=</span>.<span class="dv">6</span>)</span>
+<span id="cb43-4"><a href="inspecting-a-single-sample-of-values.html#cb43-4"></a><span class="co">## here the likelihood sd is divided by the sample size</span></span>
+<span id="cb43-5"><a href="inspecting-a-single-sample-of-values.html#cb43-5"></a><span class="kw">curve</span> (<span class="kw">dnorm</span> (x, <span class="kw">mean</span>(x), <span class="fl">21.9</span> <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span> (<span class="dv">10</span>)), <span class="dt">from =</span> <span class="kw">c</span>(<span class="dv">150</span>,<span class="dv">300</span>), </span>
+<span id="cb43-6"><a href="inspecting-a-single-sample-of-values.html#cb43-6"></a>       <span class="dt">add=</span><span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb43-7"><a href="inspecting-a-single-sample-of-values.html#cb43-7"></a><span class="kw">abline</span> (<span class="dt">v =</span> <span class="kw">c</span>(<span class="dv">175</span>, <span class="dv">200</span>, <span class="dv">225</span>), <span class="dt">lwd=</span><span class="dv">2</span>,<span class="dt">lty=</span><span class="dv">3</span>)</span>
+<span id="cb43-8"><a href="inspecting-a-single-sample-of-values.html#cb43-8"></a></span>
+<span id="cb43-9"><a href="inspecting-a-single-sample-of-values.html#cb43-9"></a><span class="kw">plot</span> (x,<span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">10</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,.<span class="dv">022</span>), <span class="dt">pch=</span><span class="dv">16</span>,<span class="dt">col=</span><span class="dv">4</span>,<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">150</span>,<span class="dv">300</span>),<span class="dt">cex.main=</span>.<span class="dv">6</span>, </span>
+<span id="cb43-10"><a href="inspecting-a-single-sample-of-values.html#cb43-10"></a>      <span class="dt">ylab=</span><span class="st">&#39;Density&#39;</span>, <span class="dt">main =</span> <span class="st">&quot;Normal distribution with mean = 175&quot;</span>,<span class="dt">xlab=</span><span class="st">&#39;f0&#39;</span>)</span>
+<span id="cb43-11"><a href="inspecting-a-single-sample-of-values.html#cb43-11"></a><span class="co">## now it is centered at mean = 175 Hz</span></span>
+<span id="cb43-12"><a href="inspecting-a-single-sample-of-values.html#cb43-12"></a><span class="kw">curve</span> (<span class="kw">dnorm</span> (x, <span class="dv">175</span>, <span class="fl">21.9</span>), <span class="dt">from =</span> <span class="kw">c</span>(<span class="dv">150</span>,<span class="dv">300</span>), </span>
+<span id="cb43-13"><a href="inspecting-a-single-sample-of-values.html#cb43-13"></a>       <span class="dt">add=</span><span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb43-14"><a href="inspecting-a-single-sample-of-values.html#cb43-14"></a><span class="kw">segments</span> (x,<span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">10</span>),x,<span class="kw">dnorm</span> (x, <span class="dv">175</span>, <span class="kw">sd</span> (x)))</span></code></pre></div>
+<p><img src="week-1_files/figure-html/unnamed-chunk-13-1.png" width="576" /></p>
+<p>In the right panel above we see that a normal distribution with a <span class="math inline">\(\mu\)</span> of 175 Hz is very unlikely to generate this data. Many points are extremely improbable and have densities close to zero. As a result, the product of these values (the heights of the lines) will be a very small number. This is reflected in the extremely small values in the likelihood function at 175 Hz in the left panel above.</p>
+<p>In the left panel below, we see that a normal distribution with a <span class="math inline">\(\mu\)</span> of 200 Hz is more likely to generate this data, and the probability distribution is clearly a much better fit. However a distribution with a mean of 200 Hz is still not very likely to have generated this data.</p>
+<p>Finally, in the right panel below we see the the maximum likelihood estimate of 225 Hz, the value representing the peak of the likelihood function (in the left panel above). When we say that 225 Hz is the most likely mean for this data, we are saying that this data is most probably the outcome of a normal distribution centered at 225 Hz, relative to the alternatives.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="inspecting-a-single-sample-of-values.html#cb44-1"></a>x =<span class="st"> </span>f0s[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]   <span class="co">## tiny sub sample for exampls</span></span>
+<span id="cb44-2"><a href="inspecting-a-single-sample-of-values.html#cb44-2"></a><span class="kw">par</span> (<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb44-3"><a href="inspecting-a-single-sample-of-values.html#cb44-3"></a><span class="kw">plot</span> (x,<span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">10</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,.<span class="dv">022</span>), <span class="dt">pch=</span><span class="dv">16</span>,<span class="dt">col=</span><span class="dv">4</span>,<span class="dt">xlim=</span> <span class="kw">c</span>(<span class="dv">150</span>,<span class="dv">300</span>),<span class="dt">cex.main=</span>.<span class="dv">6</span>, </span>
+<span id="cb44-4"><a href="inspecting-a-single-sample-of-values.html#cb44-4"></a>      <span class="dt">ylab=</span><span class="st">&#39;Density&#39;</span>, <span class="dt">main =</span> <span class="st">&quot;Normal distribution with mean = 200&quot;</span>,<span class="dt">xlab=</span><span class="st">&#39;f0&#39;</span>)</span>
+<span id="cb44-5"><a href="inspecting-a-single-sample-of-values.html#cb44-5"></a><span class="co">## distribution centered ar 200</span></span>
+<span id="cb44-6"><a href="inspecting-a-single-sample-of-values.html#cb44-6"></a><span class="kw">curve</span> (<span class="kw">dnorm</span> (x, <span class="dv">200</span>, <span class="fl">21.9</span>), <span class="dt">from =</span> <span class="kw">c</span>(<span class="dv">150</span>,<span class="dv">300</span>), </span>
+<span id="cb44-7"><a href="inspecting-a-single-sample-of-values.html#cb44-7"></a>       <span class="dt">add=</span><span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb44-8"><a href="inspecting-a-single-sample-of-values.html#cb44-8"></a><span class="kw">segments</span> (x,<span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">10</span>),x,<span class="kw">dnorm</span> (x, <span class="dv">200</span>, <span class="kw">sd</span> (x)))</span>
+<span id="cb44-9"><a href="inspecting-a-single-sample-of-values.html#cb44-9"></a></span>
+<span id="cb44-10"><a href="inspecting-a-single-sample-of-values.html#cb44-10"></a><span class="kw">plot</span> (x,<span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">10</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,.<span class="dv">022</span>), <span class="dt">pch=</span><span class="dv">16</span>,<span class="dt">col=</span><span class="dv">4</span>,<span class="dt">xlim =</span><span class="kw">c</span>(<span class="dv">150</span>,<span class="dv">300</span>),<span class="dt">cex.main=</span>.<span class="dv">6</span>, </span>
+<span id="cb44-11"><a href="inspecting-a-single-sample-of-values.html#cb44-11"></a>      <span class="dt">ylab=</span><span class="st">&#39;Density&#39;</span>, <span class="dt">main =</span> <span class="st">&quot;Normal distribution with mean = 225&quot;</span>,<span class="dt">xlab=</span><span class="st">&#39;f0&#39;</span>)</span>
+<span id="cb44-12"><a href="inspecting-a-single-sample-of-values.html#cb44-12"></a><span class="co">## and now at 220</span></span>
+<span id="cb44-13"><a href="inspecting-a-single-sample-of-values.html#cb44-13"></a><span class="kw">curve</span> (<span class="kw">dnorm</span> (x, <span class="dv">225</span>, <span class="fl">21.9</span>), <span class="dt">from =</span> <span class="kw">c</span>(<span class="dv">150</span>,<span class="dv">300</span>), </span>
+<span id="cb44-14"><a href="inspecting-a-single-sample-of-values.html#cb44-14"></a>       <span class="dt">add=</span><span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb44-15"><a href="inspecting-a-single-sample-of-values.html#cb44-15"></a><span class="kw">segments</span> (x,<span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">10</span>),x,<span class="kw">dnorm</span> (x, <span class="dv">225</span>, <span class="kw">sd</span> (x)))</span></code></pre></div>
+<p><img src="week-1_files/figure-html/unnamed-chunk-14-1.png" width="576" /></p>
+<div id="making-inferences-using-likelihoods" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> Making inferences using likelihoods</h3>
+<p>Previously, I mentioned using the normal distribution to make inferences. When variables are normally distributed we can use the theoretical normal distribution and functions such as <code>pnorm</code> to answer questions about values we expect, and don’t expect, to see.</p>
+<p>We can take this same approach to make inferences about <em>parameters</em> when their likelihood functions follow a normal distribution. For example, we can use the results of the calculations below:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="inspecting-a-single-sample-of-values.html#cb45-1"></a><span class="kw">mean</span> (f0s)   <span class="co">## sample mean</span></span></code></pre></div>
+<pre><code>## [1] 220.401</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="inspecting-a-single-sample-of-values.html#cb47-1"></a><span class="kw">sd</span> (f0s)     <span class="co">## sample standard deviation</span></span></code></pre></div>
+<pre><code>## [1] 23.22069</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="inspecting-a-single-sample-of-values.html#cb49-1"></a><span class="kw">length</span> (f0s)  <span class="co">## sample size</span></span></code></pre></div>
+<pre><code>## [1] 576</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="inspecting-a-single-sample-of-values.html#cb51-1"></a><span class="kw">sd</span> (f0s) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span> ( <span class="kw">length</span> (f0s) ) <span class="co">## the standard deviation of the likelihood function</span></span></code></pre></div>
+<pre><code>## [1] 0.9675289</code></pre>
+<p>To draw the expected likelihood function for <span class="math inline">\(\mu\)</span> given our data and our model. You may be thinking, what model? It may seem too simple to be a model, but by assuming that our data can be understood as coming from a normal distribution with some given <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span>, we have already created a simple model for our data. I’ll return to this below.</p>
+<p>We can take our model and our parameter estimates and draw the likelihood function for <span class="math inline">\(\mu\)</span>. We can then use the <code>qnorm</code> function to calculate quantiles for our likelihood, presented below. I added vertical lines at the 2.5% and 97.5% quantiles of our distribution. These vertical lines enclose 95% of the likelihood density, and so represent the range of values representing the 95% most likely values of <span class="math inline">\(\mu\)</span>. I chose an interval enclosing 95% of the likelihood because this is used by convention. This is a commonly-used interval but otherwise has no special significance.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="inspecting-a-single-sample-of-values.html#cb53-1"></a><span class="kw">par</span> (<span class="dt">mfrow =</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb53-2"><a href="inspecting-a-single-sample-of-values.html#cb53-2"></a><span class="kw">curve</span> (<span class="kw">dnorm</span> (x, <span class="kw">mean</span>(f0s), <span class="kw">sd</span>(f0s)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">length</span>(f0s))), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">216</span>,<span class="dv">225</span>),</span>
+<span id="cb53-3"><a href="inspecting-a-single-sample-of-values.html#cb53-3"></a>       <span class="dt">ylab =</span> <span class="st">&#39;Density&#39;</span>, <span class="dt">xlab =</span> <span class="st">&#39;f0&#39;</span>)</span>
+<span id="cb53-4"><a href="inspecting-a-single-sample-of-values.html#cb53-4"></a>quantiles =<span class="st"> </span><span class="kw">qnorm</span> (<span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>), <span class="kw">mean</span> (f0s), <span class="kw">sd</span> (f0s) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span> (<span class="kw">length</span> (f0s) ) )</span>
+<span id="cb53-5"><a href="inspecting-a-single-sample-of-values.html#cb53-5"></a>quantiles</span></code></pre></div>
+<pre><code>## [1] 218.5047 222.2974</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="inspecting-a-single-sample-of-values.html#cb55-1"></a><span class="kw">abline</span> (<span class="dt">v =</span> quantiles, <span class="dt">lwd=</span><span class="dv">2</span>,<span class="dt">col=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="week-1_files/figure-html/unnamed-chunk-16-1.png" width="576" /></p>
+<p>The likelihood tells you about the most believable/credible parameter values, given your model and data. Given the information presented in the figure above, we may conclude that the most likely parameter values fall between 218 and 222 Hz. This means that it is reasonable that the true value might be 221 Hz, as this value is very likely given our sample. Basically, maybe our sample mean is wrong and arose by accident, and 221 Hz is the true <span class="math inline">\(\mu\)</span>. This outcome is compatible with our data.</p>
+<p>However, a value of 216 Hz is extremely <em>unlikely</em> to fit our data. It is just too far from our sample mean relative to the amount of variation in our sample. This is like if you measured the heights of 100 women in a small town (pop. 1500) and found the average was 5’4“. You might accept that the actual population average is 5’5”, but may find it difficult to accept that it was actually 6’0". It would mean you happened to measure all of the shortest women in the town, an extremely unlikely event.</p>
+<p>So, since we think that 216 Hz is not a plausible mean f0 given our sample, this also means that it is very unlikely that the real <span class="math inline">\(\mu\)</span> is 216 Hz. This is because a distribution centered at 216 would be extremely unlikely to generate a sample mean of 220 Hz. Using this aproach, we can rule out implausible values of <span class="math inline">\(\mu\)</span> based on the characteristics of our data.</p>
+<p>At this point we can offer conventional responses to the research questions posed at the start of the Chapter:</p>
+<p>Q1) What is the average f0 of the whole <em>population</em> likely to be?</p>
+<p>A1) The most likely value for the population mean is our sample mean, 220.4 Hz.</p>
+<p>Q2) Can we set bounds on likely mean f0 values based on the data we collected?</p>
+<p>A2) Yes, there is a 95% probability that the population mean is between 218.5 222.3 Hz, given our data and model structure.</p>
+<p>Traditional approaches to statistics (sometimes generally referred to as ‘frequentist’) estimate parameters by trying to find the most likely values for parameters (i.e., ‘maximum likelihood estimation’). They do this by referring to the theoretical likelihood functions such as what we plotted above. Although this works very well for simple data, it is difficult if not impossible for some of the more complicated datasets that often arise for even the simplest research questions in linguistics.</p>
+</div>
+</div>
+<div id="bayesian-models" class="section level2">
+<h2><span class="header-section-number">1.4</span> Bayesian models</h2>
+<p>In this class we are going to learn about <em>multilevel Bayesian models</em>. These models have many advantages over ‘traditional’ approaches. They provide researchers with more information, are more robust, and at <strong>worst</strong>, they are as good as traditional models. I may sound biased, but the main reason for all of these advantages is that traditional models were developed over 100 years ago. On the other hand, mathematical and technological advances have only made Bayesian multilevel models possible in the last 10+ years. It is only reasonable that the newer approaches should offer some advantages over methods developed before calculators existed.</p>
+<p>Here, I am going to address what is meant by two aspects of the term ‘Bayesian multilevel models’: ‘Bayesian’ and ‘models’.</p>
+<div id="what-are-regression-models" class="section level3">
+<h3><span class="header-section-number">1.4.1</span> What are regression models?</h3>
+<p>I have been referring somewhat obliquely to ‘models’ without really explaining what I mean by this. It’s difficult to offer a precise definition because the term is so broad, but ‘regression’ modeling can be thought of as trying to understand variation the mean parameter (<span class="math inline">\(\mu\)</span>) of a normal distributions. Actually, you can use many other probability distributions, but for now we will focus on models based on the normal distribution.</p>
+<p>Basically it goes like this:</p>
+<ul>
+<li><p>you assume that your data is well described by a normal probability distribution. This is a mathematical function (<span class="math inline">\(\mathcal{N}(\mu,\sigma)\)</span>) that described what is and is not probable based on two parameters.</p></li>
+<li><p>the mean of this distribution is either fixed, or varies in a logical manner.</p></li>
+<li><p>the variation in the mean of this distribution can be understood using some other variables.</p></li>
+</ul>
+<p>We can write this model more formally like:</p>
+<p><span class="math inline">\(y \sim \mathcal{N}(\mu,\sigma)\)</span></p>
+<p>This says that we expect that the variable we are interested in is distributed according to (<span class="math inline">\(\sim\)</span>) a normal distribution with those parameters. Basically, this just formalizes the fact that we think the <em>shape</em> of our data will be like that of a normal distribution with a mean equal to <span class="math inline">\(\mu\)</span> and a standard deviation equal to <span class="math inline">\(\sigma\)</span>.</p>
+<p>When you see this, <span class="math inline">\(\mathcal{N}(\mu,\sigma)\)</span>, just picture in your mind the shape of a normal distribution, like if you see this <span class="math inline">\(y=x^2\)</span> you may imagine a parabola. <span class="math inline">\(\mathcal{N}(\mu,\sigma)\)</span> Really just represents that shape of the normal distribution, and the associated expectation about more and less probable outcomes.</p>
+<p>The above relationship can also be presented like this:</p>
+<p><span class="math inline">\(y = \mu + \mathcal{N}(0,\sigma)\)</span></p>
+<p>Notice that we got rid of the <span class="math inline">\(\sim\)</span> symbol, moved <span class="math inline">\(\mu\)</span> out of the distribution function (<span class="math inline">\(\mathcal{N}()\)</span>), and that the mean of the distribution function is now 0. This breaks up our variable into two components:</p>
+<ol style="list-style-type: decimal">
+<li><p>A systematic component, <span class="math inline">\(\mu\)</span>, that contributes the same value to all instances of a variable.</p></li>
+<li><p>A random component, <span class="math inline">\(\mathcal{N}(0,\sigma)\)</span>, that causes unpredictable variation around <span class="math inline">\(\mu\)</span>.</p></li>
+</ol>
+<p>In terms of our data, I might express the distribution in either of the following ways:</p>
+<p><span class="math inline">\(f0 = \mathcal{N}(220.4,23.2)\)</span></p>
+<p><span class="math inline">\(f0 = 220.4 + \mathcal{N}(0,23.2)\)</span></p>
+<p>The distribution on the left below is the original data, centered at 220.4 Hz and with a standard deviation of 23.2 Hz. On the right, the mean has been subtracted from each value. The sample now represents represents random variation around the sample mean, variation that our model can’t explain. From the perspective of our model, this is <em>noise</em>, or <em>error</em>. This doesn’t mean that it’s unexplainable, it only means that we’ve structured our model in a way that doesn’t let us explain it.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="inspecting-a-single-sample-of-values.html#cb56-1"></a><span class="kw">par</span> (<span class="dt">mfrow =</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb56-2"><a href="inspecting-a-single-sample-of-values.html#cb56-2"></a><span class="kw">hist</span> (f0s, <span class="dt">main=</span><span class="st">&quot;&quot;</span>, <span class="dt">freq=</span><span class="ot">FALSE</span>)</span>
+<span id="cb56-3"><a href="inspecting-a-single-sample-of-values.html#cb56-3"></a><span class="kw">hist</span> (f0s <span class="op">-</span><span class="st"> </span><span class="kw">mean</span> (f0s), <span class="dt">main=</span><span class="st">&quot;&quot;</span>, <span class="dt">freq=</span><span class="ot">FALSE</span>)</span></code></pre></div>
+<p><img src="week-1_files/figure-html/unnamed-chunk-17-1.png" width="576" /></p>
+<p>In regression models, we can decompose systematic variation in <span class="math inline">\(\mu\)</span> into component parts, based on predictor variables. These are variables the co-vary (vary with) our <span class="math inline">\(y\)</span> variable, and that we think help explain the variation in <span class="math inline">\(y\)</span>. Below, I am saying that I think <span class="math inline">\(\mu\)</span> is actually equal to the sum of <span class="math inline">\(a\)</span> <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span>. For example, I could think that f0 could be affected by vowel category (<span class="math inline">\(a\)</span>), the height of the speaker (<span class="math inline">\(b\)</span>), and whether the utterance is a sentence or a question (<span class="math inline">\(c\)</span>).</p>
+<p><span class="math inline">\(\mu = a + b + c\)</span></p>
+<p>Decomposition of <span class="math inline">\(\mu\)</span> into sub-components makes our model something more like:</p>
+<p><span class="math inline">\(y = \mu + \mathcal{N}(0,\sigma)\)</span></p>
+<p><span class="math inline">\(y = (a + b + c) + \mathcal{N}(0,\sigma)\)</span></p>
+<p>often, <span class="math inline">\(\varepsilon\)</span> is used to represent the random component, as in:</p>
+<p><span class="math inline">\(y = (a + b + c) + \varepsilon\)</span></p>
+<p>which is what is a ‘regression equation’ or a ‘regression model’.</p>
+<p>Notice that the above formulation means that regression models do not require that our <em>data</em> be normally distributed, but only that the <em>random variation</em> in our data (<span class="math inline">\(\varepsilon\)</span>) be normally distributed. For example, in the left panel below I plot the distribution of f0 from among the entire Hillenbrand et al. data, including boys, girls, men and women. The data is not normally distributed, however, we can still use a regression based on normally-distributed data to model this as long as we expect that:</p>
+<ol style="list-style-type: decimal">
+<li>There is systematic variation in the <span class="math inline">\(mu\)</span> of f0 across different groups, speakers, conditions, etc.</li>
+<li>The <em>random variation</em> around these predicted values of <span class="math inline">\(\mu\)</span> more or less follows a normal distribution.</li>
+</ol>
+<p>In the right panel I plot the individual densities of boys (red), girls (green), men (blue) and women (cyan). We see that although the data is not normally distributed, the within-group variation is. This suggests a regression model is appropriate for this data.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="inspecting-a-single-sample-of-values.html#cb57-1"></a><span class="kw">par</span> (<span class="dt">mfrow =</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb57-2"><a href="inspecting-a-single-sample-of-values.html#cb57-2"></a><span class="kw">hist</span> (h95<span class="op">$</span>f0, <span class="dt">main=</span><span class="st">&quot;&quot;</span>, <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">80</span>,<span class="dv">320</span>))</span>
+<span id="cb57-3"><a href="inspecting-a-single-sample-of-values.html#cb57-3"></a><span class="kw">plot</span> (<span class="kw">density</span> (h95<span class="op">$</span>f0[h95<span class="op">$</span>type<span class="op">==</span><span class="st">&#39;b&#39;</span>]),<span class="dt">col=</span><span class="dv">2</span>,<span class="dt">lwd=</span><span class="dv">4</span>, <span class="dt">main=</span><span class="st">&#39;&#39;</span>,</span>
+<span id="cb57-4"><a href="inspecting-a-single-sample-of-values.html#cb57-4"></a>      <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">80</span>,<span class="dv">320</span>),<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.025</span>))</span>
+<span id="cb57-5"><a href="inspecting-a-single-sample-of-values.html#cb57-5"></a><span class="kw">lines</span> (<span class="kw">density</span> (h95<span class="op">$</span>f0[h95<span class="op">$</span>type<span class="op">==</span><span class="st">&#39;g&#39;</span>]),<span class="dt">col=</span><span class="dv">3</span>,<span class="dt">lwd=</span><span class="dv">3</span>)</span>
+<span id="cb57-6"><a href="inspecting-a-single-sample-of-values.html#cb57-6"></a><span class="kw">lines</span> (<span class="kw">density</span> (h95<span class="op">$</span>f0[h95<span class="op">$</span>type<span class="op">==</span><span class="st">&#39;m&#39;</span>]),<span class="dt">col=</span><span class="dv">4</span>,<span class="dt">lwd=</span><span class="dv">3</span>)</span>
+<span id="cb57-7"><a href="inspecting-a-single-sample-of-values.html#cb57-7"></a><span class="kw">lines</span> (<span class="kw">density</span> (h95<span class="op">$</span>f0[h95<span class="op">$</span>type<span class="op">==</span><span class="st">&#39;w&#39;</span>]),<span class="dt">col=</span><span class="dv">5</span>,<span class="dt">lwd=</span><span class="dv">3</span>)</span></code></pre></div>
+<p><img src="week-1_files/figure-html/unnamed-chunk-18-1.png" width="576" /></p>
+</div>
+<div id="whats-bayesian-about-these-models" class="section level3">
+<h3><span class="header-section-number">1.4.2</span> What’s ‘Bayesian’ about these models?</h3>
+<p>The major difference between Bayesian and traditional models is that Bayesian models rely on <em>posterior distributions</em> rather than likelihood functions. I am going to define some terms:</p>
+<ul>
+<li><p>prior probability distribution: the distribution of possible/believable parameter values <strong>prior</strong> to the <em>current</em> experiment. This <em>a priori</em> expectation can come from world knowledge, previous experiments, or some combination of the two.</p></li>
+<li><p>the likelihood: this is the distribution of possible/credible parameter values given the <strong>current</strong> data and probability model, and nothing else.</p></li>
+<li><p>posterior probability distribution: the distribution of possible/believable parameter values you have <strong>after</strong> your current experiment. You get this by combining the prior distribution and the likelihood.</p></li>
+</ul>
+<p>Traditional models make inferences based on the likelihood functions of parameters. Bayesian models make inferences based on the posterior distributions of parameters. To do this, they have to have to actually combine information about likelihood with information about the prior probabilities of parameters.</p>
+</div>
+</div>
+<div id="posterior-distributions" class="section level2">
+<h2><span class="header-section-number">1.5</span> Posterior distributions</h2>
+<p>The combination of probability distributions is quite simple conceptually: you just multiply the values of the distributions at each x-axis location, and the result is the new curve. In the example below, I combine several sets of probability distributions, showing the effects of variations in priors and likelihoods. In each plot, I scale all densities so that they have the same y axis range to make the figures interpretable, but this does not affect any of the points I make below.</p>
+<p>In the top panel, I plot the likelihood function for <span class="math inline">\(\mu\)</span> given a sample of size 5 with a mean of 220 Hz. I show what happens when I combine this with a relatively weak but very different prior: the standard deviation is the same as our f0 data, however the mean is much higher (250 Hz). With only 5 data points the likelihood already dominates the posterior, though the prior distribution is exerting a pull.</p>
+<p>In the second panel, the posterior is almost identical to the likelihood. The likelihood represents a sample of size 100, which is actually a tiny sample in experimental linguistics work where you may have 200+ samples from each of 50+ subjects. As you might imagine, when the sample size is that large the prior exerts almost no influence on results.</p>
+<p>In the third panel we see a situation where the prior dominates the estimate. Consider a situation where we actually have really good reasons to think that the mean is 250 Hz. If we really <em>know</em> this, why would we accept and estimate of 220 Hz based on only 5 samples? In this case, the posterior distribution is basically saying: your estimate is great, but come back when you have more evidence and I might believe you.</p>
+<p>In the final panel we see a situation where the likelihood and the prior are equal. In this case the posterior represents compromise between new and prior knowledge.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="inspecting-a-single-sample-of-values.html#cb58-1"></a>x =<span class="st"> </span><span class="kw">seq</span> (<span class="dv">150</span>, <span class="dv">301</span>, <span class="fl">.1</span>)</span>
+<span id="cb58-2"><a href="inspecting-a-single-sample-of-values.html#cb58-2"></a><span class="kw">par</span> (<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))</span>
+<span id="cb58-3"><a href="inspecting-a-single-sample-of-values.html#cb58-3"></a><span class="kw">par</span>(<span class="dt">mar =</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,.<span class="dv">1</span>,.<span class="dv">1</span>), <span class="dt">oma =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>))  </span>
+<span id="cb58-4"><a href="inspecting-a-single-sample-of-values.html#cb58-4"></a></span>
+<span id="cb58-5"><a href="inspecting-a-single-sample-of-values.html#cb58-5"></a><span class="co">## likelihood is a bit stronger than the prior</span></span>
+<span id="cb58-6"><a href="inspecting-a-single-sample-of-values.html#cb58-6"></a>likelihood =<span class="st"> </span><span class="kw">dnorm</span> (x, <span class="kw">mean</span> (f0s), <span class="kw">sd</span> (f0s) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span> ( <span class="dv">5</span> ) )</span>
+<span id="cb58-7"><a href="inspecting-a-single-sample-of-values.html#cb58-7"></a>prior =<span class="st"> </span><span class="kw">dnorm</span> (x, <span class="dv">250</span>, <span class="kw">sd</span> (f0s)) ; posterior =<span class="st"> </span>likelihood <span class="op">*</span><span class="st"> </span>prior</span>
+<span id="cb58-8"><a href="inspecting-a-single-sample-of-values.html#cb58-8"></a><span class="kw">plot</span> (x, likelihood <span class="op">/</span><span class="st"> </span><span class="kw">max</span> (likelihood), <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;Density&#39;</span>,<span class="dt">lwd=</span><span class="dv">2</span>, </span>
+<span id="cb58-9"><a href="inspecting-a-single-sample-of-values.html#cb58-9"></a>      <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">175</span>, <span class="dv">300</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">1.1</span>))</span>
+<span id="cb58-10"><a href="inspecting-a-single-sample-of-values.html#cb58-10"></a><span class="kw">lines</span> (x, prior <span class="op">/</span><span class="st"> </span><span class="kw">max</span> (prior),<span class="dt">lwd=</span><span class="dv">2</span>,<span class="dt">col=</span><span class="dv">2</span>)</span>
+<span id="cb58-11"><a href="inspecting-a-single-sample-of-values.html#cb58-11"></a><span class="kw">lines</span> (x, posterior <span class="op">/</span><span class="st"> </span><span class="kw">max</span> (posterior),<span class="dt">lwd=</span><span class="dv">2</span>,<span class="dt">col=</span><span class="dv">4</span>)</span>
+<span id="cb58-12"><a href="inspecting-a-single-sample-of-values.html#cb58-12"></a><span class="kw">legend</span> (<span class="dv">178</span>, <span class="dv">1</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&#39;Prior&#39;</span>,<span class="st">&#39;Likelihood&#39;</span>,<span class="st">&#39;Posterior&#39;</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">4</span>),</span>
+<span id="cb58-13"><a href="inspecting-a-single-sample-of-values.html#cb58-13"></a>        <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">bty =</span> <span class="st">&#39;n&#39;</span>)</span>
+<span id="cb58-14"><a href="inspecting-a-single-sample-of-values.html#cb58-14"></a><span class="co">## likelihood is much stronger than the prior</span></span>
+<span id="cb58-15"><a href="inspecting-a-single-sample-of-values.html#cb58-15"></a>likelihood =<span class="st"> </span><span class="kw">dnorm</span> (x, <span class="kw">mean</span> (f0s), <span class="kw">sd</span> (f0s) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span> ( <span class="dv">100</span> ) )</span>
+<span id="cb58-16"><a href="inspecting-a-single-sample-of-values.html#cb58-16"></a>prior =<span class="st"> </span><span class="kw">dnorm</span> (x, <span class="dv">250</span>, <span class="kw">sd</span> (f0s)) ; posterior =<span class="st"> </span>likelihood <span class="op">*</span><span class="st"> </span>prior</span>
+<span id="cb58-17"><a href="inspecting-a-single-sample-of-values.html#cb58-17"></a><span class="kw">plot</span> (x, likelihood <span class="op">/</span><span class="st"> </span><span class="kw">max</span> (likelihood), <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;Density&#39;</span>,<span class="dt">lwd=</span><span class="dv">2</span>, </span>
+<span id="cb58-18"><a href="inspecting-a-single-sample-of-values.html#cb58-18"></a>      <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">175</span>, <span class="dv">300</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">1.1</span>))</span>
+<span id="cb58-19"><a href="inspecting-a-single-sample-of-values.html#cb58-19"></a><span class="kw">lines</span> (x, prior <span class="op">/</span><span class="st"> </span><span class="kw">max</span> (prior),<span class="dt">lwd=</span><span class="dv">2</span>,<span class="dt">col=</span><span class="dv">2</span>)</span>
+<span id="cb58-20"><a href="inspecting-a-single-sample-of-values.html#cb58-20"></a><span class="kw">lines</span> (x, posterior <span class="op">/</span><span class="st"> </span><span class="kw">max</span> (posterior),<span class="dt">lwd=</span><span class="dv">2</span>,<span class="dt">col=</span><span class="dv">4</span>)</span>
+<span id="cb58-21"><a href="inspecting-a-single-sample-of-values.html#cb58-21"></a><span class="co">## prior overwhelms the likelihood</span></span>
+<span id="cb58-22"><a href="inspecting-a-single-sample-of-values.html#cb58-22"></a>likelihood =<span class="st"> </span><span class="kw">dnorm</span> (x, <span class="kw">mean</span> (f0s), <span class="kw">sd</span> (f0s) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span> ( <span class="dv">5</span> ) )</span>
+<span id="cb58-23"><a href="inspecting-a-single-sample-of-values.html#cb58-23"></a>prior =<span class="st"> </span><span class="kw">dnorm</span> (x, <span class="dv">250</span>, <span class="kw">sd</span> (f0s)<span class="op">/</span><span class="dv">10</span>) ; posterior =<span class="st"> </span>likelihood <span class="op">*</span><span class="st"> </span>prior</span>
+<span id="cb58-24"><a href="inspecting-a-single-sample-of-values.html#cb58-24"></a><span class="kw">plot</span> (x, likelihood <span class="op">/</span><span class="st"> </span><span class="kw">max</span> (likelihood), <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;Density&#39;</span>,<span class="dt">lwd=</span><span class="dv">2</span>, </span>
+<span id="cb58-25"><a href="inspecting-a-single-sample-of-values.html#cb58-25"></a>      <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">175</span>, <span class="dv">300</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">1.1</span>))</span>
+<span id="cb58-26"><a href="inspecting-a-single-sample-of-values.html#cb58-26"></a><span class="kw">lines</span> (x, prior <span class="op">/</span><span class="st"> </span><span class="kw">max</span> (prior),<span class="dt">lwd=</span><span class="dv">2</span>,<span class="dt">col=</span><span class="dv">2</span>)</span>
+<span id="cb58-27"><a href="inspecting-a-single-sample-of-values.html#cb58-27"></a><span class="kw">lines</span> (x, posterior <span class="op">/</span><span class="st"> </span><span class="kw">max</span> (posterior),<span class="dt">lwd=</span><span class="dv">2</span>,<span class="dt">col=</span><span class="dv">4</span>)</span>
+<span id="cb58-28"><a href="inspecting-a-single-sample-of-values.html#cb58-28"></a><span class="co">## prior and likelihood have about equal influence</span></span>
+<span id="cb58-29"><a href="inspecting-a-single-sample-of-values.html#cb58-29"></a>likelihood =<span class="st"> </span><span class="kw">dnorm</span> (x, <span class="kw">mean</span> (f0s), <span class="kw">sd</span> (f0s) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span> ( <span class="dv">100</span> ) )</span>
+<span id="cb58-30"><a href="inspecting-a-single-sample-of-values.html#cb58-30"></a>prior =<span class="st"> </span><span class="kw">dnorm</span> (x, <span class="dv">250</span>, <span class="kw">sd</span> (f0s)<span class="op">/</span><span class="dv">10</span>) ; posterior =<span class="st"> </span>likelihood <span class="op">*</span><span class="st"> </span>prior</span>
+<span id="cb58-31"><a href="inspecting-a-single-sample-of-values.html#cb58-31"></a><span class="kw">plot</span> (x, likelihood <span class="op">/</span><span class="st"> </span><span class="kw">max</span> (likelihood), <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;Density&#39;</span>,<span class="dt">lwd=</span><span class="dv">2</span>, </span>
+<span id="cb58-32"><a href="inspecting-a-single-sample-of-values.html#cb58-32"></a>      <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">175</span>, <span class="dv">300</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">1.1</span>))</span>
+<span id="cb58-33"><a href="inspecting-a-single-sample-of-values.html#cb58-33"></a><span class="kw">lines</span> (x, prior <span class="op">/</span><span class="st"> </span><span class="kw">max</span> (prior),<span class="dt">lwd=</span><span class="dv">2</span>,<span class="dt">col=</span><span class="dv">2</span>)</span>
+<span id="cb58-34"><a href="inspecting-a-single-sample-of-values.html#cb58-34"></a><span class="kw">lines</span> (x, posterior <span class="op">/</span><span class="st"> </span><span class="kw">max</span> (posterior),<span class="dt">lwd=</span><span class="dv">2</span>,<span class="dt">col=</span><span class="dv">4</span>)</span></code></pre></div>
+<p><img src="week-1_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>The use of prior probabilities is often said to make Bayesian models ‘subjective’ but its not really a big deal. First, every model involves arbitrary decisions which can substantially affect our results. Second, a researcher will always use common sense to interpret a model. For example, before collecting my sample I can say that I expect my female average f0 to be 200 Hz or so, but think its reasonable to expect anything from 100 to 300 Hz. Based on everything we know about human speech, even these bounds are too wide, and anything outside would suggest something is very wrong. So, even if I did not use a prior, I would use my expectations to ‘screen’ my results, and be very wary of anything that did not meet my expectations.</p>
+<p>A Bayesian model simply requires that you build your expectation into your model. It formalizes it, makes it definable and replicable. Also, being ‘objective’ does not quite make sense in many cases. Is it really being objective to ignore common sense and act as if a mean f0 of 250 is exactly as likely a priori as one of 20,000 Hz? Because not using a prior is equivalent to using a ‘flat’ prior and acting like almost any value is equally likely a priori, when this is hardly the case.</p>
+<div id="sampling-from-the-posterior" class="section level3">
+<h3><span class="header-section-number">1.5.1</span> Sampling from the posterior</h3>
+<p>We want to understand the posterior distribution of parameters. How do we get this information? It is difficult to get this ‘analytically’, that is, using exact methods and solving a bunch of equations. Many traditional methods can actually be solved in this way, and that is a big part of their popularity.</p>
+<p>Understanding the characteristics of posterior probabilities is not possible analytically for many Bayesian models. As a result, these questions are answered ‘numerically’, basically by using a bunch of ‘guesses’. To understand the properties of posterior distributions, we use ‘sampling’ software that knows how to investigate these distributions.</p>
+<p>The way these samplers work is you specify a set of data and some relationships you think are represented in your data (i.e., a model). The sampler then ‘walks around’ the parameter space, which is the range of possible values a parameter (or set of parameters) can take. For example, for a single parameter the parameter space is a line (like the x axis in the plots above) along which the parameter varies.</p>
+<p>The sampler then does some variant of the following algorithm:</p>
+<ol style="list-style-type: decimal">
+<li><p>Pick a random value for the parameter (i.e., <span class="math inline">\(\mu_{tmp}\)</span> = 221 Hz).</p></li>
+<li><p>Calculate the posterior probability for the current estimate of <span class="math inline">\(\mu_{tmp}\)</span>.</p></li>
+<li><p>If the posterior estimate meets some criteria (e.g., it is better than the last one, it is not too low, etc.), then the value of <span class="math inline">\(\mu_{tmp}\)</span> is recorded, and becomes <span class="math inline">\(\mu_{estimate}\)</span>. If not it is just discarded.</p></li>
+<li><p>Go back to step 1.</p></li>
+</ol>
+<p>As incredible as it may seem, under a very reasonable set of conditions if you do the above enough times, the distribution of <span class="math inline">\(\mu_{estimate}\)</span> that results from the above process will converge on the posterior distribution of <span class="math inline">\(\mu\)</span> given your data and model structure (including prior probabilities).</p>
+<p>Below I have made a small example of this process. I use the Metropolis-Hastings algorithm, which is an algorithm to sample from probability distributions. The small example below assumes the standard deviation of the population is known, and just tries to investigate the posterior distribution of <span class="math inline">\(\mu\)</span>. It uses a very broad prior distribution (<span class="math inline">\(\mu = 0\)</span>, <span class="math inline">\(\sigma = 5000\)</span>) so that it will have a very weak effect on the outcomes.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="inspecting-a-single-sample-of-values.html#cb59-1"></a><span class="co"># the function below takes a random sample, an initial mean estimate and a fixed</span></span>
+<span id="cb59-2"><a href="inspecting-a-single-sample-of-values.html#cb59-2"></a><span class="co"># standard deviation. It then takes a certain amount of samples from the </span></span>
+<span id="cb59-3"><a href="inspecting-a-single-sample-of-values.html#cb59-3"></a><span class="co"># posterior distribution of the parameter, assuming a broad prior centered at 0</span></span>
+<span id="cb59-4"><a href="inspecting-a-single-sample-of-values.html#cb59-4"></a>sampler_example =<span class="st"> </span><span class="cf">function</span> (sample, <span class="dt">mu_estimate =</span> <span class="dv">0</span>, <span class="dt">stdev =</span> <span class="dv">1</span>, <span class="dt">nsamples =</span> <span class="dv">1000</span>){</span>
+<span id="cb59-5"><a href="inspecting-a-single-sample-of-values.html#cb59-5"></a>  <span class="co"># initial posterior calculation. This is the sum of the log likelihood and</span></span>
+<span id="cb59-6"><a href="inspecting-a-single-sample-of-values.html#cb59-6"></a>  <span class="co"># the logarithm of the prior probability.</span></span>
+<span id="cb59-7"><a href="inspecting-a-single-sample-of-values.html#cb59-7"></a>  prior =<span class="st"> </span><span class="kw">log</span> (<span class="kw">dnorm</span> (mu_estimate[<span class="dv">1</span>],<span class="dv">0</span>, <span class="dv">500</span>))</span>
+<span id="cb59-8"><a href="inspecting-a-single-sample-of-values.html#cb59-8"></a>  loglik =<span class="st"> </span><span class="kw">sum</span> (<span class="kw">dnorm</span> (sample, mu_estimate[<span class="dv">1</span>],stdev,<span class="dt">log=</span><span class="ot">TRUE</span>))</span>
+<span id="cb59-9"><a href="inspecting-a-single-sample-of-values.html#cb59-9"></a>  old_posterior =<span class="st"> </span>loglik <span class="op">+</span><span class="st"> </span>prior</span>
+<span id="cb59-10"><a href="inspecting-a-single-sample-of-values.html#cb59-10"></a>  </span>
+<span id="cb59-11"><a href="inspecting-a-single-sample-of-values.html#cb59-11"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span>nsamples){</span>
+<span id="cb59-12"><a href="inspecting-a-single-sample-of-values.html#cb59-12"></a>    accept =<span class="st"> </span><span class="ot">FALSE</span></span>
+<span id="cb59-13"><a href="inspecting-a-single-sample-of-values.html#cb59-13"></a>    <span class="co">## this loop will keep proposing new steps until one gets accepted. </span></span>
+<span id="cb59-14"><a href="inspecting-a-single-sample-of-values.html#cb59-14"></a>    <span class="cf">while</span> (<span class="op">!</span>accept){</span>
+<span id="cb59-15"><a href="inspecting-a-single-sample-of-values.html#cb59-15"></a>      <span class="co">## (step 1 above)</span></span>
+<span id="cb59-16"><a href="inspecting-a-single-sample-of-values.html#cb59-16"></a>      <span class="co">## draw new proposal by randomly changing the previous mu_estimate</span></span>
+<span id="cb59-17"><a href="inspecting-a-single-sample-of-values.html#cb59-17"></a>      mu_tmp =<span class="st"> </span>mu_estimate[i<span class="dv">-1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span> (<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">.3</span>)</span>
+<span id="cb59-18"><a href="inspecting-a-single-sample-of-values.html#cb59-18"></a>      <span class="co">## (step 2 above)</span></span>
+<span id="cb59-19"><a href="inspecting-a-single-sample-of-values.html#cb59-19"></a>      <span class="co">## find prior probability for new mu_tmp proposal</span></span>
+<span id="cb59-20"><a href="inspecting-a-single-sample-of-values.html#cb59-20"></a>      prior =<span class="st"> </span><span class="kw">log</span> (<span class="kw">dnorm</span> (mu_tmp,<span class="dv">0</span>, <span class="dv">500</span>))</span>
+<span id="cb59-21"><a href="inspecting-a-single-sample-of-values.html#cb59-21"></a>      <span class="co">## find log likelihood for new mu_tmp proposal</span></span>
+<span id="cb59-22"><a href="inspecting-a-single-sample-of-values.html#cb59-22"></a>      loglik =<span class="st"> </span><span class="kw">sum</span> (<span class="kw">dnorm</span> (sample, mu_tmp,stdev,<span class="dt">log=</span><span class="ot">TRUE</span>))</span>
+<span id="cb59-23"><a href="inspecting-a-single-sample-of-values.html#cb59-23"></a>      <span class="co">## calculate the new posterior probability</span></span>
+<span id="cb59-24"><a href="inspecting-a-single-sample-of-values.html#cb59-24"></a>      new_posterior =<span class="st"> </span>prior <span class="op">+</span><span class="st"> </span>loglik</span>
+<span id="cb59-25"><a href="inspecting-a-single-sample-of-values.html#cb59-25"></a>      <span class="co">## (step 3 above)</span></span>
+<span id="cb59-26"><a href="inspecting-a-single-sample-of-values.html#cb59-26"></a>      <span class="co">## if better accept always. If worse, accept sometimes</span></span>
+<span id="cb59-27"><a href="inspecting-a-single-sample-of-values.html#cb59-27"></a>      <span class="cf">if</span> ( ( new_posterior <span class="op">-</span><span class="st"> </span>old_posterior ) <span class="op">&gt;=</span><span class="st"> </span><span class="kw">log</span> ( <span class="kw">runif</span> (<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>) ) ){</span>
+<span id="cb59-28"><a href="inspecting-a-single-sample-of-values.html#cb59-28"></a>        mu_estimate[i] =<span class="st"> </span>mu_tmp</span>
+<span id="cb59-29"><a href="inspecting-a-single-sample-of-values.html#cb59-29"></a>        <span class="co">## if you accept, the new estimate becomes the current estimate</span></span>
+<span id="cb59-30"><a href="inspecting-a-single-sample-of-values.html#cb59-30"></a>        old_posterior =<span class="st"> </span>new_posterior</span>
+<span id="cb59-31"><a href="inspecting-a-single-sample-of-values.html#cb59-31"></a>        accept =<span class="st"> </span><span class="ot">TRUE</span></span>
+<span id="cb59-32"><a href="inspecting-a-single-sample-of-values.html#cb59-32"></a>      }</span>
+<span id="cb59-33"><a href="inspecting-a-single-sample-of-values.html#cb59-33"></a>    }</span>
+<span id="cb59-34"><a href="inspecting-a-single-sample-of-values.html#cb59-34"></a>  } </span>
+<span id="cb59-35"><a href="inspecting-a-single-sample-of-values.html#cb59-35"></a>  <span class="kw">return</span> (mu_estimate)</span>
+<span id="cb59-36"><a href="inspecting-a-single-sample-of-values.html#cb59-36"></a>}</span></code></pre></div>
+<p>In the plots below, you can see the algorithm begins at 0 (the initial guess) but is quickly able to find the most likely sample mean given the data (left column). In the middle, I show the distribution of the samples on the left, minus the burn-in phase (arbitrarily chosen by me). On the right, I compare our samples (blue) to the theoretical posterior distribution for the mean given the data and prior (red). I toss out the samples during the ‘burn in’ phase, as there are used up in trying to ‘find’ the correct location in the parameter space.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="inspecting-a-single-sample-of-values.html#cb60-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb60-2"><a href="inspecting-a-single-sample-of-values.html#cb60-2"></a><span class="co">## make a random sample of data</span></span>
+<span id="cb60-3"><a href="inspecting-a-single-sample-of-values.html#cb60-3"></a>data_<span class="dv">1</span> =<span class="st"> </span><span class="kw">rnorm</span> (<span class="dv">100</span>,<span class="dv">10</span>,<span class="dv">1</span>)</span>
+<span id="cb60-4"><a href="inspecting-a-single-sample-of-values.html#cb60-4"></a><span class="co">## collect samples from the likelihood of the mean</span></span>
+<span id="cb60-5"><a href="inspecting-a-single-sample-of-values.html#cb60-5"></a>samples_<span class="dv">1</span> =<span class="st"> </span><span class="kw">sampler_example</span> (data_<span class="dv">1</span>,<span class="dv">0</span>,<span class="kw">sd</span>(data_<span class="dv">1</span>), <span class="dv">5000</span>)</span>
+<span id="cb60-6"><a href="inspecting-a-single-sample-of-values.html#cb60-6"></a></span>
+<span id="cb60-7"><a href="inspecting-a-single-sample-of-values.html#cb60-7"></a><span class="co">## do a second one to show its not a fluke</span></span>
+<span id="cb60-8"><a href="inspecting-a-single-sample-of-values.html#cb60-8"></a>data_<span class="dv">2</span> =<span class="st"> </span><span class="kw">rnorm</span> (<span class="dv">100</span>,<span class="op">-</span><span class="dv">50</span>,<span class="dv">1</span>)</span>
+<span id="cb60-9"><a href="inspecting-a-single-sample-of-values.html#cb60-9"></a><span class="co">## collect samples from the likelihood of the mean</span></span>
+<span id="cb60-10"><a href="inspecting-a-single-sample-of-values.html#cb60-10"></a>samples_<span class="dv">2</span> =<span class="st"> </span><span class="kw">sampler_example</span> (data_<span class="dv">2</span>,<span class="dv">0</span>,<span class="kw">sd</span>(data_<span class="dv">2</span>), <span class="dv">5000</span>)</span>
+<span id="cb60-11"><a href="inspecting-a-single-sample-of-values.html#cb60-11"></a></span>
+<span id="cb60-12"><a href="inspecting-a-single-sample-of-values.html#cb60-12"></a><span class="co"># the left column shows the path the sampler took. the middle column shows the</span></span>
+<span id="cb60-13"><a href="inspecting-a-single-sample-of-values.html#cb60-13"></a><span class="co"># distribution of these samples, minus the burn in phase. the right column shows</span></span>
+<span id="cb60-14"><a href="inspecting-a-single-sample-of-values.html#cb60-14"></a><span class="co"># a comparison of theoretical and observed posterior distributions</span></span>
+<span id="cb60-15"><a href="inspecting-a-single-sample-of-values.html#cb60-15"></a><span class="kw">par</span> (<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb60-16"><a href="inspecting-a-single-sample-of-values.html#cb60-16"></a><span class="kw">plot</span> (samples_<span class="dv">1</span>)</span>
+<span id="cb60-17"><a href="inspecting-a-single-sample-of-values.html#cb60-17"></a><span class="kw">hist</span> (samples_<span class="dv">1</span>[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">250</span>)], <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">4.5</span>), <span class="dt">main=</span><span class="st">&quot;&quot;</span>,<span class="dt">col=</span><span class="dv">4</span>)</span>
+<span id="cb60-18"><a href="inspecting-a-single-sample-of-values.html#cb60-18"></a>x =<span class="st"> </span><span class="kw">seq</span> (<span class="fl">9.7</span>,<span class="fl">10.5</span>,.<span class="dv">001</span>)</span>
+<span id="cb60-19"><a href="inspecting-a-single-sample-of-values.html#cb60-19"></a>likelihood =<span class="st"> </span><span class="kw">dnorm</span> (x, <span class="kw">mean</span> (data_<span class="dv">1</span>), <span class="kw">sd</span>(data_<span class="dv">1</span>) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span> (<span class="dv">100</span>) )</span>
+<span id="cb60-20"><a href="inspecting-a-single-sample-of-values.html#cb60-20"></a>prior =<span class="st"> </span><span class="kw">dnorm</span> (x, <span class="dv">0</span>, <span class="dv">500</span> ) </span>
+<span id="cb60-21"><a href="inspecting-a-single-sample-of-values.html#cb60-21"></a>posterior =<span class="st"> </span>likelihood <span class="op">*</span><span class="st"> </span>prior</span>
+<span id="cb60-22"><a href="inspecting-a-single-sample-of-values.html#cb60-22"></a>posterior =<span class="st"> </span>posterior <span class="op">/</span><span class="st"> </span><span class="kw">max</span> (posterior)</span>
+<span id="cb60-23"><a href="inspecting-a-single-sample-of-values.html#cb60-23"></a><span class="kw">plot</span> (x, posterior, <span class="dt">lwd =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>)</span>
+<span id="cb60-24"><a href="inspecting-a-single-sample-of-values.html#cb60-24"></a>density_<span class="dv">1</span> =<span class="st"> </span><span class="kw">density</span> (samples_<span class="dv">1</span>[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">250</span>)])</span>
+<span id="cb60-25"><a href="inspecting-a-single-sample-of-values.html#cb60-25"></a>density_<span class="dv">1</span><span class="op">$</span>y =<span class="st"> </span>density_<span class="dv">1</span><span class="op">$</span>y <span class="op">/</span><span class="st"> </span><span class="kw">max</span> (density_<span class="dv">1</span><span class="op">$</span>y)</span>
+<span id="cb60-26"><a href="inspecting-a-single-sample-of-values.html#cb60-26"></a><span class="kw">lines</span> (density_<span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="dv">4</span>)</span>
+<span id="cb60-27"><a href="inspecting-a-single-sample-of-values.html#cb60-27"></a></span>
+<span id="cb60-28"><a href="inspecting-a-single-sample-of-values.html#cb60-28"></a><span class="kw">plot</span> (samples_<span class="dv">2</span>)</span>
+<span id="cb60-29"><a href="inspecting-a-single-sample-of-values.html#cb60-29"></a><span class="kw">hist</span> (samples_<span class="dv">2</span>[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">250</span>)], <span class="dt">freq =</span> <span class="ot">FALSE</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">4.5</span>), <span class="dt">main=</span><span class="st">&quot;&quot;</span>,<span class="dt">col=</span><span class="dv">4</span>)</span>
+<span id="cb60-30"><a href="inspecting-a-single-sample-of-values.html#cb60-30"></a>x =<span class="st"> </span><span class="kw">seq</span> (<span class="op">-</span><span class="fl">50.6</span>, <span class="fl">-49.75</span>,.<span class="dv">001</span>)</span>
+<span id="cb60-31"><a href="inspecting-a-single-sample-of-values.html#cb60-31"></a>likelihood =<span class="st"> </span><span class="kw">dnorm</span> (x, <span class="kw">mean</span> (data_<span class="dv">2</span>), <span class="kw">sd</span>(data_<span class="dv">2</span>) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span> (<span class="dv">100</span>) )</span>
+<span id="cb60-32"><a href="inspecting-a-single-sample-of-values.html#cb60-32"></a>prior =<span class="st"> </span><span class="kw">dnorm</span> (x, <span class="dv">0</span>, <span class="dv">500</span> ) </span>
+<span id="cb60-33"><a href="inspecting-a-single-sample-of-values.html#cb60-33"></a>posterior =<span class="st"> </span>likelihood <span class="op">*</span><span class="st"> </span>prior</span>
+<span id="cb60-34"><a href="inspecting-a-single-sample-of-values.html#cb60-34"></a>posterior =<span class="st"> </span>posterior <span class="op">/</span><span class="st"> </span><span class="kw">max</span> (posterior)</span>
+<span id="cb60-35"><a href="inspecting-a-single-sample-of-values.html#cb60-35"></a><span class="kw">plot</span> (x, posterior, <span class="dt">lwd =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>)</span>
+<span id="cb60-36"><a href="inspecting-a-single-sample-of-values.html#cb60-36"></a>density_<span class="dv">2</span> =<span class="st"> </span><span class="kw">density</span> (samples_<span class="dv">2</span>[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">250</span>)])</span>
+<span id="cb60-37"><a href="inspecting-a-single-sample-of-values.html#cb60-37"></a>density_<span class="dv">2</span><span class="op">$</span>y =<span class="st"> </span>density_<span class="dv">2</span><span class="op">$</span>y <span class="op">/</span><span class="st"> </span><span class="kw">max</span> (density_<span class="dv">2</span><span class="op">$</span>y)</span>
+<span id="cb60-38"><a href="inspecting-a-single-sample-of-values.html#cb60-38"></a><span class="kw">lines</span> (density_<span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="dv">4</span>)</span></code></pre></div>
+<p><img src="week-1_files/figure-html/unnamed-chunk-21-1.png" width="576" /></p>
+<p>The results clearly coincide, but aren’t perfect. But this sampler isn’t very sophisticated! The samplers we will be using in this class <em>do</em> provide an excellent match to the posterior distribution. As a result, we can inspect the distribution of collected <span class="math inline">\(\mu_{estimate}\)</span> to understand the posterior of our parameter. We can use these distributions in the same way that we used the theoretical likelihood functions above, by using them to make statements about likely parameter values and ranges of values.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
