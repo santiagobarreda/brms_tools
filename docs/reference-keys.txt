@@ -11,3 +11,4 @@ what-are-regression-models
 whats-bayesian-about-these-models
 posterior-distributions
 sampling-from-the-posterior
+plot-code

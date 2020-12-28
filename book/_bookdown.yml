@@ -1,6 +1,0 @@
-book_filename: "An Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers"
-chapter_name: "Chapter "
-repo: https://github.com/santiagobarreda/stats-class
-output_dir: docs
-clean: [packages.bib, bookdown.bbl]
-new_session: yes

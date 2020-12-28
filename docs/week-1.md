@@ -593,7 +593,7 @@ Traditional models make inferences based on the likelihood functions of paramete
 
 ## Posterior distributions
 
-The combination of probability distributions is quite simple conceptually: you just multiply the values of the distributions at each x-axis location, and the result is the new curve. In the example below, I combine several sets of probability distributions, showing the effects of variations in priors and likelihoods. In each plot, I scale all densities so that they have the same y axis range to make the figures interpretable, but this does not affect any of the points I make below. 
+The combination of probability distributions is straightforward conceptually: you just multiply the values of the distributions at each x-axis location, and the result is the new curve. In the figure below (code at end of chapter), I combine several sets of probability distributions, showing the effects of variations in priors and likelihoods. In each plot, I scale all densities so that they have the same y axis range to make the figures interpretable, but this does not affect any of the points I make below. 
 
 In the top panel, I plot the likelihood function for $\mu$ given a sample of size 5 with a mean of 220 Hz. I show what happens when I combine this with a relatively weak but very different prior: the standard deviation is the same as our f0 data, however the mean is much higher (250 Hz). With only 5 data points the likelihood already dominates the posterior, though the prior distribution is exerting a pull. 
 
@@ -602,44 +602,6 @@ In the second panel, the posterior is almost identical to the likelihood. The li
 In the third panel we see a situation where the prior dominates the estimate. Consider a situation where we actually have really good reasons to think that the mean is 250 Hz. If we really *know* this, why would we accept and estimate of 220 Hz based on only 5 samples? In this case, the posterior distribution is basically saying: your estimate is great, but come back when you have more evidence and I might believe you.
 
 In the final panel we see a situation where the likelihood and the prior are equal. In this case the posterior represents compromise between new and prior knowledge.
-
-
-```r
-x = seq (150, 301, .1)
-par (mfrow = c(4,1))
-par(mar =c(4,4,.1,.1), oma = c(1,0,1,0))  
-
-## likelihood is a bit stronger than the prior
-likelihood = dnorm (x, mean (f0s), sd (f0s) / sqrt ( 5 ) )
-prior = dnorm (x, 250, sd (f0s)) ; posterior = likelihood * prior
-plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2, 
-      xlim = c(175, 300), ylim = c(0,1.1))
-lines (x, prior / max (prior),lwd=2,col=2)
-lines (x, posterior / max (posterior),lwd=2,col=4)
-legend (178, 1, legend = c('Prior','Likelihood','Posterior'), col = c(2,1,4),
-        lwd = 2, bty = 'n')
-## likelihood is much stronger than the prior
-likelihood = dnorm (x, mean (f0s), sd (f0s) / sqrt ( 100 ) )
-prior = dnorm (x, 250, sd (f0s)) ; posterior = likelihood * prior
-plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2, 
-      xlim = c(175, 300), ylim = c(0,1.1))
-lines (x, prior / max (prior),lwd=2,col=2)
-lines (x, posterior / max (posterior),lwd=2,col=4)
-## prior overwhelms the likelihood
-likelihood = dnorm (x, mean (f0s), sd (f0s) / sqrt ( 5 ) )
-prior = dnorm (x, 250, sd (f0s)/10) ; posterior = likelihood * prior
-plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2, 
-      xlim = c(175, 300), ylim = c(0,1.1))
-lines (x, prior / max (prior),lwd=2,col=2)
-lines (x, posterior / max (posterior),lwd=2,col=4)
-## prior and likelihood have about equal influence
-likelihood = dnorm (x, mean (f0s), sd (f0s) / sqrt ( 100 ) )
-prior = dnorm (x, 250, sd (f0s)/10) ; posterior = likelihood * prior
-plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2, 
-      xlim = c(175, 300), ylim = c(0,1.1))
-lines (x, prior / max (prior),lwd=2,col=2)
-lines (x, posterior / max (posterior),lwd=2,col=4)
-```
 
 <img src="week-1_files/figure-html/unnamed-chunk-19-1.png" width="672" />
 
@@ -709,8 +671,59 @@ sampler_example = function (sample, mu_estimate = 0, stdev = 1, nsamples = 1000)
 }
 ```
 
-In the plots below, you can see the algorithm begins at 0 (the initial guess) but is quickly able to find the most likely sample mean given the data (left column). In the middle, I show the distribution of the samples on the left, minus the burn-in phase (arbitrarily chosen by me). On the right, I compare our samples (blue) to the theoretical posterior distribution for the mean given the data and prior (red). I toss out the samples during the 'burn in' phase, as there are used up in trying to 'find' the correct location in the parameter space.   
+In the plots below (code at end of chapter), you can see the algorithm begins at 0 (the initial guess) but is quickly able to find the most likely sample mean given the data (left column). In the middle, I show the distribution of the samples on the left, minus the burn-in phase (arbitrarily chosen by me). On the right, I compare our samples (blue) to the theoretical posterior distribution for the mean given the data and prior (red). I toss out the samples during the 'burn in' phase, as there are used up in trying to 'find' the correct location in the parameter space.   
 
+<img src="week-1_files/figure-html/unnamed-chunk-21-1.png" width="576" />
+
+The results clearly coincide, but aren't perfect. But this sampler isn't very sophisticated! The samplers we will be using in this class *do* provide an excellent match to the posterior distribution. As a result, we can inspect the distribution of collected $\mu_{estimate}$ to understand the posterior of our parameter. We can use these distributions in the same way that we used the theoretical likelihood functions above, by using them to make statements about likely parameter values and ranges of values. 
+
+
+
+## Plot Code
+
+Plot showing combinations of different priors and likelihoods into posteriors::
+
+
+```r
+x = seq (150, 301, .1)
+par (mfrow = c(4,1))
+par(mar =c(4,4,.1,.1), oma = c(1,0,1,0))  
+
+## likelihood is a bit stronger than the prior
+likelihood = dnorm (x, mean (f0s), sd (f0s) / sqrt ( 5 ) )
+prior = dnorm (x, 250, sd (f0s)) ; posterior = likelihood * prior
+plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2, 
+      xlim = c(175, 300), ylim = c(0,1.1))
+lines (x, prior / max (prior),lwd=2,col=2)
+lines (x, posterior / max (posterior),lwd=2,col=4)
+legend (178, 1, legend = c('Prior','Likelihood','Posterior'), col = c(2,1,4),
+        lwd = 2, bty = 'n')
+## likelihood is much stronger than the prior
+likelihood = dnorm (x, mean (f0s), sd (f0s) / sqrt ( 100 ) )
+prior = dnorm (x, 250, sd (f0s)) ; posterior = likelihood * prior
+plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2, 
+      xlim = c(175, 300), ylim = c(0,1.1))
+lines (x, prior / max (prior),lwd=2,col=2)
+lines (x, posterior / max (posterior),lwd=2,col=4)
+## prior overwhelms the likelihood
+likelihood = dnorm (x, mean (f0s), sd (f0s) / sqrt ( 5 ) )
+prior = dnorm (x, 250, sd (f0s)/10) ; posterior = likelihood * prior
+plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2, 
+      xlim = c(175, 300), ylim = c(0,1.1))
+lines (x, prior / max (prior),lwd=2,col=2)
+lines (x, posterior / max (posterior),lwd=2,col=4)
+## prior and likelihood have about equal influence
+likelihood = dnorm (x, mean (f0s), sd (f0s) / sqrt ( 100 ) )
+prior = dnorm (x, 250, sd (f0s)/10) ; posterior = likelihood * prior
+plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2, 
+      xlim = c(175, 300), ylim = c(0,1.1))
+lines (x, prior / max (prior),lwd=2,col=2)
+lines (x, posterior / max (posterior),lwd=2,col=4)
+```
+ 
+
+Plot showing the output of the example sampler included above:
+ 
 
 ```r
 set.seed(1)
@@ -752,13 +765,3 @@ density_2 = density (samples_2[-(1:250)])
 density_2$y = density_2$y / max (density_2$y)
 lines (density_2, lwd = 3, col = 4)
 ```
-
-<img src="week-1_files/figure-html/unnamed-chunk-21-1.png" width="576" />
-
-The results clearly coincide, but aren't perfect. But this sampler isn't very sophisticated! The samplers we will be using in this class *do* provide an excellent match to the posterior distribution. As a result, we can inspect the distribution of collected $\mu_{estimate}$ to understand the posterior of our parameter. We can use these distributions in the same way that we used the theoretical likelihood functions above, by using them to make statements about likely parameter values and ranges of values. 
-
-
-
-
-
- 
