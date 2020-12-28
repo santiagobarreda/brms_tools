@@ -4,6 +4,7 @@ author: "Santiago Bareda"
 date: "2020-12-28"
 site: bookdown::bookdown_site
 documentclass: book
+highlight: tango
 url: 'http\://santiagobarreda.com'
 description: "An Quick Introduction to Multilevel Bayesian Models"
 ---
