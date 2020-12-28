@@ -5,7 +5,7 @@ bookdown::gitbook:
     toc:
       collapse: subsection
       before: |
-        <li><a href="./">Stat Class</a></li>
+        <li><a href="./">An Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</a></li>
       after: |
         <li><a href="https://santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
 bookdown::pdf_book:
