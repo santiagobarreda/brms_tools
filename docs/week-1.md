@@ -530,7 +530,7 @@ $f0 = \mathcal{N}(220.4,23.2)$
 
 $f0 = 220.4 + \mathcal{N}(0,23.2)$
 
-The distribution on the left below is the original data, centered at 220.4 Hz and with a standard deviation of 23.2 Hz. On the right, the mean has been subtracted from each value. The sample now represents represents random variation around the sample mean, variation that our model can't explain. From the perspective of our model, this is *noise*, or *error*. This doesn't mean that it's unexplainable, it only means that we've structured our model in a way that doesn't let us explain it. 
+The distribution on the left below is the original data, centered at 220.4 Hz and with a standard deviation of 23.2 Hz. On the right, the mean has been subtracted from each value. The sample now represents random variation around the sample mean, variation that our model can't explain. From the perspective of our model, this is *noise*, or *error*. This doesn't mean that it's unexplainable, it only means that we've structured our model in a way that doesn't let us explain it. 
 
 
 ```r
@@ -555,11 +555,11 @@ often, $\varepsilon$ is used to represent the random component, as in:
 
 $y = (a + b + c) + \varepsilon$
 
-which is what is a 'regression equation' or a 'regression model'.
+When expressed in this manner, this is now a 'regression equation' or a 'regression model'.
 
 Notice that the above formulation means that regression models do not require that our *data* be normally distributed, but only that the *random variation* in our data ($\varepsilon$) be normally distributed. For example, in the left panel below I plot the distribution of f0 from among the entire Hillenbrand et al. data, including boys, girls, men and women. The data is not normally distributed, however, we can still use a regression based on normally-distributed data to model this as long as we expect that:
 
-  1) There is systematic variation in the $mu$ of f0 across different groups, speakers, conditions, etc.
+  1) There is systematic variation in the $\mu$ of f0 across different groups, speakers, conditions, etc.
   2) The *random variation* around these predicted values of $\mu$ more or less follows a normal distribution.
 
 In the right panel I plot the individual densities of boys (red), girls (green), men (blue) and women (cyan). We see that although the data is not normally distributed, the within-group variation is. This suggests a regression model is appropriate for this data. 

@@ -449,7 +449,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In terms of our data, I might express the distribution in either of the following ways:</p>
 <p><span class="math inline">\(f0 = \mathcal{N}(220.4,23.2)\)</span></p>
 <p><span class="math inline">\(f0 = 220.4 + \mathcal{N}(0,23.2)\)</span></p>
-<p>The distribution on the left below is the original data, centered at 220.4 Hz and with a standard deviation of 23.2 Hz. On the right, the mean has been subtracted from each value. The sample now represents represents random variation around the sample mean, variation that our model can’t explain. From the perspective of our model, this is <em>noise</em>, or <em>error</em>. This doesn’t mean that it’s unexplainable, it only means that we’ve structured our model in a way that doesn’t let us explain it.</p>
+<p>The distribution on the left below is the original data, centered at 220.4 Hz and with a standard deviation of 23.2 Hz. On the right, the mean has been subtracted from each value. The sample now represents random variation around the sample mean, variation that our model can’t explain. From the perspective of our model, this is <em>noise</em>, or <em>error</em>. This doesn’t mean that it’s unexplainable, it only means that we’ve structured our model in a way that doesn’t let us explain it.</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="inspecting-a-single-sample-of-values.html#cb56-1"></a><span class="kw">par</span> (<span class="dt">mfrow =</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
 <span id="cb56-2"><a href="inspecting-a-single-sample-of-values.html#cb56-2"></a><span class="kw">hist</span> (f0s, <span class="dt">main=</span><span class="st">&quot;&quot;</span>, <span class="dt">freq=</span><span class="ot">FALSE</span>)</span>
 <span id="cb56-3"><a href="inspecting-a-single-sample-of-values.html#cb56-3"></a><span class="kw">hist</span> (f0s <span class="op">-</span><span class="st"> </span><span class="kw">mean</span> (f0s), <span class="dt">main=</span><span class="st">&quot;&quot;</span>, <span class="dt">freq=</span><span class="ot">FALSE</span>)</span></code></pre></div>
@@ -461,10 +461,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(y = (a + b + c) + \mathcal{N}(0,\sigma)\)</span></p>
 <p>often, <span class="math inline">\(\varepsilon\)</span> is used to represent the random component, as in:</p>
 <p><span class="math inline">\(y = (a + b + c) + \varepsilon\)</span></p>
-<p>which is what is a ‘regression equation’ or a ‘regression model’.</p>
+<p>When expressed in this manner, this is now a ‘regression equation’ or a ‘regression model’.</p>
 <p>Notice that the above formulation means that regression models do not require that our <em>data</em> be normally distributed, but only that the <em>random variation</em> in our data (<span class="math inline">\(\varepsilon\)</span>) be normally distributed. For example, in the left panel below I plot the distribution of f0 from among the entire Hillenbrand et al. data, including boys, girls, men and women. The data is not normally distributed, however, we can still use a regression based on normally-distributed data to model this as long as we expect that:</p>
 <ol style="list-style-type: decimal">
-<li>There is systematic variation in the <span class="math inline">\(mu\)</span> of f0 across different groups, speakers, conditions, etc.</li>
+<li>There is systematic variation in the <span class="math inline">\(\mu\)</span> of f0 across different groups, speakers, conditions, etc.</li>
 <li>The <em>random variation</em> around these predicted values of <span class="math inline">\(\mu\)</span> more or less follows a normal distribution.</li>
 </ol>
 <p>In the right panel I plot the individual densities of boys (red), girls (green), men (blue) and women (cyan). We see that although the data is not normally distributed, the within-group variation is. This suggests a regression model is appropriate for this data.</p>
