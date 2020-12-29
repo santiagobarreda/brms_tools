@@ -541,21 +541,25 @@ hist (f0s - mean (f0s), main="", freq=FALSE)
 
 <img src="week-1_files/figure-html/unnamed-chunk-17-1.png" width="576" />
 
-In regression models, we can decompose systematic variation in $\mu$ into component parts, based on predictor variables. These are variables the co-vary (vary with) our $y$ variable, and that we think help explain the variation in $y$. Below, I am saying that I think $\mu$ is actually equal to the sum of $a$ $b$ and $c$. For example, I could think that f0 could be affected by vowel category ($a$), the height of the speaker ($b$), and whether the utterance is a sentence or a question ($c$). 
+In regression models, we can decompose systematic variation in $\mu$ into component parts, based on $i$ predictor variables. The  $\mathrm{x}_{i}$. These $\mathrm{x}$ variables the co-vary (vary with) our $y$ variable, and that we think help explain the variation in $y$. Below, I am saying that I think $\mu$ is actually equal to some combination sum of $\mathrm{x}_{1}$ $\mathrm{x}_{2}$ and $\mathrm{x}_{3}$. For example, I could think that f0 could be affected by vowel category ($\mathrm{x}_{1}$), the height of the speaker ($\mathrm{x}_{2}$), and whether the utterance is a sentence or a question ($\mathrm{x}_{3}$). 
 
-$\mu = a + b + c$  
+$\mu = \mathrm{x}_{1} + \mathrm{x}_{2} + \mathrm{x}_{3}$
+
+Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a *weighting* of the predictors will be necessary:
+
+$\mu = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3}$  
 
 Decomposition of $\mu$ into sub-components makes our model something more like:
 
 $y = \mu + \mathcal{N}(0,\sigma)$  
   
-$y = (a + b + c) + \mathcal{N}(0,\sigma)$  
+$y =  (a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3}) + \mathcal{N}(0,\sigma)$  
   
-often, $\varepsilon$ is used to represent the random component, as in:
+Often, $\varepsilon$ is used to represent the random component, as in:
 
-$y = (a + b + c) + \varepsilon$
+$y = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3} + \varepsilon$
 
-When expressed in this manner, this is now a 'regression equation' or a 'regression model'.
+When expressed in this manner, this is now a 'regression equation' or a 'regression model'. 'Fitting' a regression model basically consists of trying to guess the most likely values of $a$, $b$, and $c$ given our data. 
 
 Notice that the above formulation means that regression models do not require that our *data* be normally distributed, but only that the *random variation* in our data ($\varepsilon$) be normally distributed. For example, in the left panel below I plot the distribution of f0 from among the entire Hillenbrand et al. data, including boys, girls, men and women. The data is not normally distributed, however, we can still use a regression based on normally-distributed data to model this as long as we expect that:
 

@@ -1,7 +1,7 @@
 --- 
 title: "An Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers"
 author: "Santiago Bareda"
-date: "2020-12-28"
+date: "2020-12-29"
 site: bookdown::bookdown_site
 documentclass: book
 highlight: tango
@@ -17,5 +17,5 @@ I'm going to try to provide intuitive explanations for statistical models that r
 
 The book is specifically aimed for linguists only because it focuses on the sorts of research designs frequently used by linguists. However, the models and principles outlined in this book are used and useful in many domains. 
 
-
+If you have any comments or suggestions please let me know, and if you find any errors definitely let me know!
 
