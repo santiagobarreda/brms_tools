@@ -545,7 +545,7 @@ In regression models, we can decompose systematic variation in $\mu$ into compon
 
 $\mu = \mathrm{x}_{1} + \mathrm{x}_{2} + \mathrm{x}_{3}$
 
-Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a *weighting* of the predictors will be necessary:
+Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a *weighting* of the predictors will be necessary. For example, maybe $\mathrm{x}_{1}$ is twice as important as the other two predictors and so $a$ is 2, while $b$ and $c$ are 1. 
 
 $\mu = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3}$  
 
