@@ -442,14 +442,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>the variation in the mean of this distribution can be understood using some other variables.</p></li>
 </ul>
 <p>We can write this model more formally like:</p>
-<p><span class="math display">\[\begin{equation}
+<p><span class="math display" id="eq:1">\[\begin{equation}
 y \sim \mathcal{N}(\mu,\sigma)
+\tag{1.1}
 \end{equation}\]</span></p>
 <p>This says that we expect that the variable we are interested in is distributed according to (<span class="math inline">\(\sim\)</span>) a normal distribution with those parameters. Basically, this just formalizes the fact that we think the <em>shape</em> of our data will be like that of a normal distribution with a mean equal to <span class="math inline">\(\mu\)</span> and a standard deviation equal to <span class="math inline">\(\sigma\)</span>.</p>
 <p>When you see this, <span class="math inline">\(\mathcal{N}(\mu,\sigma)\)</span>, just picture in your mind the shape of a normal distribution, like if you see this <span class="math inline">\(y=x^2\)</span> you may imagine a parabola. <span class="math inline">\(\mathcal{N}(\mu,\sigma)\)</span> Really just represents that shape of the normal distribution, and the associated expectation about more and less probable outcomes.</p>
 <p>The above relationship can also be presented like this:</p>
-<p><span class="math display">\[\begin{equation}
+<p><span class="math display" id="eq:2">\[\begin{equation}
 y = \mu + \mathcal{N}(0,\sigma)
+\tag{1.2}
 \end{equation}\]</span></p>
 <p>Notice that we got rid of the <span class="math inline">\(\sim\)</span> symbol, moved <span class="math inline">\(\mu\)</span> out of the distribution function (<span class="math inline">\(\mathcal{N}()\)</span>), and that the mean of the distribution function is now 0. This breaks up our variable into two components:</p>
 <ol style="list-style-type: decimal">
@@ -457,11 +459,13 @@ y = \mu + \mathcal{N}(0,\sigma)
 <li><p>A random component, <span class="math inline">\(\mathcal{N}(0,\sigma)\)</span>, that causes unpredictable variation around <span class="math inline">\(\mu\)</span>.</p></li>
 </ol>
 <p>In terms of our data, I might express the distribution in either of the following ways:</p>
-<p><span class="math display">\[\begin{equation}
+<p><span class="math display" id="eq:3">\[\begin{equation}
 f0 = \mathcal{N}(220.4,23.2)
+\tag{1.3}
 \end{equation}\]</span></p>
-<p><span class="math display">\[\begin{equation}
+<p><span class="math display" id="eq:4">\[\begin{equation}
 f0 = 220.4 + \mathcal{N}(0,23.2)
+\tag{1.4}
 \end{equation}\]</span></p>
 <p>The distribution on the left below is the original data, centered at 220.4 Hz and with a standard deviation of 23.2 Hz. On the right, the mean has been subtracted from each value. The sample now represents random variation around the sample mean, variation that our model can’t explain. From the perspective of our model, this is <em>noise</em>, or <em>error</em>. This doesn’t mean that it’s unexplainable, it only means that we’ve structured our model in a way that doesn’t let us explain it.</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="inspecting-a-single-sample-of-values.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
@@ -469,23 +473,28 @@ f0 = 220.4 + \mathcal{N}(0,23.2)
 <span id="cb56-3"><a href="inspecting-a-single-sample-of-values.html#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span> (f0s <span class="sc">-</span> <span class="fu">mean</span> (f0s), <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">freq=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="week-1_files/figure-html/unnamed-chunk-17-1.png" width="576" /></p>
 <p>In regression models, we can decompose systematic variation in <span class="math inline">\(\mu\)</span> into component parts, based on <span class="math inline">\(i\)</span> predictor variables. The <span class="math inline">\(\mathrm{x}_{i}\)</span>. These <span class="math inline">\(\mathrm{x}\)</span> variables the co-vary (vary with) our <span class="math inline">\(y\)</span> variable, and that we think help explain the variation in <span class="math inline">\(y\)</span>. Below, I am saying that I think <span class="math inline">\(\mu\)</span> is actually equal to some combination sum of <span class="math inline">\(\mathrm{x}_{1}\)</span> <span class="math inline">\(\mathrm{x}_{2}\)</span> and <span class="math inline">\(\mathrm{x}_{3}\)</span>. For example, I could think that f0 could be affected by vowel category (<span class="math inline">\(\mathrm{x}_{1}\)</span>), the height of the speaker (<span class="math inline">\(\mathrm{x}_{2}\)</span>), and whether the utterance is a sentence or a question (<span class="math inline">\(\mathrm{x}_{3}\)</span>).</p>
-<p><span class="math display">\[\begin{equation}
+<p><span class="math display" id="eq:5">\[\begin{equation}
 \mu = \mathrm{x}_{1} + \mathrm{x}_{2} + \mathrm{x}_{3}
+\tag{1.5}
 \end{equation}\]</span></p>
 <p>Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a <em>weighting</em> of the predictors will be necessary. For example, maybe <span class="math inline">\(\mathrm{x}_{1}\)</span> is twice as important as the other two predictors and so <span class="math inline">\(a\)</span> is 2, while <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span> are 1.</p>
-<p><span class="math display">\[\begin{equation}
+<p><span class="math display" id="eq:6">\[\begin{equation}
 \mu = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3}  
+\tag{1.6}
 \end{equation}\]</span></p>
 <p>Decomposition of <span class="math inline">\(\mu\)</span> into sub-components makes our model something more like:</p>
-<p><span class="math display">\[\begin{equation}
+<p><span class="math display" id="eq:7">\[\begin{equation}
 y = \mu + \mathcal{N}(0,\sigma)  
+\tag{1.7}
 \end{equation}\]</span></p>
-<p><span class="math display">\[\begin{equation}
+<p><span class="math display" id="eq:8">\[\begin{equation}
 y =  (a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3}) + \mathcal{N}(0,\sigma)  
+\tag{1.8}
 \end{equation}\]</span></p>
 <p>Often, <span class="math inline">\(\varepsilon\)</span> is used to represent the random component, as in:</p>
-<p><span class="math display">\[\begin{equation}
+<p><span class="math display" id="eq:9">\[\begin{equation}
 y = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3} + \varepsilon
+\tag{1.9}
 \end{equation}\]</span></p>
 <p>When expressed in this manner, this is now a ‘regression equation’ or a ‘regression model’. ‘Fitting’ a regression model basically consists of trying to guess the most likely values of <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, and <span class="math inline">\(c\)</span> given our data.</p>
 <p>Notice that the above formulation means that regression models do not require that our <em>data</em> be normally distributed, but only that the <em>random variation</em> in our data (<span class="math inline">\(\varepsilon\)</span>) be normally distributed. For example, in the left panel below I plot the distribution of f0 from among the entire Hillenbrand et al. data, including boys, girls, men and women. The data is not normally distributed, however, we can still use a regression based on normally-distributed data to model this as long as we expect that:</p>

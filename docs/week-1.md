@@ -508,10 +508,10 @@ Basically it goes like this:
 
 We can write this model more formally like:
 
-
-$$\begin{align}
+$$\begin{equation}
 y \sim \mathcal{N}(\mu,\sigma)
-\end{align}$$
+(\#eq:1)
+\end{equation}$$
 
 This says that we expect that the variable we are interested in is distributed according to ($\sim$) a normal distribution with those parameters. Basically, this just formalizes the fact that we think the *shape* of our data will be like that of a normal distribution with a mean equal to $\mu$ and a standard deviation equal to $\sigma$. 
 
@@ -519,9 +519,10 @@ When you see this, $\mathcal{N}(\mu,\sigma)$, just picture in your mind the shap
 
 The above relationship can also be presented like this:
 
-$$\begin{align}
+$$\begin{equation}
 y = \mu + \mathcal{N}(0,\sigma)
-\end{align}$$
+(\#eq:2)
+\end{equation}$$
 
 Notice that we got rid of the $\sim$ symbol, moved $\mu$ out of the distribution function ($\mathcal{N}()$), and that the mean of the distribution function is now 0. This breaks up our variable into two components:
 
@@ -531,13 +532,15 @@ Notice that we got rid of the $\sim$ symbol, moved $\mu$ out of the distribution
 
 In terms of our data, I might express the distribution in either of the following ways:
 
-$$\begin{align}
+$$\begin{equation}
 f0 = \mathcal{N}(220.4,23.2)
-\end{align}$$
+(\#eq:3)
+\end{equation}$$
 
-$$\begin{align}
+$$\begin{equation}
 f0 = 220.4 + \mathcal{N}(0,23.2)
-\end{align}$$
+(\#eq:4)
+\end{equation}$$
 
 The distribution on the left below is the original data, centered at 220.4 Hz and with a standard deviation of 23.2 Hz. On the right, the mean has been subtracted from each value. The sample now represents random variation around the sample mean, variation that our model can't explain. From the perspective of our model, this is *noise*, or *error*. This doesn't mean that it's unexplainable, it only means that we've structured our model in a way that doesn't let us explain it. 
 
@@ -552,31 +555,36 @@ hist (f0s - mean (f0s), main="", freq=FALSE)
 
 In regression models, we can decompose systematic variation in $\mu$ into component parts, based on $i$ predictor variables. The  $\mathrm{x}_{i}$. These $\mathrm{x}$ variables the co-vary (vary with) our $y$ variable, and that we think help explain the variation in $y$. Below, I am saying that I think $\mu$ is actually equal to some combination sum of $\mathrm{x}_{1}$ $\mathrm{x}_{2}$ and $\mathrm{x}_{3}$. For example, I could think that f0 could be affected by vowel category ($\mathrm{x}_{1}$), the height of the speaker ($\mathrm{x}_{2}$), and whether the utterance is a sentence or a question ($\mathrm{x}_{3}$). 
 
-$$\begin{align}
+$$\begin{equation}
 \mu = \mathrm{x}_{1} + \mathrm{x}_{2} + \mathrm{x}_{3}
-\end{align}$$
+(\#eq:5)
+\end{equation}$$
 
 Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a *weighting* of the predictors will be necessary. For example, maybe $\mathrm{x}_{1}$ is twice as important as the other two predictors and so $a$ is 2, while $b$ and $c$ are 1. 
 
-$$\begin{align}
+$$\begin{equation}
 \mu = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3}  
-\end{align}$$
+(\#eq:6)
+\end{equation}$$
 
 Decomposition of $\mu$ into sub-components makes our model something more like:
 
-$$\begin{align}
+$$\begin{equation}
 y = \mu + \mathcal{N}(0,\sigma)  
-\end{align}$$
+(\#eq:7)
+\end{equation}$$
   
-$$\begin{align}
+$$\begin{equation}
 y =  (a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3}) + \mathcal{N}(0,\sigma)  
-\end{align}$$
+(\#eq:8)
+\end{equation}$$
   
 Often, $\varepsilon$ is used to represent the random component, as in:
 
-$$\begin{align}
+$$\begin{equation}
 y = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3} + \varepsilon
-\end{align}$$
+(\#eq:9)
+\end{equation}$$
 
 When expressed in this manner, this is now a 'regression equation' or a 'regression model'. 'Fitting' a regression model basically consists of trying to guess the most likely values of $a$, $b$, and $c$ given our data. 
 
