@@ -514,10 +514,10 @@ Basically it goes like this:
 
 We can write this model more formally like:
 
-$$
-y \sim \mathcal{N}(\mu,\sigma)
-(\#eq:1)
-$$
+\begin{equation}
+  y \sim \mathcal{N}(\mu,\sigma)
+\end{equation}{\#eq:1}
+
 
 This says that we expect that the variable we are interested in is distributed according to ($\sim$) a normal distribution with those parameters. Basically, this just formalizes the fact that we think the *shape* of our data will be like that of a normal distribution with a mean equal to $\mu$ and a standard deviation equal to $\sigma$. 
 

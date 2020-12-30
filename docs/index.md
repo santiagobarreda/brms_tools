@@ -7,6 +7,7 @@ documentclass: book
 highlight: tango
 url: 'http\://santiagobarreda.com'
 description: "Bayesian Models for Linguists"
+geometry: margin=2cm
 ---
 
 # Introduction {-}
