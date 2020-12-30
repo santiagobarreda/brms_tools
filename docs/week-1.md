@@ -17,6 +17,8 @@ h95 = read.csv (url(paste0 (url1, url2)))
 f0s = h95[['f0']][h95$type == 'w']
 ```
 
+
+
 These speakers represent a sample from a larger population. The sample is a finite set of observations that you actually have. The population is the larger group of possible observations that you are *actually* interested in. For example, Hillenbrand et al. collected this data not to study these speakers in particular, but instead to make inferences about Michigan speakers more generally. 
 
 Similarly, we want to answer a few basic questions about the population of female speakers from Michigan, not about the sample itself:
@@ -36,11 +38,11 @@ On the left, values are plotted according to the order they appear in the vector
 
 ```r
 par (mfrow = c(1,2), mar = c(1,4,1,1))
-plot (f0s, xaxt='n',xlab='', ylab = 'f0')
-plot ( sort ( f0s ) , xaxt='n',xlab='',ylab='f0 (sorted)')
+plot (f0s, xaxt='n',xlab='', ylab = 'f0', pch = 16, col = skyblue)
+plot (sort (f0s), xaxt='n',xlab='',ylab='f0 (sorted)', pch=16, col = deepgreen)
 ```
 
-<img src="week-1_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="week-1_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 We can easily find descriptive statistics like the sample mean ($\bar{x}$), the sample standard deviation ($s_x$), and important quantiles for this sample of values. The quantiles below correspond to the values of ordered observations, like in the right plot above. The 0% quantile is the smallest observation, while 100% is the highest. Any other quantile is found by ordering the observations and selecting the observation that is higher than x% of the sample values. For example, the 50% quantile (the median) is higher than 50% of values, and the 25% quantile is higher than 1/4 of the values in the sample. 
 
@@ -75,14 +77,14 @@ We can look at the distribution of speakers. In the top row, points indicate ind
 
 ```r
 par (mfrow = c(3,1), mar = c(1,4,1,1), oma = c(4,0,0,0))
-
-plot (f0s, jitter (rep(1,length(f0s))), xlim = c(140, 320), ylim = c(.95,1.05),yaxt='n',ylab='')
-hist (f0s,main="")
-boxplot (f0s, horizontal = TRUE, ylim = c(140, 320))
+plot (f0s, jitter (rep(1,length(f0s))), xlim = c(140, 320), ylim = c(.95,1.05),
+      yaxt='n',ylab='', pch = 16, col = yellow)
+hist (f0s,main="", col = teal)
+boxplot (f0s, horizontal = TRUE, ylim = c(140, 320), col = coral)
 mtext (side =1, outer = TRUE, text = "f0", line = 2.5)
 ```
 
-<img src="week-1_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<img src="week-1_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 ## Probability Distributions
 
@@ -127,11 +129,11 @@ Histograms can also show this difference between total counts and probabilities.
 ```r
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 
-hist (f0s, main="")
-hist (f0s, freq = FALSE, main = "")
+hist (f0s, main="", col = lavender)
+hist (f0s, freq = FALSE, main = "", col = deepgreen)
 ```
 
-<img src="week-1_files/figure-html/unnamed-chunk-6-1.png" width="576" />
+<img src="week-1_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 The density is just the thickness of the distribution at a certain location. In probability theory, the sum of the probabilities of all possible outcomes is 1, by definition. So, the fact that the area under the curve of a density is equal to 1 means that the density contains all your *stuff*, all the possible outcomes of the variable we are discussing.
 
@@ -143,11 +145,11 @@ Below I've repeated the data, doubling the counts. Notice that the y axis in the
 ```r
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 
-hist (c(f0s,f0s), breaks = 10, main = "")
-hist (c(f0s,f0s), freq = FALSE, breaks = 10, main = "")
+hist (c(f0s,f0s), breaks = 10, main = "", col = lavender)
+hist (c(f0s,f0s), freq = FALSE, breaks = 10, main = "", col = deepgreen)
 ```
 
-<img src="week-1_files/figure-html/unnamed-chunk-7-1.png" width="576" />
+<img src="week-1_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 ### The normal distribution
 
@@ -172,14 +174,14 @@ Below, I compare the histogram of f0 values to the density of a normal distribut
 
 ```r
 par (mfrow = c(1,1), mar = c(4,4,1,1))
-hist (f0s, freq = FALSE, main = "", breaks = 20)
+hist (f0s, freq = FALSE, main = "", breaks = 20, col = deepgreen)
 abline (v = 63.8, lwd = 2, col = 2, lty=3)
 ## plots the normal density (red line) using stats calculated form our sample. 
 curve (dnorm (x, mean(f0s), sd(f0s)), from = 100, to = 300, 
-       lwd=2, col = 2, add = TRUE)
+       lwd=3, col = coral, add = TRUE)
 ```
 
-<img src="week-1_files/figure-html/unnamed-chunk-8-1.png" width="576" />
+<img src="week-1_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
 When you are dealing with normally-distributed data, summary statistics can tell you a lot about the shape of your distribution, and about where you can expect the bulk of the density/distribution to lie. The left panel shows the locations of quantiles (0%, 25%, 50%, 75%, 100%), the right panel shows you the mean and standard deviations from the mean (-3, -2, 0, +1, +2, +3). Notice that ±2 standard deviations enclose most of the distribution (around 95%), and ±3 standard deviations enclose almost all of it (99%).
 
@@ -187,13 +189,13 @@ When you are dealing with normally-distributed data, summary statistics can tell
 ```r
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 
-hist (f0s, main = "")
-abline (v = quantile (f0s), lwd = 2, col = 2)
-hist (c(f0s,f0s), freq = FALSE, breaks = 10, main = "")
-abline (v = seq (mean(f0s)-3*sd(f0s),mean(f0s)+3*sd(f0s),sd(f0s)), lwd = 2, col = 2)
+hist (f0s, main = "", col = skyblue)
+abline (v = quantile (f0s), lwd = 2, col = deepgreen)
+hist (c(f0s,f0s), freq = FALSE, breaks = 10, main = "", col = yellow)
+abline (v = seq (mean(f0s)-3*sd(f0s),mean(f0s)+3*sd(f0s),sd(f0s)), lwd = 2, col = coral)
 ```
 
-<img src="week-1_files/figure-html/unnamed-chunk-9-1.png" width="576" />
+<img src="week-1_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
 ### Referring to the normal distribution to make inferences  
 
@@ -210,7 +212,7 @@ Below, I use the function `pnorm` to find the proportion of values that are expe
 
 ```r
 par (mfrow = c(1,1), mar = c(4,4,1,1))
-hist (f0s, freq = FALSE, main = "", breaks = 20)
+hist (f0s, freq = FALSE, main = "", breaks = 20, col = deepgreen)
 abline (v = 175, lwd = 2, col = 2, lty=3)
 ## plots the normal density (red line) using stats calculated form our sample. 
 curve (dnorm (x, mean(f0s), sd(f0s)),from=100, to=300, lwd=2, col = 2, add=TRUE)
@@ -221,7 +223,7 @@ polygon(x, y, col='2')
 abline (v = 63.8, lwd = 2, col = 2, lty=3); abline (v = 70, lwd = 2, col = 1, lty=3)
 ```
 
-<img src="week-1_files/figure-html/unnamed-chunk-10-1.png" width="480" />
+<img src="week-1_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 ```r
 ## probability of observing a production below 175 Hz
@@ -378,7 +380,7 @@ curve (dnorm (x, 175, 21.9), from = c(150,300),
 segments (x,rep(0,10),x,dnorm (x, 175, sd (x)))
 ```
 
-<img src="week-1_files/figure-html/unnamed-chunk-13-1.png" width="576" />
+<img src="week-1_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
 In the right panel above we see that a normal distribution with a $\mu$ of 175 Hz is very unlikely to generate this data. Many points are extremely improbable and have densities close to zero. As a result, the product of these values (the heights of the lines) will be a very small number. This is reflected in the extremely small values in the likelihood function at 175 Hz in the left panel above. 
 
@@ -405,7 +407,7 @@ curve (dnorm (x, 225, 21.9), from = c(150,300),
 segments (x,rep(0,10),x,dnorm (x, 225, sd (x)))
 ```
 
-<img src="week-1_files/figure-html/unnamed-chunk-14-1.png" width="576" />
+<img src="week-1_files/figure-html/unnamed-chunk-15-1.png" width="672" />
 
 ### Making inferences using likelihoods
 
@@ -454,7 +456,7 @@ We can take our model and our parameter estimates and draw the likelihood functi
 ```r
 par (mfrow =c(1,1), mar = c(4,4,1,1))
 curve (dnorm (x, mean(f0s), sd(f0s)/sqrt(length(f0s))), xlim = c(216,225),
-       ylab = 'Density', xlab = 'f0')
+       ylab = 'Density', xlab = 'f0', col = lavender, lwd = 4)
 quantiles = qnorm (c(0.025, 0.975), mean (f0s), sd (f0s) / sqrt (length (f0s) ) )
 quantiles
 ```
@@ -464,10 +466,10 @@ quantiles
 ```
 
 ```r
-abline (v = quantiles, lwd=2,col=2)
+abline (v = quantiles, lwd=2,col=deepgreen)
 ```
 
-<img src="week-1_files/figure-html/unnamed-chunk-16-1.png" width="576" />
+<img src="week-1_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 
 The likelihood tells you about the most believable/credible parameter values, given your model and data. Given the information presented in the figure above, we may conclude that the most likely parameter values fall between 218 and 222 Hz. This means that it is reasonable that the true value might be 221 Hz, as this value is very likely given our sample. Basically, maybe our sample mean is wrong and arose by accident, and 221 Hz is the true $\mu$. This outcome is compatible with our data. 
 
@@ -547,11 +549,11 @@ The distribution on the left below is the original data, centered at 220.4 Hz an
 
 ```r
 par (mfrow =c(1,2), mar = c(4,4,1,1))
-hist (f0s, main="", freq=FALSE)
-hist (f0s - mean (f0s), main="", freq=FALSE)
+hist (f0s, main="", freq=FALSE, col = yellow)
+hist (f0s - mean (f0s), main="", freq=FALSE, col = coral)
 ```
 
-<img src="week-1_files/figure-html/unnamed-chunk-17-1.png" width="576" />
+<img src="week-1_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 
 In regression models, we can decompose systematic variation in $\mu$ into component parts, based on $i$ predictor variables. The  $\mathrm{x}_{i}$. These $\mathrm{x}$ variables the co-vary (vary with) our $y$ variable, and that we think help explain the variation in $y$. Below, I am saying that I think $\mu$ is actually equal to some combination sum of $\mathrm{x}_{1}$ $\mathrm{x}_{2}$ and $\mathrm{x}_{3}$. For example, I could think that f0 could be affected by vowel category ($\mathrm{x}_{1}$), the height of the speaker ($\mathrm{x}_{2}$), and whether the utterance is a sentence or a question ($\mathrm{x}_{3}$). 
 
@@ -606,7 +608,7 @@ lines (density (h95$f0[h95$type=='m']),col=4,lwd=3)
 lines (density (h95$f0[h95$type=='w']),col=5,lwd=3)
 ```
 
-<img src="week-1_files/figure-html/unnamed-chunk-18-1.png" width="576" />
+<img src="week-1_files/figure-html/unnamed-chunk-19-1.png" width="672" />
 
 
 ### What's 'Bayesian' about these models?
@@ -634,7 +636,7 @@ In the third panel we see a situation where the prior dominates the estimate. Co
 
 In the final panel we see a situation where the likelihood and the prior are equal. In this case the posterior represents compromise between new and prior knowledge.
 
-<img src="week-1_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="week-1_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
 The use of prior probabilities is often said to make Bayesian models 'subjective' but its not really a big deal. First, every model involves arbitrary decisions which can substantially affect our results. Second, a researcher will always use common sense to interpret a model. For example, before collecting my sample I can say that I expect my female average f0 to be 200 Hz or so, but think its reasonable to expect anything from 100 to 300 Hz. Based on everything we know about human speech, even these bounds are too wide, and anything outside would suggest something is very wrong. So, even if I did not use a prior, I would use my expectations to 'screen' my results, and be very wary of anything that did not meet my expectations. 
 
@@ -704,7 +706,7 @@ sampler_example = function (sample, mu_estimate = 0, stdev = 1, nsamples = 1000)
 
 In the plots below (code at end of chapter), you can see the algorithm begins at 0 (the initial guess) but is quickly able to find the most likely sample mean given the data (left column). In the middle, I show the distribution of the samples on the left, minus the burn-in phase (arbitrarily chosen by me). On the right, I compare our samples (blue) to the theoretical posterior distribution for the mean given the data and prior (red). I toss out the samples during the 'burn in' phase, as there are used up in trying to 'find' the correct location in the parameter space.   
 
-<img src="week-1_files/figure-html/unnamed-chunk-21-1.png" width="576" />
+<img src="week-1_files/figure-html/unnamed-chunk-22-1.png" width="672" />
 
 The results clearly coincide, but aren't perfect. But this sampler isn't very sophisticated! The samplers we will be using in this class *do* provide an excellent match to the posterior distribution. As a result, we can inspect the distribution of collected $\mu_{estimate}$ to understand the posterior of our parameter. We can use these distributions in the same way that we used the theoretical likelihood functions above, by using them to make statements about likely parameter values and ranges of values. 
 
