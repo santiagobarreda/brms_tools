@@ -251,22 +251,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">2.2.1</span> The model formula</h3>
 <p>Model structures are expressed in R using a very specific syntax. Think of writing a model formula as writing a language within R. The good thing about learning to write models is then you can use this knowledge to describe your models in your work, and to interpret other people’s models.</p>
 <p>The model formulas resemble regression equations to some extent, but there are some differences. Remember that regression models can be thought of like this:</p>
-<p><span class="math display" id="eq:21">\[\begin{equation}
+<p><span class="math display" id="eq:21">\[
 y = \mu + \varepsilon
 \tag{2.1}
-\end{equation}\]</span></p>
+\]</span></p>
 <p>Which means that your observed variable <span class="math inline">\(y\)</span> is the sum of some of some average value (<span class="math inline">\(\mu\)</span>) and some random error <span class="math inline">\(\mu\)</span>.</p>
 <p>Actually, what we would really like is to understand orderly variation in <span class="math inline">\(\mu\)</span> by breaking it up into parts (<span class="math inline">\(\mathrm{x}_{1}, \mathrm{x}_{2},...\)</span>) when combined using some weights (<span class="math inline">\(a, b,...\)</span>).</p>
-<p><span class="math display" id="eq:22">\[\begin{equation}
+<p><span class="math display" id="eq:22">\[
 y = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + ... + \varepsilon
 \tag{2.2}
-\end{equation}\]</span></p>
+\]</span></p>
 <p>‘Fitting’ a regression model consists of trying to ‘guess’ the values of the weighing factors (<span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> above), called the <em>model coefficients</em>. When we are only trying to estimate a single average, we don’t have any predictors to explain variation in <span class="math inline">\(\mu\)</span>. In fact, our model structure suggests we expect no variation in <span class="math inline">\(\mu\)</span>.</p>
 <p>Mathematically, we can’t just say ‘we have no predictor’ since everything needs to be represented by a number. As a result, we use a ‘predictor’ with a value of 1 so that our regression equation is:</p>
-<p><span class="math display" id="eq:23">\[\begin{equation}
+<p><span class="math display" id="eq:23">\[
 y = a*1 + \varepsilon
 \tag{2.3}
-\end{equation}\]</span></p>
+\]</span></p>
 <p>Now our model is trying to guess the value of a single parameter (<span class="math inline">\(a\)</span>), and we expect this parameter to be equal to <span class="math inline">\(\mu\)</span> since it is being multiplied by a ‘predictor’ with a constant value of 1.</p>
 <p>This kind of model is called an ‘Intercept only’ model. Regression models are really about representing <em>differences</em>, differences between groups and across conditions. When you are encoding differences, you need an overall reference point. For example, saying that somethgin is 5 miles north is only interpretable given some reference point. The ‘reference point’ used by your model is called your ‘Intercept’. Basically, our model consists <em>only</em> of a single reference point, the intercept <span class="math inline">\(a\)</span>.</p>
 <p>Generally, model formulas in R have the form:</p>
@@ -461,40 +461,40 @@ Intercept   220.40      0.97   218.33   222.30 1.00      851      557</code></pr
 <p>When you place a predictor in the formula in parenthesis, on the right-hand-side of a pipe, like this <code>( | predictor )</code>, you tell <code>brm</code> that you expect data to be clustered according to each category represented in the grouping vector. In this case, we are telling <code>brm</code> that each unique speaker is a cluster of data. Whatever you put in the left-hand-side of the parentheses <code>( in here | predictor )</code> is the model for each subcluster!</p>
 <p>So what does this model formula mean: <code>f0 ~ 1 + ( 1 | uspeaker)</code>? It tells <code>brm</code>: predict f0 based on only an intercept, and also calculate a separate intercept for each speaker. Effectively, this model formula is telling <code>brm</code> to figure out all the information presented in the figures above.</p>
 <p>This regression model is now something like this:</p>
-<p><span class="math display" id="eq:24">\[\begin{equation}
+<p><span class="math display" id="eq:24">\[
 y = \mu_{overall} + \mu_{speaker}+\varepsilon
 \tag{2.4}
-\end{equation}\]</span></p>
-<p>Recall that when we predict an intercept in a regression model, we actually perform the following decomposition <span class="math inline">\(\mu = parameter * 1\)</span>. This means that we are actually just fitting a parameter that we expect to equal the value of the <span class="math inline">\(\mu\)</span> we are interested in.</p>
+\]</span></p>
+<p>Recall that when we predict an intercept in a regression model, we actually perform the following decomposition <span class="math inline">\(\mu=parameter*1\)</span>. This means that we are actually just fitting a parameter that we expect to equal the value of the <span class="math inline">\(\mu\)</span> we are interested in.</p>
 <p>Below, where I have decomposed each <span class="math inline">\(\mu\)</span> into its constituent ‘predictors’ (1) and parameters (<span class="math inline">\(a, b\)</span>).</p>
-<p><span class="math display" id="eq:25">\[\begin{equation}
+<p><span class="math display" id="eq:25">\[
 y = a*1 + b_{speaker}*1 + \varepsilon
 \tag{2.5}
-\end{equation}\]</span></p>
+\]</span></p>
 <p>In addition to the coefficient estimating the overall intercept (<span class="math inline">\(a\)</span>), we know have another term <span class="math inline">\(b_{speaker}\)</span>. This coefficient is actually a set of coefficients since it has a different value for each speaker (its a vector). It has a different value for each speaker because it will reflect variation in <span class="math inline">\(\mu_{speaker}\)</span>.</p>
 <p>However, recall that <span class="math inline">\(\mu_{speaker}\)</span> is a random variable since it reflects the random average f0 of each person drawn from the population. If <span class="math inline">\(\mu_{speaker}\)</span> behaves like a random variable, then the coefficients that reflect this value in our model (<span class="math inline">\(b_{speaker}\)</span>) will behave in the same way.</p>
 <p>This means that actually our model has <em>two</em> random variables. The first one is the error term:</p>
-<p><span class="math display" id="eq:26">\[\begin{equation}
+<p><span class="math display" id="eq:26">\[
 \varepsilon \sim \mathcal{N}(0,\sigma_{error})
 \tag{2.6}
-\end{equation}\]</span></p>
+\]</span></p>
 <p>which has a mean of 0 and a standard deviation which we can refer to as <span class="math inline">\(\sigma_{error}\)</span>.</p>
 <p>Our model further assumes that just like our data, our speaker-specific intercepts, or by-speaker intercepts, can be thought of as random draw from a normal distribution. This distribution is also assumed to be centered at zero, and has a population-specific standard deviation.</p>
-<p><span class="math display" id="eq:27">\[\begin{equation}
+<p><span class="math display" id="eq:27">\[
 \mu_{speaker} \sim \mathcal{N}(0,\sigma_{speaker})
 \tag{2.7}
-\end{equation}\]</span></p>
+\]</span></p>
 <p>Recall that I previously said that regression models encode <em>differences</em>. This helps explain why the distribution of speaker means is centered at 0 in our model. Our model already encodes the overall data average in the <span class="math inline">\(\mu_{overall}\)</span> parameter. Thus, the speaker-specific averages contain information about <em>differences</em> to this overall average, and so are centered at 0 (i.e., the average).</p>
 <p>The initial model we fit viewed the variation in the model like this:</p>
-<p><span class="math display" id="eq:28">\[\begin{equation}
+<p><span class="math display" id="eq:28">\[
 \sigma_{total} = \sigma_{error}
 \tag{2.8}
-\end{equation}\]</span></p>
+\]</span></p>
 <p>In other words, all variation was error. We don’t know why values vary from the mean. Our multilevel model views the variation in our data like this:</p>
-<p><span class="math display" id="eq:29">\[\begin{equation}
+<p><span class="math display" id="eq:29">\[
 \sigma_{total} = \sigma_{speaker} + \sigma_{error}
 \tag{2.9}
-\end{equation}\]</span></p>
+\]</span></p>
 <p>It sees only <em>some</em> of the variation in data as error. Basically, from the perspective of this multilevel model, the variation in the data is a combination of random (but systematic) between-speaker variation, and random within-speaker variation.</p>
 </div>
 <div id="fitting-the-model" class="section level3" number="2.4.2">

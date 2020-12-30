@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 
 # Inference for a 'single group' of observations using a Bayesian multilevel model   
 
@@ -49,28 +54,28 @@ Model structures are expressed in R using a very specific syntax. Think of writi
 
 The model formulas resemble regression equations to some extent, but there are some differences. Remember that regression models can be thought of like this:
 
-$$\begin{equation}
+$$
 y = \mu + \varepsilon
 (\#eq:21)
-\end{equation}$$
+$$
 
 Which means that your observed variable $y$ is the sum of some of some average value ($\mu$) and some random error $\mu$. 
 
 Actually, what we would really like is to understand orderly variation in $\mu$ by breaking it up into parts ($\mathrm{x}_{1}, \mathrm{x}_{2},...$) when combined using some weights ($a, b,...$). 
 
-$$\begin{equation}
+$$
 y = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + ... + \varepsilon
 (\#eq:22)
-\end{equation}$$
+$$
 
 'Fitting' a regression model consists of trying to 'guess' the values of the weighing factors ($a$ and $b$ above), called the *model coefficients*. When we are only trying to estimate a single average, we don't have any predictors to explain variation in $\mu$. In fact, our model structure suggests we expect no variation in $\mu$. 
 
 Mathematically, we can't just say 'we have no predictor' since everything needs to be represented by a number. As a result, we use a 'predictor' with a value of 1 so that our regression equation is:
 
-$$\begin{equation}
+$$
 y = a*1 + \varepsilon
 (\#eq:23)
-\end{equation}$$
+$$
 
 Now our model is trying to guess the value of a single parameter ($a$), and we expect this parameter to be equal to $\mu$ since it is being multiplied by a 'predictor' with a constant value of 1. 
 
@@ -282,7 +287,7 @@ curve (dnorm (x, mean (f0s), sd (f0s) / sqrt (length (f0s) )), add = TRUE,
        lwd = 4, col = yellow)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-9-1.png" width="768" />
+![](week-2_files/figure-latex/unnamed-chunk-9-1.pdf)<!-- --> 
 
 Recall that our model output provides information about expected values for the mean parameter:
 
@@ -353,7 +358,7 @@ boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots", col=4,
 abline (h = 220.4,lty=3,col='grey',lwd=2)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-13-1.png" width="768" />
+![](week-2_files/figure-latex/unnamed-chunk-13-1.pdf)<!-- --> 
 
 ### Multilevel models
 
@@ -374,7 +379,7 @@ hist (w$f0[w$uspeaker == 107], main = "Histogram of speaker 107",
       xlim = c(160, 260), freq = FALSE,col=4)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-14-1.png" width="768" />
+![](week-2_files/figure-latex/unnamed-chunk-14-1.pdf)<!-- --> 
 
 A multilevel model is able to simultaneously model independent variation at multiple 'levels'. For our f0 data, these are: 
 
@@ -411,19 +416,19 @@ So what does this model formula mean: `f0 ~ 1 + ( 1 | uspeaker)`? It tells `brm`
 
 This regression model is now something like this:
 
-$$\begin{equation}
+$$
 y = \mu_{overall} + \mu_{speaker}+\varepsilon
 (\#eq:24)
-\end{equation}$$
+$$
 
-Recall that when we predict an intercept in a regression model, we actually perform the following decomposition $\mu = parameter * 1$. This means that we are actually just fitting a parameter that we expect to equal the value of the $\mu$ we are interested in. 
+Recall that when we predict an intercept in a regression model, we actually perform the following decomposition $\mu=parameter*1$. This means that we are actually just fitting a parameter that we expect to equal the value of the $\mu$ we are interested in. 
 
 Below, where I have decomposed each $\mu$ into its constituent 'predictors' (1) and parameters ($a, b$).
 
-$$\begin{equation}
+$$
 y = a*1 + b_{speaker}*1 + \varepsilon
 (\#eq:25)
-\end{equation}$$
+$$
 
 In addition to the  coefficient estimating the overall intercept ($a$), we know have another term $b_{speaker}$. This coefficient is actually a set of coefficients since it has a different value for each speaker (its a vector). It has a different value for each speaker because it will reflect variation in $\mu_{speaker}$.
 
@@ -431,35 +436,35 @@ However, recall that $\mu_{speaker}$ is a random variable since it reflects the 
 
 This means that actually our model has *two* random variables. The first one is the error term:
 
-$$\begin{equation}
+$$
 \varepsilon \sim \mathcal{N}(0,\sigma_{error})
 (\#eq:26)
-\end{equation}$$
+$$
 
 which has a mean of 0 and a standard deviation which we can refer to as $\sigma_{error}$.
 
 Our model further assumes that just like our data, our speaker-specific intercepts, or by-speaker intercepts, can be thought of as random draw from a normal distribution. This distribution is also assumed to be centered at zero, and has a population-specific standard deviation. 
 
-$$\begin{equation}
+$$
 \mu_{speaker} \sim \mathcal{N}(0,\sigma_{speaker})
 (\#eq:27)
-\end{equation}$$
+$$
 
 Recall that I previously said that regression models encode *differences*. This helps explain why the distribution of speaker means is centered at 0 in our model. Our model already encodes the overall data average in the $\mu_{overall}$ parameter. Thus, the speaker-specific averages contain information about *differences* to this overall average, and so are centered at 0 (i.e., the average).
 
 The initial model we fit viewed the variation in the model like this:
 
-$$\begin{equation}
+$$
 \sigma_{total} = \sigma_{error}
 (\#eq:28)
-\end{equation}$$
+$$
 
 In other words, all variation was error. We don't know why values vary from the mean. Our multilevel model views the variation in our data like this:
 
-$$\begin{equation}
+$$
 \sigma_{total} = \sigma_{speaker} + \sigma_{error}
 (\#eq:29)
-\end{equation}$$
+$$
 
 It sees only *some* of the variation in data as error. Basically, from the perspective of this multilevel model, the variation in the data is a combination of random (but systematic) between-speaker variation, and random within-speaker variation.
 
@@ -562,7 +567,7 @@ boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots",col=4)
 abline (h = 220.4, lwd=3,lty=3)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-18-1.png" width="768" />
+![](week-2_files/figure-latex/unnamed-chunk-18-1.pdf)<!-- --> 
 
 ## Checking model convergence
 
@@ -750,7 +755,7 @@ In the left panel below (plot code at end of chapter) I compare the t distributi
 In the middle panel we compare this prior to the data, and see that the prior distribution is much broader (more vague) than the data distribution. The right panel compares the prior for the standard deviation parameters to the absolute value of the centered f0 data. This presentation shows how far each observation is from the mean f0 (at 220 Hz). Again, the prior distribution we have assigned for these parameters is much larger than the variation in the data. As a result, neither of these priors is going to have much of an effect on our parameter estimates.
 
 
-<img src="week-2_files/figure-html/unnamed-chunk-26-1.png" width="768" />
+![](week-2_files/figure-latex/unnamed-chunk-26-1.pdf)<!-- --> 
 
 If we compare the output of this model to `multilevel_thinned`, we see that specifying a prior has has no noticeable effect on our results. This is because the prior matters less and less when you have a lot of data, and because we have set wide priors that are appropriate (but vague) given our data. Although the priors may not matter much for models as simple as these, they can be very important when working with more complex data, and are a necessary component of Bayesian modeling. 
 
@@ -840,7 +845,7 @@ boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots",col=4)
 abline (h = 220.4, lwd=3,lty=3)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-28-1.png" width="768" />
+![](week-2_files/figure-latex/unnamed-chunk-28-1.pdf)<!-- --> 
 
 
 ## Plot Code
