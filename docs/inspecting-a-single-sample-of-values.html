@@ -478,16 +478,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>the variation in the mean of this distribution can be understood using some other variables.</p></li>
 </ul>
 <p>We can write this model more formally like:</p>
-<p><span class="math display" id="eq:1">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
   y \sim \mathcal{N}(\mu,\sigma)
-  \tag{1.1}
 \end{equation}\]</span></p>
 <p>This says that we expect that the variable we are interested in is distributed according to (<span class="math inline">\(\sim\)</span>) a normal distribution with those parameters. Basically, this just formalizes the fact that we think the <em>shape</em> of our data will be like that of a normal distribution with a mean equal to <span class="math inline">\(\mu\)</span> and a standard deviation equal to <span class="math inline">\(\sigma\)</span>.</p>
 <p>When you see this, <span class="math inline">\(\mathcal{N}(\mu,\sigma)\)</span>, just picture in your mind the shape of a normal distribution, like if you see this <span class="math inline">\(y=x^2\)</span> you may imagine a parabola. <span class="math inline">\(\mathcal{N}(\mu,\sigma)\)</span> Really just represents that shape of the normal distribution, and the associated expectation about more and less probable outcomes.</p>
 <p>The above relationship can also be presented like this:</p>
 <p><span class="math display" id="eq:2">\[
 y = \mu + \mathcal{N}(0,\sigma)
-\tag{1.2}
+\tag{1.1}
 \]</span></p>
 <p>Notice that we got rid of the <span class="math inline">\(\sim\)</span> symbol, moved <span class="math inline">\(\mu\)</span> out of the distribution function (<span class="math inline">\(\mathcal{N}()\)</span>), and that the mean of the distribution function is now 0. This breaks up our variable into two components:</p>
 <ol style="list-style-type: decimal">
@@ -497,11 +496,11 @@ y = \mu + \mathcal{N}(0,\sigma)
 <p>In terms of our data, I might express the distribution in either of the following ways:</p>
 <p><span class="math display" id="eq:3">\[
 f0 = \mathcal{N}(220.4,23.2)
-\tag{1.3}
+\tag{1.2}
 \]</span></p>
 <p><span class="math display" id="eq:4">\[
 f0 = 220.4 + \mathcal{N}(0,23.2)
-\tag{1.4}
+\tag{1.3}
 \]</span></p>
 <p>The distribution on the left below is the original data, centered at 220.4 Hz and with a standard deviation of 23.2 Hz. On the right, the mean has been subtracted from each value. The sample now represents random variation around the sample mean, variation that our model can’t explain. From the perspective of our model, this is <em>noise</em>, or <em>error</em>. This doesn’t mean that it’s unexplainable, it only means that we’ve structured our model in a way that doesn’t let us explain it.</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="inspecting-a-single-sample-of-values.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
@@ -511,26 +510,26 @@ f0 = 220.4 + \mathcal{N}(0,23.2)
 <p>In regression models, we can decompose systematic variation in <span class="math inline">\(\mu\)</span> into component parts, based on <span class="math inline">\(i\)</span> predictor variables. The <span class="math inline">\(\mathrm{x}_{i}\)</span>. These <span class="math inline">\(\mathrm{x}\)</span> variables the co-vary (vary with) our <span class="math inline">\(y\)</span> variable, and that we think help explain the variation in <span class="math inline">\(y\)</span>. Below, I am saying that I think <span class="math inline">\(\mu\)</span> is actually equal to some combination sum of <span class="math inline">\(\mathrm{x}_{1}\)</span> <span class="math inline">\(\mathrm{x}_{2}\)</span> and <span class="math inline">\(\mathrm{x}_{3}\)</span>. For example, I could think that f0 could be affected by vowel category (<span class="math inline">\(\mathrm{x}_{1}\)</span>), the height of the speaker (<span class="math inline">\(\mathrm{x}_{2}\)</span>), and whether the utterance is a sentence or a question (<span class="math inline">\(\mathrm{x}_{3}\)</span>).</p>
 <p><span class="math display" id="eq:5">\[
 \mu = \mathrm{x}_{1} + \mathrm{x}_{2} + \mathrm{x}_{3}
-\tag{1.5}
+\tag{1.4}
 \]</span></p>
 <p>Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a <em>weighting</em> of the predictors will be necessary. For example, maybe <span class="math inline">\(\mathrm{x}_{1}\)</span> is twice as important as the other two predictors and so <span class="math inline">\(a\)</span> is 2, while <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span> are 1.</p>
 <p><span class="math display" id="eq:6">\[
 \mu = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3}  
-\tag{1.6}
+\tag{1.5}
 \]</span></p>
 <p>Decomposition of <span class="math inline">\(\mu\)</span> into sub-components makes our model something more like:</p>
 <p><span class="math display" id="eq:7">\[
 y = \mu + \mathcal{N}(0,\sigma)  
-\tag{1.7}
+\tag{1.6}
 \]</span></p>
 <p><span class="math display" id="eq:8">\[
 y =  (a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3}) + \mathcal{N}(0,\sigma)  
-\tag{1.8}
+\tag{1.7}
 \]</span></p>
 <p>Often, <span class="math inline">\(\varepsilon\)</span> is used to represent the random component, as in:</p>
 <p><span class="math display" id="eq:9">\[
 y = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3} + \varepsilon
-\tag{1.9}
+\tag{1.8}
 \]</span></p>
 <p>When expressed in this manner, this is now a ‘regression equation’ or a ‘regression model’. ‘Fitting’ a regression model basically consists of trying to guess the most likely values of <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, and <span class="math inline">\(c\)</span> given our data.</p>
 <p>Notice that the above formulation means that regression models do not require that our <em>data</em> be normally distributed, but only that the <em>random variation</em> in our data (<span class="math inline">\(\varepsilon\)</span>) be normally distributed. For example, in the left panel below I plot the distribution of f0 from among the entire Hillenbrand et al. data, including boys, girls, men and women. The data is not normally distributed, however, we can still use a regression based on normally-distributed data to model this as long as we expect that:</p>
@@ -540,7 +539,7 @@ y = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3} + \varepsilon
 </ol>
 <p>In the right panel I plot the individual densities of boys (red), girls (green), men (blue) and women (cyan). We see that although the data is not normally distributed, the within-group variation is. This suggests a regression model is appropriate for this data.</p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="inspecting-a-single-sample-of-values.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb57-2"><a href="inspecting-a-single-sample-of-values.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span> (h95<span class="sc">$</span>f0, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">80</span>,<span class="dv">320</span>))</span>
+<span id="cb57-2"><a href="inspecting-a-single-sample-of-values.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span> (h95<span class="sc">$</span>f0, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">80</span>,<span class="dv">320</span>), <span class="at">col =</span> yellow)</span>
 <span id="cb57-3"><a href="inspecting-a-single-sample-of-values.html#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (<span class="fu">density</span> (h95<span class="sc">$</span>f0[h95<span class="sc">$</span>type<span class="sc">==</span><span class="st">&#39;b&#39;</span>]),<span class="at">col=</span><span class="dv">2</span>,<span class="at">lwd=</span><span class="dv">4</span>, <span class="at">main=</span><span class="st">&#39;&#39;</span>,</span>
 <span id="cb57-4"><a href="inspecting-a-single-sample-of-values.html#cb57-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">80</span>,<span class="dv">320</span>),<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.025</span>))</span>
 <span id="cb57-5"><a href="inspecting-a-single-sample-of-values.html#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span> (<span class="fu">density</span> (h95<span class="sc">$</span>f0[h95<span class="sc">$</span>type<span class="sc">==</span><span class="st">&#39;g&#39;</span>]),<span class="at">col=</span><span class="dv">3</span>,<span class="at">lwd=</span><span class="dv">3</span>)</span>
@@ -561,11 +560,11 @@ y = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3} + \varepsilon
 </div>
 <div id="posterior-distributions" class="section level2" number="1.5">
 <h2><span class="header-section-number">1.5</span> Posterior distributions</h2>
-<p>The combination of probability distributions is straightforward conceptually: you just multiply the values of the distributions at each x-axis location, and the result is the new curve. In the figure below (code at end of chapter), I combine several sets of probability distributions, showing the effects of variations in priors and likelihoods. In each plot, I scale all densities so that they have the same y axis range to make the figures interpretable, but this does not affect any of the points I make below.</p>
-<p>In the top panel, I plot the likelihood function for <span class="math inline">\(\mu\)</span> given a sample of size 5 with a mean of 220 Hz. I show what happens when I combine this with a relatively weak but very different prior: the standard deviation is the same as our f0 data, however the mean is much higher (250 Hz). With only 5 data points the likelihood already dominates the posterior, though the prior distribution is exerting a pull.</p>
-<p>In the second panel, the posterior is almost identical to the likelihood. The likelihood represents a sample of size 100, which is actually a tiny sample in experimental linguistics work where you may have 200+ samples from each of 50+ subjects. As you might imagine, when the sample size is that large the prior exerts almost no influence on results.</p>
-<p>In the third panel we see a situation where the prior dominates the estimate. Consider a situation where we actually have really good reasons to think that the mean is 250 Hz. If we really <em>know</em> this, why would we accept and estimate of 220 Hz based on only 5 samples? In this case, the posterior distribution is basically saying: your estimate is great, but come back when you have more evidence and I might believe you.</p>
-<p>In the final panel we see a situation where the likelihood and the prior are equal. In this case the posterior represents compromise between new and prior knowledge.</p>
+<p>The combination of probability distributions is straightforward conceptually: you just multiply the values of the distributions at each x-axis location, and the result is the new curve. In the figure below (code at end of chapter), I combine several sets of probability distributions, showing the effects of variations in priors and likelihoods. In each plot, I scale the posterior density so that it is the same height as the likelihood. This is only to make the figures interpretable but does not affect any of the points I make below.</p>
+<p>In the top-left panel, I plot the likelihood function for <span class="math inline">\(\mu\)</span> given a sample of size 5 with a mean of 220 Hz. I show what happens when I combine this with a relatively weak but very different prior: the standard deviation is the same as our f0 data, however the mean is much higher (250 Hz). With only 5 data points the likelihood already dominates the posterior, though the prior distribution is exerting a pull.</p>
+<p>In the top-right panel, the posterior is almost identical to the likelihood. The likelihood represents a sample of size 100, which is actually a tiny sample in experimental linguistics work where you may have 200+ samples from each of 50+ subjects. As you might imagine, when the sample size is that large the prior exerts almost no influence on results.</p>
+<p>In the bottom-left panel we see a situation where the prior dominates the estimate. Consider a situation where we actually have really good reasons to think that the mean is 250 Hz. If we really <em>know</em> this, why would we accept and estimate of 220 Hz based on only 5 samples? In this case, the posterior distribution is basically saying: your estimate is great, but come back when you have more evidence and I might believe you.</p>
+<p>In the bottom-right panel we see a situation where the likelihood and the prior are equal. In this case the posterior represents compromise between new and prior knowledge.</p>
 <p><img src="week-1_files/figure-html/unnamed-chunk-20-1.png" width="768" /></p>
 <p>The use of prior probabilities is often said to make Bayesian models ‘subjective’ but its not really a big deal. First, every model involves arbitrary decisions which can substantially affect our results. Second, a researcher will always use common sense to interpret a model. For example, before collecting my sample I can say that I expect my female average f0 to be 200 Hz or so, but think its reasonable to expect anything from 100 to 300 Hz. Based on everything we know about human speech, even these bounds are too wide, and anything outside would suggest something is very wrong. So, even if I did not use a prior, I would use my expectations to ‘screen’ my results, and be very wary of anything that did not meet my expectations.</p>
 <p>A Bayesian model simply requires that you build your expectation into your model. It formalizes it, makes it definable and replicable. Also, being ‘objective’ does not quite make sense in many cases. Is it really being objective to ignore common sense and act as if a mean f0 of 250 is exactly as likely a priori as one of 20,000 Hz? Because not using a prior is equivalent to using a ‘flat’ prior and acting like almost any value is equally likely a priori, when this is hardly the case.</p>
