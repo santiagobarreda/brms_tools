@@ -1,12 +1,12 @@
 --- 
-title: "An Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers"
+title: "A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers"
 author: "Santiago Bareda"
 date: "2020-12-29"
 site: bookdown::bookdown_site
 documentclass: book
 highlight: tango
 url: 'http\://santiagobarreda.com'
-description: "An Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers"
+description: "Bayesian Models for Linguists"
 ---
 
 # Introduction {-}
