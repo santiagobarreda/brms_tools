@@ -14,6 +14,8 @@ eq:24
 eq:25
 eq:26
 eq:27
+eq:28
+eq:29
 inspecting-a-single-sample-of-values
 data-and-research-questions
 inspecting-the-central-location-and-spread-of-values
@@ -43,3 +45,4 @@ fitting-the-model
 checking-model-convergence
 specifying-prior-probabilities
 answering-our-research-questions
+plot-code-1
