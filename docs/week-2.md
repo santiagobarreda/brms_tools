@@ -48,7 +48,7 @@ The `brms` [Bayesian regression models](https://github.com/paul-buerkner/brms) p
 
 `brms` should be installed in R so that the models described below will work. Make sure you have the latest version of R (and Rstudio) and the latest version of the `brms' package installed. Sometimes using older versions can cause R to crash when fitting models.
 
-### The model formula
+### The model
 
 Model structures are expressed in R using a very specific syntax. Think of writing a model formula as writing a language within R. The good thing about learning to write models is then you can use this knowledge to describe your models in your work, and to interpret other people's models. 
 
@@ -59,9 +59,9 @@ y = \mu + \varepsilon
 (\#eq:21)
 $$
 
-Which means that your observed variable $y$ is the sum of some of some average value ($\mu$) and some random error $\mu$. 
+Which means that your observed variable $y$ is the sum of some of some average value ($\mu$) and some random error $\mu$. The random error is expected to be normally distributed with some unknown standard deviation ($\varepsilon \sim \mathcal{N}(0,\sigma)$). 
 
-Actually, what we would really like is to understand orderly variation in $\mu$ by breaking it up into parts ($\mathrm{x}_{1}, \mathrm{x}_{2},...$) when combined using some weights ($a, b,...$). 
+What we would really like is to understand orderly variation in $\mu$ by breaking it up into parts ($\mathrm{x}_{1}, \mathrm{x}_{2},...$) when combined using some weights ($a, b,...$). 
 
 $$
 y = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + ... + \varepsilon
@@ -79,7 +79,22 @@ $$
 
 Now our model is trying to guess the value of a single parameter ($a$), and we expect this parameter to be equal to $\mu$ since it is being multiplied by a 'predictor' with a constant value of 1. 
 
-This kind of model is called an 'Intercept only' model. Regression models are really about representing *differences*, differences between groups and across conditions. When you are encoding differences, you need an overall reference point. For example, saying that somethgin is 5 miles north is only interpretable given some reference point. The 'reference point' used by your model is called your 'Intercept'. Basically, our model consists *only* of a single reference point, the intercept $a$. 
+This kind of model is called an 'Intercept only' model. Regression models are really about representing *differences*, differences between groups and across conditions. When you are encoding differences, you need an overall reference point. For example, saying that something is 5 miles north is only interpretable given some reference point. The 'reference point' used by your model is called your 'Intercept'. Basically, our model consists *only* of a single reference point, the intercept. Also, when a predictor is just being multiplied by 1, we can just omit it from the regression model (but its still secretly there). 
+
+Our complete model is now:
+
+$$
+\begin{split}
+f0 = Intercept + \varepsilon  \\
+\varepsilon \sim \mathcal{N}(0,\sigma) \\
+\end{split}
+$$
+
+Put in English, each line in the model says the following:
+ 
+  * f0 is equal to the sum the intercept and error.
+
+  * the error is also drawn from a normal distribution with a mean of 0 and a standard deviation of $\sigma$. This distribution represents all deviation in f0 around the mean f0 for the sample. 
 
 Generally, model formulas in R have the form:
 
@@ -131,9 +146,9 @@ model = brms::brm (f0 ~ 1, data = w, chains = 1, cores = 1)
 ## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 1: 
-## Chain 1:  Elapsed Time: 0.06 seconds (Warm-up)
-## Chain 1:                0.04 seconds (Sampling)
-## Chain 1:                0.1 seconds (Total)
+## Chain 1:  Elapsed Time: 0.062 seconds (Warm-up)
+## Chain 1:                0.042 seconds (Sampling)
+## Chain 1:                0.104 seconds (Total)
 ## Chain 1:
 ```
 
@@ -283,7 +298,7 @@ curve (dnorm (x, mean (f0s), sd (f0s) / sqrt (length (f0s) )), add = TRUE,
        lwd = 4, col = yellow)
 ```
 
-![](week-2_files/figure-latex/unnamed-chunk-8-1.pdf)<!-- --> 
+<img src="week-2_files/figure-html/unnamed-chunk-8-1.png" width="768" />
 
 Recall that our model output provides information about expected values for the mean parameter:
 
@@ -354,7 +369,7 @@ boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots", col=c(yellow,coral,
 abline (h = 220.4,lty=3,col='grey',lwd=2)
 ```
 
-![](week-2_files/figure-latex/unnamed-chunk-12-1.pdf)<!-- --> 
+<img src="week-2_files/figure-html/unnamed-chunk-12-1.png" width="768" />
 
 ### Multilevel models
 
@@ -376,7 +391,7 @@ hist (w$f0[w$uspeaker == 107], main = "Histogram of speaker 107",
       xlim = c(160, 260), freq = FALSE,col=yellow)
 ```
 
-![](week-2_files/figure-latex/unnamed-chunk-13-1.pdf)<!-- --> 
+<img src="week-2_files/figure-html/unnamed-chunk-13-1.png" width="768" />
 
 A multilevel model is able to simultaneously model independent variation at multiple 'levels'. For our f0 data, these are: 
 
@@ -427,29 +442,33 @@ y = a*1 + b_{speaker}*1 + \varepsilon
 (\#eq:25)
 $$
 
-In addition to the  coefficient estimating the overall intercept ($a$), we know have another term $b_{speaker}$. This coefficient is actually a set of coefficients since it has a different value for each speaker (its a vector). It has a different value for each speaker because it will reflect variation in $\mu_{speaker}$.
+In addition to the  coefficient estimating the overall intercept ($a$), we know have another term $b_{speaker}$. This coefficient is actually a set of coefficients since it has a different value for each speaker (its a vector). It has a different value for each speaker because it will reflect variation in $\mu_{speaker}$. However, $\mu_{speaker}$ is a random variable since it reflects the random average f0 of each person drawn from the population. If $\mu_{speaker}$ behaves like a random variable, then the coefficients that reflect this value in our model ($b_{speaker}$) will behave in the same way. 
 
-However, recall that $\mu_{speaker}$ is a random variable since it reflects the random average f0 of each person drawn from the population. If $\mu_{speaker}$ behaves like a random variable, then the coefficients that reflect this value in our model ($b_{speaker}$) will behave in the same way. 
+This means that actually our model has *two* random variables. The first one is the error term $\varepsilon \sim \mathcal{N}(0,\sigma_{error})$, which has a mean of 0 and a standard deviation which we can refer to as $\sigma_{error}$. The second is the random, speaker-specific intercepts, or by-speaker intercepts, that can also be thought of as random draw from a normal distribution.
 
-This means that actually our model has *two* random variables. The first one is the error term:
+A careful consideration of the model in equation 2.4 suggests that this model wouldn't really work. If the overall mean is 220 Hz and a speaker's average is 230, this would suggest a predicted average of 450 ($\mu_{overall} + \mu_{speaker}$) for this speaker. Clearly that is nothow the model should be working. 
 
-$$
-\varepsilon \sim \mathcal{N}(0,\sigma_{error})
-(\#eq:26)
-$$
+Recall that I previously said that regression models encode *differences*. Our model already encodes the overall data average in the $\mu_{overall}$ parameter. Thus, the speaker-specific averages only need to contain information about *differences* to this overall average. As a result, the model parameters for mean f0 across all speakers will be centered at 0 (i.e., the average), and will tend to be normally distributed with a population-specific standard deviation. Since our model parameters represent speaker-specific deviations rather than their actual mean f0s, people often use this symbol, $\gamma$, for them instead of $\mu$, where $\gamma = \mu_{speaker} - \mu_{overall}$.
 
-which has a mean of 0 and a standard deviation which we can refer to as $\sigma_{error}$.
-
-Our model further assumes that just like our data, our speaker-specific intercepts, or by-speaker intercepts, can be thought of as random draw from a normal distribution. This distribution is also assumed to be centered at zero, and has a population-specific standard deviation. 
+Our overall model is now as shown below, made specific for the data we have, and using expected parameter names.
 
 $$
-\mu_{speaker} \sim \mathcal{N}(0,\sigma_{speaker})
-(\#eq:27)
+\begin{split}
+f0 = Intercept + \gamma_{uspeaker} + \varepsilon  \\
+\gamma_{uspeaker} \sim \mathcal{N}(0,\sigma_{speakers}) \\
+\varepsilon \sim \mathcal{N}(0,\sigma_{error}) \\
+\end{split}
 $$
 
-Recall that I previously said that regression models encode *differences*. This helps explain why the distribution of speaker means is centered at 0 in our model. Our model already encodes the overall data average in the $\mu_{overall}$ parameter. Thus, the speaker-specific averages contain information about *differences* to this overall average, and so are centered at 0 (i.e., the average).
+Each line in the model says the following:
+ 
+  * f0 is equal to the sum the intercept, a speaker-specific deflection from the intercept, and error.
 
-The initial model we fit viewed the variation in the model like this:
+  * the speaker intercepts are drawn from a normal distribution with a mean of 0 and a standard deviation of $\sigma_{speakers}$. This distribution represents the random variation of speakers around the average f0 for the population. 
+
+  * the error is also drawn from a normal distribution with a mean of 0 and a standard deviation of $\sigma_{error}$. This distribution represents the random within-speaker variation of productions around the average f0 for the speaker. 
+
+There is a very important difference in how the initial and final models we fit view and partition the variation in our model. The initial model we fit viewed the variation in the model like this:
 
 $$
 \sigma_{total} = \sigma_{error}
@@ -565,7 +584,7 @@ boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots",col=c(yellow,coral,
 abline (h = 220.4, lwd=3,lty=3)
 ```
 
-![](week-2_files/figure-latex/unnamed-chunk-17-1.pdf)<!-- --> 
+<img src="week-2_files/figure-html/unnamed-chunk-17-1.png" width="768" />
 
 ## Checking model convergence
 
@@ -753,7 +772,7 @@ In the left panel below (plot code at end of chapter) I compare the t distributi
 In the middle panel we compare this prior to the data, and see that the prior distribution is much broader (more vague) than the data distribution. The right panel compares the prior for the standard deviation parameters to the absolute value of the centered f0 data. This presentation shows how far each observation is from the mean f0 (at 220 Hz). Again, the prior distribution we have assigned for these parameters is much larger than the variation in the data. As a result, neither of these priors is going to have much of an effect on our parameter estimates.
 
 
-![](week-2_files/figure-latex/unnamed-chunk-25-1.pdf)<!-- --> 
+<img src="week-2_files/figure-html/unnamed-chunk-25-1.png" width="768" />
 
 If we compare the output of this model to `multilevel_thinned`, we see that specifying a prior has has no noticeable effect on our results. This is because the prior matters less and less when you have a lot of data, and because we have set wide priors that are appropriate (but vague) given our data. Although the priors may not matter much for models as simple as these, they can be very important when working with more complex data, and are a necessary component of Bayesian modeling. 
 
@@ -844,7 +863,7 @@ boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots",col=c(yellow,coral,
 abline (h = 220.4, lwd=3,lty=3)
 ```
 
-![](week-2_files/figure-latex/unnamed-chunk-27-1.pdf)<!-- --> 
+<img src="week-2_files/figure-html/unnamed-chunk-27-1.png" width="768" />
 
 
 ## Plot Code
