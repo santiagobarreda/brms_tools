@@ -51,7 +51,7 @@ boxplot (f0 ~ adult, data = males, main = "Males", ylim = c(90,330),
          col = c(maroon,lightpink))
 ```
 
-<img src="week-3_files/figure-html/unnamed-chunk-3-1.png" width="768" />
+![](week-3_files/figure-latex/unnamed-chunk-3-1.pdf)<!-- --> 
 
 Clearly there is a difference in f0 between children and adults, but the difference also seems to be gender-dependent: there is more of a difference between men and boys than between women and girls. We are going to focus on the female data for now, and I leave the male data so that the reader can modify the analysis presented here to analyze that data. 
 
@@ -78,7 +78,7 @@ tmp = density (females$f0)
 lines (tmp$y, tmp$x, lwd = 3, col = 1)
 ```
 
-<img src="week-3_files/figure-html/unnamed-chunk-4-1.png" width="768" />
+![](week-3_files/figure-latex/unnamed-chunk-4-1.pdf)<!-- --> 
 
 ## Estimating the difference two means with 'brms'
 
@@ -279,7 +279,8 @@ To interpret treatment coded coefficients remember:
 
 The image below shows a comparison of the way the two coding schemes treat our data. In each case they estimate 1 intercept and one effect, letting you recreate 1 other mean (i.e., they each omit one parameter). In treatment coding this is the overall mean, which in the 2-group case will always be `Intercept + Effect/2`. In the case of sum coding this is the effect for the second group, which will always be the same magnitude but have the opposite sign as the effect for the first group. 
 
-<img src="./images/coding.png" width="100%" />
+
+\includegraphics[width=1\linewidth]{./images/coding} 
 
 ## Refitting the model with sum coding
 
@@ -470,7 +471,7 @@ plot (-samples[,'adult1'], col = teal, pch=16)
 plot (samples[,'Intercept']+samples[,'adult1'], col = yellow,pch=16)  
 ```
 
-<img src="week-3_files/figure-html/unnamed-chunk-18-1.png" width="768" />
+![](week-3_files/figure-latex/unnamed-chunk-18-1.pdf)<!-- --> 
 
 We can then summarize the sum of the parameters using the `posterior_summary` function, resulting in a mean, standard deviation, and credible interval for the new parameter:
 
@@ -588,7 +589,7 @@ If I were writing this is in a paper, at this point I could present this informa
 
 Below I present the speaker boxplot, with different colors for each group. So far we have discussed the speaker-dependent deviations from averages, but we haven't actually done anything with them. One of the nice things about multilevel models is that we can actually estimate these parameters, and use them to answer our research questions. 
 
-<img src="week-3_files/figure-html/unnamed-chunk-23-1.png" width="768" />
+![](week-3_files/figure-latex/unnamed-chunk-23-1.pdf)<!-- --> 
 
 Multilevel models are sometimes also called 'random effects' or 'mixed effects' models. What is 'mixed' about them? Researchers often talk about whether effects are 'fixed' or 'random'. The general idea is that 'fixed' effects are specifically chosen from a small set of possibilities, and we are not necessarily interested in the 'other' levels. 
 
@@ -672,7 +673,7 @@ brmplot( brms::ranef (model_sum_coding)[["uspeaker"]][,,"Intercept"], col = colo
 abline (h=0)
 ```
 
-<img src="week-3_files/figure-html/unnamed-chunk-25-1.png" width="768" />
+![](week-3_files/figure-latex/unnamed-chunk-25-1.pdf)<!-- --> 
 
 We can compare the estimates of by-speaker intercepts to the distribution of actual data arranged by subject. There is clearly a close correspondence! 
 
@@ -685,13 +686,13 @@ brmplot( brms::ranef (model_sum_coding)[["uspeaker"]][,,"Intercept"],
 boxplot (f0 ~ uspeaker, data=females, col = colors, ylim = c(150,310))
 ```
 
-<img src="week-3_files/figure-html/unnamed-chunk-26-1.png" width="768" />
+![](week-3_files/figure-latex/unnamed-chunk-26-1.pdf)<!-- --> 
 
 ## But what does it all mean?
 
 Ok, so are the f0s produced by women and girls different? Consider the distribution of productions between and within speakers and groups, as shown in the figure below (lines represent the group means). An unbiased look at our results (and figures) so far suggests that: 
 
-<img src="week-3_files/figure-html/unnamed-chunk-27-1.png" width="768" />
+![](week-3_files/figure-latex/unnamed-chunk-27-1.pdf)<!-- --> 
 
 
 * the magnitude of between speaker variation is **larger** than the difference between girls and women (19 Hz vs 18/17 Hz). This means that random people drawn from the two groups largely overlap. 
