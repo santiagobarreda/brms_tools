@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="inspecting-a-single-sample-of-values.html"/>
-
+<link rel="next" href="comparing-two-groups.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -193,6 +193,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.6" data-path="inference-for-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inference-for-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#specifying-prior-probabilities"><i class="fa fa-check"></i><b>2.6</b> Specifying prior probabilities</a></li>
 <li class="chapter" data-level="2.7" data-path="inference-for-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inference-for-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#answering-our-research-questions"><i class="fa fa-check"></i><b>2.7</b> Answering our research questions</a></li>
 <li class="chapter" data-level="2.8" data-path="inference-for-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inference-for-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#plot-code-1"><i class="fa fa-check"></i><b>2.8</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="comparing-two-groups.html"><a href="comparing-two-groups.html"><i class="fa fa-check"></i><b>3</b> Comparing two groups</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="comparing-two-groups.html"><a href="comparing-two-groups.html#data-and-research-questions-2"><i class="fa fa-check"></i><b>3.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="3.2" data-path="comparing-two-groups.html"><a href="comparing-two-groups.html#estimating-the-difference-two-means-with-brms"><i class="fa fa-check"></i><b>3.2</b> Estimating the difference two means with ‘brms’</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="comparing-two-groups.html"><a href="comparing-two-groups.html#fitting-the-model-1"><i class="fa fa-check"></i><b>3.2.1</b> Fitting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="comparing-two-groups.html"><a href="comparing-two-groups.html#contrasts"><i class="fa fa-check"></i><b>3.3</b> Contrasts</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="comparing-two-groups.html"><a href="comparing-two-groups.html#treatment-coding"><i class="fa fa-check"></i><b>3.3.1</b> Treatment coding</a></li>
+<li class="chapter" data-level="3.3.2" data-path="comparing-two-groups.html"><a href="comparing-two-groups.html#sum-coding"><i class="fa fa-check"></i><b>3.3.2</b> Sum coding</a></li>
+<li class="chapter" data-level="3.3.3" data-path="comparing-two-groups.html"><a href="comparing-two-groups.html#comparison-of-sum-and-treatment-coding"><i class="fa fa-check"></i><b>3.3.3</b> Comparison of sum and treatment coding</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="comparing-two-groups.html"><a href="comparing-two-groups.html#refitting-the-model-with-sum-coding"><i class="fa fa-check"></i><b>3.4</b> Refitting the model with sum coding</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="comparing-two-groups.html"><a href="comparing-two-groups.html#fitting-the-model-2"><i class="fa fa-check"></i><b>3.4.1</b> Fitting the model</a></li>
+<li class="chapter" data-level="3.4.2" data-path="comparing-two-groups.html"><a href="comparing-two-groups.html#the-model-2"><i class="fa fa-check"></i><b>3.4.2</b> The model</a></li>
+<li class="chapter" data-level="3.4.3" data-path="comparing-two-groups.html"><a href="comparing-two-groups.html#interpreting-the-two-group-model"><i class="fa fa-check"></i><b>3.4.3</b> Interpreting the two-group model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="comparing-two-groups.html"><a href="comparing-two-groups.html#random-effects"><i class="fa fa-check"></i><b>3.5</b> ‘Random’ Effects</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="comparing-two-groups.html"><a href="comparing-two-groups.html#random-effects-priors-and-pooling"><i class="fa fa-check"></i><b>3.5.1</b> Random effects, priors and pooling</a></li>
+<li class="chapter" data-level="3.5.2" data-path="comparing-two-groups.html"><a href="comparing-two-groups.html#inspecting-the-random-effects"><i class="fa fa-check"></i><b>3.5.2</b> Inspecting the random effects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="comparing-two-groups.html"><a href="comparing-two-groups.html#but-what-does-it-all-mean"><i class="fa fa-check"></i><b>3.6</b> But what does it all mean?</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="http://www.santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
@@ -485,8 +511,13 @@ y = a*1 + b_{speaker}*1 + \varepsilon
 \]</span></p>
 <p>In addition to the coefficient estimating the overall intercept (<span class="math inline">\(a\)</span>), we know have another term <span class="math inline">\(b_{speaker}\)</span>. This coefficient is actually a set of coefficients since it has a different value for each speaker (its a vector). It has a different value for each speaker because it will reflect variation in <span class="math inline">\(\mu_{speaker}\)</span>. However, <span class="math inline">\(\mu_{speaker}\)</span> is a random variable since it reflects the random average f0 of each person drawn from the population. If <span class="math inline">\(\mu_{speaker}\)</span> behaves like a random variable, then the coefficients that reflect this value in our model (<span class="math inline">\(b_{speaker}\)</span>) will behave in the same way.</p>
 <p>This means that actually our model has <em>two</em> random variables. The first one is the error term <span class="math inline">\(\varepsilon \sim \mathcal{N}(0,\sigma_{error})\)</span>, which has a mean of 0 and a standard deviation which we can refer to as <span class="math inline">\(\sigma_{error}\)</span>. The second is the random, speaker-specific intercepts, or by-speaker intercepts, that can also be thought of as random draw from a normal distribution.</p>
-<p>A careful consideration of the model in equation 2.4 suggests that this model wouldn’t really work. If the overall mean is 220 Hz and a speaker’s average is 230, this would suggest a predicted average of 450 (<span class="math inline">\(\mu_{overall} + \mu_{speaker}\)</span>) for this speaker. Clearly that is nothow the model should be working.</p>
-<p>Recall that I previously said that regression models encode <em>differences</em>. Our model already encodes the overall data average in the <span class="math inline">\(\mu_{overall}\)</span> parameter. Thus, the speaker-specific averages only need to contain information about <em>differences</em> to this overall average. As a result, the model parameters for mean f0 across all speakers will be centered at 0 (i.e., the average), and will tend to be normally distributed with a population-specific standard deviation. Since our model parameters represent speaker-specific deviations rather than their actual mean f0s, people often use this symbol, <span class="math inline">\(\gamma\)</span>, for them instead of <span class="math inline">\(\mu\)</span>, where <span class="math inline">\(\gamma = \mu_{speaker} - \mu_{overall}\)</span>.</p>
+<p>A careful consideration of the model in equation 2.4 suggests that this model wouldn’t really work. If the overall mean is 220 Hz and a speaker’s average is 230, this would suggest a predicted average of 450 (<span class="math inline">\(\mu_{overall} + \mu_{speaker}\)</span>) for this speaker. Clearly that is not how the model should be working.</p>
+<p>Recall that I previously said that regression models encode <em>differences</em>. Our model already encodes the overall data average in the <span class="math inline">\(\mu_{overall}\)</span> parameter. Thus, the speaker-specific averages only need to contain information about <em>differences</em> to this overall average. As a result, the model parameters for mean f0 across all speakers will be centered at 0 (i.e., the average), and will tend to be normally distributed with a population-specific standard deviation.</p>
+<p>Since our model parameters represent speaker-specific deviations rather than their actual mean f0s, people often use this symbol, <span class="math inline">\(\gamma\)</span>, for them instead of <span class="math inline">\(\mu\)</span>, where <span class="math inline">\(\gamma = \mu_{speaker} - \mu_{overall}\)</span>. We can show the expected distribution of this variable below, where <span class="math inline">\(\sigma_{speakers}\)</span> is a population-specific standard deviation term.</p>
+<p><span class="math display" id="eq:26">\[
+\gamma_{uspeaker} \sim \mathcal{N}(0,\sigma_{speakers})
+\tag{2.6}
+\]</span></p>
 <p>Our overall model is now as shown below, made specific for the data we have, and using expected parameter names.</p>
 <p><span class="math display">\[
 \begin{split}
@@ -504,12 +535,12 @@ f0 = Intercept + \gamma_{uspeaker} + \varepsilon  \\
 <p>There is a very important difference in how the initial and final models we fit view and partition the variation in our model. The initial model we fit viewed the variation in the model like this:</p>
 <p><span class="math display" id="eq:28">\[
 \sigma_{total} = \sigma_{error}
-\tag{2.6}
+\tag{2.7}
 \]</span></p>
 <p>In other words, all variation was error. We don’t know why values vary from the mean. Our multilevel model views the variation in our data like this:</p>
 <p><span class="math display" id="eq:29">\[
 \sigma_{total} = \sigma_{speaker} + \sigma_{error}
-\tag{2.7}
+\tag{2.8}
 \]</span></p>
 <p>It sees only <em>some</em> of the variation in data as error. Basically, from the perspective of this multilevel model, the variation in the data is a combination of random (but systematic) between-speaker variation, and random within-speaker variation.</p>
 </div>
@@ -802,8 +833,8 @@ sd(Intercept)    20.19      2.10    16.65    25.06 1.00      135      192</code>
           </div>
         </div>
       </div>
-<a href="inspecting-a-single-sample-of-values.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="inspecting-a-single-sample-of-values.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="comparing-two-groups.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

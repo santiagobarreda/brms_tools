@@ -11,6 +11,7 @@ eq:22
 eq:23
 eq:24
 eq:25
+eq:26
 eq:28
 eq:29
 inspecting-a-single-sample-of-values
@@ -43,3 +44,19 @@ checking-model-convergence
 specifying-prior-probabilities
 answering-our-research-questions
 plot-code-1
+comparing-two-groups
+data-and-research-questions-2
+estimating-the-difference-two-means-with-brms
+fitting-the-model-1
+contrasts
+treatment-coding
+sum-coding
+comparison-of-sum-and-treatment-coding
+refitting-the-model-with-sum-coding
+fitting-the-model-2
+the-model-2
+interpreting-the-two-group-model
+random-effects
+random-effects-priors-and-pooling
+inspecting-the-random-effects
+but-what-does-it-all-mean

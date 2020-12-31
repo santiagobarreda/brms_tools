@@ -446,9 +446,16 @@ In addition to the  coefficient estimating the overall intercept ($a$), we know 
 
 This means that actually our model has *two* random variables. The first one is the error term $\varepsilon \sim \mathcal{N}(0,\sigma_{error})$, which has a mean of 0 and a standard deviation which we can refer to as $\sigma_{error}$. The second is the random, speaker-specific intercepts, or by-speaker intercepts, that can also be thought of as random draw from a normal distribution.
 
-A careful consideration of the model in equation 2.4 suggests that this model wouldn't really work. If the overall mean is 220 Hz and a speaker's average is 230, this would suggest a predicted average of 450 ($\mu_{overall} + \mu_{speaker}$) for this speaker. Clearly that is nothow the model should be working. 
+A careful consideration of the model in equation 2.4 suggests that this model wouldn't really work. If the overall mean is 220 Hz and a speaker's average is 230, this would suggest a predicted average of 450 ($\mu_{overall} + \mu_{speaker}$) for this speaker. Clearly that is not how the model should be working. 
 
-Recall that I previously said that regression models encode *differences*. Our model already encodes the overall data average in the $\mu_{overall}$ parameter. Thus, the speaker-specific averages only need to contain information about *differences* to this overall average. As a result, the model parameters for mean f0 across all speakers will be centered at 0 (i.e., the average), and will tend to be normally distributed with a population-specific standard deviation. Since our model parameters represent speaker-specific deviations rather than their actual mean f0s, people often use this symbol, $\gamma$, for them instead of $\mu$, where $\gamma = \mu_{speaker} - \mu_{overall}$.
+Recall that I previously said that regression models encode *differences*. Our model already encodes the overall data average in the $\mu_{overall}$ parameter. Thus, the speaker-specific averages only need to contain information about *differences* to this overall average. As a result, the model parameters for mean f0 across all speakers will be centered at 0 (i.e., the average), and will tend to be normally distributed with a population-specific standard deviation. 
+
+Since our model parameters represent speaker-specific deviations rather than their actual mean f0s, people often use this symbol, $\gamma$, for them instead of $\mu$, where $\gamma = \mu_{speaker} - \mu_{overall}$. We can show the expected distribution of this variable below, where $\sigma_{speakers}$ is a population-specific standard deviation term.
+
+$$
+\gamma_{uspeaker} \sim \mathcal{N}(0,\sigma_{speakers})
+(\#eq:26)
+$$
 
 Our overall model is now as shown below, made specific for the data we have, and using expected parameter names.
 
