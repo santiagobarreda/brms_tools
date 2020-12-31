@@ -18,8 +18,7 @@ The 'traditional' designs equivalent to these models are: one-sample t-test, and
 
 We are going to keep analyzing the female f0 data from the Hillenbrand et al. (1995) dataset. 
 
-
-```r
+```{r}
 url1 = "https://raw.githubusercontent.com/santiagobarreda"
 url2 = "/stats-class/master/data/h95_vowel_data.csv"
 h95 = read.csv (url(paste0 (url1, url2)))
@@ -32,7 +31,17 @@ w$uspeaker = factor (w$uspeaker)
 f0s = w$f0
 ```
 
-
+```{r, include=FALSE}
+lightpink = rgb (247/255, 181/255, 197/255, 0.75)
+lavender = rgb (202/255, 135/255, 185/255, 0.75)
+coral = rgb (238/255, 78/255, 98/255, 0.75)
+yellow = rgb (248/255,166/255,27/255, 0.75)
+deepgreen = rgb (12/255, 130/255, 117/255, 0.75)
+teal = rgb (39/255, 192/255, 216/255, 0.75)
+skyblue =rgb (58/255, 101/255, 175/255, 0.75)
+maroon = rgb (130/255, 43/255, 50/255, .75)
+deeppurple = rgb (96/255, 45/255, 69/255, 0.75)
+```
 
 We are going to try to address the same questions we talked about last week:
 
@@ -93,56 +102,18 @@ For intercept only models, the number `1` is included in the model formula to in
 
 Below, I load the `brms` package, which contains the `brm` function. The `brm` function takes a model specification, data and some other information, and fits a model that estimates all the model parameters. Unless otherwise specified, `brm` assumes that the error component ($\varepsilon$) of my model is normally distributed. The first argument in the function call is the model formula, and the second argument tells the function where to find the data. The other argument tell the function to estimates a single set of samples (chains = 1) using a single processor on your CPU (cores = 1). These arguments will be discussed more later.
 
-
-```r
+```{r, warning = FALSE, cache = TRUE}
 # To ensure predictable results in examples, I will be using the same random  
 # seed throughout, and resetting it before running any 'random' process.  
 set.seed (1)
 model = brms::brm (f0 ~ 1, data = w, chains = 1, cores = 1)
 ```
 
-```
-## Compiling Stan program...
-```
-
-```
-## Start sampling
-```
-
-```
-## 
-## SAMPLING FOR MODEL '98dae0f1caaef07c210aac2156c73749' NOW (CHAIN 1).
-## Chain 1: 
-## Chain 1: Gradient evaluation took 0 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
-## Chain 1: Adjust your expectations accordingly!
-## Chain 1: 
-## Chain 1: 
-## Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 1: 
-## Chain 1:  Elapsed Time: 0.06 seconds (Warm-up)
-## Chain 1:                0.04 seconds (Sampling)
-## Chain 1:                0.1 seconds (Total)
-## Chain 1:
-```
-
 By default, `brms` takes 2000 samples, throwing out the first 1000 and returning the last 1000. The output above shows you that the sampler is working, and tells you about the progress as it works. 
 
 This is the last time I will be actually fitting a model in the code chunks. I am going to be relying on pre-fit models that you can load after downloading from the book GitHub. Models can be found in the folder corresponding to each chapter.
 
-
-```r
+```{r}
 ## load pre fit model
 model = readRDS ('2_model.RDS')
 ```
@@ -151,30 +122,8 @@ model = readRDS ('2_model.RDS')
 
 We can evaluate the model name to show the default `brms` model print statement:
 
-
-```r
+```{r}
 model
-```
-
-```
-##  Family: gaussian 
-##   Links: mu = identity; sigma = identity 
-## Formula: f0 ~ 1 
-##    Data: w (Number of observations: 576) 
-## Samples: 1 chains, each with iter = 2000; warmup = 1000; thin = 1;
-##          total post-warmup samples = 1000
-## 
-## Population-Level Effects: 
-##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## Intercept   220.40      0.97   218.33   222.30 1.00      851      557
-## 
-## Family Specific Parameters: 
-##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sigma    23.24      0.69    21.99    24.61 1.00      653      550
-## 
-## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
-## and Tail_ESS are effective sample size measures, and Rhat is the potential
-## scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
 Typing the model name into the console and hitting enter prints the information seen above. The first part just tells you technical details that we don't have to worry about for now (though some are obvious). 
@@ -202,23 +151,11 @@ The *x% credible interval* for a parameter is the smallest interval that enclose
 
 Notice that the parameter estimate and intervals almost exactly match the estimate and intervals we obtain by referencing the theoretical likelihood function (discussed in Chapter 1):
 
-
-```r
+```{r}
 ## sample mean
 mean (f0s)
-```
-
-```
-## [1] 220.401
-```
-
-```r
 ## theoretical quantiles for likelihood of mean
 qnorm (c(0.025, 0.975), mean (f0s), sd (f0s) / sqrt (length (f0s) ) )
-```
-
-```
-## [1] 218.5047 222.2974
 ```
 
 Our model also provides us an estimate of the error ($\varepsilon$), under 'Family Specific Parameters: sigma'. This estimate closely matches our sample standard deviation ($s_{x}$) estimate of 23.2. In addition, we also get a 95% credible interval for this parameter (2.5% = 21.99, 97.5% = 24.61). 
@@ -243,47 +180,23 @@ In Chapter 1 I discussed that samplers (like `brm`, or STAN) take samples of the
 
 Below I get the posterior samples from the model. We have 1000 samples, as indicated in the model output above. The first column represents the model intercept, the middle column is the error, and the third column is a statistic related to model fit. 
 
-
-```r
+```{r}
 ## get posterior samples from model
 samples = brms::posterior_samples (model)
 str (samples)
-```
-
-```
-## 'data.frame':	1000 obs. of  3 variables:
-##  $ b_Intercept: num  221 221 220 222 220 ...
-##  $ sigma      : num  22.1 21.9 23.2 21.9 22.9 ...
-##  $ lp__       : num  -2635 -2635 -2634 -2637 -2634 ...
-```
-
-```r
 ## inspect values
 head (samples)
 ```
 
-```
-##   b_Intercept    sigma      lp__
-## 1    220.7860 22.06961 -2634.851
-## 2    220.5312 21.93719 -2635.160
-## 3    219.6445 23.22390 -2633.588
-## 4    222.3286 21.93414 -2637.392
-## 5    219.5626 22.87259 -2633.785
-## 6    221.2339 23.08532 -2633.672
-```
-
 I can plot the individual samples for the mean parameter on the left below. On the right I plot a histogram of the same samples, superimposed with the theoretical distribution of the likelihood. Although this is not the posterior, with so many data points we expect our posterior to be dominated by the likelihood anyways.  
 
-
-```r
+```{r, fig.width = 8, fig.height = 3.5}
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 plot (samples[,1], xlab = 'Sample number',ylab = 'f0',col=teal,pch=16)
 hist (samples[,1], freq = FALSE, breaks = 20,main='',xlab='f0',col=maroon)
 curve (dnorm (x, mean (f0s), sd (f0s) / sqrt (length (f0s) )), add = TRUE,
        lwd = 4, col = yellow)
 ```
-
-![](week-2_files/figure-latex/unnamed-chunk-8-1.pdf)<!-- --> 
 
 Recall that our model output provides information about expected values for the mean parameter:
 
@@ -295,37 +208,20 @@ Intercept   220.40      0.97   218.33   222.30 1.00      851      557
 
 These simply correspond to the quantiles of the posterior samples!
 
-
-```r
+```{r}
 quantile (samples[,1], c(.025, .5, .975))
-```
-
-```
-##     2.5%      50%    97.5% 
-## 218.3288 220.3997 222.3001
 ```
 
 There is no special status for these quantiles. We can check the values of other ones: 
 
-
-```r
+```{r}
 quantile (samples[,1], c(.25, .75))
-```
-
-```
-##      25%      75% 
-## 219.8043 221.0296
 ```
 
 Or even use the posterior distribution to find the probability that the mean parameter is over/under any arbitrary value:
 
-
-```r
+```{r}
 mean (samples[,1] < 221)
-```
-
-```
-## [1] 0.74
 ```
 
 For example, given the calculation above we can say that there is a 0.74 probability (a 74% chance) that the mean f0 for female speakers in this population is under 221 Hz, given our data and model structure. We come to this conclusion by finding that 74% of the posterior samples of the parameter of interest are below 221 Hz. 
@@ -344,17 +240,16 @@ This can be seen quite clearly below. The top panel shows the distribution of al
 
 These boxplots shows that each speaker has their own average f0, and that their productions tend to vary around their 'natural average. As a result, we might have closer to 46 observations (one average value per speaker) than 576. For example, the 'outliers' around 150 Hz may seem like huge 'errors' in the top plot. In the bottom plot we see that these productions all come from one speaker, and actually reflect her average f0. These are not errors but systematic between-speaker *variation*. 
 
-
-```r
+```{r, fig.height = 6, fig.width = 8}
 par (mar = c(4,4,2,1)); layout (mat = c(1,2), heights = c(.3,.7))
 boxplot (f0s, main = "Overall Boxplot", col="lavender", 
          horizontal = TRUE, ylim = c(140,320)) 
 boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots", col=c(yellow,coral,
          deepgreen,teal), horizontal = TRUE, ylim = c(140,320)) 
 abline (h = 220.4,lty=3,col='grey',lwd=2)
-```
 
-![](week-2_files/figure-latex/unnamed-chunk-12-1.pdf)<!-- --> 
+
+```
 
 ### Multilevel models
 
@@ -364,8 +259,7 @@ Repeated-measures data leads to random variation in parameters that is *indistin
 
 If you are trying to estimate a speaker's mean f0, then the individual productions might be 'data' and the mean can be thought of as a 'parameter'. If you were instead only interested in the population average, maybe now your subject mean is actually just a single data point, and the *population* mean is actually your 'parameter'. 
 
-
-```r
+```{r, fig.height = 5, fig.width = 8}
 par (mfrow = c(2,2), mar = c(4,4,3,1))
 hist (w$f0, main = "Histogram of all f0",xlim = c(140, 290), freq = FALSE,
       col=4)
@@ -375,8 +269,6 @@ abline (v = 16,lty=3)
 hist (w$f0[w$uspeaker == 107], main = "Histogram of speaker 107",
       xlim = c(160, 260), freq = FALSE,col=yellow)
 ```
-
-![](week-2_files/figure-latex/unnamed-chunk-13-1.pdf)<!-- --> 
 
 A multilevel model is able to simultaneously model independent variation at multiple 'levels'. For our f0 data, these are: 
 
@@ -469,43 +361,15 @@ It sees only *some* of the variation in data as error. Basically, from the persp
 
 We can fit a model with a formula that appropriately specifies the clustering we expect in our data. As a result, this model can estimate both between- and within-speaker variability. 
 
-
-```r
+```{r,eval = FALSE}
 set.seed (1)
 multilevel_model =  
   brm (f0 ~ (1|uspeaker), data = w, chains = 1, cores = 1)
 ```
-
-```r
+```{r}
 ## loand and inspect pre-fit model
 multilevel_model = readRDS ("2_multilevel_model.RDS")
 multilevel_model
-```
-
-```
-##  Family: gaussian 
-##   Links: mu = identity; sigma = identity 
-## Formula: f0 ~ (1 | uspeaker) 
-##    Data: w (Number of observations: 576) 
-## Samples: 1 chains, each with iter = 2000; warmup = 1000; thin = 1;
-##          total post-warmup samples = 1000
-## 
-## Group-Level Effects: 
-## ~uspeaker (Number of levels: 48) 
-##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sd(Intercept)    20.19      2.10    16.65    25.06 1.00      135      192
-## 
-## Population-Level Effects: 
-##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## Intercept   220.39      3.10   214.49   226.13 1.03       51      108
-## 
-## Family Specific Parameters: 
-##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sigma    12.54      0.39    11.83    13.34 1.01      400      700
-## 
-## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
-## and Tail_ESS are effective sample size measures, and Rhat is the potential
-## scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
 This new model contains one new chunk its print statement:
@@ -519,8 +383,7 @@ sd(Intercept)    20.19      2.10    16.65    25.06 1.00      135      192
 
 This sections contains information about the standard deviation of between-speaker averages ($\mu_{speaker}$) in the sample. We can see that the information provided by `brms` is quite similar to what we can estimate directly using our data. However, *brms* does this all for us, in addition to giving us a lot more information. 
 
-
-```r
+```{r}
 ## find mean f0 for each speaker
 speaker_means = aggregate (f0 ~ uspeaker, data = w, FUN = mean) 
 ## find the within speaker variance. This is the within-talker 'error'.
@@ -528,44 +391,23 @@ speaker_vars = aggregate (f0 ~ uspeaker, data = w, FUN = var)
 
 ## the mean of the speaker means corresponds to our overall mean estimate
 mean (speaker_means$f0)
-```
-
-```
-## [1] 220.401
-```
-
-```r
 ## sd(Intercept) in the model reflects the amount of variation in talker 
 ## intercepts. This is the between speaker variation in our model. See how it is 
 ## similar to the sd of the actual speaker means.
 sd (speaker_means$f0)
-```
-
-```
-## [1] 20.07397
-```
-
-```r
 ## sigma in the model reflects the amount of variation in talker intercepts.
 ## This is the between speaker variation in our model. 
 sqrt (sd (speaker_vars$f0))
 ```
 
-```
-## [1] 12.42719
-```
-
 The overall mean f0 in our data (220.4) corresponds quite well to our model estimate of 220.4. This reflects the central location of the overall distribution below (the horizontal line in the figure below). The standard deviation of the speaker means (Intercept = 20.1) is again very similar to our model estimate (sd(Intercept) = 20.1). This reflects the average distance from each speaker's average, and the overall average. Finally, the average of the within speaker standard deviation in our data (12.4) corresponds closely to our model's error estimate (sigma = 12.5). This reflects the average spread of each speaker's data relative to their own mean, within their own little boxplot.
 
-
-```r
+```{r, fig.height = 3.54, fig.width = 8}
 par (mfrow = c(1,1), mar = c(4,4,2,1))
 boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots",col=c(yellow,coral,
          deepgreen,teal)) 
 abline (h = 220.4, lwd=3,lty=3)
 ```
-
-![](week-2_files/figure-latex/unnamed-chunk-17-1.pdf)<!-- --> 
 
 ## Checking model convergence
 
@@ -579,43 +421,15 @@ To get more samples we can run the model longer, or we can use more *chains*. A 
 
 Below, I refit the same model from above but run it on 4 chains, and on 4 cores at once. This doesn't take any longer but it does give us a higher ESS. Just make sure you leave a couple of cores free on your computer when you fit a model! 
 
-
-```r
+```{r, eval = FALSE}
 set.seed (1)
 multilevel_multicore =  
   brm (f0 ~ 1 + (1|uspeaker), data = w, chains = 4, cores = 4)
 ```
-
-```r
+```{r}
 ## load and inspect pre-fit model
 multilevel_multicore = readRDS ('2_multilevel_multicore.RDS')
 multilevel_multicore
-```
-
-```
-##  Family: gaussian 
-##   Links: mu = identity; sigma = identity 
-## Formula: f0 ~ 1 + (1 | uspeaker) 
-##    Data: w (Number of observations: 576) 
-## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
-##          total post-warmup samples = 4000
-## 
-## Group-Level Effects: 
-## ~uspeaker (Number of levels: 48) 
-##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sd(Intercept)    20.22      2.19    16.54    25.19 1.02      345      615
-## 
-## Population-Level Effects: 
-##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## Intercept   220.47      2.91   214.67   226.14 1.02      228      543
-## 
-## Family Specific Parameters: 
-##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sigma    12.54      0.39    11.81    13.34 1.00     3427     2943
-## 
-## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
-## and Tail_ESS are effective sample size measures, and Rhat is the potential
-## scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
 If we compare the ESS for this new model to the previous model, we see that using 4 chains has substantially increased our ESS, without taking up any more computing time. 
@@ -628,44 +442,16 @@ To do this you have to set the `iter`, `warmup` and `thin` parameters. You will 
 
 Below, I ask for 11,000 sample per chain, 10,000 post warm-up. However, since I plan to keep only 1/10, I will have 1000 per core, so 4000 samples in total. However, despite having the same number of samples as the `multilevel_multicore`, the ESS for this model is much higher for important parameters such as the model intercept. 
 
-
-```r
+```{r, eval = FALSE}
 set.seed (1)
 multilevel_thinned =  
   brm (f0 ~ 1 + (1|uspeaker), data = w, chains = 4, cores = 4,
        warmup = 1000, iter = 11000, thin = 10)
 ```
-
-```r
+```{r}
 ## load and inspect pre-fit model
 multilevel_thinned = readRDS ('2_multilevel_thinned.RDS')
 multilevel_thinned
-```
-
-```
-##  Family: gaussian 
-##   Links: mu = identity; sigma = identity 
-## Formula: f0 ~ 1 + (1 | uspeaker) 
-##    Data: w (Number of observations: 576) 
-## Samples: 4 chains, each with iter = 11000; warmup = 1000; thin = 10;
-##          total post-warmup samples = 4000
-## 
-## Group-Level Effects: 
-## ~uspeaker (Number of levels: 48) 
-##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sd(Intercept)    20.06      2.23    16.24    24.98 1.00     2775     3392
-## 
-## Population-Level Effects: 
-##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## Intercept   220.40      2.95   214.57   226.19 1.00     1987     2625
-## 
-## Family Specific Parameters: 
-##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sigma    12.54      0.38    11.81    13.31 1.00     3908     3891
-## 
-## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
-## and Tail_ESS are effective sample size measures, and Rhat is the potential
-## scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
 ## Specifying prior probabilities
@@ -676,21 +462,9 @@ If you don't specify prior probabilities for your parameters, `brm` will use a '
 
 `brms` makes it really easy to specify prior probabilities for specific parameters or whole groups of parameters. First we figure out the overall mean and the standard deviation of the data.  
 
-
-```r
+```{r}
 mean(f0s)
-```
-
-```
-## [1] 220.401
-```
-
-```r
 sd(f0s)
-```
-
-```
-## [1] 23.22069
 ```
 
 In the example below, I use this information to set reasonable bounds on the parameters in the model. I do this by class of parameter:
@@ -706,8 +480,7 @@ The format for the priors looks like this `student_t(nu, mean, sd)`, where `nu` 
 So, for the overall intercept ($\mu_{overall}$) I am using a prior with the same mean as the data mean, and a standard deviation that is twice as large as the data standard deviation. For both the model standard deviation terms ($\sigma_{error}, \sigma_{speaker}$) I am using a t distribution centered at 0 (explained below), with a standard deviation twice as large as the data standard deviation.
 
 
-
-```r
+```{r, eval = FALSE}
 set.seed (1)
 multilevel_priors =  
   brm (f0 ~ 1 + (1|uspeaker), data = w, chains = 4, cores = 4,
@@ -715,37 +488,10 @@ multilevel_priors =
        prior = c(set_prior("student_t(3, 220.4, 46.4)", class = "Intercept"),
                  set_prior("student_t(3, 0, 46.4)", class = "sd")))
 ```
-
-```r
+```{r}
 ## load and inspect pr-fit model
 multilevel_priors = readRDS ('2_multilevel_priors.RDS')
 multilevel_priors
-```
-
-```
-##  Family: gaussian 
-##   Links: mu = identity; sigma = identity 
-## Formula: f0 ~ 1 + (1 | uspeaker) 
-##    Data: w (Number of observations: 576) 
-## Samples: 4 chains, each with iter = 11000; warmup = 1000; thin = 10;
-##          total post-warmup samples = 4000
-## 
-## Group-Level Effects: 
-## ~uspeaker (Number of levels: 48) 
-##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sd(Intercept)    20.19      2.24    16.29    25.06 1.00     3114     3663
-## 
-## Population-Level Effects: 
-##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## Intercept   220.42      2.97   214.44   226.38 1.00     1796     2841
-## 
-## Family Specific Parameters: 
-##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sigma    12.54      0.39    11.81    13.34 1.00     3968     3972
-## 
-## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
-## and Tail_ESS are effective sample size measures, and Rhat is the potential
-## scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
 In the left panel below (plot code at end of chapter) I compare the t distribution we used (blue) to the equivalent normal distribution (red). It is clear that the t distribution can tolerate more extreme values because of its 'fatter' tails. As we will discuss later, using t distributions can make our models more robust to outliers. This is really important in linguistics where subjects/speakers sometimes do weird stuff! 
@@ -753,7 +499,31 @@ In the left panel below (plot code at end of chapter) I compare the t distributi
 In the middle panel we compare this prior to the data, and see that the prior distribution is much broader (more vague) than the data distribution. The right panel compares the prior for the standard deviation parameters to the absolute value of the centered f0 data. This presentation shows how far each observation is from the mean f0 (at 220 Hz). Again, the prior distribution we have assigned for these parameters is much larger than the variation in the data. As a result, neither of these priors is going to have much of an effect on our parameter estimates.
 
 
-![](week-2_files/figure-latex/unnamed-chunk-25-1.pdf)<!-- --> 
+```{r, fig.height = 3.5, fig.width = 8, echo = FALSE}
+# get t density
+x1 = seq (-4,4,.1)
+y1 = dt (x1, 3); y1 = y1 / max (y1) / 50
+x2 = 220+(x1*46.4)
+y2 = dnorm (x2, 220, 46.4); y2 = y2 / max (y2) / 50
+
+par (mfrow = c(1,3), mar = c(4,4,1,1))
+## plot t
+plot (x2, y1, type = 'l', lwd = 2, ylab = 'Density', xlab = 'f0', col = 4)
+## compare to equivalent normal
+lines (x2, y2, lwd=2,col=2)
+
+## plot t
+plot (x2, y1, type = 'l', lwd = 2, ylab = 'Density', xlab = 'f0', col = 4)
+## compare to equivalent normal
+hist (f0s, add = TRUE, freq = FALSE, col = deepgreen)
+
+## plot prior for standard deviations
+x3 = x2 - mean (x2)
+y3 = dt (x1, 3); y3 = y3 / max (y3) / 20
+plot (x3[x3>0], y3[x3>0], type = 'l', lwd = 2, ylab = 'Density', 
+      xlab = 'f0', col = 4)
+hist (abs (f0s - mean (f0s)), add = TRUE, freq = FALSE, col = yellow)
+```
 
 If we compare the output of this model to `multilevel_thinned`, we see that specifying a prior has has no noticeable effect on our results. This is because the prior matters less and less when you have a lot of data, and because we have set wide priors that are appropriate (but vague) given our data. Although the priors may not matter much for models as simple as these, they can be very important when working with more complex data, and are a necessary component of Bayesian modeling. 
 
@@ -768,60 +538,9 @@ Let's return again to the research questions I posed initially:
 
 And we can compare the answers provided to this question by our initial and final models. 
 
-
-```r
+```{r}
 model
-```
-
-```
-##  Family: gaussian 
-##   Links: mu = identity; sigma = identity 
-## Formula: f0 ~ 1 
-##    Data: w (Number of observations: 576) 
-## Samples: 1 chains, each with iter = 2000; warmup = 1000; thin = 1;
-##          total post-warmup samples = 1000
-## 
-## Population-Level Effects: 
-##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## Intercept   220.40      0.97   218.33   222.30 1.00      851      557
-## 
-## Family Specific Parameters: 
-##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sigma    23.24      0.69    21.99    24.61 1.00      653      550
-## 
-## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
-## and Tail_ESS are effective sample size measures, and Rhat is the potential
-## scale reduction factor on split chains (at convergence, Rhat = 1).
-```
-
-```r
 multilevel_priors
-```
-
-```
-##  Family: gaussian 
-##   Links: mu = identity; sigma = identity 
-## Formula: f0 ~ 1 + (1 | uspeaker) 
-##    Data: w (Number of observations: 576) 
-## Samples: 4 chains, each with iter = 11000; warmup = 1000; thin = 10;
-##          total post-warmup samples = 4000
-## 
-## Group-Level Effects: 
-## ~uspeaker (Number of levels: 48) 
-##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sd(Intercept)    20.19      2.24    16.29    25.06 1.00     3114     3663
-## 
-## Population-Level Effects: 
-##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## Intercept   220.42      2.97   214.44   226.38 1.00     1796     2841
-## 
-## Family Specific Parameters: 
-##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sigma    12.54      0.39    11.81    13.34 1.00     3968     3972
-## 
-## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
-## and Tail_ESS are effective sample size measures, and Rhat is the potential
-## scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
 Our initial model (`model`) and our final model (`multilevel_priors`) agree on what the average f0 is. However, they disagree on a credible interval for that parameter. Our initial model did not specify information about repeated measures. This causes our model to think that it has more independent observations than it does, and so it returns an overly-precise estimate. 
@@ -836,23 +555,19 @@ I am including the speaker boxplots below because I think this image basically p
 
 When you are thinking about the relationships in your data, or that you expect in your data, its a good idea to think: what kind of picture could illustrate this relationship? Conversely, if you see a figure of your results that you feel really expresses something interesting about your data you should think, how can these relationships be represented in a model?
 
-
-```r
+```{r, fig.height = 3.54, fig.width = 8}
 par (mfrow = c(1,1), mar = c(4,4,2,1))
 boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots",col=c(yellow,coral,
          deepgreen,teal)) 
 abline (h = 220.4, lwd=3,lty=3)
 ```
 
-![](week-2_files/figure-latex/unnamed-chunk-27-1.pdf)<!-- --> 
-
 
 ## Plot Code
 
 Plot for comparison of prior distributions with f0 data
 
-
-```r
+```{r, fig.height = 3.5, fig.width = 8, eval = FALSE}
 # get t density
 x1 = seq (-4,4,.1)
 y1 = dt (x1, 3); y1 = y1 / max (y1) / 50

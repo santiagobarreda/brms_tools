@@ -1,6 +1,8 @@
 
 # Inspecting a single sample of values  
 
+In this chapter I am going to present an introduction to some fundamental statistical concepts (i.e, probability, likelihood). We will discuss how to use these concepts to make inferences about our observations.  
+
 ## Data and research questions 
 
 Voice fundamental frequency (f0, related to pitch) is a very important cue in speech communication. It relates to phoneme identification, prosody, and to the communication of social and indexical information (speaker gender, age, ...etc.). 
@@ -14,6 +16,18 @@ url2 = "/stats-class/master/data/h95_vowel_data.csv"
 h95 = read.csv (url(paste0 (url1, url2)))
 # select the 'f0' vector, for women only (speaker type = 'w')
 f0s = h95[['f0']][h95$type == 'w']
+```
+
+```{r, include=FALSE}
+lightpink = rgb (247/255, 181/255, 197/255, 0.75)
+lavender = rgb (202/255, 135/255, 185/255, 0.75)
+coral = rgb (238/255, 78/255, 98/255, 0.75)
+yellow = rgb (248/255,166/255,27/255, 0.75)
+deepgreen = rgb (12/255, 130/255, 117/255, 0.75)
+teal = rgb (39/255, 192/255, 216/255, 0.75)
+skyblue =rgb (58/255, 101/255, 175/255, 0.75)
+maroon = rgb (130/255, 43/255, 50/255, .75)
+deeppurple = rgb (96/255, 45/255, 69/255, 0.75)
 ```
 
 These speakers represent a sample from a larger population. The sample is a finite set of observations that you actually have. The population is the larger group of possible observations that you are *actually* interested in. For example, Hillenbrand et al. collected this data not to study these speakers in particular, but instead to make inferences about Michigan speakers more generally. 
@@ -32,15 +46,16 @@ Below we will discuss how to measure the spread and location of a set of numbers
 
 On the left, values are plotted according to the order they appear in the vector. This is not very useful. On the right, the same values have been ordered from low to high.
 
-```{r, fig.height = 3}
+```{r, fig.height = 3.5, fig.width = 8}
 par (mfrow = c(1,2), mar = c(1,4,1,1))
-plot (f0s, xaxt='n',xlab='', ylab = 'f0')
-plot ( sort ( f0s ) , xaxt='n',xlab='',ylab='f0 (sorted)')
+plot (f0s, xaxt='n',xlab='', ylab = 'f0', pch = 16, col = skyblue)
+plot (sort (f0s), xaxt='n',xlab='',ylab='f0 (sorted)', pch=16, col = deepgreen)
 ```
 
 We can easily find descriptive statistics like the sample mean ($\bar{x}$), the sample standard deviation ($s_x$), and important quantiles for this sample of values. The quantiles below correspond to the values of ordered observations, like in the right plot above. The 0% quantile is the smallest observation, while 100% is the highest. Any other quantile is found by ordering the observations and selecting the observation that is higher than x% of the sample values. For example, the 50% quantile (the median) is higher than 50% of values, and the 25% quantile is higher than 1/4 of the values in the sample. 
 
 ```{r}
+## calculate basic descriptive statistics
 mean (f0s)
 sd (f0s)
 quantile (f0s)
@@ -48,12 +63,12 @@ quantile (f0s)
 
 We can look at the distribution of speakers. In the top row, points indicate individual productions, and are jittered along the y axis to make them easier to see. In the middle row we see a histogram of the same data. The histogram gives you the count of observations in each bin. In the bottom row we see a box plot of the same data. The edges of the box correspond to the 25 and 75% quantiles of the distribution, and the line in the middle of it corresponds to the median. As a result, 50% of observations are contained in the box.   
 
-```{r, fig.height = 5}
+```{r, fig.height = 6, fig.width = 6}
 par (mfrow = c(3,1), mar = c(1,4,1,1), oma = c(4,0,0,0))
-
-plot (f0s, jitter (rep(1,length(f0s))), xlim = c(140, 320), ylim = c(.95,1.05),yaxt='n',ylab='')
-hist (f0s,main="")
-boxplot (f0s, horizontal = TRUE, ylim = c(140, 320))
+plot (f0s, jitter (rep(1,length(f0s))), xlim = c(140, 320), ylim = c(.95,1.05),
+      yaxt='n',ylab='', pch = 16, col = yellow)
+hist (f0s,main="", col = teal)
+boxplot (f0s, horizontal = TRUE, ylim = c(140, 320), col = coral)
 mtext (side =1, outer = TRUE, text = "f0", line = 2.5)
 ```
 
@@ -77,11 +92,11 @@ Histograms can also show this difference between total counts and probabilities.
   1) It lets you compare the distribution of values across different sample sizes. 
   2) It makes the histogram more comparable to a probability distribution. 
   
-```{r, fig.height = 3.5, fig.width = 6}
+```{r, fig.height = 3.5, fig.width = 8}
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 
-hist (f0s, main="")
-hist (f0s, freq = FALSE, main = "")
+hist (f0s, main="", col = lavender)
+hist (f0s, freq = FALSE, main = "", col = deepgreen)
 ```
 
 The density is just the thickness of the distribution at a certain location. In probability theory, the sum of the probabilities of all possible outcomes is 1, by definition. So, the fact that the area under the curve of a density is equal to 1 means that the density contains all your *stuff*, all the possible outcomes of the variable we are discussing.
@@ -90,12 +105,12 @@ Imagine a circle like in a Venn diagram that contains all possible productions o
 
 Below I've repeated the data, doubling the counts. Notice that the y axis in the right panel does not change. This is because increasing the number of observations changes your counts but not the relative frequencies of observations. For instance, increasing the number of coin flips will not change the fact that 50% will be heads, but it will change the number of heads observed. 
 
-```{r, fig.height = 3.5, fig.width = 6}
+```{r, fig.height = 3.5, fig.width = 8}
 
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 
-hist (c(f0s,f0s), breaks = 10, main = "")
-hist (c(f0s,f0s), freq = FALSE, breaks = 10, main = "")
+hist (c(f0s,f0s), breaks = 10, main = "", col = lavender)
+hist (c(f0s,f0s), freq = FALSE, breaks = 10, main = "", col = deepgreen)
 
 ```
 
@@ -119,25 +134,26 @@ Normal distributions have two parameters. This means they vary from each other i
 
 Below, I compare the histogram of f0 values to the density of a normal distribution with a mean equal to our sample mean ($\mu = \bar{x}$) and a standard deviation equal to our sample standard deviation ($\sigma = s_x$). The density was drawn using the `dnorm` function. This function will help draw a curve representing the shape of a theoretical normal distribution with a given mean and standard deviation. 
 
-```{r, fig.height = 3, fig.width = 6}
+```{r, fig.height = 3, fig.width = 8}
 par (mfrow = c(1,1), mar = c(4,4,1,1))
-hist (f0s, freq = FALSE, main = "", breaks = 20)
+hist (f0s, freq = FALSE, main = "", breaks = 20, col = deepgreen)
 abline (v = 63.8, lwd = 2, col = 2, lty=3)
 ## plots the normal density (red line) using stats calculated form our sample. 
 curve (dnorm (x, mean(f0s), sd(f0s)), from = 100, to = 300, 
-       lwd=2, col = 2, add = TRUE)
+       lwd=3, col = coral, add = TRUE)
 
 ```
 
 When you are dealing with normally-distributed data, summary statistics can tell you a lot about the shape of your distribution, and about where you can expect the bulk of the density/distribution to lie. The left panel shows the locations of quantiles (0%, 25%, 50%, 75%, 100%), the right panel shows you the mean and standard deviations from the mean (-3, -2, 0, +1, +2, +3). Notice that ±2 standard deviations enclose most of the distribution (around 95%), and ±3 standard deviations enclose almost all of it (99%).
 
-```{r, fig.height = 3.5, fig.width = 6}
+```{r, fig.height = 3.5, fig.width = 8}
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 
-hist (f0s, main = "")
-abline (v = quantile (f0s), lwd = 2, col = 2)
-hist (c(f0s,f0s), freq = FALSE, breaks = 10, main = "")
-abline (v = seq (mean(f0s)-3*sd(f0s),mean(f0s)+3*sd(f0s),sd(f0s)), lwd = 2, col = 2)
+hist (f0s, main = "", col = skyblue)
+abline (v = quantile (f0s), lwd = 2, col = deepgreen)
+hist (c(f0s,f0s), freq = FALSE, breaks = 10, main = "", col = yellow)
+abline (v = seq (mean(f0s)-3*sd(f0s),mean(f0s)+3*sd(f0s),sd(f0s)), lwd = 2, 
+        col = coral)
 
 ```
 
@@ -153,9 +169,9 @@ We do this by referring to the proportion of values expected to be less 175 Hz i
 
 Below, I use the function `pnorm` to find the proportion of values that are expected to be greater/less than 175 Hz. I use the parameters estimated form our sample to run the `pnorm`function, as these are our best guesses of the population parameters. As we can see, this value is reasonably close to our empirical proportion, which was 0.038 (3.8%). 
 
-```{r, fig.height = 3.5, fig.width = 5}
+```{r, fig.height = 3.5, fig.width = 8}
 par (mfrow = c(1,1), mar = c(4,4,1,1))
-hist (f0s, freq = FALSE, main = "", breaks = 20)
+hist (f0s, freq = FALSE, main = "", breaks = 20, col = deepgreen)
 abline (v = 175, lwd = 2, col = 2, lty=3)
 ## plots the normal density (red line) using stats calculated form our sample. 
 curve (dnorm (x, mean(f0s), sd(f0s)),from=100, to=300, lwd=2, col = 2, add=TRUE)
@@ -163,7 +179,7 @@ curve (dnorm (x, mean(f0s), sd(f0s)),from=100, to=300, lwd=2, col = 2, add=TRUE)
 x = c(140,seq(140,175,length.out = 100),175)
 y = c(0,dnorm(seq(140,175,length.out = 100), mean (f0s), sd (f0s)),0)
 polygon(x, y, col='2')
-abline (v = 63.8, lwd = 2, col = 2, lty=3); abline (v = 70, lwd = 2, col = 1, lty=3)
+abline (v = 63.8, lwd = 2, col = 2, lty=3); abline (v = 70, lwd = 2,col=1,lty=3)
 
 ## probability of observing a production below 175 Hz
 pnorm (175, mean (f0s), sd(f0s))
@@ -230,7 +246,7 @@ The likelihood of any parameter estimate (e.g., $\mu$ = 175 Hz in the right pane
 
 Imagine I follow the steps above for each position along the x axis, recording the likelihood values I calculate. I then plot the product of the densities for each x value: I have just plotted a likelihood function for $\mu$ given our data. 
 
-```{r, fig.height = 3.5, fig.width = 6}
+```{r, fig.height = 3.5, fig.width = 8}
 x = f0s[1:10]   ## tiny sub sample for exampls
 mean(x)  ## sample mean
 sd (x)   ## sample standard deviation
@@ -257,7 +273,7 @@ In the left panel below, we see that a normal distribution with a $\mu$ of 200 H
 
 Finally, in the right panel below we see the the maximum likelihood estimate of 225 Hz, the value representing the peak of the likelihood function (in the left panel above). When we say that 225 Hz is the most likely mean for this data, we are saying that this data is most probably the outcome of a normal distribution centered at 225 Hz, relative to the alternatives. 
 
-```{r, fig.height = 3.5, fig.width = 6}
+```{r, fig.height = 3.5,  fig.width = 8}
 x = f0s[1:10]   ## tiny sub sample for exampls
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 plot (x,rep(0,10), ylim = c(0,.022), pch=16,col=4,xlim= c(150,300),cex.main=.6, 
@@ -293,13 +309,13 @@ To draw the expected likelihood function for $\mu$ given our data and our model.
 
 We can take our model and our parameter estimates and draw the likelihood function for $\mu$. We can then use the `qnorm` function to calculate quantiles for our likelihood, presented below. I added vertical lines at the 2.5% and 97.5% quantiles of our distribution. These vertical lines enclose 95% of the likelihood density, and so represent the range of values representing the 95% most likely values of $\mu$. I chose an interval enclosing 95% of the likelihood because this is used by convention. This is a commonly-used interval but otherwise has no special significance.  
 
-```{r, fig.height = 3.5, fig.width = 6}
+```{r, fig.height = 3.5,fig.width = 8}
 par (mfrow =c(1,1), mar = c(4,4,1,1))
 curve (dnorm (x, mean(f0s), sd(f0s)/sqrt(length(f0s))), xlim = c(216,225),
-       ylab = 'Density', xlab = 'f0')
+       ylab = 'Density', xlab = 'f0', col = lavender, lwd = 4)
 quantiles = qnorm (c(0.025, 0.975), mean (f0s), sd (f0s) / sqrt (length (f0s) ) )
 quantiles
-abline (v = quantiles, lwd=2,col=2)
+abline (v = quantiles, lwd=2,col=deepgreen)
 ```
 
 The likelihood tells you about the most believable/credible parameter values, given your model and data. Given the information presented in the figure above, we may conclude that the most likely parameter values fall between 218 and 222 Hz. This means that it is reasonable that the true value might be 221 Hz, as this value is very likely given our sample. Basically, maybe our sample mean is wrong and arose by accident, and 221 Hz is the true $\mu$. This outcome is compatible with our data. 
@@ -341,10 +357,10 @@ Basically it goes like this:
 
 We can write this model more formally like:
 
-$$\begin{equation}
-y \sim \mathcal{N}(\mu,\sigma)
-(\#eq:1)
-\end{equation}$$
+\begin{equation}
+  y \sim \mathcal{N}(\mu,\sigma)
+\end{equation}
+
 
 This says that we expect that the variable we are interested in is distributed according to ($\sim$) a normal distribution with those parameters. Basically, this just formalizes the fact that we think the *shape* of our data will be like that of a normal distribution with a mean equal to $\mu$ and a standard deviation equal to $\sigma$. 
 
@@ -352,10 +368,10 @@ When you see this, $\mathcal{N}(\mu,\sigma)$, just picture in your mind the shap
 
 The above relationship can also be presented like this:
 
-$$\begin{equation}
+$$
 y = \mu + \mathcal{N}(0,\sigma)
 (\#eq:2)
-\end{equation}$$
+$$
 
 Notice that we got rid of the $\sim$ symbol, moved $\mu$ out of the distribution function ($\mathcal{N}()$), and that the mean of the distribution function is now 0. This breaks up our variable into two components:
 
@@ -365,56 +381,56 @@ Notice that we got rid of the $\sim$ symbol, moved $\mu$ out of the distribution
 
 In terms of our data, I might express the distribution in either of the following ways:
 
-$$\begin{equation}
+$$
 f0 = \mathcal{N}(220.4,23.2)
 (\#eq:3)
-\end{equation}$$
+$$
 
-$$\begin{equation}
+$$
 f0 = 220.4 + \mathcal{N}(0,23.2)
 (\#eq:4)
-\end{equation}$$
+$$
 
 The distribution on the left below is the original data, centered at 220.4 Hz and with a standard deviation of 23.2 Hz. On the right, the mean has been subtracted from each value. The sample now represents random variation around the sample mean, variation that our model can't explain. From the perspective of our model, this is *noise*, or *error*. This doesn't mean that it's unexplainable, it only means that we've structured our model in a way that doesn't let us explain it. 
 
-```{r, fig.height = 3.5, fig.width = 6}
+```{r, fig.height = 3.5,fig.width = 8}
 par (mfrow =c(1,2), mar = c(4,4,1,1))
-hist (f0s, main="", freq=FALSE)
-hist (f0s - mean (f0s), main="", freq=FALSE)
+hist (f0s, main="", freq=FALSE, col = yellow)
+hist (f0s - mean (f0s), main="", freq=FALSE, col = coral)
 ```
 
 In regression models, we can decompose systematic variation in $\mu$ into component parts, based on $i$ predictor variables. The  $\mathrm{x}_{i}$. These $\mathrm{x}$ variables the co-vary (vary with) our $y$ variable, and that we think help explain the variation in $y$. Below, I am saying that I think $\mu$ is actually equal to some combination sum of $\mathrm{x}_{1}$ $\mathrm{x}_{2}$ and $\mathrm{x}_{3}$. For example, I could think that f0 could be affected by vowel category ($\mathrm{x}_{1}$), the height of the speaker ($\mathrm{x}_{2}$), and whether the utterance is a sentence or a question ($\mathrm{x}_{3}$). 
 
-$$\begin{equation}
+$$
 \mu = \mathrm{x}_{1} + \mathrm{x}_{2} + \mathrm{x}_{3}
 (\#eq:5)
-\end{equation}$$
+$$
 
 Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a *weighting* of the predictors will be necessary. For example, maybe $\mathrm{x}_{1}$ is twice as important as the other two predictors and so $a$ is 2, while $b$ and $c$ are 1. 
 
-$$\begin{equation}
+$$
 \mu = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3}  
 (\#eq:6)
-\end{equation}$$
+$$
 
 Decomposition of $\mu$ into sub-components makes our model something more like:
 
-$$\begin{equation}
+$$
 y = \mu + \mathcal{N}(0,\sigma)  
 (\#eq:7)
-\end{equation}$$
+$$
   
-$$\begin{equation}
+$$
 y =  (a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3}) + \mathcal{N}(0,\sigma)  
 (\#eq:8)
-\end{equation}$$
+$$
   
 Often, $\varepsilon$ is used to represent the random component, as in:
 
-$$\begin{equation}
+$$
 y = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3} + \varepsilon
 (\#eq:9)
-\end{equation}$$
+$$
 
 When expressed in this manner, this is now a 'regression equation' or a 'regression model'. 'Fitting' a regression model basically consists of trying to guess the most likely values of $a$, $b$, and $c$ given our data. 
 
@@ -425,9 +441,9 @@ Notice that the above formulation means that regression models do not require th
 
 In the right panel I plot the individual densities of boys (red), girls (green), men (blue) and women (cyan). We see that although the data is not normally distributed, the within-group variation is. This suggests a regression model is appropriate for this data. 
 
-```{r, fig.height = 3.5, fig.width = 6}
+```{r, fig.height = 3.5,fig.width = 8}
 par (mfrow =c(1,2), mar = c(4,4,1,1))
-hist (h95$f0, main="", freq=FALSE, xlim = c(80,320))
+hist (h95$f0, main="", freq=FALSE, xlim = c(80,320), col = yellow)
 plot (density (h95$f0[h95$type=='b']),col=2,lwd=4, main='',
       xlim = c(80,320),ylim=c(0,0.025))
 lines (density (h95$f0[h95$type=='g']),col=3,lwd=3)
@@ -452,52 +468,49 @@ Traditional models make inferences based on the likelihood functions of paramete
 
 ## Posterior distributions
 
-The combination of probability distributions is straightforward conceptually: you just multiply the values of the distributions at each x-axis location, and the result is the new curve. In the figure below (code at end of chapter), I combine several sets of probability distributions, showing the effects of variations in priors and likelihoods. In each plot, I scale all densities so that they have the same y axis range to make the figures interpretable, but this does not affect any of the points I make below. 
+The combination of probability distributions is straightforward conceptually: you just multiply the values of the distributions at each x-axis location, and the result is the new curve. In the figure below (code at end of chapter), I combine several sets of probability distributions, showing the effects of variations in priors and likelihoods. In each plot, I scale the posterior density so that it is the same height as the likelihood. This is only to make the figures interpretable but does not affect any of the points I make below. 
 
-In the top panel, I plot the likelihood function for $\mu$ given a sample of size 5 with a mean of 220 Hz. I show what happens when I combine this with a relatively weak but very different prior: the standard deviation is the same as our f0 data, however the mean is much higher (250 Hz). With only 5 data points the likelihood already dominates the posterior, though the prior distribution is exerting a pull. 
+In the top-left panel, I plot the likelihood function for $\mu$ given a sample of size 5 with a mean of 220 Hz. I show what happens when I combine this with a relatively weak but very different prior: the standard deviation is the same as our f0 data, however the mean is much higher (250 Hz). With only 5 data points the likelihood already dominates the posterior, though the prior distribution is exerting a pull. 
 
-In the second panel, the posterior is almost identical to the likelihood. The likelihood represents a sample of size 100, which is actually a tiny sample in experimental linguistics work where you may have 200+ samples from each of 50+ subjects. As you might imagine, when the sample size is that large the prior exerts almost no influence on results. 
+In the top-right panel, the posterior is almost identical to the likelihood. The likelihood represents a sample of size 100, which is actually a tiny sample in experimental linguistics work where you may have 200+ samples from each of 50+ subjects. As you might imagine, when the sample size is that large the prior exerts almost no influence on results. 
 
-In the third panel we see a situation where the prior dominates the estimate. Consider a situation where we actually have really good reasons to think that the mean is 250 Hz. If we really *know* this, why would we accept and estimate of 220 Hz based on only 5 samples? In this case, the posterior distribution is basically saying: your estimate is great, but come back when you have more evidence and I might believe you.
+In the bottom-left panel we see a situation where the prior dominates the estimate. Consider a situation where we actually have really good reasons to think that the mean is 250 Hz. If we really *know* this, why would we accept and estimate of 220 Hz based on only 5 samples? In this case, the posterior distribution is basically saying: your estimate is great, but come back when you have more evidence and I might believe you.
 
-In the final panel we see a situation where the likelihood and the prior are equal. In this case the posterior represents compromise between new and prior knowledge.
+In the bottom-right panel we see a situation where the likelihood and the prior are equal. In this case the posterior represents compromise between new and prior knowledge.
 
-```{r, fig.height = 7, collapse = TRUE, echo = FALSE}
+```{r, fig.height = 5.5, collapse = TRUE, echo = FALSE,fig.width = 8}
 x = seq (150, 301, .1)
-par (mfrow = c(4,1))
-par(mar =c(4,4,.1,.1), oma = c(1,0,1,0))  
-
+par(mfrow = c(2,2), mar =c(4,4,.1,.1), oma = c(1,0,1,0))  
 ## likelihood is a bit stronger than the prior
 likelihood = dnorm (x, mean (f0s), sd (f0s) / sqrt ( 5 ) )
 prior = dnorm (x, 250, sd (f0s)) ; posterior = likelihood * prior
-plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2, 
-      xlim = c(175, 300), ylim = c(0,1.1))
-lines (x, prior / max (prior),lwd=2,col=2)
-lines (x, posterior / max (posterior),lwd=2,col=4)
-legend (178, 1, legend = c('Prior','Likelihood','Posterior'), col = c(2,1,4),
-        lwd = 2, bty = 'n')
+plot (x, likelihood / 1, type = 'l', ylab='Density',lwd=2, xlab='f0',
+      xlim = c(185, 300))
+lines (x, prior /1,lwd=2,col=2)
+lines (x, posterior / max (posterior) * max(likelihood),lwd=2,col=4)
 ## likelihood is much stronger than the prior
 likelihood = dnorm (x, mean (f0s), sd (f0s) / sqrt ( 100 ) )
 prior = dnorm (x, 250, sd (f0s)) ; posterior = likelihood * prior
-plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2, 
-      xlim = c(175, 300), ylim = c(0,1.1))
-lines (x, prior / max (prior),lwd=2,col=2)
-lines (x, posterior / max (posterior),lwd=2,col=4)
+plot (x, likelihood / 1, type = 'l', ylab='Density',lwd=2, xlab='f0',
+      xlim = c(185, 300))
+lines (x, prior / 1,lwd=2,col=2)
+lines (x, posterior / max (posterior) * max(likelihood),lwd=2,col=4)
+legend (240, .15, legend = c('Prior','Likelihood','Posterior'), col = c(2,1,4),
+        lwd = 2, bty = 'n')
 ## prior overwhelms the likelihood
 likelihood = dnorm (x, mean (f0s), sd (f0s) / sqrt ( 5 ) )
 prior = dnorm (x, 250, sd (f0s)/10) ; posterior = likelihood * prior
-plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2, 
-      xlim = c(175, 300), ylim = c(0,1.1))
-lines (x, prior / max (prior),lwd=2,col=2)
-lines (x, posterior / max (posterior),lwd=2,col=4)
+plot (x, likelihood / max (1), type = 'l', ylab='Density',lwd=2, ylim =c(0,.18),
+      xlim = c(185, 300),xlab='f0')
+lines (x, prior / max (1),lwd=2,col=2)
+lines (x, posterior / max (posterior) * max(likelihood),lwd=2,col=4)
 ## prior and likelihood have about equal influence
 likelihood = dnorm (x, mean (f0s), sd (f0s) / sqrt ( 100 ) )
 prior = dnorm (x, 250, sd (f0s)/10) ; posterior = likelihood * prior
-plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2, 
-      xlim = c(175, 300), ylim = c(0,1.1))
-lines (x, prior / max (prior),lwd=2,col=2)
-lines (x, posterior / max (posterior),lwd=2,col=4)
-
+plot (x, likelihood / max (1), type = 'l', ylab='Density',lwd=2, xlab='f0',
+      xlim = c(185, 300))
+lines (x, prior / max (1),lwd=2,col=2)
+lines (x, posterior / max (posterior) * max(likelihood),lwd=2,col=4)
 ```
 
 The use of prior probabilities is often said to make Bayesian models 'subjective' but its not really a big deal. First, every model involves arbitrary decisions which can substantially affect our results. Second, a researcher will always use common sense to interpret a model. For example, before collecting my sample I can say that I expect my female average f0 to be 200 Hz or so, but think its reasonable to expect anything from 100 to 300 Hz. Based on everything we know about human speech, even these bounds are too wide, and anything outside would suggest something is very wrong. So, even if I did not use a prior, I would use my expectations to 'screen' my results, and be very wary of anything that did not meet my expectations. 
@@ -567,7 +580,7 @@ sampler_example = function (sample, mu_estimate = 0, stdev = 1, nsamples = 1000)
 
 In the plots below (code at end of chapter), you can see the algorithm begins at 0 (the initial guess) but is quickly able to find the most likely sample mean given the data (left column). In the middle, I show the distribution of the samples on the left, minus the burn-in phase (arbitrarily chosen by me). On the right, I compare our samples (blue) to the theoretical posterior distribution for the mean given the data and prior (red). I toss out the samples during the 'burn in' phase, as there are used up in trying to 'find' the correct location in the parameter space.   
 
-```{r, fig.height = 5, fig.width = 6, echo = FALSE}
+```{r, fig.height = 5, fig.width = 8, echo = FALSE}
 set.seed(1)
 ## make a random sample of data
 data_1 = rnorm (100,10,1)
@@ -584,28 +597,28 @@ samples_2 = sampler_example (data_2,0,sd(data_2), 5000)
 # a comparison of theoretical and observed posterior distributions
 par (mfrow = c(2,3), mar = c(4,4,1,1))
 plot (samples_1)
-hist (samples_1[-(1:250)], freq = FALSE, ylim = c(0,4.5), main="",col=4)
+hist (samples_1[-(1:250)], freq = FALSE, ylim = c(0,4.5), main="",col=skyblue)
 x = seq (9.7,10.5,.001)
 likelihood = dnorm (x, mean (data_1), sd(data_1) / sqrt (100) )
 prior = dnorm (x, 0, 500 ) 
 posterior = likelihood * prior
 posterior = posterior / max (posterior)
-plot (x, posterior, lwd = 4, col = 2, type = 'l')
+plot (x, posterior, lwd = 4, col = coral, type = 'l')
 density_1 = density (samples_1[-(1:250)])
 density_1$y = density_1$y / max (density_1$y)
-lines (density_1, lwd = 3, col = 4)
+lines (density_1, lwd = 3, col = skyblue)
 
 plot (samples_2)
-hist (samples_2[-(1:250)], freq = FALSE, ylim = c(0,4.5), main="",col=4)
+hist (samples_2[-(1:250)], freq = FALSE, ylim = c(0,4.5), main="",col=skyblue)
 x = seq (-50.6, -49.75,.001)
 likelihood = dnorm (x, mean (data_2), sd(data_2) / sqrt (100) )
 prior = dnorm (x, 0, 500 ) 
 posterior = likelihood * prior
 posterior = posterior / max (posterior)
-plot (x, posterior, lwd = 4, col = 2, type = 'l')
+plot (x, posterior, lwd = 4, col = coral, type = 'l')
 density_2 = density (samples_2[-(1:250)])
 density_2$y = density_2$y / max (density_2$y)
-lines (density_2, lwd = 3, col = 4)
+lines (density_2, lwd = 3, col = skyblue)
 
 ```
 
@@ -617,7 +630,7 @@ The results clearly coincide, but aren't perfect. But this sampler isn't very so
 
 Plot showing combinations of different priors and likelihoods into posteriors::
 
-```{r, fig.height = 7, eval = FALSE}
+```{r, fig.height = 7, eval = FALSE,fig.width = 8}
 x = seq (150, 301, .1)
 par (mfrow = c(4,1))
 par(mar =c(4,4,.1,.1), oma = c(1,0,1,0))  
@@ -658,7 +671,7 @@ lines (x, posterior / max (posterior),lwd=2,col=4)
 
 Plot showing the output of the example sampler included above:
  
-```{r, fig.height = 3.5, fig.width = 6, eval = FALSE}
+```{r, fig.height = 3.5, fig.width = 6, eval = FALSE,fig.width = 8}
 set.seed(1)
 ## make a random sample of data
 data_1 = rnorm (100,10,1)
