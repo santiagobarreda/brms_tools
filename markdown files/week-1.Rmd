@@ -46,7 +46,7 @@ Below we will discuss how to measure the spread and location of a set of numbers
 
 On the left, values are plotted according to the order they appear in the vector. This is not very useful. On the right, the same values have been ordered from low to high.
 
-```{r, fig.height = 3.5, fig.width = 8}
+```{r initialplot, fig.height = 3.5, fig.width = 8, fig.cap='Initial plot of values.'}
 par (mfrow = c(1,2), mar = c(1,4,1,1))
 plot (f0s, xaxt='n',xlab='', ylab = 'f0', pch = 16, col = skyblue)
 plot (sort (f0s), xaxt='n',xlab='',ylab='f0 (sorted)', pch=16, col = deepgreen)
@@ -63,7 +63,7 @@ quantile (f0s)
 
 We can look at the distribution of speakers. In the top row, points indicate individual productions, and are jittered along the y axis to make them easier to see. In the middle row we see a histogram of the same data. The histogram gives you the count of observations in each bin. In the bottom row we see a box plot of the same data. The edges of the box correspond to the 25 and 75% quantiles of the distribution, and the line in the middle of it corresponds to the median. As a result, 50% of observations are contained in the box.   
 
-```{r, fig.height = 6, fig.width = 6}
+```{r distributioncomparison, fig.height = 6, fig.width = 6, fig.cap='Different ways to consider a distribution'}
 par (mfrow = c(3,1), mar = c(1,4,1,1), oma = c(4,0,0,0))
 plot (f0s, jitter (rep(1,length(f0s))), xlim = c(140, 320), ylim = c(.95,1.05),
       yaxt='n',ylab='', pch = 16, col = yellow)
@@ -92,7 +92,7 @@ Histograms can also show this difference between total counts and probabilities.
   1) It lets you compare the distribution of values across different sample sizes. 
   2) It makes the histogram more comparable to a probability distribution. 
   
-```{r, fig.height = 3.5, fig.width = 8}
+```{r twohists1, fig.height = 3.5, fig.width = 8, fig.cap='A comarison of two histograms'}
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 
 hist (f0s, main="", col = lavender)
@@ -105,13 +105,10 @@ Imagine a circle like in a Venn diagram that contains all possible productions o
 
 Below I've repeated the data, doubling the counts. Notice that the y axis in the right panel does not change. This is because increasing the number of observations changes your counts but not the relative frequencies of observations. For instance, increasing the number of coin flips will not change the fact that 50% will be heads, but it will change the number of heads observed. 
 
-```{r, fig.height = 3.5, fig.width = 8}
-
+```{r twohists2, fig.height = 3.5, fig.width = 8, fig.cap='The counts have been doubled relative to above.'}
 par (mfrow = c(1,2), mar = c(4,4,1,1))
-
 hist (c(f0s,f0s), breaks = 10, main = "", col = lavender)
 hist (c(f0s,f0s), freq = FALSE, breaks = 10, main = "", col = deepgreen)
-
 ```
 
 ### The normal distribution
@@ -134,7 +131,7 @@ Normal distributions have two parameters. This means they vary from each other i
 
 Below, I compare the histogram of f0 values to the density of a normal distribution with a mean equal to our sample mean ($\mu = \bar{x}$) and a standard deviation equal to our sample standard deviation ($\sigma = s_x$). The density was drawn using the `dnorm` function. This function will help draw a curve representing the shape of a theoretical normal distribution with a given mean and standard deviation. 
 
-```{r, fig.height = 3, fig.width = 8}
+```{r theoretical, fig.height = 3.5, fig.width = 8, fig.cap='A comparison of the data distribution with a theoretical normal distribution.'}
 par (mfrow = c(1,1), mar = c(4,4,1,1))
 hist (f0s, freq = FALSE, main = "", breaks = 20, col = deepgreen)
 abline (v = 63.8, lwd = 2, col = 2, lty=3)
@@ -146,7 +143,7 @@ curve (dnorm (x, mean(f0s), sd(f0s)), from = 100, to = 300,
 
 When you are dealing with normally-distributed data, summary statistics can tell you a lot about the shape of your distribution, and about where you can expect the bulk of the density/distribution to lie. The left panel shows the locations of quantiles (0%, 25%, 50%, 75%, 100%), the right panel shows you the mean and standard deviations from the mean (-3, -2, 0, +1, +2, +3). Notice that ±2 standard deviations enclose most of the distribution (around 95%), and ±3 standard deviations enclose almost all of it (99%).
 
-```{r, fig.height = 3.5, fig.width = 8}
+```{r quantiles, fig.height = 3.5, fig.width = 8, fig.cap='Quantiles and standard deviations help understand the shape of a distribution.'}
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 
 hist (f0s, main = "", col = skyblue)
@@ -169,7 +166,7 @@ We do this by referring to the proportion of values expected to be less 175 Hz i
 
 Below, I use the function `pnorm` to find the proportion of values that are expected to be greater/less than 175 Hz. I use the parameters estimated form our sample to run the `pnorm`function, as these are our best guesses of the population parameters. As we can see, this value is reasonably close to our empirical proportion, which was 0.038 (3.8%). 
 
-```{r, fig.height = 3.5, fig.width = 8}
+```{r prediction, fig.height = 3.5, fig.width = 8, fig.cap='The read area relects the distribution of outcomes that satisfy f0 < 175 Hz.'}
 par (mfrow = c(1,1), mar = c(4,4,1,1))
 hist (f0s, freq = FALSE, main = "", breaks = 20, col = deepgreen)
 abline (v = 175, lwd = 2, col = 2, lty=3)
@@ -194,7 +191,6 @@ Since the total number of observations is always one. This helps us compare acro
 ```{r}
 ## probability of observing a production with an f0 under 175 Hz
 pnorm (175, mean (f0s), sd(f0s)) 
-
 ## expected count
 pnorm (175, mean (f0s), sd(f0s)) * length (f0s)
 ## actual count
@@ -207,7 +203,6 @@ We can also use this theoretical distribution to think about other possible outc
 min (f0s)
 pnorm (149, mean (f0s), sd(f0s)) # probability of observing our smallest value
 pnorm (140, mean (f0s), sd(f0s)) # probability of observing a smaller value
-
 ## predicted number of tokens below 175 Hz if we was had 5500 observations
 pnorm (175, mean (f0s), sd(f0s)) * 5500
 ```
@@ -246,20 +241,20 @@ The likelihood of any parameter estimate (e.g., $\mu$ = 175 Hz in the right pane
 
 Imagine I follow the steps above for each position along the x axis, recording the likelihood values I calculate. I then plot the product of the densities for each x value: I have just plotted a likelihood function for $\mu$ given our data. 
 
-```{r, fig.height = 3.5, fig.width = 8}
-x = f0s[1:10]   ## tiny sub sample for exampls
+```{r likelihood1, fig.height = 3.5, fig.width = 8, fig.cap='(Left) The likelihood of the population mean given the blue points in the figure. (right) The probability of the points given an assumed mean of 175 Hz.'}
+x = f0s[1:10]   ## tiny sub sample for example
 mean(x)  ## sample mean
 sd (x)   ## sample standard deviation
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 plot (x,rep(0,10), ylim = c(0,.08), pch=16,col=4, xlim = c(150,300), 
-      ylab='Density', main = 'Likelihood of mean',xlab='f0',cex.main=.6)
+      ylab='Density', main = 'Likelihood of mean',xlab='f0',cex.main=.8)
 ## here the likelihood sd is divided by the sample size
 curve (dnorm (x, mean(x), 21.9 / sqrt (10)), from = c(150,300), 
        add=TRUE, col = 2, lwd = 2)
 abline (v = c(175, 200, 225), lwd=2,lty=3)
 
-plot (x,rep(0,10), ylim = c(0,.022), pch=16,col=4,xlim = c(150,300),cex.main=.6, 
-      ylab='Density', main = "Normal distribution with mean = 175",xlab='f0')
+plot (x,rep(0,10), ylim = c(0,.022), pch=16,col=4,xlim = c(150,300),cex.main=.8, 
+      ylab='Density', main = "mean = 175",xlab='f0')
 ## now it is centered at mean = 175 Hz
 curve (dnorm (x, 175, 21.9), from = c(150,300), 
        add=TRUE, col = 2, lwd = 2)
@@ -273,18 +268,18 @@ In the left panel below, we see that a normal distribution with a $\mu$ of 200 H
 
 Finally, in the right panel below we see the the maximum likelihood estimate of 225 Hz, the value representing the peak of the likelihood function (in the left panel above). When we say that 225 Hz is the most likely mean for this data, we are saying that this data is most probably the outcome of a normal distribution centered at 225 Hz, relative to the alternatives. 
 
-```{r, fig.height = 3.5,  fig.width = 8}
+```{r likelihood2, fig.height = 3.5, fig.width = 8, fig.cap='(Left) The probability of the points given an assumed mean of 200 Hz. (right) The probability of the points given an assumed mean of 225 Hz.'}
 x = f0s[1:10]   ## tiny sub sample for exampls
 par (mfrow = c(1,2), mar = c(4,4,1,1))
-plot (x,rep(0,10), ylim = c(0,.022), pch=16,col=4,xlim= c(150,300),cex.main=.6, 
-      ylab='Density', main = "Normal distribution with mean = 200",xlab='f0')
+plot (x,rep(0,10), ylim = c(0,.022), pch=16,col=4,xlim= c(150,300),cex.main=.8, 
+      ylab='Density', main = "mean = 200",xlab='f0')
 ## distribution centered ar 200
 curve (dnorm (x, 200, 21.9), from = c(150,300), 
        add=TRUE, col = 2, lwd = 2)
 segments (x,rep(0,10),x,dnorm (x, 200, sd (x)))
 
-plot (x,rep(0,10), ylim = c(0,.022), pch=16,col=4,xlim =c(150,300),cex.main=.6, 
-      ylab='Density', main = "Normal distribution with mean = 225",xlab='f0')
+plot (x,rep(0,10), ylim = c(0,.022), pch=16,col=4,xlim =c(150,300),cex.main=.8, 
+      ylab='Density', main = "mean = 225",xlab='f0')
 ## and now at 220
 curve (dnorm (x, 225, 21.9), from = c(150,300), 
        add=TRUE, col = 2, lwd = 2)
@@ -309,7 +304,7 @@ To draw the expected likelihood function for $\mu$ given our data and our model.
 
 We can take our model and our parameter estimates and draw the likelihood function for $\mu$. We can then use the `qnorm` function to calculate quantiles for our likelihood, presented below. I added vertical lines at the 2.5% and 97.5% quantiles of our distribution. These vertical lines enclose 95% of the likelihood density, and so represent the range of values representing the 95% most likely values of $\mu$. I chose an interval enclosing 95% of the likelihood because this is used by convention. This is a commonly-used interval but otherwise has no special significance.  
 
-```{r, fig.height = 3.5,fig.width = 8}
+```{r likelihood, fig.height = 3.5, fig.width = 8, fig.cap='Likelihood of population mean given our data. Horizontal lines indicate intervals enclosing 95% of the distribution.'}
 par (mfrow =c(1,1), mar = c(4,4,1,1))
 curve (dnorm (x, mean(f0s), sd(f0s)/sqrt(length(f0s))), xlim = c(216,225),
        ylab = 'Density', xlab = 'f0', col = lavender, lwd = 4)
@@ -439,9 +434,9 @@ Notice that the above formulation means that regression models do not require th
   1) There is systematic variation in the $\mu$ of f0 across different groups, speakers, conditions, etc.
   2) The *random variation* around these predicted values of $\mu$ more or less follows a normal distribution.
 
-In the right panel I plot the individual densities of boys (red), girls (green), men (blue) and women (cyan). We see that although the data is not normally distributed, the within-group variation is. This suggests a regression model is appropriate for this data. 
+In the right panel I plot the individual densities for different speaker classes. We see that although the data is not normally distributed, the within-group variation is. This suggests a regression model is appropriate for this data. 
 
-```{r, fig.height = 3.5,fig.width = 8}
+```{r allf0s, fig.height = 3.5, fig.width = 8, fig.cap='(left) Distribution of f0 across all speakers. (right) Densities of distributions of f0 for different speaker classes: boys (red), girls (green), men (blue) and women (cyan).'}
 par (mfrow =c(1,2), mar = c(4,4,1,1))
 hist (h95$f0, main="", freq=FALSE, xlim = c(80,320), col = yellow)
 plot (density (h95$f0[h95$type=='b']),col=2,lwd=4, main='',
@@ -478,7 +473,7 @@ In the bottom-left panel we see a situation where the prior dominates the estima
 
 In the bottom-right panel we see a situation where the likelihood and the prior are equal. In this case the posterior represents compromise between new and prior knowledge.
 
-```{r, fig.height = 5.5, collapse = TRUE, echo = FALSE,fig.width = 8}
+```{r posterior, fig.height = 5.5, collapse = TRUE, echo = FALSE,fig.width = 8, fig.caption = "Demonstration of the effect of different types of priors and likelihoods on posterior distributions."}
 x = seq (150, 301, .1)
 par(mfrow = c(2,2), mar =c(4,4,.1,.1), oma = c(1,0,1,0))  
 ## likelihood is a bit stronger than the prior
@@ -580,7 +575,7 @@ sampler_example = function (sample, mu_estimate = 0, stdev = 1, nsamples = 1000)
 
 In the plots below (code at end of chapter), you can see the algorithm begins at 0 (the initial guess) but is quickly able to find the most likely sample mean given the data (left column). In the middle, I show the distribution of the samples on the left, minus the burn-in phase (arbitrarily chosen by me). On the right, I compare our samples (blue) to the theoretical posterior distribution for the mean given the data and prior (red). I toss out the samples during the 'burn in' phase, as there are used up in trying to 'find' the correct location in the parameter space.   
 
-```{r, fig.height = 5, fig.width = 8, echo = FALSE}
+```{r mcmc, fig.height = 5, fig.width = 8, echo = FALSE, fig.caption = "Demonstration of parameter estimation using a random walk, yielding a good approximation of analytically-derived values."}
 set.seed(1)
 ## make a random sample of data
 data_1 = rnorm (100,10,1)
