@@ -146,9 +146,9 @@ model = brms::brm (f0 ~ 1, data = w, chains = 1, cores = 1)
 ## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 1: 
-## Chain 1:  Elapsed Time: 0.06 seconds (Warm-up)
-## Chain 1:                0.04 seconds (Sampling)
-## Chain 1:                0.1 seconds (Total)
+## Chain 1:  Elapsed Time: 0.062 seconds (Warm-up)
+## Chain 1:                0.042 seconds (Sampling)
+## Chain 1:                0.104 seconds (Total)
 ## Chain 1:
 ```
 
@@ -298,7 +298,7 @@ curve (dnorm (x, mean (f0s), sd (f0s) / sqrt (length (f0s) )), add = TRUE,
        lwd = 4, col = yellow)
 ```
 
-![](week-2_files/figure-latex/unnamed-chunk-8-1.pdf)<!-- --> 
+<img src="week-2_files/figure-html/unnamed-chunk-8-1.png" width="768" />
 
 Recall that our model output provides information about expected values for the mean parameter:
 
@@ -369,7 +369,7 @@ boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots", col=c(yellow,coral,
 abline (h = 220.4,lty=3,col='grey',lwd=2)
 ```
 
-![](week-2_files/figure-latex/unnamed-chunk-12-1.pdf)<!-- --> 
+<img src="week-2_files/figure-html/unnamed-chunk-12-1.png" width="768" />
 
 ### Multilevel models
 
@@ -391,7 +391,7 @@ hist (w$f0[w$uspeaker == 107], main = "Histogram of speaker 107",
       xlim = c(160, 260), freq = FALSE,col=yellow)
 ```
 
-![](week-2_files/figure-latex/unnamed-chunk-13-1.pdf)<!-- --> 
+<img src="week-2_files/figure-html/unnamed-chunk-13-1.png" width="768" />
 
 A multilevel model is able to simultaneously model independent variation at multiple 'levels'. For our f0 data, these are: 
 
@@ -591,7 +591,7 @@ boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots",col=c(yellow,coral,
 abline (h = 220.4, lwd=3,lty=3)
 ```
 
-![](week-2_files/figure-latex/unnamed-chunk-17-1.pdf)<!-- --> 
+<img src="week-2_files/figure-html/unnamed-chunk-17-1.png" width="768" />
 
 ## Checking model convergence
 
@@ -779,7 +779,7 @@ In the left panel below (plot code at end of chapter) I compare the t distributi
 In the middle panel we compare this prior to the data, and see that the prior distribution is much broader (more vague) than the data distribution. The right panel compares the prior for the standard deviation parameters to the absolute value of the centered f0 data. This presentation shows how far each observation is from the mean f0 (at 220 Hz). Again, the prior distribution we have assigned for these parameters is much larger than the variation in the data. As a result, neither of these priors is going to have much of an effect on our parameter estimates.
 
 
-![](week-2_files/figure-latex/unnamed-chunk-25-1.pdf)<!-- --> 
+<img src="week-2_files/figure-html/unnamed-chunk-25-1.png" width="768" />
 
 If we compare the output of this model to `multilevel_thinned`, we see that specifying a prior has has no noticeable effect on our results. This is because the prior matters less and less when you have a lot of data, and because we have set wide priors that are appropriate (but vague) given our data. Although the priors may not matter much for models as simple as these, they can be very important when working with more complex data, and are a necessary component of Bayesian modeling. 
 
@@ -870,7 +870,7 @@ boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots",col=c(yellow,coral,
 abline (h = 220.4, lwd=3,lty=3)
 ```
 
-![](week-2_files/figure-latex/unnamed-chunk-27-1.pdf)<!-- --> 
+<img src="week-2_files/figure-html/unnamed-chunk-27-1.png" width="768" />
 
 
 ## Plot Code
