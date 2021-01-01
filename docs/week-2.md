@@ -4,7 +4,7 @@ output:
   html_document: default
 ---
 
-# Inference for a 'single group' of observations using a Bayesian multilevel model   
+# Inspecting a 'single group' of observations using a Bayesian multilevel model   
 
 In this chapter I am going to discuss how to use the `brms` package to estimate a population mean given a sample of data. For these models the data:
 

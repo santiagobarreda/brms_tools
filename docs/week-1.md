@@ -1,5 +1,5 @@
 
-# Inspecting a single sample of values  
+# Inspecting a single group of observations  
 
 In this chapter I am going to present an introduction to some fundamental statistical concepts (i.e, probability, likelihood). We will discuss how to use these concepts to make inferences about our observations.  
 

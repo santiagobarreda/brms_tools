@@ -25,7 +25,7 @@ eq:25
 eq:26
 eq:28
 eq:29
-inspecting-a-single-sample-of-values
+inspecting-a-single-group-of-observations
 data-and-research-questions
 inspecting-the-central-location-and-spread-of-values
 probability-distributions
@@ -39,7 +39,7 @@ whats-bayesian-about-these-models
 posterior-distributions
 sampling-from-the-posterior
 plot-code
-inference-for-a-single-group-of-observations-using-a-bayesian-multilevel-model
+inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model
 data-and-research-questions-1
 estimating-a-single-mean-with-the-brms-package
 the-model
@@ -55,7 +55,7 @@ checking-model-convergence
 specifying-prior-probabilities
 answering-our-research-questions
 plot-code-1
-comparing-two-groups
+comparing-two-groups-of-observations
 data-and-research-questions-2
 estimating-the-difference-two-means-with-brms
 fitting-the-model-1
