@@ -16,7 +16,7 @@ url2 = "/stats-class/master/data/h95_vowel_data.csv"
 ## read data from my Github page
 h95 = read.csv (url(paste0 (url1, url2)))
 # select the 'f0' vector, for women only (speaker type = 'w')
-f0s = h95[['f0']][h95$type == 'w']
+f0 = h95[['f0']][h95$type == 'w']
 ```
 
 
@@ -40,8 +40,8 @@ On the left, values are plotted according to the order they appear in the vector
 
 ```r
 par (mfrow = c(1,2), mar = c(1,4,1,1))
-plot (f0s, xaxt='n',xlab='', ylab = 'f0', pch = 16, col = skyblue)
-plot (sort (f0s), xaxt='n',xlab='',ylab='f0 (sorted)', pch=16, col = deepgreen)
+plot (f0, xaxt='n',xlab='', ylab = 'f0', pch = 16, col = skyblue)
+plot (sort (f0), xaxt='n',xlab='',ylab='f0 (sorted)', pch=16, col = deepgreen)
 ```
 
 <div class="figure">
@@ -54,7 +54,7 @@ We can easily find descriptive statistics like the sample mean ($\bar{x}$), the 
 
 ```r
 ## calculate basic descriptive statistics
-mean (f0s)
+mean (f0)
 ```
 
 ```
@@ -62,7 +62,7 @@ mean (f0s)
 ```
 
 ```r
-sd (f0s)
+sd (f0)
 ```
 
 ```
@@ -70,7 +70,7 @@ sd (f0s)
 ```
 
 ```r
-quantile (f0s)
+quantile (f0)
 ```
 
 ```
@@ -83,10 +83,10 @@ We can look at the distribution of speakers. In the top row, points indicate ind
 
 ```r
 par (mfrow = c(3,1), mar = c(1,4,1,1), oma = c(4,0,0,0))
-plot (f0s, jitter (rep(1,length(f0s))), xlim = c(140, 320), ylim = c(.95,1.05),
+plot (f0, jitter (rep(1,length(f0))), xlim = c(140, 320), ylim = c(.95,1.05),
       yaxt='n',ylab='', pch = 16, col = yellow)
-hist (f0s,main="", col = teal)
-boxplot (f0s, horizontal = TRUE, ylim = c(140, 320), col = coral)
+hist (f0,main="", col = teal)
+boxplot (f0, horizontal = TRUE, ylim = c(140, 320), col = coral)
 mtext (side =1, outer = TRUE, text = "f0", line = 2.5)
 ```
 
@@ -104,7 +104,7 @@ The total probability of all events is always equal to 1. This is like using 100
 
 ```r
 # the evaluation in the parenthesis will return 1 if true, 0 if false
-sum (f0s < 175)  ## number of observations the fall below threshold
+sum (f0 < 175)  ## number of observations the fall below threshold
 ```
 
 ```
@@ -112,7 +112,7 @@ sum (f0s < 175)  ## number of observations the fall below threshold
 ```
 
 ```r
-sum (f0s < 175) / length (f0s)  ## divided by total number of events
+sum (f0 < 175) / length (f0)  ## divided by total number of events
 ```
 
 ```
@@ -120,7 +120,7 @@ sum (f0s < 175) / length (f0s)  ## divided by total number of events
 ```
 
 ```r
-mean (f0s < 175) ## a shortcut to calculate probability, mean = total/length
+mean (f0 < 175) ## a shortcut to calculate probability, mean = total/length
 ```
 
 ```
@@ -138,8 +138,8 @@ Histograms can also show this difference between total counts and probabilities.
 ```r
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 
-hist (f0s, main="", col = lavender)
-hist (f0s, freq = FALSE, main = "", col = deepgreen)
+hist (f0, main="", col = lavender)
+hist (f0, freq = FALSE, main = "", col = deepgreen)
 ```
 
 <div class="figure">
@@ -156,8 +156,8 @@ Below I've repeated the data, doubling the counts. Notice that the y axis in the
 
 ```r
 par (mfrow = c(1,2), mar = c(4,4,1,1))
-hist (c(f0s,f0s), breaks = 10, main = "", col = lavender)
-hist (c(f0s,f0s), freq = FALSE, breaks = 10, main = "", col = deepgreen)
+hist (c(f0,f0), breaks = 10, main = "", col = lavender)
+hist (c(f0,f0), freq = FALSE, breaks = 10, main = "", col = deepgreen)
 ```
 
 <div class="figure">
@@ -188,10 +188,10 @@ Below, I compare the histogram of f0 values to the density of a normal distribut
 
 ```r
 par (mfrow = c(1,1), mar = c(4,4,1,1))
-hist (f0s, freq = FALSE, main = "", breaks = 20, col = deepgreen)
+hist (f0, freq = FALSE, main = "", breaks = 20, col = deepgreen)
 abline (v = 63.8, lwd = 2, col = 2, lty=3)
 ## plots the normal density (red line) using stats calculated form our sample. 
-curve (dnorm (x, mean(f0s), sd(f0s)), from = 100, to = 300, 
+curve (dnorm (x, mean(f0), sd(f0)), from = 100, to = 300, 
        lwd=3, col = coral, add = TRUE)
 ```
 
@@ -206,10 +206,10 @@ When you are dealing with normally-distributed data, summary statistics can tell
 ```r
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 
-hist (f0s, main = "", col = skyblue)
-abline (v = quantile (f0s), lwd = 2, col = deepgreen)
-hist (c(f0s,f0s), freq = FALSE, breaks = 10, main = "", col = yellow)
-abline (v = seq (mean(f0s)-3*sd(f0s),mean(f0s)+3*sd(f0s),sd(f0s)), lwd = 2, 
+hist (f0, main = "", col = skyblue)
+abline (v = quantile (f0), lwd = 2, col = deepgreen)
+hist (c(f0,f0), freq = FALSE, breaks = 10, main = "", col = yellow)
+abline (v = seq (mean(f0)-3*sd(f0),mean(f0)+3*sd(f0),sd(f0)), lwd = 2, 
         col = coral)
 ```
 
@@ -233,13 +233,13 @@ Below, I use the function `pnorm` to find the proportion of values that are expe
 
 ```r
 par (mfrow = c(1,1), mar = c(4,4,1,1))
-hist (f0s, freq = FALSE, main = "", breaks = 20, col = deepgreen)
+hist (f0, freq = FALSE, main = "", breaks = 20, col = deepgreen)
 abline (v = 175, lwd = 2, col = 2, lty=3)
 ## plots the normal density (red line) using stats calculated form our sample. 
-curve (dnorm (x, mean(f0s), sd(f0s)),from=100, to=300, lwd=2, col = 2, add=TRUE)
+curve (dnorm (x, mean(f0), sd(f0)),from=100, to=300, lwd=2, col = 2, add=TRUE)
 
 x = c(140,seq(140,175,length.out = 100),175)
-y = c(0,dnorm(seq(140,175,length.out = 100), mean (f0s), sd (f0s)),0)
+y = c(0,dnorm(seq(140,175,length.out = 100), mean (f0), sd (f0)),0)
 polygon(x, y, col='2')
 abline (v = 63.8, lwd = 2, col = 2, lty=3); abline (v = 70, lwd = 2,col=1,lty=3)
 ```
@@ -251,7 +251,7 @@ abline (v = 63.8, lwd = 2, col = 2, lty=3); abline (v = 70, lwd = 2,col=1,lty=3)
 
 ```r
 ## probability of observing a production below 175 Hz
-pnorm (175, mean (f0s), sd(f0s))
+pnorm (175, mean (f0), sd(f0))
 ```
 
 ```
@@ -260,7 +260,7 @@ pnorm (175, mean (f0s), sd(f0s))
 
 ```r
 ## probability of observing a production greater than 175 Hz
-1 - pnorm (175, mean (f0s), sd(f0s))
+1 - pnorm (175, mean (f0), sd(f0))
 ```
 
 ```
@@ -274,7 +274,7 @@ Since the total number of observations is always one. This helps us compare acro
 
 ```r
 ## probability of observing a production with an f0 under 175 Hz
-pnorm (175, mean (f0s), sd(f0s)) 
+pnorm (175, mean (f0), sd(f0)) 
 ```
 
 ```
@@ -283,7 +283,7 @@ pnorm (175, mean (f0s), sd(f0s))
 
 ```r
 ## expected count
-pnorm (175, mean (f0s), sd(f0s)) * length (f0s)
+pnorm (175, mean (f0), sd(f0)) * length (f0)
 ```
 
 ```
@@ -292,7 +292,7 @@ pnorm (175, mean (f0s), sd(f0s)) * length (f0s)
 
 ```r
 ## actual count
-sum (f0s < 175)
+sum (f0 < 175)
 ```
 
 ```
@@ -303,7 +303,7 @@ We can also use this theoretical distribution to think about other possible outc
 
 
 ```r
-min (f0s)
+min (f0)
 ```
 
 ```
@@ -311,7 +311,7 @@ min (f0s)
 ```
 
 ```r
-pnorm (149, mean (f0s), sd(f0s)) # probability of observing our smallest value
+pnorm (149, mean (f0), sd(f0)) # probability of observing our smallest value
 ```
 
 ```
@@ -319,7 +319,7 @@ pnorm (149, mean (f0s), sd(f0s)) # probability of observing our smallest value
 ```
 
 ```r
-pnorm (140, mean (f0s), sd(f0s)) # probability of observing a smaller value
+pnorm (140, mean (f0), sd(f0)) # probability of observing a smaller value
 ```
 
 ```
@@ -328,7 +328,7 @@ pnorm (140, mean (f0s), sd(f0s)) # probability of observing a smaller value
 
 ```r
 ## predicted number of tokens below 175 Hz if we was had 5500 observations
-pnorm (175, mean (f0s), sd(f0s)) * 5500
+pnorm (175, mean (f0), sd(f0)) * 5500
 ```
 
 ```
@@ -371,7 +371,7 @@ Imagine I follow the steps above for each position along the x axis, recording t
 
 
 ```r
-x = f0s[1:10]   ## tiny sub sample for example
+x = f0[1:10]   ## tiny sub sample for example
 mean(x)  ## sample mean
 ```
 
@@ -417,7 +417,7 @@ Finally, in the right panel below we see the the maximum likelihood estimate of 
 
 
 ```r
-x = f0s[1:10]   ## tiny sub sample for exampls
+x = f0[1:10]   ## tiny sub sample for exampls
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 plot (x,rep(0,10), ylim = c(0,.022), pch=16,col=4,xlim= c(150,300),cex.main=.8, 
       ylab='Density', main = "mean = 200",xlab='f0')
@@ -447,7 +447,7 @@ We can take this same approach to make inferences about *parameters* when their 
 
 
 ```r
-mean (f0s)   ## sample mean
+mean (f0)   ## sample mean
 ```
 
 ```
@@ -455,7 +455,7 @@ mean (f0s)   ## sample mean
 ```
 
 ```r
-sd (f0s)     ## sample standard deviation
+sd (f0)     ## sample standard deviation
 ```
 
 ```
@@ -463,7 +463,7 @@ sd (f0s)     ## sample standard deviation
 ```
 
 ```r
-length (f0s)  ## sample size
+length (f0)  ## sample size
 ```
 
 ```
@@ -471,7 +471,7 @@ length (f0s)  ## sample size
 ```
 
 ```r
-sd (f0s) / sqrt ( length (f0s) ) ## the standard deviation of the likelihood function
+sd (f0) / sqrt ( length (f0) ) ## the standard deviation of the likelihood function
 ```
 
 ```
@@ -485,9 +485,9 @@ We can take our model and our parameter estimates and draw the likelihood functi
 
 ```r
 par (mfrow =c(1,1), mar = c(4,4,1,1))
-curve (dnorm (x, mean(f0s), sd(f0s)/sqrt(length(f0s))), xlim = c(216,225),
+curve (dnorm (x, mean(f0), sd(f0)/sqrt(length(f0))), xlim = c(216,225),
        ylab = 'Density', xlab = 'f0', col = lavender, lwd = 4)
-quantiles = qnorm (c(0.025, 0.975), mean (f0s), sd (f0s) / sqrt (length (f0s) ) )
+quantiles = qnorm (c(0.025, 0.975), mean (f0), sd (f0) / sqrt (length (f0) ) )
 quantiles
 ```
 
@@ -554,11 +554,11 @@ $$
 
 This says that we expect that the tokens of the variable we are interested in is distributed according to ($\sim$) a normal distribution with those parameters. 
 
-Notice hat $y$ gets a subscript while $\mu$ and $\sigma$ do not. This is because for right now, those parameters are fixed for all observations, while the value of $y$ changes for each observation based on the $i$ subscript. For example, below I set $i=2$ and use this index variable to show the second element of the data vector, i.e. $f0s_{i=2}=214$.
+Notice hat $y$ gets a subscript while $\mu$ and $\sigma$ do not. This is because for right now, those parameters are fixed for all observations, while the value of $y$ changes for each observation based on the $i$ subscript. For example, below I set $i=2$ and use this index variable to show the second element of the data vector, i.e. $f0_{i=2}=214$.
 
 
 ```r
-head (f0s)
+head (f0)
 ```
 
 ```
@@ -567,7 +567,7 @@ head (f0s)
 
 ```r
 i = 2
-f0s[2]
+f0[2]
 ```
 
 ```
@@ -608,8 +608,8 @@ The distribution on the left below is the original data, centered at 220.4 Hz an
 
 ```r
 par (mfrow =c(1,2), mar = c(4,4,1,1))
-hist (f0s, main="", freq=FALSE, col = yellow)
-hist (f0s - mean (f0s), main="", freq=FALSE, col = coral)
+hist (f0, main="", freq=FALSE, col = yellow)
+hist (f0 - mean (f0), main="", freq=FALSE, col = coral)
 ```
 
 <div class="figure">
@@ -801,8 +801,8 @@ par (mfrow = c(4,1))
 par(mar =c(4,4,.1,.1), oma = c(1,0,1,0))  
 
 ## likelihood is a bit stronger than the prior
-likelihood = dnorm (x, mean (f0s), sd (f0s) / sqrt ( 5 ) )
-prior = dnorm (x, 250, sd (f0s)) ; posterior = likelihood * prior
+likelihood = dnorm (x, mean (f0), sd (f0) / sqrt ( 5 ) )
+prior = dnorm (x, 250, sd (f0)) ; posterior = likelihood * prior
 plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2, 
       xlim = c(175, 300), ylim = c(0,1.1))
 lines (x, prior / max (prior),lwd=2,col=2)
@@ -810,22 +810,22 @@ lines (x, posterior / max (posterior),lwd=2,col=4)
 legend (178, 1, legend = c('Prior','Likelihood','Posterior'), col = c(2,1,4),
         lwd = 2, bty = 'n')
 ## likelihood is much stronger than the prior
-likelihood = dnorm (x, mean (f0s), sd (f0s) / sqrt ( 100 ) )
-prior = dnorm (x, 250, sd (f0s)) ; posterior = likelihood * prior
+likelihood = dnorm (x, mean (f0), sd (f0) / sqrt ( 100 ) )
+prior = dnorm (x, 250, sd (f0)) ; posterior = likelihood * prior
 plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2, 
       xlim = c(175, 300), ylim = c(0,1.1))
 lines (x, prior / max (prior),lwd=2,col=2)
 lines (x, posterior / max (posterior),lwd=2,col=4)
 ## prior overwhelms the likelihood
-likelihood = dnorm (x, mean (f0s), sd (f0s) / sqrt ( 5 ) )
-prior = dnorm (x, 250, sd (f0s)/10) ; posterior = likelihood * prior
+likelihood = dnorm (x, mean (f0), sd (f0) / sqrt ( 5 ) )
+prior = dnorm (x, 250, sd (f0)/10) ; posterior = likelihood * prior
 plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2, 
       xlim = c(175, 300), ylim = c(0,1.1))
 lines (x, prior / max (prior),lwd=2,col=2)
 lines (x, posterior / max (posterior),lwd=2,col=4)
 ## prior and likelihood have about equal influence
-likelihood = dnorm (x, mean (f0s), sd (f0s) / sqrt ( 100 ) )
-prior = dnorm (x, 250, sd (f0s)/10) ; posterior = likelihood * prior
+likelihood = dnorm (x, mean (f0), sd (f0) / sqrt ( 100 ) )
+prior = dnorm (x, 250, sd (f0)/10) ; posterior = likelihood * prior
 plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2, 
       xlim = c(175, 300), ylim = c(0,1.1))
 lines (x, prior / max (prior),lwd=2,col=2)

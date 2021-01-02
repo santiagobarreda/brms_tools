@@ -24,7 +24,7 @@ h95$adult[h95$type %in% c('g','b')] = "child"
 ## split up data by into male and female groups, only some columns
 males = h95[h95$type %in% c('m','b'),c('f0', 'adult', 'type', 'uspeaker')]
 females = h95[h95$type %in% c('w','g'),c('f0', 'adult', 'type', 'uspeaker')]
-f0s = females[['f0']]
+f0 = females[['f0']]
 
 # re-factor to remove excluded subjects
 males$uspeaker = factor (males$uspeaker)  
@@ -95,7 +95,7 @@ First we find the mean and the standard deviation of our data to use in the prio
 
 ```r
 ## establish data statistics for priors
-mean (f0s)
+mean (f0)
 ```
 
 ```
@@ -103,7 +103,7 @@ mean (f0s)
 ```
 
 ```r
-sd (f0s)
+sd (f0)
 ```
 
 ```

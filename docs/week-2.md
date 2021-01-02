@@ -29,7 +29,7 @@ w = h95[h95$type == 'w',]
 # this is unique subject numbers across all groups
 w$uspeaker = factor (w$uspeaker)  
 # select only the vector of interest
-f0s = w$f0
+f0 = w$f0
 ```
 
 
@@ -234,7 +234,7 @@ Notice that the parameter estimate and intervals almost exactly match the estima
 
 ```r
 ## sample mean
-mean (f0s)
+mean (f0)
 ```
 
 ```
@@ -243,7 +243,7 @@ mean (f0s)
 
 ```r
 ## theoretical quantiles for likelihood of mean
-qnorm (c(0.025, 0.975), mean (f0s), sd (f0s) / sqrt (length (f0s) ) )
+qnorm (c(0.025, 0.975), mean (f0), sd (f0) / sqrt (length (f0) ) )
 ```
 
 ```
@@ -308,7 +308,7 @@ I can plot the individual samples for the mean parameter on the left below. On t
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 plot (samples[,1], xlab = 'Sample number',ylab = 'f0',col=teal,pch=16)
 hist (samples[,1], freq = FALSE, breaks = 20,main='',xlab='f0',col=maroon)
-curve (dnorm (x, mean (f0s), sd (f0s) / sqrt (length (f0s) )), add = TRUE,
+curve (dnorm (x, mean (f0), sd (f0) / sqrt (length (f0) )), add = TRUE,
        lwd = 4, col = yellow)
 ```
 
@@ -376,7 +376,7 @@ These boxplots shows that each speaker has their own average f0, and that their 
 
 ```r
 par (mar = c(4,4,2,1)); layout (mat = c(1,2), heights = c(.3,.7))
-boxplot (f0s, main = "Overall Boxplot", col="lavender", 
+boxplot (f0, main = "Overall Boxplot", col="lavender", 
          horizontal = TRUE, ylim = c(140,320)) 
 boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots", col=c(yellow,coral,
          deepgreen,teal), horizontal = TRUE, ylim = c(140,320)) 
@@ -715,7 +715,7 @@ If you don't specify prior probabilities for your parameters, `brm` will use a '
 
 
 ```r
-mean(f0s)
+mean(f0)
 ```
 
 ```
@@ -723,7 +723,7 @@ mean(f0s)
 ```
 
 ```r
-sd(f0s)
+sd(f0)
 ```
 
 ```
@@ -905,14 +905,14 @@ lines (x2, y2, lwd=2,col=2)
 ## plot t
 plot (x2, y1, type = 'l', lwd = 2, ylab = 'Density', xlab = 'f0', col = 4)
 ## compare to equivalent normal
-hist (f0s, add = TRUE, freq = FALSE)
+hist (f0, add = TRUE, freq = FALSE)
 
 ## plot prior for standard deviations
 x3 = x2 - mean (x2)
 y3 = dt (x1, 3); y3 = y3 / max (y3) / 20
 plot (x3[x3>0], y3[x3>0], type = 'l', lwd = 2, ylab = 'Density', 
       xlab = 'f0', col = 4)
-hist (abs (f0s - mean (f0s)), add = TRUE, freq = FALSE)
+hist (abs (f0 - mean (f0)), add = TRUE, freq = FALSE)
 ```
 
 
