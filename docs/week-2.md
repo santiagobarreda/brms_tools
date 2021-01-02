@@ -52,57 +52,71 @@ The `brms` [Bayesian regression models](https://github.com/paul-buerkner/brms) p
 
 Model structures are expressed in R using a very specific syntax. Think of writing a model formula as writing a language within R. The good thing about learning to write models is then you can use this knowledge to describe your models in your work, and to interpret other people's models. 
 
-The model formulas resemble regression equations to some extent, but there are some differences. Remember that regression models can be thought of like this:
+The model formulas resemble regression equations to some extent, but there are some differences. Remember that regression models can be thought of in either of two two ways:
 
 $$
-y = \mu + \varepsilon
-(\#eq:21)
+y_i = \mu_i + \varepsilon_i
+(\#eq:21) \\
+y_i \sim \mathcal{N}(\mu_i,\sigma) 
+(\#eq:212) \\
 $$
 
-Which means that your observed variable $y$ is the sum of some of some average value ($\mu$) and some random error $\mu$. The random error is expected to be normally distributed with some unknown standard deviation ($\varepsilon \sim \mathcal{N}(0,\sigma)$). 
+The top line says that your observed variable for any given trial $y_i$ is the sum of some of some average expected value for that trial, ($\mu_i$) and some specific random error for that trial ($\mu_i$). The random error is expected to be normally distributed with some unknown standard deviation ($\varepsilon_i \sim \mathcal{N}(0,\sigma)$). The second line presents the $y$ variable as being a normally-distributed variable with a trial-specific mean of $\mu_i$, and a fixed standard deviation $\sigma_{error}$
 
-What we would really like is to understand orderly variation in $\mu$ by breaking it up into parts ($\mathrm{x}_{1}, \mathrm{x}_{2},...$) when combined using some weights ($a, b,...$). 
+In general, in regression models we would really like to understand orderly variation in $\mu_i$ from trial to trial by breaking it up into parts ($\mathrm{x}_{1}, \mathrm{x}_{2},...$) when combined using some weights ($\beta_1, \beta_2,...$). 
 
 $$
-y = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + ... + \varepsilon
+\mu_i = \beta_1*\mathrm{x}_{i1} + \beta_2*\mathrm{x}_{i2}+...+\beta_j*\mathrm{x}_{ij}
 (\#eq:22)
 $$
 
-'Fitting' a regression model consists of trying to 'guess' the values of the weighing factors ($a$ and $b$ above), called the *model coefficients*. When we are only trying to estimate a single average, we don't have any predictors to explain variation in $\mu$. In fact, our model structure suggests we expect no variation in $\mu$. 
+'Fitting' a regression model consists of trying to 'guess' the values of the weighing factors ($\beta$), called the *model coefficients*. When we are only trying to estimate a single average, we don't have any predictors to explain variation in $\mu_i$. In fact, our model structure suggests we expect no variation in $\mu_i$ from trial to trial!. 
 
-Mathematically, we can't just say 'we have no predictor' since everything needs to be represented by a number. As a result, we use a 'predictor' with a value of 1 so that our regression equation is:
+Mathematically, we can't just say 'we have no predictor' since everything needs to be represented by a number. As a result, we use a single 'predictor' $\mathrm{x}$ with a value of 1 so that our regression equation is:
 
 $$
-y = a*1 + \varepsilon
+\mu_i = \beta_1*1
 (\#eq:23)
 $$
 
-Now our model is trying to guess the value of a single parameter ($a$), and we expect this parameter to be equal to $\mu$ since it is being multiplied by a 'predictor' with a constant value of 1. 
+Now our model is trying to guess the value of a single parameter ($\beta_1$), and we expect this parameter to be equal to $\mu_i$ since it is being multiplied by a 'predictor' with a constant value of 1. 
 
-This kind of model is called an 'Intercept only' model. Regression models are really about representing *differences*, differences between groups and across conditions. When you are encoding differences, you need an overall reference point. For example, saying that something is 5 miles north is only interpretable given some reference point. The 'reference point' used by your model is called your 'Intercept'. Basically, our model consists *only* of a single reference point, the intercept. Also, when a predictor is just being multiplied by 1, we can just omit it from the regression model (but its still secretly there). 
+This kind of model is called an 'Intercept only' model. Regression models are really about representing *differences*, differences between groups and across conditions. When you are encoding differences, you need an overall reference point. For example, saying that something is 5 miles north is only interpretable given some reference point. The 'reference point' used by your model is called your 'Intercept'. Basically, our model consists *only* of a single reference point, and the $\beta_1$ parameter reflects its value (as shown in Equation \@ref(eq:231)). 
 
-Our complete model is now:
+As a result, the $\beta_1$ coefficient is called the 'intercept' in our model. When a coefficient is just being multiplied by a 'fake' predictor that just equals 1, we can omit it from the regression model (but its still secretly there). 
+
+Based on the above, our f0 model can be thought of like this:
 
 $$
-\begin{split}
-f0 = Intercept + \varepsilon  \\
-\varepsilon \sim \mathcal{N}(0,\sigma) \\
-\end{split}
+f0_i \sim \mathcal{N}(\mu_i,\sigma) \\
+\mu_i = Intercept \\
+(\#eq:24)
 $$
 
-Put in English, each line in the model says the following:
+Put in plain English, each line in the model says the following:
  
-  * f0 is equal to the sum the intercept and error.
+  * We expect f0 for a given observation $i$ is equal to be normally distributed according to some trial-specific expected value and some unknown (but fixed) standard deviation. 
 
-  * the error is also drawn from a normal distribution with a mean of 0 and a standard deviation of $\sigma$. This distribution represents all deviation in f0 around the mean f0 for the sample. 
+  * The expected value for any given trial ($\mu_i$) is equal to the intercept of the model for all trials. This means its fixed and we have the same expected value for all tokens!
+  
+What the model also says implicitly, is that the error is drawn from a normal distribution with a mean of 0 and a standard deviation of $\sigma$. This distribution represents all deviations in f0 around the mean f0 for the sample ($\mu_i$). In other words, the error for this model is expected to look like:
+
+$$
+$\varepsilon_i \sim \mathcal{N}(0,\sigma) $
+(\#eq:25)
+$$
+  
+### The model formula
 
 Generally, model formulas in R have the form:
 
 `y ~ predictor`
 
-The variable we are interested in understanding ($y$) goes on the left hand side, and on our predictors go on the right hand side, separated by a $\sim$. Notice that the random term ($\varepsilon$) is not included. The formula above can be read as 'y is distributed according to some predictor', which really means "we think there is systematic variation in our y variable that can be understood by considering its joint variation with our predictor variable(s).
+where all variables are represented by their names in your data. The variable we are interested in understanding ($y$) goes on the left hand side, and on our predictors go on the right hand side, separated by a $\sim$. Notice that the random term ($\varepsilon$) is not included in the model formula. 
 
-For intercept only models, the number `1` is included in the model formula to indicate that a single constant value is being estimated. As a result, our model formula will have the form `f0 ~ 1`. This model could be said out loud like "we are trying to estimate the mean of f0" or "we are predicting mean f0 given only an intercept". 
+The formula above can be read as 'y is distributed according to some predictor', which really means "we think there is systematic variation in our y variable that can be understood by considering its joint variation with our predictor variable(s).
+
+For intercept only models, the number `1` is included in the model formula to indicate that a single constant value is being estimated (as in  \@ref(eq:23)). As a result, our model formula will have the form `f0 ~ 1`. This model could be said out loud like "we are trying to estimate the mean of f0" or "we are predicting mean f0 given only an intercept". 
 
 ### Calling the `brm` function
 
@@ -236,7 +250,7 @@ qnorm (c(0.025, 0.975), mean (f0s), sd (f0s) / sqrt (length (f0s) ) )
 ## [1] 218.5047 222.2974
 ```
 
-Our model also provides us an estimate of the error ($\varepsilon$), under 'Family Specific Parameters: sigma'. This estimate closely matches our sample standard deviation ($s_{x}$) estimate of 23.2. In addition, we also get a 95% credible interval for this parameter (2.5% = 21.99, 97.5% = 24.61). 
+Our model also provides us an estimate of the error standard deviation($\sigma$), under 'Family Specific Parameters: sigma'. This estimate closely matches our sample standard deviation ($s_{x}$) estimate of 23.2. In addition, we also get a 95% credible interval for this parameter (2.5% = 21.99, 97.5% = 24.61). 
 
 ```
 Family Specific Parameters: 
@@ -422,38 +436,34 @@ which meant 'predict f0 using only an intercept'. Now the model formula will loo
 
 `f0 ~ 1 + ( 1 | uspeaker)` 
 
-When you place a predictor in the formula in parenthesis, on the right-hand-side of a pipe, like this `( | predictor )`, you tell `brm` that you expect data to be clustered according to each category represented in the grouping vector. In this case, we are telling `brm` that each unique speaker is a cluster of data. Whatever you put in the left-hand-side of the parentheses `( in here | predictor )` is the model for each subcluster! 
+When you place a predictor in the formula in parenthesis and on the right-hand-side of a pipe, like this `( | predictor )`, you tell `brm` that you expect data to be clustered according to each category represented in the grouping vector. In this case, we are telling `brm` that each unique speaker is a cluster of data. Whatever you put in the left-hand-side of the parentheses `( in here | predictor )` is the model for each subcluster! 
 
-So what does this model formula mean: `f0 ~ 1 + ( 1 | uspeaker)`? It tells `brm`: predict f0 based on only an intercept, and also calculate a separate intercept for each speaker. Effectively, this model formula is telling `brm` to figure out all the information presented in the figures above.
+So what does this model formula mean: `f0 ~ 1 + ( 1 | uspeaker)`? It tells `brm`: predict f0 based on only an intercept, but also allow intercept values to vary separately for each speaker. Effectively, this model formula is telling `brm` to figure out all the information presented in the figures above.
 
 This regression model is now something like this:
 
 $$
-y = \mu_{overall} + \mu_{speaker}+\varepsilon
+f0_i \sim \mathcal{N}(\mu_i,\sigma) \\
+\mu_i = Intercept + \beta_{uspeaker_i}
 (\#eq:24)
 $$
 
-Recall that when we predict an intercept in a regression model, we actually perform the following decomposition $\mu=parameter*1$. This means that we are actually just fitting a parameter that we expect to equal the value of the $\mu$ we are interested in. 
+In English, the model above says: we expect f0 to be normally distributed. The f0 value we expect for any given token is equal to some overall average ($Intercept$), and some value associated with each the individual speaker (\beta_{uspeaker,i}) who uttered the trial. 
 
-Below, where I have decomposed each $\mu$ into its constituent 'predictors' (1) and parameters ($a, b$).
+In addition to the  coefficient estimating the overall intercept, we know have another term $\beta_{uspeaker}$. This coefficient is actually a set of coefficients since it has a different value for each speaker (its a vector). It has a different value for each speaker because it will reflect variation in $\mu_{speaker}$, the average f0 value produced by each speaker. However, $\mu_{speaker}$ is a random variable since it reflects the random average f0 of each person drawn from the population. If $\mu_{speaker}$ behaves like a random variable, then the coefficients that reflect this value in our model ($\beta_{uspeaker}$) will behave in the same way. 
 
-$$
-y = a*1 + b_{speaker}*1 + \varepsilon
-(\#eq:25)
-$$
+This means that actually our model has *two* random variables. The first one is the error term $\varepsilon \sim \mathcal{N}(0,\sigma_{error})$, which has a mean of 0 and a standard deviation which we can refer to as $\sigma_{error}$. The second is the random terms that allow for speaker-specific adjustments to the intercept ($\beta_{uspeaker}$), that can also be thought of as random draw from a normal distribution.
 
-In addition to the  coefficient estimating the overall intercept ($a$), we know have another term $b_{speaker}$. This coefficient is actually a set of coefficients since it has a different value for each speaker (its a vector). It has a different value for each speaker because it will reflect variation in $\mu_{speaker}$. However, $\mu_{speaker}$ is a random variable since it reflects the random average f0 of each person drawn from the population. If $\mu_{speaker}$ behaves like a random variable, then the coefficients that reflect this value in our model ($b_{speaker}$) will behave in the same way. 
+A careful consideration of the model in equation 2.4 suggests that the ($\beta_{uspeaker}$) coefficients can't actually be exactly equal to $\mu_{speaker}$), the average f0 for a speaker. If the overall mean (the intercept) is 220 Hz and a speaker's average is 230, this would suggest a predicted average of 450 ($\mu_{overall} + \mu_{speaker}$) for this speaker. Clearly that is not how the model should be working. 
 
-This means that actually our model has *two* random variables. The first one is the error term $\varepsilon \sim \mathcal{N}(0,\sigma_{error})$, which has a mean of 0 and a standard deviation which we can refer to as $\sigma_{error}$. The second is the random, speaker-specific intercepts, or by-speaker intercepts, that can also be thought of as random draw from a normal distribution.
-
-A careful consideration of the model in equation 2.4 suggests that this model wouldn't really work. If the overall mean is 220 Hz and a speaker's average is 230, this would suggest a predicted average of 450 ($\mu_{overall} + \mu_{speaker}$) for this speaker. Clearly that is not how the model should be working. 
-
-Recall that I previously said that regression models encode *differences*. Our model already encodes the overall data average in the $\mu_{overall}$ parameter. Thus, the speaker-specific averages only need to contain information about *differences* to this overall average. As a result, the model parameters for mean f0 across all speakers will be centered at 0 (i.e., the average), and will tend to be normally distributed with a population-specific standard deviation. 
+Recall that I previously said that regression models encode *differences*. Our model already encodes the overall data average in the intercept parameter. Thus, the speaker-specific averages only need to contain information about *differences* to this reference value. As a result, the model parameters for mean f0 across all speakers will be centered at 0 (i.e., the average), and will tend to be normally distributed with a population-specific standard deviation. 
 
 Since our model parameters represent speaker-specific deviations rather than their actual mean f0s, people often use this symbol, $\gamma$, for them instead of $\mu$, where $\gamma = \mu_{speaker} - \mu_{overall}$. We can show the expected distribution of this variable below, where $\sigma_{speakers}$ is a population-specific standard deviation term.
 
 $$
-\gamma_{uspeaker} \sim \mathcal{N}(0,\sigma_{speakers})
+\gamma_{i} \sim \mathcal{N}(0,\sigma_{speakers}) \\
+\beta_{i} = \gamma_{i}
+
 (\#eq:26)
 $$
 
@@ -461,19 +471,20 @@ Our overall model is now as shown below, made specific for the data we have, and
 
 $$
 \begin{split}
-f0 = Intercept + \gamma_{uspeaker} + \varepsilon  \\
-\gamma_{uspeaker} \sim \mathcal{N}(0,\sigma_{speakers}) \\
-\varepsilon \sim \mathcal{N}(0,\sigma_{error}) \\
+f0_i \sim \mathcal{N}(\mu_i,\sigma_{error}) \\
+
+\mu_i = Intercept + \beta_{uspeaker_i} \\
+\beta_{uspeaker} \sim \mathcal{N}(0,\sigma_{speakers}) \\
 \end{split}
 $$
 
 Each line in the model says the following:
  
-  * f0 is equal to the sum the intercept, a speaker-specific deflection from the intercept, and error.
+  * the observed f0 for a given trial is expected to be normally distributed around a trial-specific mean, with some unknown but fixed standard deviation. 
 
-  * the speaker intercepts are drawn from a normal distribution with a mean of 0 and a standard deviation of $\sigma_{speakers}$. This distribution represents the random variation of speakers around the average f0 for the population. 
+  * the expected value for a given trial ($\mu_i$) is equal to the model intercept, plus some speaker-specific deviation/difference to the intercept for the speaker that produced that trial ($\beta_{uspeaker_i}$). 
 
-  * the error is also drawn from a normal distribution with a mean of 0 and a standard deviation of $\sigma_{error}$. This distribution represents the random within-speaker variation of productions around the average f0 for the speaker. 
+  * the speaker effects ($\beta_{uspeaker}$) are also drawn from a normal distribution with a mean of 0 and a standard deviation of $\sigma_{speakers}$. This distribution represents the random within-speaker variation of productions around the average f0 for the speaker. 
 
 There is a very important difference in how the initial and final models we fit view and partition the variation in our model. The initial model we fit viewed the variation in the model like this:
 
@@ -723,7 +734,7 @@ In the example below, I use this information to set reasonable bounds on the par
 
 * Intercept: this is a unique class, only for intercepts.
 * b: this is for all the non-intercept predictors. There are none in this model.
-* sd: this is for all standard deviation parameters. In our example this is `sd(Intercept)` for `uspeaker` ($\sigma_{speaker}$), and `sigma` ($\sigma_{error}$).
+* sd: this is for all standard deviation parameters. In our example this is `sd(Intercept)` for `uspeaker` ($\sigma_{speakers}$), and `sigma` ($\sigma_{error}$).
 
 Both priors below use a 't' distribution, which is just like a normal distribution but it is more pointy, and has more density in the outer parts of the distribution. I use this because it has good properties, but you can use normal priors, or any other priors that you think work for your model. Rather than focusing on the mathematical properties of priors, the most important thing is that their *shape* reflect the distribution of credible parameter values a priori (before you conducted your experiment). 
 
@@ -903,6 +914,29 @@ plot (x3[x3>0], y3[x3>0], type = 'l', lwd = 2, ylab = 'Density',
       xlab = 'f0', col = 4)
 hist (abs (f0s - mean (f0s)), add = TRUE, freq = FALSE)
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

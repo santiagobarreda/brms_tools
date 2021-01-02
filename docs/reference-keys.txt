@@ -8,9 +8,11 @@ fig:prediction
 fig:likelihood1
 fig:likelihood2
 fig:likelihood
+eq:1
 eq:2
 eq:3
 eq:4
+fig:errorhist
 eq:5
 eq:6
 eq:7
@@ -18,6 +20,7 @@ eq:8
 eq:9
 fig:allf0s
 eq:21
+eq:212
 eq:22
 eq:23
 eq:24
@@ -43,6 +46,7 @@ inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model
 data-and-research-questions-1
 estimating-a-single-mean-with-the-brms-package
 the-model
+the-model-formula
 calling-the-brm-function
 interpreting-the-model-print-statement
 seeing-the-samples

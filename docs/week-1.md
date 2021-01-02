@@ -531,9 +531,13 @@ Here, I am going to address what is meant by two aspects of the term 'Bayesian m
 
 ### What are regression models?
 
+Before beginning this section I just want to say that its ok if much of this section makes no sense right now. It will make more sense once you start to actually build models and it becomes less hypothetical and more practical. I will use the terms and concepts described here in later chapters, but I will re-explain it each time. If you think that a model in a later section is not explained in as much detail as you would like, look at this section again!
+
 I have been referring somewhat obliquely to 'models' without really explaining what I mean by this. It's difficult to offer a precise definition because the term is so broad, but 'regression' modeling can be thought of as trying to understand variation the mean parameter ($\mu$) of a normal distributions. Actually, you can use many other probability distributions, but for now we will focus on models based on the normal distribution.
 
 Basically it goes like this:
+
+* you have a variable you are interested in, $y$, which is is a vector containing N observations. We can refer to any one of these observations like this $y_i$ for the $i^{th}$ observation.
 
 * you assume that your data is well described by a normal probability distribution. This is a mathematical function ($\mathcal{N}(\mu,\sigma)$) that described what is and is not probable based on two parameters. 
 
@@ -541,21 +545,43 @@ Basically it goes like this:
 
 * the variation in the mean of this distribution can be understood using some other variables. 
 
-We can write this model more formally like:
+We can write this model more formally like this:
 
-\begin{equation}
-  y \sim \mathcal{N}(\mu,\sigma)
-\end{equation}
+$$
+  y_i \sim \mathcal{N}(\mu,\sigma)
+  (\#eq:1)
+$$
+
+This says that we expect that the tokens of the variable we are interested in is distributed according to ($\sim$) a normal distribution with those parameters. 
+
+Notice hat $y$ gets a subscript while $\mu$ and $\sigma$ do not. This is because for right now, those parameters are fixed for all observations, while the value of $y$ changes for each observation based on the $i$ subscript. For example, below I set $i=2$ and use this index variable to show the second element of the data vector, i.e. $f0s_{i=2}=214$.
 
 
-This says that we expect that the variable we are interested in is distributed according to ($\sim$) a normal distribution with those parameters. Basically, this just formalizes the fact that we think the *shape* of our data will be like that of a normal distribution with a mean equal to $\mu$ and a standard deviation equal to $\sigma$. 
+```r
+head (f0s)
+```
+
+```
+## [1] 225 214 192 233 223 223
+```
+
+```r
+i = 2
+f0s[2]
+```
+
+```
+## [1] 214
+```
+
+Equation \@ref(eq:1) just formalizes the fact that we think the *shape* of our data will be like that of a normal distribution with a mean equal to $\mu$ and a standard deviation equal to $\sigma$.
 
 When you see this, $\mathcal{N}(\mu,\sigma)$, just picture in your mind the shape of a normal distribution, like if you see this $y=x^2$ you may imagine a parabola. $\mathcal{N}(\mu,\sigma)$ Really just represents that shape of the normal distribution, and the associated expectation about more and less probable outcomes. 
 
 The above relationship can also be presented like this:
 
 $$
-y = \mu + \mathcal{N}(0,\sigma)
+y_i = \mu + \mathcal{N}(0,\sigma)
 (\#eq:2)
 $$
 
@@ -568,12 +594,12 @@ Notice that we got rid of the $\sim$ symbol, moved $\mu$ out of the distribution
 In terms of our data, I might express the distribution in either of the following ways:
 
 $$
-f0 = \mathcal{N}(220.4,23.2)
+f0_i = \mathcal{N}(220.4,23.2)
 (\#eq:3)
 $$
 
 $$
-f0 = 220.4 + \mathcal{N}(0,23.2)
+f0_i = 220.4 + \mathcal{N}(0,23.2)
 (\#eq:4)
 $$
 
@@ -586,47 +612,64 @@ hist (f0s, main="", freq=FALSE, col = yellow)
 hist (f0s - mean (f0s), main="", freq=FALSE, col = coral)
 ```
 
-<img src="week-1_files/figure-html/unnamed-chunk-8-1.png" width="768" />
+<div class="figure">
+<img src="week-1_files/figure-html/errorhist-1.png" alt="(left) Histogram of data. (right) Histogram of centered data, basically the error distribution." width="768" />
+<p class="caption">(\#fig:errorhist)(left) Histogram of data. (right) Histogram of centered data, basically the error distribution.</p>
+</div>
 
-In regression models, we can decompose systematic variation in $\mu$ into component parts, based on $i$ predictor variables (the  $\mathrm{x}_{i}$). These $\mathrm{x}$ variables the co-vary (vary with) our $y$ variable, and that we think help explain the variation in $y$. Below, I am saying that I think $\mu$ is actually equal to some combination sum of $\mathrm{x}_{1}$ $\mathrm{x}_{2}$ and $\mathrm{x}_{3}$. For example, I could think that f0 could be affected by vowel category ($\mathrm{x}_{1}$), the height of the speaker ($\mathrm{x}_{2}$), and whether the utterance is a sentence or a question ($\mathrm{x}_{3}$). 
+In regression models, we can decompose systematic variation in $\mu$ into component parts, based on some number predictor variables, $\mathrm{x}$. These predictor variables co-vary (vary with) our $y$ variable, and that we think help explain the variation in $y$. 
+
+Below, I am saying that I think $\mu$ is actually equal to some combination sum of $\mathrm{x}_{1}$ $\mathrm{x}_{2}$ and $\mathrm{x}_{3}$. For example, I could think that f0 could be affected by speaker age ($\mathrm{x}_{1}$), the gender of the speaker ($\mathrm{x}_{2}$), and vowel category ($\mathrm{x}_{3}$). 
 
 $$
 \mu = \mathrm{x}_{1} + \mathrm{x}_{2} + \mathrm{x}_{3}
 (\#eq:5)
 $$
 
-Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a *weighting* of the predictors will be necessary. For example, maybe $\mathrm{x}_{1}$ is twice as important as the other two predictors and so $a$ is 2, while $b$ and $c$ are 1. 
+But actually, the values of the predictor variables will vary from trial to trial. Often the whole point of running an experiment is to predict differences in observations for different predictor values! So obviously, $\mu$ will also need to vary from trial to trial. That means that the equation above should actually be more like below, with the $i$ subscripts indicating that the equation refers to the value of the predictors and expected mean, *for that trial* rather than overall. 
 
 $$
-\mu = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3}  
+\mu_i = \mathrm{x}_{i1} + \mathrm{x}_{i2} + \mathrm{x}_{i3}
+(\#eq:5)
+$$
+
+Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a *weighting* of the predictors will be necessary. We will use the symbol $\beta$ for these weights. For example, maybe $\mathrm{x}_{1}$ is twice as important as the other two predictors and so $\beta_1$ is 2, while $\beta_2$ and $\beta_1$ are 1. 
+
+$$
+\mu_i = \beta_1*\mathrm{x}_{i1} + \beta_2*\mathrm{x}_{i2} + \beta_3*\mathrm{x}_{i3}  
 (\#eq:6)
 $$
+
+Note that the weight terms ($\beta$) do not get an $i$ subscript. This is because they do not change from trial to trial. The *values* of the predictors change from trial to trial, but the way that these are combined does not, they are a stable property of the model. 
 
 Decomposition of $\mu$ into sub-components makes our model something more like:
 
 $$
-y = \mu + \mathcal{N}(0,\sigma)  
+y_i = \mu_i + \mathcal{N}(0,\sigma)  
 (\#eq:7)
 $$
   
 $$
-y =  (a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3}) + \mathcal{N}(0,\sigma)  
+y_i =  (\beta_1*\mathrm{x}_{i1} + \beta_2*\mathrm{x}_{i2} + \beta_3*\mathrm{x}_{i3} ) + \mathcal{N}(0,\sigma)  
 (\#eq:8)
 $$
   
 Often, $\varepsilon$ is used to represent the random component, as in:
 
 $$
-y = a*\mathrm{x}_{1} + b*\mathrm{x}_{2} + c*\mathrm{x}_{3} + \varepsilon
+y_i = \beta_1*\mathrm{x}_{i1} + \beta_2*\mathrm{x}_{i2} + \beta_3*\mathrm{x}_{i3}+ \varepsilon_i
 (\#eq:9)
 $$
+
+Notice that the error term *does* get a, $i$ subscript, as in $\varepsilon_i$. That is because the exact value of the error changes from trial to trial, even of the general characteristics of the error (i.e., $\mathcal{N}(0,\sigma)$) do not.  
 
 When expressed in this manner, this is now a 'regression equation' or a 'regression model'. 'Fitting' a regression model basically consists of trying to guess the most likely values of $a$, $b$, and $c$ given our data. 
 
 Notice that the above formulation means that regression models do not require that our *data* be normally distributed, but only that the *random variation* in our data ($\varepsilon$) be normally distributed. For example, in the left panel below I plot the distribution of f0 from among the entire Hillenbrand et al. data, including boys, girls, men and women. The data is not normally distributed, however, we can still use a regression based on normally-distributed data to model this as long as we expect that:
 
-  1) There is systematic variation in the $\mu$ of f0 across different groups, speakers, conditions, etc.
-  2) The *random variation* around these predicted values of $\mu$ more or less follows a normal distribution.
+  1) There is systematic variation in the $\mu_i$ of f0 across different groups, speakers, conditions, etc.
+  
+  2) The *random variation* around these predicted values of $\mu_i$ more or less follows a normal distribution.
 
 In the right panel I plot the individual densities for different speaker classes. We see that although the data is not normally distributed, the within-group variation is. This suggests a regression model is appropriate for this data. 
 
@@ -635,7 +678,7 @@ In the right panel I plot the individual densities for different speaker classes
 par (mfrow =c(1,2), mar = c(4,4,1,1))
 hist (h95$f0, main="", freq=FALSE, xlim = c(80,320), col = yellow)
 plot (density (h95$f0[h95$type=='b']),col=2,lwd=4, main='',
-      xlim = c(80,320),ylim=c(0,0.025))
+      xlim = c(80,320),ylim=c(0,0.025), xlab = 'f0')
 lines (density (h95$f0[h95$type=='g']),col=3,lwd=3)
 lines (density (h95$f0[h95$type=='m']),col=4,lwd=3)
 lines (density (h95$f0[h95$type=='w']),col=5,lwd=3)
@@ -645,7 +688,6 @@ lines (density (h95$f0[h95$type=='w']),col=5,lwd=3)
 <img src="week-1_files/figure-html/allf0s-1.png" alt="(left) Distribution of f0 across all speakers. (right) Densities of distributions of f0 for different speaker classes: boys (red), girls (green), men (blue) and women (cyan)." width="768" />
 <p class="caption">(\#fig:allf0s)(left) Distribution of f0 across all speakers. (right) Densities of distributions of f0 for different speaker classes: boys (red), girls (green), men (blue) and women (cyan).</p>
 </div>
-
 
 ### What's 'Bayesian' about these models?
 

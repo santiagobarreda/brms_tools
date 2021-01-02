@@ -403,7 +403,9 @@ The full model specification, including prior probabilities is below. I used the
 
 $$
 \begin{split}
-y = Intercept + adult1 + \gamma_{uspeaker} + \varepsilon \\\\
+Likelihood: \\ 
+y \sim \mathcal{N}(\mu,\sigma_{error}) \\
+\mu = Intercept + adult1 + \gamma_{uspeaker} \\\\
 \textrm{Random Variables:} \\ 
 \gamma_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\
 \varepsilon \sim \mathcal{N}(0,\sigma_{error}) \\\\
