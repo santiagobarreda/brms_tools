@@ -81,7 +81,7 @@ $$
 
 Now our model is trying to guess the value of a single parameter ($\beta_1$), and we expect this parameter to be equal to $\mu_i$ since it is being multiplied by a 'predictor' with a constant value of 1. 
 
-This kind of model is called an 'Intercept only' model. Regression models are really about representing *differences*, differences between groups and across conditions. When you are encoding differences, you need an overall reference point. For example, saying that something is 5 miles north is only interpretable given some reference point. The 'reference point' used by your model is called your 'Intercept'. Basically, our model consists *only* of a single reference point, and the $\beta_1$ parameter reflects its value (as shown in Equation \@ref(eq:231)). 
+This kind of model is called an 'Intercept only' model. Regression models are really about representing *differences*, differences between groups and across conditions. When you are encoding differences, you need an overall reference point. For example, saying that something is 5 miles north is only interpretable given some reference point. The 'reference point' used by your model is called your 'Intercept'. Basically, our model consists *only* of a single reference point, and the $\beta_1$ parameter reflects its value (as shown in Equation \@ref(eq:23)). 
 
 As a result, the $\beta_1$ coefficient is called the 'intercept' in our model. When a coefficient is just being multiplied by a 'fake' predictor that just equals 1, we can omit it from the regression model (but its still secretly there). 
 
