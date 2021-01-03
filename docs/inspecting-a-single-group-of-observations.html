@@ -606,12 +606,12 @@ Figure 1.11: (left) Histogram of data. (right) Histogram of centered data, basic
 \]</span></p>
 <p>But actually, the values of the predictor variables will vary from trial to trial. Often the whole point of running an experiment is to predict differences in observations for different predictor values! So obviously, <span class="math inline">\(\mu\)</span> will also need to vary from trial to trial. That means that the equation above should actually be more like below, with the <span class="math inline">\(i\)</span> subscripts indicating that the equation refers to the value of the predictors and expected mean, <em>for that trial</em> rather than overall.</p>
 <p><span class="math display" id="eq:5">\[
-\mu_i = \mathrm{x}_{i1} + \mathrm{x}_{i2} + \mathrm{x}_{i3}
+\mu_i = \mathrm{x}_{1i} + \mathrm{x}_{2i} + \mathrm{x}_{3i}
 \tag{1.5}
 \]</span></p>
 <p>Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a <em>weighting</em> of the predictors will be necessary. We will use the symbol <span class="math inline">\(\alpha\)</span> for these weights. For example, maybe <span class="math inline">\(\mathrm{x}_{1}\)</span> is twice as important as the other two predictors and so <span class="math inline">\(\alpha_1\)</span> is 2, while <span class="math inline">\(\alpha_2\)</span> and <span class="math inline">\(\alpha_1\)</span> are 1.</p>
 <p><span class="math display" id="eq:6">\[
-\mu_i = \alpha_1*\mathrm{x}_{i1} + \alpha_2*\mathrm{x}_{i2} + \alpha_3*\mathrm{x}_{i3}  
+\mu_i = \alpha_1*\mathrm{x}_{1i} + \alpha_2*\mathrm{x}_{2i} + \alpha_3*\mathrm{x}_{3i}  
 \tag{1.6}
 \]</span></p>
 <p>Note that the weight terms (<span class="math inline">\(\alpha\)</span>) do not get an <span class="math inline">\(i\)</span> subscript. This is because they do not change from trial to trial. The <em>values</em> of the predictors change from trial to trial, but the way that these are combined does not, they are a stable property of the model.</p>
@@ -621,16 +621,16 @@ y_i = \mu_i + \mathcal{N}(0,\sigma)
 \tag{1.7}
 \]</span></p>
 <p><span class="math display" id="eq:8">\[
-y_i =  (\alpha_1*\mathrm{x}_{i1} + \alpha_2*\mathrm{x}_{i2} + \alpha_3*\mathrm{x}_{i3} ) + \mathcal{N}(0,\sigma)  
+y_i =  (\alpha_1*\mathrm{x}_{1i} + \alpha_2*\mathrm{x}_{2i} + \alpha_3*\mathrm{x}_{3i} ) + \mathcal{N}(0,\sigma)  
 \tag{1.8}
 \]</span></p>
 <p>Often, <span class="math inline">\(\varepsilon\)</span> is used to represent the random component, as in:</p>
 <p><span class="math display" id="eq:9">\[
-y_i = \alpha_1*\mathrm{x}_{i1} + \alpha_2*\mathrm{x}_{i2} + \alpha_3*\mathrm{x}_{i3}+ \varepsilon_i
+y_i = \alpha_1*\mathrm{x}_{1i} + \alpha_2*\mathrm{x}_{2i} + \alpha_3*\mathrm{x}_{3i}+ \varepsilon_i
 \tag{1.9}
 \]</span></p>
 <p>Notice that the error term <em>does</em> get a, <span class="math inline">\(i\)</span> subscript, as in <span class="math inline">\(\varepsilon_i\)</span>. That is because the exact value of the error changes from trial to trial, even of the general characteristics of the error (i.e., <span class="math inline">\(\mathcal{N}(0,\sigma)\)</span>) do not.</p>
-<p>When expressed in this manner, this is now a ‘regression equation’ or a ‘regression model’. ‘Fitting’ a regression model basically consists of trying to guess the most likely values of <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, and <span class="math inline">\(c\)</span> given our data.</p>
+<p>When expressed in this manner, this is now a ‘regression equation’ or a ‘regression model’. ‘Fitting’ a regression model basically consists of trying to guess the most likely values of <span class="math inline">\(\alpha_1\)</span>, <span class="math inline">\(\alpha_2\)</span>, and <span class="math inline">\(\alpha_3\)</span> given our data.</p>
 <p>Notice that the above formulation means that regression models do not require that our <em>data</em> be normally distributed, but only that the <em>random variation</em> in our data (<span class="math inline">\(\varepsilon\)</span>) be normally distributed. For example, in the left panel below I plot the distribution of f0 from among the entire Hillenbrand et al. data, including boys, girls, men and women. The data is not normally distributed, however, we can still use a regression based on normally-distributed data to model this as long as we expect that:</p>
 <ol style="list-style-type: decimal">
 <li><p>There is systematic variation in the <span class="math inline">\(\mu_i\)</span> of f0 across different groups, speakers, conditions, etc.</p></li>

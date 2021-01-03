@@ -629,14 +629,14 @@ $$
 But actually, the values of the predictor variables will vary from trial to trial. Often the whole point of running an experiment is to predict differences in observations for different predictor values! So obviously, $\mu$ will also need to vary from trial to trial. That means that the equation above should actually be more like below, with the $i$ subscripts indicating that the equation refers to the value of the predictors and expected mean, *for that trial* rather than overall. 
 
 $$
-\mu_i = \mathrm{x}_{i1} + \mathrm{x}_{i2} + \mathrm{x}_{i3}
+\mu_i = \mathrm{x}_{1i} + \mathrm{x}_{2i} + \mathrm{x}_{3i}
 (\#eq:5)
 $$
 
 Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a *weighting* of the predictors will be necessary. We will use the symbol $\alpha$ for these weights. For example, maybe $\mathrm{x}_{1}$ is twice as important as the other two predictors and so $\alpha_1$ is 2, while $\alpha_2$ and $\alpha_1$ are 1. 
 
 $$
-\mu_i = \alpha_1*\mathrm{x}_{i1} + \alpha_2*\mathrm{x}_{i2} + \alpha_3*\mathrm{x}_{i3}  
+\mu_i = \alpha_1*\mathrm{x}_{1i} + \alpha_2*\mathrm{x}_{2i} + \alpha_3*\mathrm{x}_{3i}  
 (\#eq:6)
 $$
 
@@ -650,20 +650,20 @@ y_i = \mu_i + \mathcal{N}(0,\sigma)
 $$
   
 $$
-y_i =  (\alpha_1*\mathrm{x}_{i1} + \alpha_2*\mathrm{x}_{i2} + \alpha_3*\mathrm{x}_{i3} ) + \mathcal{N}(0,\sigma)  
+y_i =  (\alpha_1*\mathrm{x}_{1i} + \alpha_2*\mathrm{x}_{2i} + \alpha_3*\mathrm{x}_{3i} ) + \mathcal{N}(0,\sigma)  
 (\#eq:8)
 $$
   
 Often, $\varepsilon$ is used to represent the random component, as in:
 
 $$
-y_i = \alpha_1*\mathrm{x}_{i1} + \alpha_2*\mathrm{x}_{i2} + \alpha_3*\mathrm{x}_{i3}+ \varepsilon_i
+y_i = \alpha_1*\mathrm{x}_{1i} + \alpha_2*\mathrm{x}_{2i} + \alpha_3*\mathrm{x}_{3i}+ \varepsilon_i
 (\#eq:9)
 $$
 
 Notice that the error term *does* get a, $i$ subscript, as in $\varepsilon_i$. That is because the exact value of the error changes from trial to trial, even of the general characteristics of the error (i.e., $\mathcal{N}(0,\sigma)$) do not.  
 
-When expressed in this manner, this is now a 'regression equation' or a 'regression model'. 'Fitting' a regression model basically consists of trying to guess the most likely values of $a$, $b$, and $c$ given our data. 
+When expressed in this manner, this is now a 'regression equation' or a 'regression model'. 'Fitting' a regression model basically consists of trying to guess the most likely values of $\alpha_1$, $\alpha_2$, and $\alpha_3$ given our data. 
 
 Notice that the above formulation means that regression models do not require that our *data* be normally distributed, but only that the *random variation* in our data ($\varepsilon$) be normally distributed. For example, in the left panel below I plot the distribution of f0 from among the entire Hillenbrand et al. data, including boys, girls, men and women. The data is not normally distributed, however, we can still use a regression based on normally-distributed data to model this as long as we expect that:
 
