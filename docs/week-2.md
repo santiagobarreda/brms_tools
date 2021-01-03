@@ -101,7 +101,7 @@ Put in plain English, each line in the model says the following:
 What the model also says implicitly, is that the error is drawn from a normal distribution with a mean of 0 and a standard deviation of $\sigma$. This distribution represents all deviations in f0 around the mean f0 for the sample ($\mu_i$). In other words, the error for this model is expected to look like:
 
 $$
-$\varepsilon_i \sim \mathcal{N}(0,\sigma) $
+\varepsilon_i \sim \mathcal{N}(0,\sigma)
 (\#eq:25)
 $$
   
