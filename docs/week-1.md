@@ -351,7 +351,7 @@ The second point says that if you are wondering what the best (most likely) esti
 
 The third point means that the likelihood function for $\mu$ will tend to be *much* narrower than the distribution of our original data. This is because a mean based on, for example, 50 samples will contain many positive and negative deviations from the average that will tend to cancel out. As a result, the more data you have the more *precise* your estimates are, and the less *uncertainty* is associated with any estimate. 
 
-The left panel in Figure \@ref(fig:likelihood1) below shows the likelihood function for $\mu$ based on the first 10 observations of our f0 vector, shown by the blue points at the bottom of the plot. I chose this small sample just to make this example clearer. Notice that the most likely mean values of $\mu$ for these points like over the bulk of the sampled values. The vertical dotted lines show three possible mean values that will be highlighted. 
+The left panel in Figure \@ref(fig:likelihood1) (code at end of chapter) shows the likelihood function for $\mu$ based on the first 10 observations of our f0 vector, shown by the blue points at the bottom of the plot. I chose this small sample just to make this example clearer. Notice that the most likely mean values of $\mu$ for these points like over the bulk of the sampled values. The vertical dotted lines show three possible mean values that will be highlighted. 
 
 The likelihood of any parameter estimate (e.g., $\mu$ = 175 Hz in the right panel of Figure \@ref(fig:likelihood1)) is equal to the product of the density of each observation in the sample, if we assume that the estimate were true. For example, to calculate the likelihood that $\mu=175$, we: 
 
@@ -362,22 +362,26 @@ The likelihood of any parameter estimate (e.g., $\mu$ = 175 Hz in the right pane
   3) The likelihood is the product of all of these densities (heights). In practice, the logarithms of the individual probabilities are added together, yielding the *log-likelihood*. This is because multiplying together too many fractions can lead to numbers so small computers have a hard time representing them, and adding logarithms is equivalent to multiplying to original values.  
 
 Imagine I follow the steps above for each position along the x axis, recording the likelihood values I calculate. I then plot the product of the densities for each corresponding x value. If I do this I have just plotted a likelihood function for $\mu$ given our data. 
-
+  
+&nbsp;
 <div class="figure">
 <img src="week-1_files/figure-html/likelihood1-1.png" alt="(Left) The likelihood of the population mean given the blue points in the figure. (right) The probability of the points given an assumed mean of 175 Hz." width="768" />
 <p class="caption">(\#fig:likelihood1)(Left) The likelihood of the population mean given the blue points in the figure. (right) The probability of the points given an assumed mean of 175 Hz.</p>
 </div>
+&nbsp;
 
-In the right panel above we see that a normal distribution with a $\mu$ of 175 Hz is very unlikely to generate this data. Many points are extremely improbable and have densities close to zero. As a result, the product of these values (the heights of the lines) will be a very small number. This is reflected in the extremely small values in the likelihood function at 175 Hz in the left panel above. 
+In the right panel in Figure \@ref(fig:likelihood1) we see that a normal distribution with a $\mu$ of 175 Hz is very unlikely to generate this data. Many points are extremely improbable and have densities close to zero. As a result, the product of these values (the heights of the lines) will be a very small number. This is reflected in the extremely small values in the likelihood function at 175 Hz in the left panel above. 
 
-In the left panel below, we see that a normal distribution with a $\mu$ of 200 Hz is more likely to generate this data, and the probability distribution is clearly a much better fit. However a distribution with a mean of 200 Hz is still not very likely to have generated this data. 
+In the left panel in Figure \@ref(fig:likelihood2) (code at end of chapter), we see that a normal distribution with a $\mu$ of 200 Hz is more likely to generate this data, and the probability distribution is clearly a much better fit. However a distribution with a mean of 200 Hz is still not very likely to have generated this data. 
 
 Finally, in the right panel below we see the the maximum likelihood estimate of 225 Hz, the value representing the peak of the likelihood function (in the left panel above). When we say that 225 Hz is the most likely mean for this data, we are saying that this data is most probably the outcome of a normal distribution centered at 225 Hz, relative to the alternatives. 
 
+&nbsp;
 <div class="figure">
 <img src="week-1_files/figure-html/likelihood2-1.png" alt="(Left) The probability of the points given an assumed mean of 200 Hz. (right) The probability of the points given an assumed mean of 225 Hz." width="768" />
 <p class="caption">(\#fig:likelihood2)(Left) The probability of the points given an assumed mean of 200 Hz. (right) The probability of the points given an assumed mean of 225 Hz.</p>
 </div>
+&nbsp;
 
 ### Making inferences using likelihoods
 
@@ -443,6 +447,7 @@ abline (v = quantiles, lwd=2,col=deepgreen)
 <img src="week-1_files/figure-html/likelihood-1.png" alt="Likelihood of population mean given our data. Horizontal lines indicate intervals enclosing 95% of the distribution." width="768" />
 <p class="caption">(\#fig:likelihood)Likelihood of population mean given our data. Horizontal lines indicate intervals enclosing 95% of the distribution.</p>
 </div>
+&nbsp;
 
 The likelihood tells you about the most believable/credible parameter values, given your model and data. Given the information presented in the figure above, we may conclude that the most likely parameter values fall between 218 and 222 Hz. This means that it is reasonable that the true value might be 221 Hz, as this value is very likely given our sample. Basically, maybe our sample mean is wrong and arose by accident, and 221 Hz is the true $\mu$. This outcome is compatible with our data. 
 
@@ -471,13 +476,14 @@ Here, I am going to address what is meant by two aspects of the term 'Bayesian m
 
 ### What are regression models?
 
-Before beginning this section I just want to say that its ok if much of this section makes no sense right now. It will make more sense once you start to actually build models and it becomes less hypothetical and more practical. I will use the terms and concepts described here in later chapters, but I will re-explain it each time. If you think that a model in a later section is not explained in as much detail as you would like, look at this section again!
+Before beginning this section I just want to say that its ok if a lot of this section doesn't makes sense right now. It will make more sense once you start to actually build models and it becomes less hypothetical and more practical. I will use the terms and concepts described here in later chapters, but I will re-explain it each time. If you think that a model in a later section is not explained in as much detail as you would like, look at this section again!
 
 I have been referring somewhat obliquely to 'models' without really explaining what I mean by this. It's difficult to offer a precise definition because the term is so broad, but 'regression' modeling can be thought of as trying to understand variation the mean parameter ($\mu$) of a normal distributions. Actually, you can use many other probability distributions, but for now we will focus on models based on the normal distribution.
 
 Basically it goes like this:
 
-* you have a variable you are interested in, $y$, which is is a vector containing N observations. We can refer to any one of these observations like this $y_i$ for the $i^{th}$ observation.
+* you have a variable you are interested in, $y$, which is is a vector containing N observations. We can refer to any one of these observations like this $y_{i}$ for the $i^{th}$ observation. In our case this is a vector of 576 f0 values (`f0[1:576]`). Although its not necessary, I am going to put the index variables associated with trial number ($i$) in brackets like this $y_{[i]}$. This is just to make it easier to identify, and to highlight the similarity to vectors (e.g., `f0[i]`).
+
 
 * you assume that your data is well described by a normal probability distribution. This is a mathematical function ($\mathcal{N}(\mu,\sigma)$) that described what is and is not probable based on two parameters. 
 
@@ -488,13 +494,13 @@ Basically it goes like this:
 We can write this model more formally like this:
 
 $$
-y_i \sim \mathcal{N}(\mu,\sigma)
+y_{[i]} \sim \mathcal{N}(\mu,\sigma)
 (\#eq:1)
 $$
 
 This says that we expect that the tokens of the variable we are interested in is distributed according to ($\sim$) a normal distribution with those parameters. 
 
-Notice hat $y$ gets a subscript while $\mu$ and $\sigma$ do not. This is because for right now, those parameters are fixed for all observations, while the value of $y$ changes for each observation based on the $i$ subscript. For example, below I set $i=2$ and use this index variable to show the second element of the data vector, i.e. $f0_{i=2}=214$.
+Notice hat $y$ gets a subscript while $\mu$ and $\sigma$ do not. This is because for right now, those parameters are fixed for all observations, while the value of $y$ changes for each observation based on the $i$ subscript. For example, below I set $i=2$ and use this index variable to show the second element of the data vector, i.e. $f0_{[i=2]}=214$.
 
 
 ```r
@@ -521,7 +527,7 @@ When you see this, $\mathcal{N}(\mu,\sigma)$, just picture in your mind the shap
 The above relationship can also be presented like this:
 
 $$
-y_i = \mu + \mathcal{N}(0,\sigma)
+y_{[i]} = \mu + \mathcal{N}(0,\sigma)
 (\#eq:2)
 $$
 
@@ -534,12 +540,12 @@ Notice that we got rid of the $\sim$ symbol, moved $\mu$ out of the distribution
 In terms of our data, I might express the distribution in either of the following ways:
 
 $$
-f0_i = \mathcal{N}(220.4,23.2)
+f0_{[i]} = \mathcal{N}(220.4,23.2)
 (\#eq:3)
 $$
 
 $$
-f0_i = 220.4 + \mathcal{N}(0,23.2)
+f0_{[i]} = 220.4 + \mathcal{N}(0,23.2)
 (\#eq:4)
 $$
 
@@ -557,26 +563,25 @@ hist (f0 - mean (f0), main="", freq=FALSE, col = coral)
 <p class="caption">(\#fig:errorhist)(left) Histogram of data. (right) Histogram of centered data, basically the error distribution.</p>
 </div>
 
-In regression models, we can decompose systematic variation in $\mu$ into component parts, based on some number predictor variables, $\mathrm{x}$. These predictor variables co-vary (vary with) our $y$ variable, and that we think help explain the variation in $y$. 
+In regression models, we can decompose systematic variation in $\mu$ into component parts, based on some predictor variables, $\mathrm{x}$. These predictor variables co-vary (vary with) our $y$ variable, and we think help explain the variation in $y$. 
 
-Below, I am saying that I think $\mu$ is actually equal to some combination sum of $\mathrm{x}_{1}$ $\mathrm{x}_{2}$ and $\mathrm{x}_{3}$. For example, I could think that f0 could be affected by speaker age ($\mathrm{x}_{1}$), the gender of the speaker ($\mathrm{x}_{2}$), and vowel category ($\mathrm{x}_{3}$). 
+Below, I am saying that I think $\mu$ is actually equal to some combination of $\mathrm{x}_{1}$ $\mathrm{x}_{2}$ and $\mathrm{x}_{3}$. For example, I could think that f0 is affected by the speaker age ($\mathrm{x}_{1}$) and gender of the speaker ($\mathrm{x}_{2}$), and vowel category ($\mathrm{x}_{3}$) of the production. 
 
 $$
 \mu = \mathrm{x}_{1} + \mathrm{x}_{2} + \mathrm{x}_{3}
 (\#eq:5)
 $$
 
-But actually, the values of the predictor variables will vary from trial to trial. Often the whole point of running an experiment is to predict differences in observations for different predictor values! So obviously, $\mu$ will also need to vary from trial to trial. That means that the equation above should actually be more like below, with the $i$ subscripts indicating that the equation refers to the value of the predictors and expected mean, *for that trial* rather than overall. 
+The values of the predictor variables will vary from trial to trial, and are not fixed. Often the whole point of running an experiment is to predict differences in observations based on differing predictor values! So obviously, $\mu$ will need to vary from trial to trial. That means that the equation above should actually include $i$ subscripts indicating that the equation refers to the value of the predictors and expected mean, *for that trial* rather than overall. 
 
 $$
-\mu_i = \mathrm{x}_{1i} + \mathrm{x}_{2i} + \mathrm{x}_{3i}
-(\#eq:5)
+\mu_{[i]} = \mathrm{x}_{1[i]} + \mathrm{x}_{2[i]} + \mathrm{x}_{3[i]} (\#eq:5)
 $$
 
-Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a *weighting* of the predictors will be necessary. We will use the symbol $\alpha$ for these weights. For example, maybe $\mathrm{x}_{1}$ is twice as important as the other two predictors and so $\alpha_1$ is 2, while $\alpha_2$ and $\alpha_1$ are 1. 
+Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a *weighting* of the predictors will be necessary. We can use the symbol $\alpha$ for these weights. For example, maybe $\mathrm{x}_{1}$ is twice as important as the other two predictors and so $\alpha_1$ is 2, while $\alpha_2$ and $\alpha_1$ are 1. 
 
 $$
-\mu_i = \alpha_1*\mathrm{x}_{1i} + \alpha_2*\mathrm{x}_{2i} + \alpha_3*\mathrm{x}_{3i}  
+\mu_{[i]} = \alpha_1*\mathrm{x}_{1[i]} + \alpha_2*\mathrm{x}_{2[i]} + \alpha_3*\mathrm{x}_{3[i]}  
 (\#eq:6)
 $$
 
@@ -585,31 +590,31 @@ Note that the weight terms ($\alpha$) do not get an $i$ subscript. This is becau
 Decomposition of $\mu$ into sub-components makes our model something more like:
 
 $$
-y_i = \mu_i + \mathcal{N}(0,\sigma)  
+y_{[i]} = \mu_{[i]} + \mathcal{N}(0,\sigma)  
 (\#eq:7)
 $$
   
 $$
-y_i =  (\alpha_1*\mathrm{x}_{1i} + \alpha_2*\mathrm{x}_{2i} + \alpha_3*\mathrm{x}_{3i} ) + \mathcal{N}(0,\sigma)  
+y_{[i]} =  (\alpha_1*\mathrm{x}_{1[i]} + \alpha_2*\mathrm{x}_{2[i]} + \alpha_3*\mathrm{x}_{3[i]} ) + \mathcal{N}(0,\sigma)  
 (\#eq:8)
 $$
   
 Often, $\varepsilon$ is used to represent the random component, as in:
 
 $$
-y_i = \alpha_1*\mathrm{x}_{1i} + \alpha_2*\mathrm{x}_{2i} + \alpha_3*\mathrm{x}_{3i}+ \varepsilon_i
+y_{[i]} = \alpha_1*\mathrm{x}_{1[i]} + \alpha_2*\mathrm{x}_{2[i]} + \alpha_3*\mathrm{x}_{3[i]}+ \varepsilon_{[i]}
 (\#eq:9)
 $$
 
-Notice that the error term *does* get a, $i$ subscript, as in $\varepsilon_i$. That is because the exact value of the error changes from trial to trial, even of the general characteristics of the error (i.e., $\mathcal{N}(0,\sigma)$) do not.  
+Notice that the error term *does* get a, $i$ subscript, as in $\varepsilon_{[i]}$. That is because the exact value of the error changes from trial to trial, even of the general characteristics of the error (i.e., $\mathcal{N}(0,\sigma)$) do not.  
 
 When expressed in this manner, this is now a 'regression equation' or a 'regression model'. 'Fitting' a regression model basically consists of trying to guess the most likely values of $\alpha_1$, $\alpha_2$, and $\alpha_3$ given our data. 
 
 Notice that the above formulation means that regression models do not require that our *data* be normally distributed, but only that the *random variation* in our data ($\varepsilon$) be normally distributed. For example, in the left panel below I plot the distribution of f0 from among the entire Hillenbrand et al. data, including boys, girls, men and women. The data is not normally distributed, however, we can still use a regression based on normally-distributed data to model this as long as we expect that:
 
-  1) There is systematic variation in the $\mu_i$ of f0 across different groups, speakers, conditions, etc.
+  1) There is systematic variation in the $\mu_{[i]}$ of f0 across different groups, speakers, conditions, etc.
   
-  2) The *random variation* around these predicted values of $\mu_i$ more or less follows a normal distribution.
+  2) The *random variation* around these predicted values of $\mu_{[i]}$ more or less follows a normal distribution.
 
 In the right panel I plot the individual densities for different speaker classes. We see that although the data is not normally distributed, the within-group variation is. This suggests a regression model is appropriate for this data. 
 
