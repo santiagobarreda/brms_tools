@@ -25,7 +25,7 @@ url2 = "/stats-class/master/data/h95_vowel_data.csv"
 h95 = read.csv (url(paste0 (url1, url2)))
 
 # select women only
-w = h95[h95$type == 'w',]
+w = h95[h95$group == 'w',]
 # this is unique subject numbers across all groups
 w$speaker = factor (w$speaker)  
 # select only the vector of interest
@@ -896,7 +896,7 @@ Usually, when I report parameters I provide the mean and standard deviations of 
 
 > "Based on our model the average f0 produced by adult females in Michigan is likely to be 220 Hz (s.d. = 2.97, 95% CI = 214.4, 226.4). However, consistent between-speaker variation averages about 20 Hz (s.d. = 2.24, 95% CI = 16.29, 25.06), meaning that we can expect the average f0 produced by individuals to deviate substantially from 220 Hz. Finally, the standard deviation of production error was about 12.5 Hz (s.d. = 0.39, 95% CI = 11.81, 13.34) indicating that the amount of random between speaker variation in production is about half the magnitude of the stable, between-speaker differences in f0.   
 
-I am including the speaker boxplots below because I think this image basically presents the same information as the paragraph above, but in visual form. In general, any data relationship or result can be presented in a figure, and the relationships presented in a figure can also be expressed as a mathematical model. 
+I'm again including the speaker boxplots below because I think this image basically presents the same information as the paragraph above, but in visual form. In general, any data relationship or result can be presented in a figure, and the relationships presented in a figure can also be expressed as a mathematical model. 
 
 When you are thinking about the relationships in your data, or that you expect in your data, its a good idea to think: what kind of picture could illustrate this relationship? Conversely, if you see a figure of your results that you feel really expresses something interesting about your data you should think, how can these relationships be represented in a model?
 

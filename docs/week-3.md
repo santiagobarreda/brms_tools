@@ -7,7 +7,7 @@ In the previous chapter, I focused on investigating values from a single group, 
 
 We are going to be using the same Hillenbrand et al. f0 data we used in the other chapters, but this time we are going to compare the f0 measurements for adult females to those of girls between 10-12 years of age. 
 
-Below I load in the Hillenbrand et al. data, and include a new variable that indicates whether the talker is an adult or a child. I also split the data up by gender. The variable `speaker` is a speaker number that is unique across all speaker groups, and `type` indicates speaker group from among `b` (boys), `g` (girls), `m` (men), and `w` (women).
+Below I load in the Hillenbrand et al. data, and include a new variable that indicates whether the talker is an adult or a child. I also split the data up by gender. The variable `speaker` is a speaker number that is unique across all speaker groups, and `group` indicates speaker group from among `b` (boys), `g` (girls), `m` (men), and `w` (women).
 
 
 
@@ -18,12 +18,12 @@ url2 = "/stats-class/master/data/h95_vowel_data.csv"
 h95 = read.csv (url(paste0 (url1, url2)))
 ## make variable that indicates if the talker is an adult
 h95$adult = ""
-h95$adult[h95$type %in% c('w','m')] = "adult"
-h95$adult[h95$type %in% c('g','b')] = "child"
+h95$adult[h95$group %in% c('w','m')] = "adult"
+h95$adult[h95$group %in% c('g','b')] = "child"
 
 ## split up data by into male and female groups, only some columns
-males = h95[h95$type %in% c('m','b'),c('f0', 'adult', 'type', 'speaker')]
-females = h95[h95$type %in% c('w','g'),c('f0', 'adult', 'type', 'speaker')]
+males = h95[h95$group %in% c('m','b'),c('f0', 'adult', 'group', 'speaker')]
+females = h95[h95$group %in% c('w','g'),c('f0', 'adult', 'group', 'speaker')]
 f0 = females[['f0']]
 
 # re-factor to remove excluded subjects
@@ -55,9 +55,7 @@ boxplot (f0 ~ adult, data = males, main = "Males", ylim = c(90,330),
 
 Clearly there is a difference in f0 between children and adults, but the difference also seems to be gender-dependent: there is more of a difference between men and boys than between women and girls. We are going to focus on the female data for now, and I leave the male data so that the reader can modify the analysis presented here to analyze that data. 
 
-Below, the figure on the left highlights both between- and within-speaker variation in f0 by women (cyan) and girls (red). On the right, we see the overall distribution (black) compared to the distribution of f0 for women (cyan) and girls (red).
-
-Obviously the distributions seem a *bit* different, but they are also not *that* different. We can also clearly see that there is substantial overlap between individual girls and women (in the figure on the left). As a result, a cautious analysis of this data would recognize this overlap even if somehow 'differentess' were found. We are going to fit a model that can help us quantify all of the variability shown in the figures below. 
+Below, the figure on the left highlights both between- and within-speaker variation in f0 by women (cyan) and girls (red). On the right, we see the overall distributions of f0 for women (cyan) and girls (red). Obviously the distributions seem a *bit* different, but they are also not *that* different. We can also clearly see that there is substantial overlap between individual girls and women (in the figure on the left). As a result, a cautious analysis of this data would recognize this overlap even if somehow 'differentess' were found. We are going to fit a model that can help us quantify all of the variability shown in the figures below. 
 
 
 ```r
@@ -74,15 +72,13 @@ plot (tmp$y, tmp$x, lwd = 3, col = teal, ylab = "f0",xlab="Density",
       ylim = c(140,320), xlim = c(0,0.025), type = 'l')
 tmp = density (females$f0[females$adult=="adult"])
 lines (tmp$y, tmp$x, lwd = 3, col = coral)
-tmp = density (females$f0)
-lines (tmp$y, tmp$x, lwd = 3, col = 1)
 ```
 
 <img src="week-3_files/figure-html/unnamed-chunk-4-1.png" width="768" />
 
 ## Estimating the difference two means with 'brms'
 
-In chapter 2 the model we fit had the simplest possible formula, just an intercept. Here, we need to extend this to include an actual predictor: a vector indicating 'adultness'. Remember that formulas look like this `variable ~ predictor`. So, if we want to predict f0 based on whether the talker is an adult or not, our model is going to have a formula that looks basically like this `f0 ~ adult + (1|speaker)`. You can think of this meaning something like 'We expect the distribution to vary based on whether the talker is an adult or not'. 
+In chapter 2 the model we fit had the simplest possible formula, just an intercept. Here, we need to extend this to include an actual predictor: a vector indicating 'adultness'. Remember that formulas look like this `variable ~ predictor`. So, if we want to predict f0 based on whether the talker is an adult or not, our model is going to have a formula that looks basically like this `f0 ~ adult + (1|speaker)`. You can think of this meaning something like 'We expect the distribution to vary based on whether the talker is an adult or not, in addition to speaker-specific adjustments to the intercept'. 
 
 Note that the model calculates an intercept (mean value) for each speaker, but does **not** include an effect for `adult` for each speaker (i.e., the model does *not* include a term like `(adult|speaker)`). This is because we are estimating a mean for each speaker, but not the effect for 'adultness' for each speaker. Each speaker is only either an adult or a child, and so we cannot estimate the effect for 'adultness' for each speaker. Doing things that don't 'make sense' from the model's perspective will cause it to crash or return strange values. 
 
@@ -168,7 +164,7 @@ Intercept    220.47      2.80   215.10   226.16 1.00     1827     2813
 adultchild    17.63      5.22     7.34    27.88 1.00     1987     2068
 ```
 
-In addition to the 'Intercept' term, we now get estimates for a term called `adultchild`. Admittedly, this is a strange name, but its how R handles predictors that are words (called 'factors' in R). What this tells us is that this is the estimate for the 'child' level of the 'adult' factor. ` 
+In addition to the 'Intercept' term, we now get estimates for a term called `adultchild`. Admittedly, this is a strange name, but its how R handles predictors that are words (called 'factors' in R). In general, r names predictors like these `factornameFactorlevel`. For example, a factor called `colors` with levels `red`, `green` and `blue` might have a level represented like `colorsred`. So, the `adultchild` name tells us is that this is the estimate for the `child` level of the `adult` factor. 
 
 A couple of questions arise. First, the 'Intercept' term in the model above seems to correspond to the mean f0 for adult females. We can confirm this: 
 
@@ -393,7 +389,7 @@ This reflects the following considerations:
   * this speaker's average f0 is 20 Hz above the average for adult females.
   * this particular production is 16 Hz higher than expected for this particular speaker. 
 
-nother observation from this talker might be: 
+Another observation from this talker might be: 
 
 237 = 229 (Intercept) - 9 (adult female mean) + 20 (speaker effect) - 3 (error)
 
@@ -402,19 +398,25 @@ In this case, the error is -3 since the production is now 3 Hz *below* the speak
 The full model specification, including prior probabilities is below. I used the same ordering format for the t-distributions that `brm` uses (nu, mean, sd). 
 
 
+\begin{equation}
 \begin{split}
-\textrm{Likelihood:} \\ 
-y_i \sim \mathcal{N}(\mu_i,\sigma_{error}) \\
-\mu_i = Intercept + adult1 + \alpha_{speaker_i} \\\\
+\textrm{Likelihood:} \\
+y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
+\mu_{[i]} = Intercept + adult1 + \alpha_{speaker_{[i]}} \\\\
 
 \textrm{Priors:} \\
 \alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
 
 Intercept \sim \mathcal{t}(3, 225.5, 48) \\ 
 adult1 \sim \mathcal{t}(3, 225.5, 48) \\ 
+
 \sigma_{error} \sim \mathcal{t}(3, 0, 48) \\
 \sigma_{speaker} \sim \mathcal{t}(3, 0, 48) \\ 
 \end{split}
+\end{equation}
+
+The top chunk is labeled 'likelihood' because this chunk specifies the relationships between our parameters and our data. As a result, the relationships specified in this section determine the likelihood of the model parameters. For example, in the first line we say that our data is normally distributed around some mean parameter. In turn, this specifies the shape of the likelihood function for that parameter given the data (as discussed in Figure \@ref(fig:likelihood1)). What I mean by this is that the shape of the likelihood functions for different model coefficients will be based on the relationships laid out in the section of the model description labeled 'likelihood'. 
+
 
 ### Interpreting the two-group model
 
@@ -603,7 +605,6 @@ Luckily, when thinking about these concepts in terms of multilevel models we can
 
 Look at the list of priors in our latest model definition. If you look at our latest `brm` model fit, you will see where most of these are specifically defined in the function call. However, you will notice that the standard deviation of the prior ($\sigma_{speakers}$) for the speaker-specific intercept deviations ($\alpha_{speaker}$) is actually not specifically defined in the model. 
 
-
 \begin{split}
 
 \textrm{Priors:} \\
@@ -615,8 +616,6 @@ adult1 \sim \mathcal{t}(3, 225.5, 48) \\
 \sigma_{speaker} \sim \mathcal{t}(3, 0, 48) \\ 
 
 \end{split}
-
-
 
 It turns out that the $\sigma_{speaker}$ parameter is estimated from the data! For this reason, the prior you set on $\sigma_{speaker}$ is sometimes called a 'hyperprior', because it is the prior for your prior! 
 

@@ -16,7 +16,7 @@ url2 = "/stats-class/master/data/h95_vowel_data.csv"
 ## read data from my Github page
 h95 = read.csv (url(paste0 (url1, url2)))
 # select the 'f0' vector, for women only (speaker type = 'w')
-f0 = h95[['f0']][h95$type == 'w']
+f0 = h95[['f0']][h95$group == 'w']
 ```
 
 
@@ -622,11 +622,11 @@ In the right panel I plot the individual densities for different speaker classes
 ```r
 par (mfrow =c(1,2), mar = c(4,4,1,1))
 hist (h95$f0, main="", freq=FALSE, xlim = c(80,320), col = yellow)
-plot (density (h95$f0[h95$type=='b']),col=2,lwd=4, main='',
+plot (density (h95$f0[h95$group=='b']),col=2,lwd=4, main='',
       xlim = c(80,320),ylim=c(0,0.025), xlab = 'f0')
-lines (density (h95$f0[h95$type=='g']),col=3,lwd=3)
-lines (density (h95$f0[h95$type=='m']),col=4,lwd=3)
-lines (density (h95$f0[h95$type=='w']),col=5,lwd=3)
+lines (density (h95$f0[h95$group=='g']),col=3,lwd=3)
+lines (density (h95$f0[h95$group=='m']),col=4,lwd=3)
+lines (density (h95$f0[h95$group=='w']),col=5,lwd=3)
 ```
 
 <div class="figure">
@@ -741,7 +741,6 @@ In the bottom row, I use this algorithm on our f0 data! This is a 'Bayesian' ana
 </div>
 
 The results clearly coincide, but aren't perfect. But this sampler isn't very sophisticated! The samplers we will be using in this class *do* provide an excellent match to the posterior distribution. As a result, we can inspect the distribution of collected $\mu_{estimate}$ to understand the posterior of our parameter. We can use these distributions in the same way that we used the theoretical likelihood functions above, by using them to make statements about likely parameter values and ranges of values. 
-
 
 
 ## Plot Code
