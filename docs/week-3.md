@@ -401,9 +401,9 @@ In this case, the error is -3 since the production is now 3 Hz *below* the speak
 
 The full model specification, including prior probabilities is below. I used the same ordering format for the t-distributions that `brm` uses (nu, mean, sd). 
 
-$$
+
 \begin{split}
-Likelihood: \\ 
+\textrm{Likelihood:} \\ 
 y_i \sim \mathcal{N}(\mu_i,\sigma_{error}) \\
 \mu_i = Intercept + adult1 + \alpha_{uspeaker_i} \\\\
 
@@ -415,7 +415,6 @@ adult1 \sim \mathcal{t}(3, 225.5, 48) \\
 \sigma_{error} \sim \mathcal{t}(3, 0, 48) \\
 \sigma_{speaker} \sim \mathcal{t}(3, 0, 48) \\ 
 \end{split}
-$$
 
 ### Interpreting the two-group model
 
@@ -604,7 +603,9 @@ Luckily, when thinking about these concepts in terms of multilevel models we can
 
 Look at the list of priors in our latest model definition. If you look at our latest `brm` model fit, you will see where most of these are specifically defined in the function call. However, you will notice that the standard deviation of the prior ($\sigma_{speakers}$) for the speaker-specific intercept deviations ($\alpha_{speaker}$) is actually not specifically defined in the model. 
 
-$$
+
+\begin{split}
+
 \textrm{Priors:} \\
 \alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
 
@@ -612,7 +613,10 @@ Intercept \sim \mathcal{t}(3, 225.5, 48) \\
 adult1 \sim \mathcal{t}(3, 225.5, 48) \\ 
 \sigma_{error} \sim \mathcal{t}(3, 0, 48) \\
 \sigma_{speaker} \sim \mathcal{t}(3, 0, 48) \\ 
-$$
+
+\end{split}
+
+
 
 It turns out that the $\sigma_{speaker}$ parameter is estimated from the data! For this reason, the prior you set on $\sigma_{speaker}$ is sometimes called a 'hyperprior', because it is the prior for your prior! 
 

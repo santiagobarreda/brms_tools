@@ -54,11 +54,14 @@ Model structures are expressed in R using a very specific syntax. Think of writi
 
 The model formulas resemble regression equations to some extent, but there are some differences. Remember that regression models can be thought of in either of two two ways:
 
-$$
-y_i = \mu_i + \varepsilon_i \\
-y_i \sim \mathcal{N}(\mu_i,\sigma) \\
-(\#eq:21) 
-$$
+\begin{equation}
+\begin{split}
+\\
+y_i = \mu_i + \varepsilon_i \\ \\
+y_i \sim \mathcal{N}(\mu_i,\sigma) \\ \\
+\end{split}
+(\#eq:21)
+\end{equation}
 
 The top line says that your observed variable for any given trial $y_i$ is the sum of some of some average expected value for that trial, ($\mu_i$) and some specific random error for that trial ($\mu_i$). The random error is expected to be normally distributed with some unknown standard deviation ($\varepsilon_i \sim \mathcal{N}(0,\sigma)$). The second line presents the $y$ variable as being a normally-distributed variable with a trial-specific mean of $\mu_i$, and a fixed standard deviation $\sigma_{error}$
 
@@ -86,11 +89,14 @@ As a result, the $\alpha_1$ coefficient is called the 'intercept' in our model. 
 
 Based on the above, our f0 model can be thought of like this:
 
-$$
-f0_i \sim \mathcal{N}(\mu_i,\sigma) \\
-\mu_i = Intercept \\
+\begin{equation}
+\begin{split}
+\\
+f0_i \sim \mathcal{N}(\mu_i,\sigma) \\ \\ 
+\mu_i = Intercept \\ \\
+\end{split}
 (\#eq:24)
-$$
+\end{equation}
 
 Put in plain English, each line in the model says the following:
  
@@ -311,7 +317,7 @@ curve (dnorm (x, mean (f0), sd (f0) / sqrt (length (f0) )), add = TRUE,
        lwd = 4, col = yellow)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-8-1.png" width="768" />
+<img src="week-2_files/figure-html/posteriorplot1-1.png" width="768" />
 
 Recall that our model output provides information about expected values for the mean parameter:
 
@@ -382,7 +388,7 @@ boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots", col=c(yellow,coral,
 abline (h = 220.4,lty=3,col='grey',lwd=2)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-12-1.png" width="768" />
+<img src="week-2_files/figure-html/unnamed-chunk-11-1.png" width="768" />
 
 ### Multilevel models
 
@@ -404,7 +410,7 @@ hist (w$f0[w$uspeaker == 107], main = "Histogram of speaker 107",
       xlim = c(160, 260), freq = FALSE,col=yellow)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-13-1.png" width="768" />
+<img src="week-2_files/figure-html/unnamed-chunk-12-1.png" width="768" />
 
 A multilevel model is able to simultaneously model independent variation at multiple 'levels'. For our f0 data, these are: 
 
@@ -441,13 +447,18 @@ So what does this model formula mean: `f0 ~ 1 + ( 1 | uspeaker)`? It tells `brm`
 
 This regression model is now something like this:
 
-$$
-f0_i \sim \mathcal{N}(\mu_i,\sigma) \\
-\mu_i = Intercept + \alpha_{uspeaker_i}
-(\#eq:25)
-$$
+\begin{equation}
+\begin{split}
+\\
+f0_i \sim \mathcal{N}(\mu_i,\sigma) \\ \\
+\mu_i = Intercept + \alpha_{uspeaker_i} \\
+\\
+\end{split}
+(\#eq:26)
+\end{equation}
 
-In English, the model above says: we expect f0 to be normally distributed. The f0 value we expect for any given token is equal to some overall average ($Intercept$), and some value associated with each the individual speaker (\alpha_{uspeaker,i}) who uttered the trial. 
+
+In English, the model above says: we expect f0 to be normally distributed. The f0 value we expect for any given token is equal to some overall average ($Intercept$), and some value associated with each the individual speaker ($\alpha_{uspeaker,i}$) who uttered the trial. 
 
 In addition to the  coefficient estimating the overall intercept, we know have another term $\alpha_{uspeaker}$. This coefficient is actually a set of coefficients since it has a different value for each speaker (its a vector). It has a different value for each speaker because it will reflect variation in $\mu_{speaker}$, the average f0 value produced by each speaker. However, $\mu_{speaker}$ is a random variable since it reflects the random average f0 of each person drawn from the population. If $\mu_{speaker}$ behaves like a random variable, then the coefficients that reflect this value in our model ($\alpha_{uspeaker}$) will behave in the same way. 
 
@@ -459,20 +470,28 @@ Recall that I previously said that regression models encode *differences*. Our m
 
 Since our model parameters represent speaker-specific deviations rather than their actual mean f0s, people often use this symbol, $\gamma$, for them instead of $\mu$, where $\gamma = \mu_{speaker} - \mu_{overall}$. We can show the expected distribution of this variable below, where $\sigma_{speakers}$ is a population-specific standard deviation term.
 
-$$
-\gamma_{i} \sim \mathcal{N}(0,\sigma_{speakers}) \\
-\alpha_{i} = \gamma_{i}
-(\#eq:26)
-$$
+\begin{equation}
+\begin{split}
+\\
+\gamma_{i} \sim \mathcal{N}(0,\sigma_{speakers}) \\ \\ 
+\alpha_{i} = \gamma_{i} \\
+\\
+\end{split}
+(\#eq:27)
+\end{equation}
 
 Our overall model is now as shown below, made specific for the data we have, and using expected parameter names.
 
-
-$$
-f0_i \sim \mathcal{N}(\mu_i,\sigma_{error}) \\
-\mu_i = Intercept + \alpha_{uspeaker_i} \\
-\alpha_{uspeaker} \sim \mathcal{N}(0,\sigma_{speakers}) \\
-$$
+\begin{equation}
+\begin{split}
+\\
+f0_i \sim \mathcal{N}(\mu_i,\sigma_{error}) \\ \\
+\mu_i = Intercept + \alpha_{uspeaker_i} \\ \\
+\alpha_{uspeaker} \sim \mathcal{N}(0,\sigma_{speakers}) \\ \\
+\\
+\end{split}
+(\#eq:28)
+\end{equation}
 
 Each line in the model says the following:
  
@@ -486,14 +505,14 @@ There is a very important difference in how the initial and final models we fit 
 
 $$
 \sigma_{total} = \sigma_{error}
-(\#eq:28)
+(\#eq:29)
 $$
 
 In other words, all variation was error. We don't know why values vary from the mean. Our multilevel model views the variation in our data like this:
 
 $$
 \sigma_{total} = \sigma_{speaker} + \sigma_{error}
-(\#eq:29)
+(\#eq:210)
 $$
 
 It sees only *some* of the variation in data as error. Basically, from the perspective of this multilevel model, the variation in the data is a combination of random (but systematic) between-speaker variation, and random within-speaker variation.
@@ -598,7 +617,7 @@ boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots",col=c(yellow,coral,
 abline (h = 220.4, lwd=3,lty=3)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-17-1.png" width="768" />
+<img src="week-2_files/figure-html/unnamed-chunk-16-1.png" width="768" />
 
 ## Checking model convergence
 
@@ -786,7 +805,7 @@ In the left panel below (plot code at end of chapter) I compare the t distributi
 In the middle panel we compare this prior to the data, and see that the prior distribution is much broader (more vague) than the data distribution. The right panel compares the prior for the standard deviation parameters to the absolute value of the centered f0 data. This presentation shows how far each observation is from the mean f0 (at 220 Hz). Again, the prior distribution we have assigned for these parameters is much larger than the variation in the data. As a result, neither of these priors is going to have much of an effect on our parameter estimates.
 
 
-<img src="week-2_files/figure-html/unnamed-chunk-25-1.png" width="768" />
+<img src="week-2_files/figure-html/unnamed-chunk-24-1.png" width="768" />
 
 If we compare the output of this model to `multilevel_thinned`, we see that specifying a prior has has no noticeable effect on our results. This is because the prior matters less and less when you have a lot of data, and because we have set wide priors that are appropriate (but vague) given our data. Although the priors may not matter much for models as simple as these, they can be very important when working with more complex data, and are a necessary component of Bayesian modeling. 
 
@@ -877,7 +896,7 @@ boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots",col=c(yellow,coral,
 abline (h = 220.4, lwd=3,lty=3)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-27-1.png" width="768" />
+<img src="week-2_files/figure-html/unnamed-chunk-26-1.png" width="768" />
 
 
 ## Plot Code

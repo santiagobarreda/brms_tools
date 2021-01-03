@@ -1,13 +1,13 @@
 
 # Inspecting a single group of observations  
 
-In this chapter I am going to present an introduction to some fundamental statistical concepts (i.e, probability, likelihood). We will discuss how to use these concepts to make inferences about our observations.  
+In this chapter I am going to present an introduction to some fundamental statistical concepts (i.e, probability, likelihood). We will discuss how to use these concepts to make inferences about our observations. The things I talk about in this chapter will be come up in every chapter, so if things don't all make snese right now that's fine, things will make more sense bit by bit as we learn how to use more and more complicated models.  
 
 ## Data and research questions 
 
-Voice fundamental frequency (f0, related to pitch) is a very important cue in speech communication. It relates to phoneme identification, prosody, and to the communication of social and indexical information (speaker gender, age, ...etc.). 
+Basically the simplest question a researcher can ask is: what is the value of a single number? What is the average ________ ? As an example of this, we are going to investigate variation in voice fundamental frequency (f0) in a sample of speakers. The f0 of a voice is the primary determinant of perceived pitch, and is a very important cue in speech communication. It relates to phoneme identification, prosody, and to the communication of social and indexical information (speaker gender, age, ...etc.). 
 
-We are going use a well-known data set, the Hillenbrand et al. (1995) data of Michigan English. We are going to focus on a single vector (f0),  representing the f0 produced by a set of female speakers. 
+We are going use a well-known data set, the [Hillenbrand et al. (1995)](https://homepages.wmich.edu/~hillenbr/Papers/HillenbrandGettyClarkWheeler.pdf) data of Michigan English. We are going to focus on a single vector (f0),  representing the f0 produced by a set of female speakers. 
 
 
 ```r
@@ -21,7 +21,7 @@ f0 = h95[['f0']][h95$type == 'w']
 
 
 
-These speakers represent a sample from a larger population. The sample is a finite set of observations that you actually have. The population is the larger group of possible observations that you are *actually* interested in. For example, Hillenbrand et al. collected this data not to study these speakers in particular, but instead to make inferences about Michigan speakers more generally. 
+These speakers represent a sample from a larger population. The sample is a finite set of observations that you actually have. The population is the (hypothetical) larger group of all possible observations that you are *actually* interested in. For example, Hillenbrand et al. collected this data not to study these speakers in particular, but instead to make inferences about Michigan speakers more generally. 
 
 Similarly, we want to answer a few basic questions about the population of female speakers from Michigan, not about the sample itself:
 
@@ -29,13 +29,11 @@ Similarly, we want to answer a few basic questions about the population of femal
 
 2) Can we set bounds on likely mean f0 values based on the data we collected?
 
-The second point is crucial. First, our sample will never exactly match the population. But it should be *representative* of it, meaning it should not be *too* far off from the real mean (otherwise, it is likely not a good sample from that population). For example, the mean f0 in the data we will discuss below is 220 Hz. This seems to suggest that, for example, a *true* mean of 100 Hz is unlikely. Is a true mean of 150 Hz also unlikely? What about 190 Hz? 
-
-Below we will discuss how to measure the spread and location of a set of numbers, and how to establish likely and credible values for the variable. 
+The second point is crucial. First, our sample will never exactly match the population. But it should be *representative* of it, meaning it should not be *too* far off from the real mean. If it is too far off, then is it really a representative sample from that population? For example, the mean f0 in the data we will discuss below is 220 Hz. This seems to suggest that, for example, a *true* mean of 100 Hz is unlikely. Is a true mean of 150 Hz also unlikely? What about 190 Hz? 
 
 ### Inspecting the central location and spread of values 
 
-On the left, values are plotted according to the order they appear in the vector. This is not very useful. On the right, the same values have been ordered from low to high.
+We can easily find descriptive statistics like the sample mean ($\bar{x}$), the sample standard deviation ($s_x$), and important quantiles for this sample of f0 values. The quantiles below correspond to the values of ordered observations, like in the right plot in Figure \@ref(fig:initialplot). The 0% quantile is the smallest (leftmost) observation, while 100% is the highest (rightmost) observation. Any other quantile is found by ordering the observations and selecting the observation that is higher than x% of the sample values. For example, the 50% quantile (the median) is higher than 50% of values, and the 25% quantile is higher than 1/4 of the values in the sample. 
 
 
 ```r
@@ -45,11 +43,10 @@ plot (sort (f0), xaxt='n',xlab='',ylab='f0 (sorted)', pch=16, col = deepgreen)
 ```
 
 <div class="figure">
-<img src="week-1_files/figure-html/initialplot-1.png" alt="Initial plot of values." width="768" />
-<p class="caption">(\#fig:initialplot)Initial plot of values.</p>
+<img src="week-1_files/figure-html/initialplot-1.png" alt="(left) Plot of values in the order they appear in the original data. (right) Observations ordered by increasing value." width="768" />
+<p class="caption">(\#fig:initialplot)(left) Plot of values in the order they appear in the original data. (right) Observations ordered by increasing value.</p>
 </div>
 
-We can easily find descriptive statistics like the sample mean ($\bar{x}$), the sample standard deviation ($s_x$), and important quantiles for this sample of values. The quantiles below correspond to the values of ordered observations, like in the right plot above. The 0% quantile is the smallest observation, while 100% is the highest. Any other quantile is found by ordering the observations and selecting the observation that is higher than x% of the sample values. For example, the 50% quantile (the median) is higher than 50% of values, and the 25% quantile is higher than 1/4 of the values in the sample. 
 
 
 ```r
@@ -78,7 +75,7 @@ quantile (f0)
 ## 149.00 207.00 220.00 236.25 307.00
 ```
 
-We can look at the distribution of speakers. In the top row, points indicate individual productions, and are jittered along the y axis to make them easier to see. In the middle row we see a histogram of the same data. The histogram gives you the count of observations in each bin. In the bottom row we see a box plot of the same data. The edges of the box correspond to the 25 and 75% quantiles of the distribution, and the line in the middle of it corresponds to the median. As a result, 50% of observations are contained in the box.   
+We can look at the distribution of productions of f0 in several ways, as seen in Figure \@ref(fig:distributioncomparison). In the top row, points indicate individual productions, and are jittered along the y axis to make them easier to see. In the middle row we see a histogram of the same data. The histogram divides the x axis into a set of discrete sections ('bins'), and gives you the count of observations in each bin. In the bottom row we see a box plot of the same data. The edges of the box correspond to the 25 and 75% quantiles of the distribution, and the line in the middle of it corresponds to the median. As a result, 50% of observations are contained in the box.   
 
 
 ```r
@@ -91,8 +88,8 @@ mtext (side =1, outer = TRUE, text = "f0", line = 2.5)
 ```
 
 <div class="figure">
-<img src="week-1_files/figure-html/distributioncomparison-1.png" alt="Different ways to consider a distribution" width="576" />
-<p class="caption">(\#fig:distributioncomparison)Different ways to consider a distribution</p>
+<img src="week-1_files/figure-html/distributioncomparison-1.png" alt="Different ways to consider our distribution of f0 values." width="576" />
+<p class="caption">(\#fig:distributioncomparison)Different ways to consider our distribution of f0 values.</p>
 </div>
 
 ## Probability Distributions
@@ -143,8 +140,8 @@ hist (f0, freq = FALSE, main = "", col = deepgreen)
 ```
 
 <div class="figure">
-<img src="week-1_files/figure-html/twohists1-1.png" alt="A comarison of two histograms" width="768" />
-<p class="caption">(\#fig:twohists1)A comarison of two histograms</p>
+<img src="week-1_files/figure-html/twohists1-1.png" alt="(left) A histogram of our f0 data showing counts in each bin. (right) A histogram of our f0 data showing densities." width="768" />
+<p class="caption">(\#fig:twohists1)(left) A histogram of our f0 data showing counts in each bin. (right) A histogram of our f0 data showing densities.</p>
 </div>
 
 The density is just the thickness of the distribution at a certain location. In probability theory, the sum of the probabilities of all possible outcomes is 1, by definition. So, the fact that the area under the curve of a density is equal to 1 means that the density contains all your *stuff*, all the possible outcomes of the variable we are discussing.
@@ -167,7 +164,7 @@ hist (c(f0,f0), freq = FALSE, breaks = 10, main = "", col = deepgreen)
 
 ### The normal distribution
 
-The distribution of many variables (including f0) follows what is called a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution). This means if you take a random sample of a variable and arrange observations into bins, they will tend to resemble the shape of a normal distribution. This distribution is also called a Gaussian distribution and has a familiar, bell-shaped curve.  
+The distribution of [many variables](https://www.youtube.com/watch?v=4HpvBZnHOVI) (including f0) follows what's called a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution). This means if you take a random sample of a variable and arrange observations into bins, they will tend to resemble the shape of a normal distribution. This distribution is also called a Gaussian distribution and has a familiar, bell-shaped curve.  
 
 The normal distribution has the following important characteristics. 
 
@@ -175,7 +172,7 @@ The normal distribution has the following important characteristics.
 
 2. The probability of observing a given value decreases as you get further from the mean. 
 
-3. It is easy to work with, very well understood, and naturally arises in basically all domains. 
+3. It's easy to work with, very well understood, and naturally arises in basically all domains. 
 
 Normal distributions have two parameters. This means they vary from each other in only two ways. These parameters are:
 
@@ -183,7 +180,7 @@ Normal distributions have two parameters. This means they vary from each other i
 
 2. A standard deviation, $\sigma$, that determines its *spread* along the x axis. Since every distribution has an area under the curve equal to one (they all have the same 'volume'), the smaller the variance the higher the peak of the density along the y axis must be. 
 
-Below, I compare the histogram of f0 values to the density of a normal distribution with a mean equal to our sample mean ($\mu = \bar{x}$) and a standard deviation equal to our sample standard deviation ($\sigma = s_x$). The density was drawn using the `dnorm` function. This function will help draw a curve representing the shape of a theoretical normal distribution with a given mean and standard deviation. 
+Below, I compare the histogram of f0 values to the density of a normal distribution with a mean equal to our sample mean ($\mu = \bar{f0}$) and a standard deviation equal to our sample standard deviation ($\sigma = s_{f0}$). The density was drawn using the `dnorm` function. This function will help draw a curve representing the shape of a theoretical normal distribution with a given mean and standard deviation. 
 
 
 ```r
@@ -222,11 +219,11 @@ abline (v = seq (mean(f0)-3*sd(f0),mean(f0)+3*sd(f0),sd(f0)), lwd = 2,
 
 In general, it is impossible to know what the 'true' data distribution is, so that *perfect* inference is not possible. As a result, scientists often use theoretical probability distributions to make inferences about real-life populations and observations. Notice that our real life measurements follow the 'shape' predicted by the theoretical normal distribution. This suggests that we may be able to use the characteristics of an appropriate normal distribution to make inferences about female f0 (and other variables).
 
-Using a normal distribution to make inferences about your data is like using a mathematical model for spheres to understand the behavior of billiard balls. In reality the balls are not perfect spheres. However, their shapes will be spherical enough to allow us to make useful predictions based on the simplified model. In general, it is useful to keep in mind that reality will never exactly conform to our model. This can result in unpredictable errors in our conclusions, which can cause errors to occur. In general, the things you don't know you don't know are the things that will cause the most problems.
+Using a normal distribution to make inferences about your data is like using a mathematical model for spheres to understand the behavior of billiard balls. In reality the balls are not perfect spheres. However, their shapes will be spherical enough to allow us to make useful predictions based on the simplified model. In general, it is useful to keep in mind that reality will never exactly conform to our model. This can result in unpredictable errors in our conclusions. In general, the things you don't know you don't know are the things that will cause the most problems. If you know where your model went wrong, you would have fixed it!
 
-So, since we expect the distribution of f0 values to have the shape of the normal distribution, we can use the shape of the normal distribution to make inferences about the distribution of f0 values, even the ones we did not observe. For example, we can use the theoretical normal density to estimate the probability of observing a female production with an f0 of under 175 Hz, from among *all* possible observable productions of f0 in this *population*.
+Since we expect the distribution of f0 values to have the shape of the normal distribution, we can use the shape of the normal distribution to make inferences about the distribution of f0 values, even the ones we did not observe. For example, we can use the theoretical normal density to estimate the probability of observing a female production with an f0 of under 175 Hz, from among *all* possible observable productions of f0 in this *population*.
 
-We do this by referring to the proportion of values expected to be less 175 Hz in the normal distribution. This can be found by finding the area under the curve of the probability density to the left of that point (the red area below). Since the *total* area is always equal to 1, the area of the red portion below corresponds to a percentage/probability. 
+We do this by referring to the proportion of values expected to be less 175 Hz in the normal distribution that has the same 'shape' as our sample. This can be found by finding the area under the curve of the probability density to the left of that point (the red area below). Since the *total* area is always equal to 1, the area of the red portion below corresponds to a percentage/probability. 
 
 Below, I use the function `pnorm` to find the proportion of values that are expected to be greater/less than 175 Hz. I use the parameters estimated form our sample to run the `pnorm`function, as these are our best guesses of the population parameters. As we can see, this value is reasonably close to our empirical proportion, which was 0.038 (3.8%). 
 
@@ -337,72 +334,34 @@ pnorm (175, mean (f0), sd(f0)) * 5500
 
 ## Probabilities of events and likelihoods of parameters
 
-We are going to switch from talking about *probabilities* to talking about *likelihoods*. A probability is the odds of observing some event/outcome, given some parameter(s). A likelihood is the odds of observing a parameter given some observed data. In both cases, these terms assume that you are referring to some probability distribution. 
-
-Every parameter for every probability distribution has a likelihood function, given some data. I am only going to talk about the likelihood of the normal mean parameter, $\mu$, in detail. 
+We are going to switch from talking about *probabilities* to talking about *likelihoods*. A probability is the odds of observing some data/event/outcome, given some parameter(s). A likelihood places odds on different *parameters* given some observed data. Every parameter for every probability distribution has a likelihood function, given some data. I am only going to talk about the likelihood of the normal mean parameter, $\mu$, in detail. 
 
 The *likelihood function* is a curve showing the relative likelihoods of different parameter values, given a fixed set of data. The likelihood function tells you what values are *believable* given your data. If a value is very unlikely, that means that it is not supported by your data. In other words, unlikely parameter estimates represent conclusions that your data is rejecting as not viable. 
-
 Here are three useful properties of the likelihood functions of $\mu$, the mean parameter of the normal distribution:
  
 1. The likelihood function of $\mu$ will tend to be a normal distribution. 
 
-2. The mean (and peak) of the likelihood function of $\mu$ given some sample $x$ is equal to the arithmetic mean of the sample ($\bar{x}$).
+2. The mean (and peak) of the likelihood function of $\mu$ given some sample $x$ is equal to the arithmetic mean of the sample ($\bar{x}=mean(x)$).
 
-3. The standard deviation of the likelihood of $\mu$ is equal to the standard deviation of the data ($s_x$), divided by the square root of N (the sample size). 
+3. The standard deviation of the likelihood of $\mu$ is equal to the standard deviation of the data ($s_x=sd(x)$), divided by the square root of N (the sample size). 
 
 The first point tells us that we can use the normal distribution to make inferences about likely, and unlikely values for means, given some data. 
 
 The second point says that if you are wondering what the best (most likely) estimate of $\mu$ is given your sample, the answer is the arithmetic mean of your sample ($\bar{x}$). 
 
-The third point means that the likelihood function for $\mu$ will tend to be *much* narrower than the distribution of our original data. This is because a mean based on, for example, 50 samples will contains many positive and negative deviations from the average that will tend to cancel out. As a result, the more data you have the more *precise* your estimates are, and the less *uncertainty* is associated with any estimate. 
+The third point means that the likelihood function for $\mu$ will tend to be *much* narrower than the distribution of our original data. This is because a mean based on, for example, 50 samples will contain many positive and negative deviations from the average that will tend to cancel out. As a result, the more data you have the more *precise* your estimates are, and the less *uncertainty* is associated with any estimate. 
 
-The left panel below shows the likelihood function for $\mu$ based on the first 10 observations of our f0 vector, shown by the blue points at the bottom of the plot. I chose this small sample just to make this example clearer. Notice that the most likely mean values for these points like over the bulk of the sampled values. The vertical dotted lines show three possible mean values that will be highlighted. 
+The left panel in Figure \@ref(fig:likelihood1) below shows the likelihood function for $\mu$ based on the first 10 observations of our f0 vector, shown by the blue points at the bottom of the plot. I chose this small sample just to make this example clearer. Notice that the most likely mean values of $\mu$ for these points like over the bulk of the sampled values. The vertical dotted lines show three possible mean values that will be highlighted. 
 
-The likelihood of any parameter estimate (e.g., $\mu$ = 175 Hz in the right panel below) is equal to the product of the density of each observation in the sample, if we assume that the estimate were true. For example, to calculate the likelihood that $\mu$, we: 
+The likelihood of any parameter estimate (e.g., $\mu$ = 175 Hz in the right panel of Figure \@ref(fig:likelihood1)) is equal to the product of the density of each observation in the sample, if we assume that the estimate were true. For example, to calculate the likelihood that $\mu=175$, we: 
 
-1) assume that the data is generated by a normal distribution with a $\mu$ equal to x, and $\sigma$ equal to the sample standard deviation ($s_x$). 
+  1) Assume that the data is generated by a normal distribution with a $\mu$ equal to 175 Hz, and $\sigma$ equal to the sample standard deviation ($s_{f0}$). 
 
-2) Find the the height of the curve of the probability distribution (the density) over each point (indicated by lines in the right panel below). 
+  2) Find the the height of the curve of the probability distribution (the density) over each point (indicated by lines in the right panel below). 
 
-3) The likelihood is the product of all of these densities. In practice, the logarithms of the individual probabilities are added together, yielding the *log-likelihood*. This is because multiplying together too many fractions can lead to numbers so small computers have a hard time representing them.  
+  3) The likelihood is the product of all of these densities (heights). In practice, the logarithms of the individual probabilities are added together, yielding the *log-likelihood*. This is because multiplying together too many fractions can lead to numbers so small computers have a hard time representing them, and adding logarithms is equivalent to multiplying to original values.  
 
-Imagine I follow the steps above for each position along the x axis, recording the likelihood values I calculate. I then plot the product of the densities for each x value: I have just plotted a likelihood function for $\mu$ given our data. 
-
-
-```r
-x = f0[1:10]   ## tiny sub sample for example
-mean(x)  ## sample mean
-```
-
-```
-## [1] 220.2
-```
-
-```r
-sd (x)   ## sample standard deviation
-```
-
-```
-## [1] 21.86219
-```
-
-```r
-par (mfrow = c(1,2), mar = c(4,4,1,1))
-plot (x,rep(0,10), ylim = c(0,.08), pch=16,col=4, xlim = c(150,300), 
-      ylab='Density', main = 'Likelihood of mean',xlab='f0',cex.main=.8)
-## here the likelihood sd is divided by the sample size
-curve (dnorm (x, mean(x), 21.9 / sqrt (10)), from = c(150,300), 
-       add=TRUE, col = 2, lwd = 2)
-abline (v = c(175, 200, 225), lwd=2,lty=3)
-
-plot (x,rep(0,10), ylim = c(0,.022), pch=16,col=4,xlim = c(150,300),cex.main=.8, 
-      ylab='Density', main = "mean = 175",xlab='f0')
-## now it is centered at mean = 175 Hz
-curve (dnorm (x, 175, 21.9), from = c(150,300), 
-       add=TRUE, col = 2, lwd = 2)
-segments (x,rep(0,10),x,dnorm (x, 175, sd (x)))
-```
+Imagine I follow the steps above for each position along the x axis, recording the likelihood values I calculate. I then plot the product of the densities for each corresponding x value. If I do this I have just plotted a likelihood function for $\mu$ given our data. 
 
 <div class="figure">
 <img src="week-1_files/figure-html/likelihood1-1.png" alt="(Left) The likelihood of the population mean given the blue points in the figure. (right) The probability of the points given an assumed mean of 175 Hz." width="768" />
@@ -414,25 +373,6 @@ In the right panel above we see that a normal distribution with a $\mu$ of 175 H
 In the left panel below, we see that a normal distribution with a $\mu$ of 200 Hz is more likely to generate this data, and the probability distribution is clearly a much better fit. However a distribution with a mean of 200 Hz is still not very likely to have generated this data. 
 
 Finally, in the right panel below we see the the maximum likelihood estimate of 225 Hz, the value representing the peak of the likelihood function (in the left panel above). When we say that 225 Hz is the most likely mean for this data, we are saying that this data is most probably the outcome of a normal distribution centered at 225 Hz, relative to the alternatives. 
-
-
-```r
-x = f0[1:10]   ## tiny sub sample for exampls
-par (mfrow = c(1,2), mar = c(4,4,1,1))
-plot (x,rep(0,10), ylim = c(0,.022), pch=16,col=4,xlim= c(150,300),cex.main=.8, 
-      ylab='Density', main = "mean = 200",xlab='f0')
-## distribution centered ar 200
-curve (dnorm (x, 200, 21.9), from = c(150,300), 
-       add=TRUE, col = 2, lwd = 2)
-segments (x,rep(0,10),x,dnorm (x, 200, sd (x)))
-
-plot (x,rep(0,10), ylim = c(0,.022), pch=16,col=4,xlim =c(150,300),cex.main=.8, 
-      ylab='Density', main = "mean = 225",xlab='f0')
-## and now at 220
-curve (dnorm (x, 225, 21.9), from = c(150,300), 
-       add=TRUE, col = 2, lwd = 2)
-segments (x,rep(0,10),x,dnorm (x, 225, sd (x)))
-```
 
 <div class="figure">
 <img src="week-1_files/figure-html/likelihood2-1.png" alt="(Left) The probability of the points given an assumed mean of 200 Hz. (right) The probability of the points given an assumed mean of 225 Hz." width="768" />
@@ -548,8 +488,8 @@ Basically it goes like this:
 We can write this model more formally like this:
 
 $$
-  y_i \sim \mathcal{N}(\mu,\sigma)
-  (\#eq:1)
+y_i \sim \mathcal{N}(\mu,\sigma)
+(\#eq:1)
 $$
 
 This says that we expect that the tokens of the variable we are interested in is distributed according to ($\sim$) a normal distribution with those parameters. 
@@ -714,7 +654,11 @@ In the bottom-left panel we see a situation where the prior dominates the estima
 
 In the bottom-right panel we see a situation where the likelihood and the prior are equal. In this case the posterior represents compromise between new and prior knowledge.
 
-<img src="week-1_files/figure-html/posterior-1.png" width="768" />
+
+<div class="figure">
+<img src="week-1_files/figure-html/posterior-1.png" alt="Demonstration of the effect of different types of priors and likelihoods on posterior distributions." width="768" />
+<p class="caption">(\#fig:posterior)Demonstration of the effect of different types of priors and likelihoods on posterior distributions.</p>
+</div>
 
 The use of prior probabilities is often said to make Bayesian models 'subjective' but its not really a big deal. First, every model involves arbitrary decisions which can substantially affect our results. Second, a researcher will always use common sense to interpret a model. For example, before collecting my sample I can say that I expect my female average f0 to be 200 Hz or so, but think its reasonable to expect anything from 100 to 300 Hz. Based on everything we know about human speech, even these bounds are too wide, and anything outside would suggest something is very wrong. So, even if I did not use a prior, I would use my expectations to 'screen' my results, and be very wary of anything that did not meet my expectations. 
 
@@ -784,7 +728,11 @@ sampler_example = function (sample, mu_estimate = 0, stdev = 1, nsamples = 1000)
 
 In the plots below (code at end of chapter), you can see the algorithm begins at 0 (the initial guess) but is quickly able to find the most likely sample mean given the data (left column). In the middle, I show the distribution of the samples on the left, minus the burn-in phase (arbitrarily chosen by me). On the right, I compare our samples (blue) to the theoretical posterior distribution for the mean given the data and prior (red). I toss out the samples during the 'burn in' phase, as there are used up in trying to 'find' the correct location in the parameter space.   
 
-<img src="week-1_files/figure-html/mcmc-1.png" width="768" />
+
+<div class="figure">
+<img src="week-1_files/figure-html/mcmc-1.png" alt="Demonstration of parameter estimation using a random walk, yielding a good approximation of analytically-derived values." width="768" />
+<p class="caption">(\#fig:mcmc)Demonstration of parameter estimation using a random walk, yielding a good approximation of analytically-derived values.</p>
+</div>
 
 The results clearly coincide, but aren't perfect. But this sampler isn't very sophisticated! The samplers we will be using in this class *do* provide an excellent match to the posterior distribution. As a result, we can inspect the distribution of collected $\mu_{estimate}$ to understand the posterior of our parameter. We can use these distributions in the same way that we used the theoretical likelihood functions above, by using them to make statements about likely parameter values and ranges of values. 
 
@@ -792,7 +740,49 @@ The results clearly coincide, but aren't perfect. But this sampler isn't very so
 
 ## Plot Code
 
-Plot showing combinations of different priors and likelihoods into posteriors::
+Figure \@ref(fig:likelihood1)
+
+
+```r
+x = f0[1:10]   ## tiny sub sample for example
+par (mfrow = c(1,2), mar = c(4,4,1,1))
+plot (x,rep(0,10), ylim = c(0,.08), pch=16,col=4, xlim = c(150,300), 
+      ylab='Density', main = 'Likelihood of mean',xlab='f0',cex.main=.8)
+## here the likelihood sd is divided by the sample size
+curve (dnorm (x, mean(x), 21.9 / sqrt (10)), from = c(150,300), 
+       add=TRUE, col = 2, lwd = 2)
+abline (v = c(175, 200, 225), lwd=2,lty=3)
+
+plot (x,rep(0,10), ylim = c(0,.022), pch=16,col=4,xlim = c(150,300),cex.main=.8, 
+      ylab='Density', main = "mean = 175",xlab='f0')
+## now it is centered at mean = 175 Hz
+curve (dnorm (x, 175, 21.9), from = c(150,300), 
+       add=TRUE, col = 2, lwd = 2)
+segments (x,rep(0,10),x,dnorm (x, 175, sd (x)))
+```
+
+Figure \@ref(fig:likelihood2)
+
+
+```r
+x = f0[1:10]   ## tiny sub sample for exampls
+par (mfrow = c(1,2), mar = c(4,4,1,1))
+plot (x,rep(0,10), ylim = c(0,.022), pch=16,col=4,xlim= c(150,300),cex.main=.8, 
+      ylab='Density', main = "mean = 200",xlab='f0')
+## distribution centered ar 200
+curve (dnorm (x, 200, 21.9), from = c(150,300), 
+       add=TRUE, col = 2, lwd = 2)
+segments (x,rep(0,10),x,dnorm (x, 200, sd (x)))
+
+plot (x,rep(0,10), ylim = c(0,.022), pch=16,col=4,xlim =c(150,300),cex.main=.8, 
+      ylab='Density', main = "mean = 225",xlab='f0')
+## and now at 220
+curve (dnorm (x, 225, 21.9), from = c(150,300), 
+       add=TRUE, col = 2, lwd = 2)
+segments (x,rep(0,10),x,dnorm (x, 225, sd (x)))
+```
+
+Figure \@ref(fig:posterior)
 
 
 ```r
@@ -831,10 +821,8 @@ plot (x, likelihood / max (likelihood), type = 'l', ylab='Density',lwd=2,
 lines (x, prior / max (prior),lwd=2,col=2)
 lines (x, posterior / max (posterior),lwd=2,col=4)
 ```
- 
 
-Plot showing the output of the example sampler included above:
- 
+
 
 ```r
 set.seed(1)
@@ -876,3 +864,5 @@ density_2 = density (samples_2[-(1:250)])
 density_2$y = density_2$y / max (density_2$y)
 lines (density_2, lwd = 3, col = 4)
 ```
+
+
