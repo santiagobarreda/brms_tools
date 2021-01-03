@@ -16,7 +16,7 @@ The 'traditional' designs equivalent to these models are: one-sample t-test, and
 
 ## Data and research questions 
 
-We are going to keep analyzing the female f0 data from the Hillenbrand et al. (1995) dataset. 
+We are going to keep analyzing the female f0 data from the Hillenbrand et al. (1995) dataset, discussed in chapter 1. 
 
 
 ```r
@@ -44,7 +44,7 @@ However, this time we are going to do this with a Bayesian multilevel model.
 
 ## Estimating a single mean with the `brms` package
 
-The `brms` [Bayesian regression models](https://github.com/paul-buerkner/brms) package in R lets you fit Bayesian models using the STAN probabilistic programming language using R. The package is really amazing and makes Bayesian multilevel modeling easy and accessible for anyone. It also includes a lot of helper functions that making with these models very convenient. 
+The `brms` [Bayesian regression models](https://github.com/paul-buerkner/brms) package in R lets you fit Bayesian models using the STAN probabilistic programming language using R. The package is really amazing and makes Bayesian multilevel modeling easy and accessible for anyone. It also includes a lot of helper functions that make working with these models very convenient. 
 
 `brms` should be installed in R so that the models described below will work. Make sure you have the latest version of R (and Rstudio) and the latest version of the `brms' package installed. Sometimes using older versions can cause R to crash when fitting models.
 
@@ -57,31 +57,31 @@ The model formulas resemble regression equations to some extent, but there are s
 \begin{equation}
 \begin{split}
 \\
-y_i = \mu_i + \varepsilon_i \\ \\
-y_i \sim \mathcal{N}(\mu_i,\sigma) \\ \\
+y_{[i]} = \mu_{[i]} + \varepsilon_{[i]} \\ \\
+y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\
 \end{split}
 (\#eq:21)
 \end{equation}
 
-The top line says that your observed variable for any given trial $y_i$ is the sum of some of some average expected value for that trial, ($\mu_i$) and some specific random error for that trial ($\mu_i$). The random error is expected to be normally distributed with some unknown standard deviation ($\varepsilon_i \sim \mathcal{N}(0,\sigma)$). The second line presents the $y$ variable as being a normally-distributed variable with a trial-specific mean of $\mu_i$, and a fixed standard deviation $\sigma_{error}$
+The top line says that your observed variable for any given trial $y_{[i]}$ is the sum of some of some average expected value for that trial, ($\mu_{[i]}$) and some specific random error for that trial ($\mu_{[i]}$). The random error is expected to be normally distributed with a mean of 0 and some unknown standard deviation ($\varepsilon_{[i]} \sim \mathcal{N}(0,\sigma)$). The second line presents the $y$ variable as being a normally-distributed variable with a trial-specific mean of $\mu_i$, and a fixed standard deviation $\sigma_{error}$
 
-In general, in regression models we would really like to understand orderly variation in $\mu_i$ from trial to trial by breaking it up into parts ($\mathrm{x}_{1}, \mathrm{x}_{2},...$) when combined using some weights ($\alpha_1, \alpha_2,...$). 
+In general, in regression models we would really like to understand orderly variation in $\mu_{[i]}$ from trial to trial by breaking it up into predictors ($\mathrm{x}_{1}, \mathrm{x}_{2},...$) that are combined using some weights ($\alpha_1, \alpha_2,...$). 
 
 $$
-\mu_i = \alpha_1*\mathrm{x}_{1i} + \alpha_2*\mathrm{x}_{2i}+...+\alpha_j*\mathrm{x}_{ji}
+\mu_{[i]} = \alpha_1*\mathrm{x}_{1{[i]}} + \alpha_2*\mathrm{x}_{2i}+...+\alpha_j*\mathrm{x}_{j{[i]}}
 (\#eq:22)
 $$
 
-'Fitting' a regression model consists of trying to 'guess' the values of the weighing factors ($\alpha$), called the *model coefficients*. When we are only trying to estimate a single average, we don't have any predictors to explain variation in $\mu_i$. In fact, our model structure suggests we expect no variation in $\mu_i$ from trial to trial!. 
+'Fitting' a regression model consists of trying to 'guess' the values of the weighing factors ($\alpha$), called the *model coefficients*. When we are only trying to estimate a single average, we don't have any predictors to explain variation in $\mu_{[i]}$. In fact, our model structure suggests we expect no variation in $\mu_{[i]}$ from trial to trial!. 
 
 Mathematically, we can't just say 'we have no predictor' since everything needs to be represented by a number. As a result, we use a single 'predictor' $\mathrm{x}$ with a value of 1 so that our regression equation is:
 
 $$
-\mu_i = \alpha_1*1
+\mu_{[i]} = \alpha_1*1
 (\#eq:23)
 $$
 
-Now our model is trying to guess the value of a single parameter ($\alpha_1$), and we expect this parameter to be equal to $\mu_i$ since it is being multiplied by a 'predictor' with a constant value of 1. 
+Now our model is trying to guess the value of a single coefficient ($\alpha_1$), and we expect this coefficient to be equal to $\mu_{[i]}$ since it is being multiplied by a 'predictor' with a constant value of 1. 
 
 This kind of model is called an 'Intercept only' model. Regression models are really about representing *differences*, differences between groups and across conditions. When you are encoding differences, you need an overall reference point. For example, saying that something is 5 miles north is only interpretable given some reference point. The 'reference point' used by your model is called your 'Intercept'. Basically, our model consists *only* of a single reference point, and the $\alpha_1$ parameter reflects its value (as shown in Equation \@ref(eq:23)). 
 
@@ -92,22 +92,22 @@ Based on the above, our f0 model can be thought of like this:
 \begin{equation}
 \begin{split}
 \\
-f0_i \sim \mathcal{N}(\mu_i,\sigma) \\ \\ 
-\mu_i = Intercept \\ \\
+f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\ 
+\mu_{[i]} = Intercept \\ \\
 \end{split}
 (\#eq:24)
 \end{equation}
 
 Put in plain English, each line in the model says the following:
  
-  * We expect f0 for a given observation $i$ is equal to be normally distributed according to some trial-specific expected value and some unknown (but fixed) standard deviation. 
+  * We expect that f0 for a given observation $i$ is normally distributed according to some trial-specific expected value and some unknown (but fixed) standard deviation. 
 
-  * The expected value for any given trial ($\mu_i$) is equal to the intercept of the model for all trials. This means its fixed and we have the same expected value for all tokens!
+  * The expected value for any given trial ($\mu_{[i]}$) is equal to the intercept of the model for all trials. This means its fixed and we have the same expected value for all tokens!
   
-What the model also says implicitly, is that the error is drawn from a normal distribution with a mean of 0 and a standard deviation of $\sigma$. This distribution represents all deviations in f0 around the mean f0 for the sample ($\mu_i$). In other words, the error for this model is expected to look like:
+What the model also implicitly says that the error is drawn from a normal distribution with a mean of 0 and a standard deviation of $\sigma$. This distribution represents all deviations in f0 around the mean f0 for the sample ($\mu_{[i]}$). In other words, the error for this model is expected to look like:
 
 $$
-\varepsilon_i \sim \mathcal{N}(0,\sigma)
+\varepsilon_{[i]} \sim \mathcal{N}(0,\sigma)
 (\#eq:25)
 $$
   
@@ -119,13 +119,13 @@ Generally, model formulas in R have the form:
 
 where all variables are represented by their names in your data. The variable we are interested in understanding ($y$) goes on the left hand side, and on our predictors go on the right hand side, separated by a $\sim$. Notice that the random term ($\varepsilon$) is not included in the model formula. 
 
-The formula above can be read as 'y is distributed according to some predictor', which really means "we think there is systematic variation in our y variable that can be understood by considering its joint variation with our predictor variable(s).
+The formula above can be read as 'y is distributed according to some predictor', which really means "we think there is systematic variation in our y variable that can be understood by considering its joint variation with our predictor variable(s)."
 
 For intercept only models, the number `1` is included in the model formula to indicate that a single constant value is being estimated (as in  \@ref(eq:23)). As a result, our model formula will have the form `f0 ~ 1`. This model could be said out loud like "we are trying to estimate the mean of f0" or "we are predicting mean f0 given only an intercept". 
 
 ### Calling the `brm` function
 
-Below, I load the `brms` package, which contains the `brm` function. The `brm` function takes a model specification, data and some other information, and fits a model that estimates all the model parameters. Unless otherwise specified, `brm` assumes that the error component ($\varepsilon$) of my model is normally distributed. The first argument in the function call is the model formula, and the second argument tells the function where to find the data. The other argument tell the function to estimates a single set of samples (chains = 1) using a single processor on your CPU (cores = 1). These arguments will be discussed more later.
+Below, I load the `brms` package, which contains the `brm` function. The `brm` function takes a model specification, data and some other information, and fits a model that estimates all the model parameters. Unless otherwise specified, `brm` assumes that the error component ($\varepsilon$) of your model is normally distributed. The first argument in the function call is the model formula, and the second argument tells the function where to find the data. The other arguments tell the function to estimates a single set of samples (chains = 1) using a single processor on your CPU (cores = 1). These arguments will be discussed more later.
 
 
 ```r
@@ -306,7 +306,7 @@ head (samples)
 ## 6    221.2339 23.08532 -2633.672
 ```
 
-I can plot the individual samples for the mean parameter on the left below. On the right I plot a histogram of the same samples, superimposed with the theoretical distribution of the likelihood. Although this is not the posterior, with so many data points we expect our posterior to be dominated by the likelihood anyways.  
+I can plot the individual samples for the mean parameter on the left below. On the right I plot a histogram of the same samples, superimposed with the theoretical distribution of the likelihood. Although this is not the posterior, with so many data points we expect our posterior to be dominated by the likelihood so they should be similar.  
 
 
 ```r
@@ -450,8 +450,8 @@ This regression model is now something like this:
 \begin{equation}
 \begin{split}
 \\
-f0_i \sim \mathcal{N}(\mu_i,\sigma) \\ \\
-\mu_i = Intercept + \alpha_{uspeaker_i} \\
+f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\
+\mu_{[i]} = Intercept + \alpha_{uspeaker_{[i]}} \\
 \\
 \end{split}
 (\#eq:26)
@@ -460,7 +460,7 @@ f0_i \sim \mathcal{N}(\mu_i,\sigma) \\ \\
 
 In English, the model above says: we expect f0 to be normally distributed. The f0 value we expect for any given token is equal to some overall average ($Intercept$), and some value associated with each the individual speaker ($\alpha_{uspeaker,i}$) who uttered the trial. 
 
-In addition to the  coefficient estimating the overall intercept, we know have another term $\alpha_{uspeaker}$. This coefficient is actually a set of coefficients since it has a different value for each speaker (its a vector). It has a different value for each speaker because it will reflect variation in $\mu_{speaker}$, the average f0 value produced by each speaker. However, $\mu_{speaker}$ is a random variable since it reflects the random average f0 of each person drawn from the population. If $\mu_{speaker}$ behaves like a random variable, then the coefficients that reflect this value in our model ($\alpha_{uspeaker}$) will behave in the same way. 
+In addition to the coefficient estimating the overall intercept, we know have another term $\alpha_{uspeaker}$. This coefficient is actually a set of coefficients since it has a different value for each speaker (its a vector). It has a different value for each speaker because it will reflect variation in $\mu_{speaker}$, the average f0 value produced by each speaker. However, $\mu_{speaker}$ is a random variable since it reflects the random average f0 of each person drawn from the population. If $\mu_{speaker}$ behaves like a random variable, then the coefficients that reflect this value in our model ($\alpha_{uspeaker}$) will behave in the same way. 
 
 This means that actually our model has *two* random variables. The first one is the error term $\varepsilon \sim \mathcal{N}(0,\sigma_{error})$, which has a mean of 0 and a standard deviation which we can refer to as $\sigma_{error}$. The second is the random terms that allow for speaker-specific adjustments to the intercept ($\alpha_{uspeaker}$), that can also be thought of as random draw from a normal distribution.
 

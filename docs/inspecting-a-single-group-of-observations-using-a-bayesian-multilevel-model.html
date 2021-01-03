@@ -252,7 +252,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The ‘traditional’ designs equivalent to these models are: one-sample t-test, and repeated-measures one-way ANOVA with only two groups. However, these models won’t be discussed in the chapter below.</p>
 <div id="data-and-research-questions-1" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Data and research questions</h2>
-<p>We are going to keep analyzing the female f0 data from the Hillenbrand et al. (1995) dataset.</p>
+<p>We are going to keep analyzing the female f0 data from the Hillenbrand et al. (1995) dataset, discussed in chapter 1.</p>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-1" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">=</span> <span class="st">&quot;https://raw.githubusercontent.com/santiagobarreda&quot;</span></span>
 <span id="cb61-2"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-2" aria-hidden="true" tabindex="-1"></a>url2 <span class="ot">=</span> <span class="st">&quot;/stats-class/master/data/h95_vowel_data.csv&quot;</span></span>
 <span id="cb61-3"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-3" aria-hidden="true" tabindex="-1"></a>h95 <span class="ot">=</span> <span class="fu">read.csv</span> (<span class="fu">url</span>(<span class="fu">paste0</span> (url1, url2)))</span>
@@ -272,7 +272,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="estimating-a-single-mean-with-the-brms-package" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Estimating a single mean with the <code>brms</code> package</h2>
-<p>The <code>brms</code> <a href="https://github.com/paul-buerkner/brms">Bayesian regression models</a> package in R lets you fit Bayesian models using the STAN probabilistic programming language using R. The package is really amazing and makes Bayesian multilevel modeling easy and accessible for anyone. It also includes a lot of helper functions that making with these models very convenient.</p>
+<p>The <code>brms</code> <a href="https://github.com/paul-buerkner/brms">Bayesian regression models</a> package in R lets you fit Bayesian models using the STAN probabilistic programming language using R. The package is really amazing and makes Bayesian multilevel modeling easy and accessible for anyone. It also includes a lot of helper functions that make working with these models very convenient.</p>
 <p><code>brms</code> should be installed in R so that the models described below will work. Make sure you have the latest version of R (and Rstudio) and the latest version of the `brms’ package installed. Sometimes using older versions can cause R to crash when fitting models.</p>
 <div id="the-model" class="section level3" number="2.2.1">
 <h3><span class="header-section-number">2.2.1</span> The model</h3>
@@ -281,43 +281,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display" id="eq:21">\[\begin{equation}
 \begin{split}
 \\
-y_i = \mu_i + \varepsilon_i \\ \\
-y_i \sim \mathcal{N}(\mu_i,\sigma) \\ \\
+y_{[i]} = \mu_{[i]} + \varepsilon_{[i]} \\ \\
+y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\
 \end{split}
 \tag{2.1}
 \end{equation}\]</span></p>
-<p>The top line says that your observed variable for any given trial <span class="math inline">\(y_i\)</span> is the sum of some of some average expected value for that trial, (<span class="math inline">\(\mu_i\)</span>) and some specific random error for that trial (<span class="math inline">\(\mu_i\)</span>). The random error is expected to be normally distributed with some unknown standard deviation (<span class="math inline">\(\varepsilon_i \sim \mathcal{N}(0,\sigma)\)</span>). The second line presents the <span class="math inline">\(y\)</span> variable as being a normally-distributed variable with a trial-specific mean of <span class="math inline">\(\mu_i\)</span>, and a fixed standard deviation <span class="math inline">\(\sigma_{error}\)</span></p>
-<p>In general, in regression models we would really like to understand orderly variation in <span class="math inline">\(\mu_i\)</span> from trial to trial by breaking it up into parts (<span class="math inline">\(\mathrm{x}_{1}, \mathrm{x}_{2},...\)</span>) when combined using some weights (<span class="math inline">\(\alpha_1, \alpha_2,...\)</span>).</p>
+<p>The top line says that your observed variable for any given trial <span class="math inline">\(y_{[i]}\)</span> is the sum of some of some average expected value for that trial, (<span class="math inline">\(\mu_{[i]}\)</span>) and some specific random error for that trial (<span class="math inline">\(\mu_{[i]}\)</span>). The random error is expected to be normally distributed with a mean of 0 and some unknown standard deviation (<span class="math inline">\(\varepsilon_{[i]} \sim \mathcal{N}(0,\sigma)\)</span>). The second line presents the <span class="math inline">\(y\)</span> variable as being a normally-distributed variable with a trial-specific mean of <span class="math inline">\(\mu_i\)</span>, and a fixed standard deviation <span class="math inline">\(\sigma_{error}\)</span></p>
+<p>In general, in regression models we would really like to understand orderly variation in <span class="math inline">\(\mu_{[i]}\)</span> from trial to trial by breaking it up into predictors (<span class="math inline">\(\mathrm{x}_{1}, \mathrm{x}_{2},...\)</span>) that are combined using some weights (<span class="math inline">\(\alpha_1, \alpha_2,...\)</span>).</p>
 <p><span class="math display" id="eq:22">\[
-\mu_i = \alpha_1*\mathrm{x}_{1i} + \alpha_2*\mathrm{x}_{2i}+...+\alpha_j*\mathrm{x}_{ji}
+\mu_{[i]} = \alpha_1*\mathrm{x}_{1{[i]}} + \alpha_2*\mathrm{x}_{2i}+...+\alpha_j*\mathrm{x}_{j{[i]}}
 \tag{2.2}
 \]</span></p>
-<p>‘Fitting’ a regression model consists of trying to ‘guess’ the values of the weighing factors (<span class="math inline">\(\alpha\)</span>), called the <em>model coefficients</em>. When we are only trying to estimate a single average, we don’t have any predictors to explain variation in <span class="math inline">\(\mu_i\)</span>. In fact, our model structure suggests we expect no variation in <span class="math inline">\(\mu_i\)</span> from trial to trial!.</p>
+<p>‘Fitting’ a regression model consists of trying to ‘guess’ the values of the weighing factors (<span class="math inline">\(\alpha\)</span>), called the <em>model coefficients</em>. When we are only trying to estimate a single average, we don’t have any predictors to explain variation in <span class="math inline">\(\mu_{[i]}\)</span>. In fact, our model structure suggests we expect no variation in <span class="math inline">\(\mu_{[i]}\)</span> from trial to trial!.</p>
 <p>Mathematically, we can’t just say ‘we have no predictor’ since everything needs to be represented by a number. As a result, we use a single ‘predictor’ <span class="math inline">\(\mathrm{x}\)</span> with a value of 1 so that our regression equation is:</p>
 <p><span class="math display" id="eq:23">\[
-\mu_i = \alpha_1*1
+\mu_{[i]} = \alpha_1*1
 \tag{2.3}
 \]</span></p>
-<p>Now our model is trying to guess the value of a single parameter (<span class="math inline">\(\alpha_1\)</span>), and we expect this parameter to be equal to <span class="math inline">\(\mu_i\)</span> since it is being multiplied by a ‘predictor’ with a constant value of 1.</p>
+<p>Now our model is trying to guess the value of a single coefficient (<span class="math inline">\(\alpha_1\)</span>), and we expect this coefficient to be equal to <span class="math inline">\(\mu_{[i]}\)</span> since it is being multiplied by a ‘predictor’ with a constant value of 1.</p>
 <p>This kind of model is called an ‘Intercept only’ model. Regression models are really about representing <em>differences</em>, differences between groups and across conditions. When you are encoding differences, you need an overall reference point. For example, saying that something is 5 miles north is only interpretable given some reference point. The ‘reference point’ used by your model is called your ‘Intercept’. Basically, our model consists <em>only</em> of a single reference point, and the <span class="math inline">\(\alpha_1\)</span> parameter reflects its value (as shown in Equation <a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#eq:23">(2.3)</a>).</p>
 <p>As a result, the <span class="math inline">\(\alpha_1\)</span> coefficient is called the ‘intercept’ in our model. When a coefficient is just being multiplied by a ‘fake’ predictor that just equals 1, we can omit it from the regression model (but its still secretly there).</p>
 <p>Based on the above, our f0 model can be thought of like this:</p>
 <p><span class="math display" id="eq:24">\[\begin{equation}
 \begin{split}
 \\
-f0_i \sim \mathcal{N}(\mu_i,\sigma) \\ \\ 
-\mu_i = Intercept \\ \\
+f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\ 
+\mu_{[i]} = Intercept \\ \\
 \end{split}
 \tag{2.4}
 \end{equation}\]</span></p>
 <p>Put in plain English, each line in the model says the following:</p>
 <ul>
-<li><p>We expect f0 for a given observation <span class="math inline">\(i\)</span> is equal to be normally distributed according to some trial-specific expected value and some unknown (but fixed) standard deviation.</p></li>
-<li><p>The expected value for any given trial (<span class="math inline">\(\mu_i\)</span>) is equal to the intercept of the model for all trials. This means its fixed and we have the same expected value for all tokens!</p></li>
+<li><p>We expect that f0 for a given observation <span class="math inline">\(i\)</span> is normally distributed according to some trial-specific expected value and some unknown (but fixed) standard deviation.</p></li>
+<li><p>The expected value for any given trial (<span class="math inline">\(\mu_{[i]}\)</span>) is equal to the intercept of the model for all trials. This means its fixed and we have the same expected value for all tokens!</p></li>
 </ul>
-<p>What the model also says implicitly, is that the error is drawn from a normal distribution with a mean of 0 and a standard deviation of <span class="math inline">\(\sigma\)</span>. This distribution represents all deviations in f0 around the mean f0 for the sample (<span class="math inline">\(\mu_i\)</span>). In other words, the error for this model is expected to look like:</p>
+<p>What the model also implicitly says that the error is drawn from a normal distribution with a mean of 0 and a standard deviation of <span class="math inline">\(\sigma\)</span>. This distribution represents all deviations in f0 around the mean f0 for the sample (<span class="math inline">\(\mu_{[i]}\)</span>). In other words, the error for this model is expected to look like:</p>
 <p><span class="math display" id="eq:25">\[
-\varepsilon_i \sim \mathcal{N}(0,\sigma)
+\varepsilon_{[i]} \sim \mathcal{N}(0,\sigma)
 \tag{2.5}
 \]</span></p>
 </div>
@@ -326,12 +326,12 @@ f0_i \sim \mathcal{N}(\mu_i,\sigma) \\ \\
 <p>Generally, model formulas in R have the form:</p>
 <p><code>y ~ predictor</code></p>
 <p>where all variables are represented by their names in your data. The variable we are interested in understanding (<span class="math inline">\(y\)</span>) goes on the left hand side, and on our predictors go on the right hand side, separated by a <span class="math inline">\(\sim\)</span>. Notice that the random term (<span class="math inline">\(\varepsilon\)</span>) is not included in the model formula.</p>
-<p>The formula above can be read as ‘y is distributed according to some predictor’, which really means "we think there is systematic variation in our y variable that can be understood by considering its joint variation with our predictor variable(s).</p>
+<p>The formula above can be read as ‘y is distributed according to some predictor’, which really means “we think there is systematic variation in our y variable that can be understood by considering its joint variation with our predictor variable(s).”</p>
 <p>For intercept only models, the number <code>1</code> is included in the model formula to indicate that a single constant value is being estimated (as in <a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#eq:23">(2.3)</a>). As a result, our model formula will have the form <code>f0 ~ 1</code>. This model could be said out loud like “we are trying to estimate the mean of f0” or “we are predicting mean f0 given only an intercept”.</p>
 </div>
 <div id="calling-the-brm-function" class="section level3" number="2.2.3">
 <h3><span class="header-section-number">2.2.3</span> Calling the <code>brm</code> function</h3>
-<p>Below, I load the <code>brms</code> package, which contains the <code>brm</code> function. The <code>brm</code> function takes a model specification, data and some other information, and fits a model that estimates all the model parameters. Unless otherwise specified, <code>brm</code> assumes that the error component (<span class="math inline">\(\varepsilon\)</span>) of my model is normally distributed. The first argument in the function call is the model formula, and the second argument tells the function where to find the data. The other argument tell the function to estimates a single set of samples (chains = 1) using a single processor on your CPU (cores = 1). These arguments will be discussed more later.</p>
+<p>Below, I load the <code>brms</code> package, which contains the <code>brm</code> function. The <code>brm</code> function takes a model specification, data and some other information, and fits a model that estimates all the model parameters. Unless otherwise specified, <code>brm</code> assumes that the error component (<span class="math inline">\(\varepsilon\)</span>) of your model is normally distributed. The first argument in the function call is the model formula, and the second argument tells the function where to find the data. The other arguments tell the function to estimates a single set of samples (chains = 1) using a single processor on your CPU (cores = 1). These arguments will be discussed more later.</p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To ensure predictable results in examples, I will be using the same random  </span></span>
 <span id="cb62-2"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="co"># seed throughout, and resetting it before running any &#39;random&#39; process.  </span></span>
 <span id="cb62-3"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span> (<span class="dv">1</span>)</span>
@@ -439,7 +439,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 ## 4    222.3286 21.93414 -2637.392
 ## 5    219.5626 22.87259 -2633.785
 ## 6    221.2339 23.08532 -2633.672</code></pre>
-<p>I can plot the individual samples for the mean parameter on the left below. On the right I plot a histogram of the same samples, superimposed with the theoretical distribution of the likelihood. Although this is not the posterior, with so many data points we expect our posterior to be dominated by the likelihood anyways.</p>
+<p>I can plot the individual samples for the mean parameter on the left below. On the right I plot a histogram of the same samples, superimposed with the theoretical distribution of the likelihood. Although this is not the posterior, with so many data points we expect our posterior to be dominated by the likelihood so they should be similar.</p>
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
 <span id="cb81-2"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (samples[,<span class="dv">1</span>], <span class="at">xlab =</span> <span class="st">&#39;Sample number&#39;</span>,<span class="at">ylab =</span> <span class="st">&#39;f0&#39;</span>,<span class="at">col=</span>teal,<span class="at">pch=</span><span class="dv">16</span>)</span>
 <span id="cb81-3"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span> (samples[,<span class="dv">1</span>], <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="dv">20</span>,<span class="at">main=</span><span class="st">&#39;&#39;</span>,<span class="at">xlab=</span><span class="st">&#39;f0&#39;</span>,<span class="at">col=</span>maroon)</span>
@@ -519,8 +519,8 @@ Intercept   220.40      0.97   218.33   222.30 1.00      851      557</code></pr
 <p><span class="math display" id="eq:26">\[\begin{equation}
 \begin{split}
 \\
-f0_i \sim \mathcal{N}(\mu_i,\sigma) \\ \\
-\mu_i = Intercept + \alpha_{uspeaker_i} \\
+f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\
+\mu_{[i]} = Intercept + \alpha_{uspeaker_{[i]}} \\
 \\
 \end{split}
 \tag{2.6}
