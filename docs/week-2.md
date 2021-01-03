@@ -27,7 +27,7 @@ h95 = read.csv (url(paste0 (url1, url2)))
 # select women only
 w = h95[h95$type == 'w',]
 # this is unique subject numbers across all groups
-w$uspeaker = factor (w$uspeaker)  
+w$speaker = factor (w$speaker)  
 # select only the vector of interest
 f0 = w$f0
 ```
@@ -383,7 +383,7 @@ These boxplots shows that each speaker has their own average f0, and that their 
 par (mar = c(4,4,2,1)); layout (mat = c(1,2), heights = c(.3,.7))
 boxplot (f0, main = "Overall Boxplot", col="lavender", 
          horizontal = TRUE, ylim = c(140,320)) 
-boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots", col=c(yellow,coral,
+boxplot (f0 ~ speaker, data = w, main = "Speaker Boxplots", col=c(yellow,coral,
          deepgreen,teal), horizontal = TRUE, ylim = c(140,320)) 
 abline (h = 220.4,lty=3,col='grey',lwd=2)
 ```
@@ -404,9 +404,9 @@ par (mfrow = c(2,2), mar = c(4,4,3,1))
 hist (w$f0, main = "Histogram of all f0",xlim = c(140, 290), freq = FALSE,
       col=4)
 boxplot (w$f0, main = "Boxplot of all f0",col=lavender)
-boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots",col=deepgreen) 
+boxplot (f0 ~ speaker, data = w, main = "Speaker Boxplots",col=deepgreen) 
 abline (v = 16,lty=3)
-hist (w$f0[w$uspeaker == 107], main = "Histogram of speaker 107",
+hist (w$f0[w$speaker == 107], main = "Histogram of speaker 107",
       xlim = c(160, 260), freq = FALSE,col=yellow)
 ```
 
@@ -429,7 +429,7 @@ We are now going to fit the same model we fit above, but with a structure that r
 
 ### The model 
 
-To specify a multilevel model, you need to write a slightly more complicated model formula. This explanation assumes that you have a dataframe or matrix where one column contains the variable you are interested and predicting (in this case `f0`), and another column contains a vector containing unique labels for each speaker or source of data (in this case a unique speaker label `uspeaker`). 
+To specify a multilevel model, you need to write a slightly more complicated model formula. This explanation assumes that you have a dataframe or matrix where one column contains the variable you are interested and predicting (in this case `f0`), and another column contains a vector containing unique labels for each speaker or source of data (in this case a unique speaker label `speaker`). 
 
 To indicate that your model contains an 'upper' level where you have clusters of data coming from different individuals, you have to put another model inside your main model!
 
@@ -439,11 +439,11 @@ Before, the model formula looked like this:
 
 which meant 'predict f0 using only an intercept'. Now the model formula will look like this:
 
-`f0 ~ 1 + ( 1 | uspeaker)` 
+`f0 ~ 1 + ( 1 | speaker)` 
 
 When you place a predictor in the formula in parenthesis and on the right-hand-side of a pipe, like this `( | predictor )`, you tell `brm` that you expect data to be clustered according to each category represented in the grouping vector. In this case, we are telling `brm` that each unique speaker is a cluster of data. Whatever you put in the left-hand-side of the parentheses `( in here | predictor )` is the model for each subcluster! 
 
-So what does this model formula mean: `f0 ~ 1 + ( 1 | uspeaker)`? It tells `brm`: predict f0 based on only an intercept, but also allow intercept values to vary separately for each speaker. Effectively, this model formula is telling `brm` to figure out all the information presented in the figures above.
+So what does this model formula mean: `f0 ~ 1 + ( 1 | speaker)`? It tells `brm`: predict f0 based on only an intercept, but also allow intercept values to vary separately for each speaker. Effectively, this model formula is telling `brm` to figure out all the information presented in the figures above.
 
 This regression model is now something like this:
 
@@ -451,31 +451,33 @@ This regression model is now something like this:
 \begin{split}
 \\
 f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\
-\mu_{[i]} = Intercept + \alpha_{uspeaker_{[i]}} \\
+\mu_{[i]} = Intercept + \alpha_{speaker_{[i]}} \\
 \\
 \end{split}
 (\#eq:26)
 \end{equation}
 
+In English, the model above says: we expect f0 to be normally distributed. The f0 value we expect for any given token is equal to some overall average ($Intercept$), and some value associated with each the individual speaker ($\alpha_{speaker_{[i]}}$) who uttered the trial. 
 
-In English, the model above says: we expect f0 to be normally distributed. The f0 value we expect for any given token is equal to some overall average ($Intercept$), and some value associated with each the individual speaker ($\alpha_{uspeaker,i}$) who uttered the trial. 
+We now have another term $\alpha_{speaker}$, in addition to the intercept. This coefficient is actually a set of coefficients since it has a different value for each speaker (it's a vector). For each trial, the value of $\alpha_{speaker}$ that should be used will vary based on the value of the vector indicating the speaker for that trial (e.g., `w[["speaker"]][i]` for some value of `i`). We will talk more coefficients like these later, we don't really need to worry about it for now. 
 
-In addition to the coefficient estimating the overall intercept, we know have another term $\alpha_{uspeaker}$. This coefficient is actually a set of coefficients since it has a different value for each speaker (its a vector). It has a different value for each speaker because it will reflect variation in $\mu_{speaker}$, the average f0 value produced by each speaker. However, $\mu_{speaker}$ is a random variable since it reflects the random average f0 of each person drawn from the population. If $\mu_{speaker}$ behaves like a random variable, then the coefficients that reflect this value in our model ($\alpha_{uspeaker}$) will behave in the same way. 
+The value of $\alpha_{speaker}$ has a different value for each speaker because it will reflect variation in $\mu_{speaker}$, the average f0 value produced by each speaker. However, $\mu_{speaker}$ is a random variable since it reflects the random average f0 of each person drawn from the population. If $\mu_{speaker}$ behaves like a random variable, then the coefficients that reflect this value in our model ($\alpha_{speaker}$) will behave in the same way. 
 
-This means that actually our model has *two* random variables. The first one is the error term $\varepsilon \sim \mathcal{N}(0,\sigma_{error})$, which has a mean of 0 and a standard deviation which we can refer to as $\sigma_{error}$. The second is the random terms that allow for speaker-specific adjustments to the intercept ($\alpha_{uspeaker}$), that can also be thought of as random draw from a normal distribution.
+This means that actually our model has *two* random variables. The first one is the error term $\varepsilon_{[i]} \sim \mathcal{N}(0,\sigma_{error})$, which has a mean of 0 and a standard deviation which we can refer to as $\sigma_{error}$. The second is the random terms that allows for speaker-specific adjustments to the intercept ($\alpha_{speaker}$), that can also be thought of as random draw from a normal distribution.
 
-A careful consideration of the model in equation 2.4 suggests that the ($\alpha_{uspeaker}$) coefficients can't actually be exactly equal to $\mu_{speaker}$), the average f0 for a speaker. If the overall mean (the intercept) is 220 Hz and a speaker's average is 230, this would suggest a predicted average of 450 ($\mu_{overall} + \mu_{speaker}$) for this speaker. Clearly that is not how the model should be working. 
+A careful consideration of the model in equation 2.4 suggests that the ($\alpha_{speaker}$) coefficients can't actually be exactly equal to $\mu_{speaker}$, the average f0 for a speaker. If the overall mean (the intercept) is 220 Hz and a speaker's average is 230, this would suggest a predicted average of 450 ($Intercept + \mu_{speaker}$) for this speaker. Clearly that is not how the model should be working. 
 
-Recall that I previously said that regression models encode *differences*. Our model already encodes the overall data average in the intercept parameter. Thus, the speaker-specific averages only need to contain information about *differences* to this reference value. As a result, the model parameters for mean f0 across all speakers will be centered at 0 (i.e., the average), and will tend to be normally distributed with a population-specific standard deviation. 
+Recall that regression models encode *differences*, rather than absolute values. Our model already represents the overall data average in the intercept parameter. Thus, the speaker-specific averages only need to contain information about *differences* to this reference value. As a result, the model parameters for mean f0 across all speakers will be centered at 0 (i.e., the average), and will tend to be normally distributed with a population-specific standard deviation. 
 
-Since our model parameters represent speaker-specific deviations rather than their actual mean f0s, people often use this symbol, $\gamma$, for them instead of $\mu$, where $\gamma = \mu_{speaker} - \mu_{overall}$. We can show the expected distribution of this variable below, where $\sigma_{speakers}$ is a population-specific standard deviation term.
+Since our model coefficients reflect speaker-specific *deviations* rather than the actual mean f0 of different speakers, people often use this symbol, $\gamma$, for them instead of $\mu$, where $\gamma$ reflects the difference between the speaker means and the mean for the population of speakers,  $\gamma_{speaker} = \mu_{speaker} - \mu_{population}$. 
+
+We can show the expected distribution of this variable below, where $\sigma_{speakers}$ is a population-specific standard deviation term. Note the similarity of this to the expected variation in our original data in Equation \@ref(eq:24).
 
 \begin{equation}
 \begin{split}
 \\
-\gamma_{i} \sim \mathcal{N}(0,\sigma_{speakers}) \\ \\ 
-\alpha_{i} = \gamma_{i} \\
-\\
+\gamma_{speaker} \sim \mathcal{N}(0,\sigma_{speakers}) \\ \\ 
+\gamma_{speaker} = \alpha_{speaker} \\ \\
 \end{split}
 (\#eq:27)
 \end{equation}
@@ -485,22 +487,32 @@ Our overall model is now as shown below, made specific for the data we have, and
 \begin{equation}
 \begin{split}
 \\
-f0_i \sim \mathcal{N}(\mu_i,\sigma_{error}) \\ \\
-\mu_i = Intercept + \alpha_{uspeaker_i} \\ \\
-\alpha_{uspeaker} \sim \mathcal{N}(0,\sigma_{speakers}) \\ \\
-\\
+f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\ \\
+\mu_{[i]} = Intercept + \alpha_{speaker_{[i]}} \\ \\
+\alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speakers}) \\ \\
 \end{split}
 (\#eq:28)
 \end{equation}
 
 Each line in the model says the following:
  
-  * the observed f0 for a given trial is expected to be normally distributed around a trial-specific mean, with some unknown but fixed standard deviation. 
+  * observed f0 is expected to be normally distributed around a trial-specific mean, with some unknown but fixed standard deviation ($\sigma_{error}$). 
 
-  * the expected value for a given trial ($\mu_i$) is equal to the model intercept, plus some speaker-specific deviation/difference to the intercept for the speaker that produced that trial ($\alpha_{uspeaker_i}$). 
+  * the expected value for a given trial ($\mu_{[i]}$) is equal to the model intercept, plus some speaker-specific deviation/difference from the intercept for the speaker that produced that trial ($\alpha_{speaker_{[i]}}$). 
 
-  * the speaker effects ($\alpha_{uspeaker}$) are also drawn from a normal distribution with a mean of 0 and a standard deviation of $\sigma_{speakers}$. This distribution represents the random within-speaker variation of productions around the average f0 for the speaker. 
+  * the speaker effects ($\alpha_{speaker}$) are also drawn from a normal distribution with a mean of 0 and a standard deviation of $\sigma_{speakers}$. This distribution represents the random, but systematic, between-speaker variation in average productions that exists within any population of speakers.  
+  
+All of this information can be seen in the speaker boxplots below. The observed error around some unknown mean is what causes there to be a *distribution* of f0 values around each speaker's mean. The model intercept (horizontal dotted line) represents the overall mean, and the variation in $\alpha_{speaker}$ is what causes the middle of each little box to differ from the mean. 
+  
 
+```r
+par (mfrow = c(1,1), mar = c(4,4,3,1))
+boxplot (f0 ~ speaker, data = w, main = "Speaker Boxplots",col=cols[3:6]) 
+abline (h = 220.4,lty=3, lwd=3)
+```
+
+<img src="week-2_files/figure-html/unnamed-chunk-13-1.png" width="768" />
+  
 There is a very important difference in how the initial and final models we fit view and partition the variation in our model. The initial model we fit viewed the variation in the model like this:
 
 $$
@@ -515,7 +527,7 @@ $$
 (\#eq:210)
 $$
 
-It sees only *some* of the variation in data as error. Basically, from the perspective of this multilevel model, the variation in the data is a combination of random (but systematic) between-speaker variation, and random within-speaker variation.
+It sees only *some* of the variation in data as error. In terms of the boxplot above, only the variation *within* a speaker's box is error. The differences from box to box represent random (but systematic) between-speaker variation in f0. Basically, from the perspective of this multilevel model, the random variation in the data is not all noise/error.
 
 ### Fitting the model  
 
@@ -525,7 +537,7 @@ We can fit a model with a formula that appropriately specifies the clustering we
 ```r
 set.seed (1)
 multilevel_model =  
-  brm (f0 ~ (1|uspeaker), data = w, chains = 1, cores = 1)
+  brm (f0 ~ (1|speaker), data = w, chains = 1, cores = 1)
 ```
 
 ```r
@@ -564,7 +576,7 @@ This new model contains one new chunk its print statement:
 
 ```
 Group-Level Effects: 
-~uspeaker (Number of levels: 48) 
+~speaker (Number of levels: 48) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sd(Intercept)    20.19      2.10    16.65    25.06 1.00      135      192
 ```
@@ -574,9 +586,9 @@ This sections contains information about the standard deviation of between-speak
 
 ```r
 ## find mean f0 for each speaker
-speaker_means = aggregate (f0 ~ uspeaker, data = w, FUN = mean) 
+speaker_means = aggregate (f0 ~ speaker, data = w, FUN = mean) 
 ## find the within speaker variance. This is the within-talker 'error'.
-speaker_vars = aggregate (f0 ~ uspeaker, data = w, FUN = var) 
+speaker_vars = aggregate (f0 ~ speaker, data = w, FUN = var) 
 
 ## the mean of the speaker means corresponds to our overall mean estimate
 mean (speaker_means$f0)
@@ -612,12 +624,12 @@ The overall mean f0 in our data (220.4) corresponds quite well to our model esti
 
 ```r
 par (mfrow = c(1,1), mar = c(4,4,2,1))
-boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots",col=c(yellow,coral,
+boxplot (f0 ~ speaker, data = w, main = "Speaker Boxplots",col=c(yellow,coral,
          deepgreen,teal)) 
 abline (h = 220.4, lwd=3,lty=3)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-16-1.png" width="768" />
+<img src="week-2_files/figure-html/unnamed-chunk-17-1.png" width="768" />
 
 ## Checking model convergence
 
@@ -635,7 +647,7 @@ Below, I refit the same model from above but run it on 4 chains, and on 4 cores 
 ```r
 set.seed (1)
 multilevel_multicore =  
-  brm (f0 ~ 1 + (1|uspeaker), data = w, chains = 4, cores = 4)
+  brm (f0 ~ 1 + (1|speaker), data = w, chains = 4, cores = 4)
 ```
 
 ```r
@@ -684,7 +696,7 @@ Below, I ask for 11,000 sample per chain, 10,000 post warm-up. However, since I 
 ```r
 set.seed (1)
 multilevel_thinned =  
-  brm (f0 ~ 1 + (1|uspeaker), data = w, chains = 4, cores = 4,
+  brm (f0 ~ 1 + (1|speaker), data = w, chains = 4, cores = 4,
        warmup = 1000, iter = 11000, thin = 10)
 ```
 
@@ -749,7 +761,7 @@ In the example below, I use this information to set reasonable bounds on the par
 
 * Intercept: this is a unique class, only for intercepts.
 * b: this is for all the non-intercept predictors. There are none in this model.
-* sd: this is for all standard deviation parameters. In our example this is `sd(Intercept)` for `uspeaker` ($\sigma_{speakers}$), and `sigma` ($\sigma_{error}$).
+* sd: this is for all standard deviation parameters. In our example this is `sd(Intercept)` for `speaker` ($\sigma_{speakers}$), and `sigma` ($\sigma_{error}$).
 
 Both priors below use a 't' distribution, which is just like a normal distribution but it is more pointy, and has more density in the outer parts of the distribution. I use this because it has good properties, but you can use normal priors, or any other priors that you think work for your model. Rather than focusing on the mathematical properties of priors, the most important thing is that their *shape* reflect the distribution of credible parameter values a priori (before you conducted your experiment). 
 
@@ -762,7 +774,7 @@ So, for the overall intercept ($\mu_{overall}$) I am using a prior with the same
 ```r
 set.seed (1)
 multilevel_priors =  
-  brm (f0 ~ 1 + (1|uspeaker), data = w, chains = 4, cores = 4,
+  brm (f0 ~ 1 + (1|speaker), data = w, chains = 4, cores = 4,
        warmup = 1000, iter = 11000, thin = 10,
        prior = c(set_prior("student_t(3, 220.4, 46.4)", class = "Intercept"),
                  set_prior("student_t(3, 0, 46.4)", class = "sd")))
@@ -805,7 +817,7 @@ In the left panel below (plot code at end of chapter) I compare the t distributi
 In the middle panel we compare this prior to the data, and see that the prior distribution is much broader (more vague) than the data distribution. The right panel compares the prior for the standard deviation parameters to the absolute value of the centered f0 data. This presentation shows how far each observation is from the mean f0 (at 220 Hz). Again, the prior distribution we have assigned for these parameters is much larger than the variation in the data. As a result, neither of these priors is going to have much of an effect on our parameter estimates.
 
 
-<img src="week-2_files/figure-html/unnamed-chunk-24-1.png" width="768" />
+<img src="week-2_files/figure-html/unnamed-chunk-25-1.png" width="768" />
 
 If we compare the output of this model to `multilevel_thinned`, we see that specifying a prior has has no noticeable effect on our results. This is because the prior matters less and less when you have a lot of data, and because we have set wide priors that are appropriate (but vague) given our data. Although the priors may not matter much for models as simple as these, they can be very important when working with more complex data, and are a necessary component of Bayesian modeling. 
 
@@ -891,12 +903,12 @@ When you are thinking about the relationships in your data, or that you expect i
 
 ```r
 par (mfrow = c(1,1), mar = c(4,4,2,1))
-boxplot (f0 ~ uspeaker, data = w, main = "Speaker Boxplots",col=c(yellow,coral,
+boxplot (f0 ~ speaker, data = w, main = "Speaker Boxplots",col=c(yellow,coral,
          deepgreen,teal)) 
 abline (h = 220.4, lwd=3,lty=3)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-26-1.png" width="768" />
+<img src="week-2_files/figure-html/unnamed-chunk-27-1.png" width="768" />
 
 
 ## Plot Code
@@ -929,34 +941,5 @@ plot (x3[x3>0], y3[x3>0], type = 'l', lwd = 2, ylab = 'Density',
       xlab = 'f0', col = 4)
 hist (abs (f0 - mean (f0)), add = TRUE, freq = FALSE)
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

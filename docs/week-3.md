@@ -7,7 +7,7 @@ In the previous chapter, I focused on investigating values from a single group, 
 
 We are going to be using the same Hillenbrand et al. f0 data we used in the other chapters, but this time we are going to compare the f0 measurements for adult females to those of girls between 10-12 years of age. 
 
-Below I load in the Hillenbrand et al. data, and include a new variable that indicates whether the talker is an adult or a child. I also split the data up by gender. The variable `uspeaker` is a speaker number that is unique across all speaker groups, and `type` indicates speaker group from among `b` (boys), `g` (girls), `m` (men), and `w` (women).
+Below I load in the Hillenbrand et al. data, and include a new variable that indicates whether the talker is an adult or a child. I also split the data up by gender. The variable `speaker` is a speaker number that is unique across all speaker groups, and `type` indicates speaker group from among `b` (boys), `g` (girls), `m` (men), and `w` (women).
 
 
 
@@ -22,14 +22,14 @@ h95$adult[h95$type %in% c('w','m')] = "adult"
 h95$adult[h95$type %in% c('g','b')] = "child"
 
 ## split up data by into male and female groups, only some columns
-males = h95[h95$type %in% c('m','b'),c('f0', 'adult', 'type', 'uspeaker')]
-females = h95[h95$type %in% c('w','g'),c('f0', 'adult', 'type', 'uspeaker')]
+males = h95[h95$type %in% c('m','b'),c('f0', 'adult', 'type', 'speaker')]
+females = h95[h95$type %in% c('w','g'),c('f0', 'adult', 'type', 'speaker')]
 f0 = females[['f0']]
 
 # re-factor to remove excluded subjects
-males$uspeaker = factor (males$uspeaker)  
+males$speaker = factor (males$speaker)  
 # re-factor to remove excluded subjects
-females$uspeaker = factor (females$uspeaker)  
+females$speaker = factor (females$speaker)  
 ```
 
 
@@ -62,10 +62,10 @@ Obviously the distributions seem a *bit* different, but they are also not *that*
 
 ```r
 colors = 
-  c(coral,teal)[ apply (table(females$uspeaker, females$adult),1,which.max) ]
+  c(coral,teal)[ apply (table(females$speaker, females$adult),1,which.max) ]
 
 par (mfrow = c(1,2)); layout (mat = t(c(1,2)), widths = c(.7,.3))
-boxplot (f0 ~ uspeaker, data=females, col = colors)
+boxplot (f0 ~ speaker, data=females, col = colors)
 
 ## I rotate the density figures so that you can see how these correspond to
 ## the boxplots on the left. 
@@ -82,9 +82,9 @@ lines (tmp$y, tmp$x, lwd = 3, col = 1)
 
 ## Estimating the difference two means with 'brms'
 
-In chapter 2 the model we fit had the simplest possible formula, just an intercept. Here, we need to extend this to include an actual predictor: a vector indicating 'adultness'. Remember that formulas look like this `variable ~ predictor`. So, if we want to predict f0 based on whether the talker is an adult or not, our model is going to have a formula that looks basically like this `f0 ~ adult + (1|uspeaker)`. You can think of this meaning something like 'We expect the distribution to vary based on whether the talker is an adult or not'. 
+In chapter 2 the model we fit had the simplest possible formula, just an intercept. Here, we need to extend this to include an actual predictor: a vector indicating 'adultness'. Remember that formulas look like this `variable ~ predictor`. So, if we want to predict f0 based on whether the talker is an adult or not, our model is going to have a formula that looks basically like this `f0 ~ adult + (1|speaker)`. You can think of this meaning something like 'We expect the distribution to vary based on whether the talker is an adult or not'. 
 
-Note that the model calculates an intercept (mean value) for each speaker, but does **not** include an effect for `adult` for each speaker (i.e., the model does *not* include a term like `(adult|uspeaker)`). This is because we are estimating a mean for each speaker, but not the effect for 'adultness' for each speaker. Each speaker is only either an adult or a child, and so we cannot estimate the effect for 'adultness' for each speaker. Doing things that don't 'make sense' from the model's perspective will cause it to crash or return strange values. 
+Note that the model calculates an intercept (mean value) for each speaker, but does **not** include an effect for `adult` for each speaker (i.e., the model does *not* include a term like `(adult|speaker)`). This is because we are estimating a mean for each speaker, but not the effect for 'adultness' for each speaker. Each speaker is only either an adult or a child, and so we cannot estimate the effect for 'adultness' for each speaker. Doing things that don't 'make sense' from the model's perspective will cause it to crash or return strange values. 
 
 I'm not going to go into so much detail about the structure of the regression model right now because an explanation involves some of the less intuitive concepts relating to regression. We are going to to fit the model first and discuss its structure, and then get to the details of the model later.
 
@@ -120,7 +120,7 @@ library (brms)
 ```r
 set.seed (1)
 model =  
-  brms::brm (f0 ~ adult + (1|uspeaker), data = females, chains = 4, cores = 4,
+  brms::brm (f0 ~ adult + (1|speaker), data = females, chains = 4, cores = 4,
        warmup = 1000, iter = 11000, thin = 10,
        prior = c(set_prior("student_t(3, 225.5, 48)", class = "Intercept"),
                  set_prior("student_t(3, 0, 48)", class = "b"),
@@ -303,7 +303,7 @@ We can fit the model with sum coding using the exact same code since the options
 ```r
 set.seed (1)
 model_sum_coding =  
-  brms::brm (f0 ~ adult + (1|uspeaker), data = females, chains = 4, cores = 4,
+  brms::brm (f0 ~ adult + (1|speaker), data = females, chains = 4, cores = 4,
        warmup = 1000, iter = 11000, thin = 10,
        prior = c(set_prior("student_t(3, 225.5, 48)", class = "Intercept"),
                  set_prior("student_t(3, 0, 48)", class = "b"),
@@ -370,7 +370,7 @@ So far we have covered the fact that after picking a value to use as a reference
   
   * represent group means as deviations from the intercept.
   
-  * represent the speaker-specific deviations from the intercept ($\gamma_{uspeaker}$) as being centered at 0, with a standard deviation of $\sigma_{speaker}$.
+  * represent the speaker-specific deviations from the intercept ($\gamma_{speaker}$) as being centered at 0, with a standard deviation of $\sigma_{speaker}$.
   
   * represent the random error ($\varepsilon$) as having a mean of 0 and a standard deviation of $\sigma_{error}$. 
   
@@ -405,7 +405,7 @@ The full model specification, including prior probabilities is below. I used the
 \begin{split}
 \textrm{Likelihood:} \\ 
 y_i \sim \mathcal{N}(\mu_i,\sigma_{error}) \\
-\mu_i = Intercept + adult1 + \alpha_{uspeaker_i} \\\\
+\mu_i = Intercept + adult1 + \alpha_{speaker_i} \\\\
 
 \textrm{Priors:} \\
 \alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
@@ -597,7 +597,7 @@ In contrast, 'random' effects are not chosen arbitrarily but at random. The spea
 
 Despite this primarily philosophical definition, in practice the terms 'fixed' and 'random' effects have [several inconsistent and sometimes contradictory definitions](https://statmodeling.stat.columbia.edu/2005/01/25/why_i_dont_use/). 
 
-Luckily, when thinking about these concepts in terms of multilevel models we can be very specific: 'random' effects are those for which we estimate a standard deviation term. So, we treat differences in speaker average f0 ($\gamma_{uspeaker}$) as a variable, and estimate $\sigma_{speaker}$ for the distribution of variable. 
+Luckily, when thinking about these concepts in terms of multilevel models we can be very specific: 'random' effects are those for which we estimate a standard deviation term. So, we treat differences in speaker average f0 ($\gamma_{speaker}$) as a variable, and estimate $\sigma_{speaker}$ for the distribution of variable. 
 
 ### Random effects, priors and pooling
 
@@ -640,23 +640,13 @@ The `brms` package has several functions to help understand our 'random' effects
 
 
 ```r
-## I am telling it to give me the 'uspeaker' Intercepts, but only the first 
+## I am telling it to give me the 'speaker' Intercepts, but only the first 
 ## 10 rows. This is just so it doesn't take up the whole page.
-brms::ranef (model_sum_coding)$uspeaker[1:10,,"Intercept"]
+brms::ranef (model_sum_coding)$speaker[1:10,,"Intercept"]
 ```
 
 ```
-##      Estimate Est.Error       Q2.5     Q97.5
-## 28   1.178409  5.790598 -10.331626 12.469034
-## 29 -19.727367  5.642356 -30.539406 -8.716086
-## 30  28.603411  5.701636  17.425326 39.832925
-## 31 -14.676172  5.708269 -26.092560 -3.744481
-## 32  -4.580821  5.671900 -15.861710  6.565227
-## 33   2.798833  5.655844  -8.245980 13.886910
-## 34  20.406371  5.604936   9.573044 31.603909
-## 35  34.305413  5.788705  23.119722 45.409219
-## 36  -8.921223  5.662577 -19.945362  2.183889
-## 37  -6.332217  5.665746 -17.468755  4.633425
+## NULL
 ```
 
 Notice that the speaker averages vary around 0, and some are even negative. That is because the speaker effects (and all random effects) are coded using sum-coding. So, what the speaker-specific mean terms tell us is: what is the average value for this speaker, relative to the overall average, and the group specific adjustment? Keep in mind, since our model encodes both the overall average *and* the group means, the speaker-effects encode differences to the group means and not to the overall means. 
@@ -682,7 +672,7 @@ We can compare the estimates of by-speaker intercepts to the distribution of act
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 brmplot( brms::ranef (model_sum_coding)[["uspeaker"]][,,"Intercept"], 
          col = colors)
-boxplot (f0 ~ uspeaker, data=females, col = colors, ylim = c(150,310))
+boxplot (f0 ~ speaker, data=females, col = colors, ylim = c(150,310))
 ```
 
 <img src="week-3_files/figure-html/unnamed-chunk-26-1.png" width="768" />
