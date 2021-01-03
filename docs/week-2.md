@@ -63,27 +63,27 @@ $$
 
 The top line says that your observed variable for any given trial $y_i$ is the sum of some of some average expected value for that trial, ($\mu_i$) and some specific random error for that trial ($\mu_i$). The random error is expected to be normally distributed with some unknown standard deviation ($\varepsilon_i \sim \mathcal{N}(0,\sigma)$). The second line presents the $y$ variable as being a normally-distributed variable with a trial-specific mean of $\mu_i$, and a fixed standard deviation $\sigma_{error}$
 
-In general, in regression models we would really like to understand orderly variation in $\mu_i$ from trial to trial by breaking it up into parts ($\mathrm{x}_{1}, \mathrm{x}_{2},...$) when combined using some weights ($\beta_1, \beta_2,...$). 
+In general, in regression models we would really like to understand orderly variation in $\mu_i$ from trial to trial by breaking it up into parts ($\mathrm{x}_{1}, \mathrm{x}_{2},...$) when combined using some weights ($\alpha_1, \alpha_2,...$). 
 
 $$
-\mu_i = \beta_1*\mathrm{x}_{i1} + \beta_2*\mathrm{x}_{i2}+...+\beta_j*\mathrm{x}_{ij}
+\mu_i = \alpha_1*\mathrm{x}_{1i} + \alpha_2*\mathrm{x}_{2i}+...+\alpha_j*\mathrm{x}_{ji}
 (\#eq:22)
 $$
 
-'Fitting' a regression model consists of trying to 'guess' the values of the weighing factors ($\beta$), called the *model coefficients*. When we are only trying to estimate a single average, we don't have any predictors to explain variation in $\mu_i$. In fact, our model structure suggests we expect no variation in $\mu_i$ from trial to trial!. 
+'Fitting' a regression model consists of trying to 'guess' the values of the weighing factors ($\alpha$), called the *model coefficients*. When we are only trying to estimate a single average, we don't have any predictors to explain variation in $\mu_i$. In fact, our model structure suggests we expect no variation in $\mu_i$ from trial to trial!. 
 
 Mathematically, we can't just say 'we have no predictor' since everything needs to be represented by a number. As a result, we use a single 'predictor' $\mathrm{x}$ with a value of 1 so that our regression equation is:
 
 $$
-\mu_i = \beta_1*1
+\mu_i = \alpha_1*1
 (\#eq:23)
 $$
 
-Now our model is trying to guess the value of a single parameter ($\beta_1$), and we expect this parameter to be equal to $\mu_i$ since it is being multiplied by a 'predictor' with a constant value of 1. 
+Now our model is trying to guess the value of a single parameter ($\alpha_1$), and we expect this parameter to be equal to $\mu_i$ since it is being multiplied by a 'predictor' with a constant value of 1. 
 
-This kind of model is called an 'Intercept only' model. Regression models are really about representing *differences*, differences between groups and across conditions. When you are encoding differences, you need an overall reference point. For example, saying that something is 5 miles north is only interpretable given some reference point. The 'reference point' used by your model is called your 'Intercept'. Basically, our model consists *only* of a single reference point, and the $\beta_1$ parameter reflects its value (as shown in Equation \@ref(eq:23)). 
+This kind of model is called an 'Intercept only' model. Regression models are really about representing *differences*, differences between groups and across conditions. When you are encoding differences, you need an overall reference point. For example, saying that something is 5 miles north is only interpretable given some reference point. The 'reference point' used by your model is called your 'Intercept'. Basically, our model consists *only* of a single reference point, and the $\alpha_1$ parameter reflects its value (as shown in Equation \@ref(eq:23)). 
 
-As a result, the $\beta_1$ coefficient is called the 'intercept' in our model. When a coefficient is just being multiplied by a 'fake' predictor that just equals 1, we can omit it from the regression model (but its still secretly there). 
+As a result, the $\alpha_1$ coefficient is called the 'intercept' in our model. When a coefficient is just being multiplied by a 'fake' predictor that just equals 1, we can omit it from the regression model (but its still secretly there). 
 
 Based on the above, our f0 model can be thought of like this:
 
@@ -444,17 +444,17 @@ This regression model is now something like this:
 
 $$
 f0_i \sim \mathcal{N}(\mu_i,\sigma) \\
-\mu_i = Intercept + \beta_{uspeaker_i}
+\mu_i = Intercept + \alpha_{uspeaker_i}
 (\#eq:24)
 $$
 
-In English, the model above says: we expect f0 to be normally distributed. The f0 value we expect for any given token is equal to some overall average ($Intercept$), and some value associated with each the individual speaker (\beta_{uspeaker,i}) who uttered the trial. 
+In English, the model above says: we expect f0 to be normally distributed. The f0 value we expect for any given token is equal to some overall average ($Intercept$), and some value associated with each the individual speaker (\alpha_{uspeaker,i}) who uttered the trial. 
 
-In addition to the  coefficient estimating the overall intercept, we know have another term $\beta_{uspeaker}$. This coefficient is actually a set of coefficients since it has a different value for each speaker (its a vector). It has a different value for each speaker because it will reflect variation in $\mu_{speaker}$, the average f0 value produced by each speaker. However, $\mu_{speaker}$ is a random variable since it reflects the random average f0 of each person drawn from the population. If $\mu_{speaker}$ behaves like a random variable, then the coefficients that reflect this value in our model ($\beta_{uspeaker}$) will behave in the same way. 
+In addition to the  coefficient estimating the overall intercept, we know have another term $\alpha_{uspeaker}$. This coefficient is actually a set of coefficients since it has a different value for each speaker (its a vector). It has a different value for each speaker because it will reflect variation in $\mu_{speaker}$, the average f0 value produced by each speaker. However, $\mu_{speaker}$ is a random variable since it reflects the random average f0 of each person drawn from the population. If $\mu_{speaker}$ behaves like a random variable, then the coefficients that reflect this value in our model ($\alpha_{uspeaker}$) will behave in the same way. 
 
-This means that actually our model has *two* random variables. The first one is the error term $\varepsilon \sim \mathcal{N}(0,\sigma_{error})$, which has a mean of 0 and a standard deviation which we can refer to as $\sigma_{error}$. The second is the random terms that allow for speaker-specific adjustments to the intercept ($\beta_{uspeaker}$), that can also be thought of as random draw from a normal distribution.
+This means that actually our model has *two* random variables. The first one is the error term $\varepsilon \sim \mathcal{N}(0,\sigma_{error})$, which has a mean of 0 and a standard deviation which we can refer to as $\sigma_{error}$. The second is the random terms that allow for speaker-specific adjustments to the intercept ($\alpha_{uspeaker}$), that can also be thought of as random draw from a normal distribution.
 
-A careful consideration of the model in equation 2.4 suggests that the ($\beta_{uspeaker}$) coefficients can't actually be exactly equal to $\mu_{speaker}$), the average f0 for a speaker. If the overall mean (the intercept) is 220 Hz and a speaker's average is 230, this would suggest a predicted average of 450 ($\mu_{overall} + \mu_{speaker}$) for this speaker. Clearly that is not how the model should be working. 
+A careful consideration of the model in equation 2.4 suggests that the ($\alpha_{uspeaker}$) coefficients can't actually be exactly equal to $\mu_{speaker}$), the average f0 for a speaker. If the overall mean (the intercept) is 220 Hz and a speaker's average is 230, this would suggest a predicted average of 450 ($\mu_{overall} + \mu_{speaker}$) for this speaker. Clearly that is not how the model should be working. 
 
 Recall that I previously said that regression models encode *differences*. Our model already encodes the overall data average in the intercept parameter. Thus, the speaker-specific averages only need to contain information about *differences* to this reference value. As a result, the model parameters for mean f0 across all speakers will be centered at 0 (i.e., the average), and will tend to be normally distributed with a population-specific standard deviation. 
 
@@ -462,7 +462,7 @@ Since our model parameters represent speaker-specific deviations rather than the
 
 $$
 \gamma_{i} \sim \mathcal{N}(0,\sigma_{speakers}) \\
-\beta_{i} = \gamma_{i}
+\alpha_{i} = \gamma_{i}
 
 (\#eq:26)
 $$
@@ -473,8 +473,8 @@ $$
 \begin{split}
 f0_i \sim \mathcal{N}(\mu_i,\sigma_{error}) \\
 
-\mu_i = Intercept + \beta_{uspeaker_i} \\
-\beta_{uspeaker} \sim \mathcal{N}(0,\sigma_{speakers}) \\
+\mu_i = Intercept + \alpha_{uspeaker_i} \\
+\alpha_{uspeaker} \sim \mathcal{N}(0,\sigma_{speakers}) \\
 \end{split}
 $$
 
@@ -482,9 +482,9 @@ Each line in the model says the following:
  
   * the observed f0 for a given trial is expected to be normally distributed around a trial-specific mean, with some unknown but fixed standard deviation. 
 
-  * the expected value for a given trial ($\mu_i$) is equal to the model intercept, plus some speaker-specific deviation/difference to the intercept for the speaker that produced that trial ($\beta_{uspeaker_i}$). 
+  * the expected value for a given trial ($\mu_i$) is equal to the model intercept, plus some speaker-specific deviation/difference to the intercept for the speaker that produced that trial ($\alpha_{uspeaker_i}$). 
 
-  * the speaker effects ($\beta_{uspeaker}$) are also drawn from a normal distribution with a mean of 0 and a standard deviation of $\sigma_{speakers}$. This distribution represents the random within-speaker variation of productions around the average f0 for the speaker. 
+  * the speaker effects ($\alpha_{uspeaker}$) are also drawn from a normal distribution with a mean of 0 and a standard deviation of $\sigma_{speakers}$. This distribution represents the random within-speaker variation of productions around the average f0 for the speaker. 
 
 There is a very important difference in how the initial and final models we fit view and partition the variation in our model. The initial model we fit viewed the variation in the model like this:
 

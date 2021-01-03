@@ -633,14 +633,14 @@ $$
 (\#eq:5)
 $$
 
-Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a *weighting* of the predictors will be necessary. We will use the symbol $\beta$ for these weights. For example, maybe $\mathrm{x}_{1}$ is twice as important as the other two predictors and so $\beta_1$ is 2, while $\beta_2$ and $\beta_1$ are 1. 
+Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a *weighting* of the predictors will be necessary. We will use the symbol $\alpha$ for these weights. For example, maybe $\mathrm{x}_{1}$ is twice as important as the other two predictors and so $\alpha_1$ is 2, while $\alpha_2$ and $\alpha_1$ are 1. 
 
 $$
-\mu_i = \beta_1*\mathrm{x}_{i1} + \beta_2*\mathrm{x}_{i2} + \beta_3*\mathrm{x}_{i3}  
+\mu_i = \alpha_1*\mathrm{x}_{i1} + \alpha_2*\mathrm{x}_{i2} + \alpha_3*\mathrm{x}_{i3}  
 (\#eq:6)
 $$
 
-Note that the weight terms ($\beta$) do not get an $i$ subscript. This is because they do not change from trial to trial. The *values* of the predictors change from trial to trial, but the way that these are combined does not, they are a stable property of the model. 
+Note that the weight terms ($\alpha$) do not get an $i$ subscript. This is because they do not change from trial to trial. The *values* of the predictors change from trial to trial, but the way that these are combined does not, they are a stable property of the model. 
 
 Decomposition of $\mu$ into sub-components makes our model something more like:
 
@@ -650,14 +650,14 @@ y_i = \mu_i + \mathcal{N}(0,\sigma)
 $$
   
 $$
-y_i =  (\beta_1*\mathrm{x}_{i1} + \beta_2*\mathrm{x}_{i2} + \beta_3*\mathrm{x}_{i3} ) + \mathcal{N}(0,\sigma)  
+y_i =  (\alpha_1*\mathrm{x}_{i1} + \alpha_2*\mathrm{x}_{i2} + \alpha_3*\mathrm{x}_{i3} ) + \mathcal{N}(0,\sigma)  
 (\#eq:8)
 $$
   
 Often, $\varepsilon$ is used to represent the random component, as in:
 
 $$
-y_i = \beta_1*\mathrm{x}_{i1} + \beta_2*\mathrm{x}_{i2} + \beta_3*\mathrm{x}_{i3}+ \varepsilon_i
+y_i = \alpha_1*\mathrm{x}_{i1} + \alpha_2*\mathrm{x}_{i2} + \alpha_3*\mathrm{x}_{i3}+ \varepsilon_i
 (\#eq:9)
 $$
 

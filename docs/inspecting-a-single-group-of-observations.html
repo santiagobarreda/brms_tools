@@ -609,24 +609,24 @@ Figure 1.11: (left) Histogram of data. (right) Histogram of centered data, basic
 \mu_i = \mathrm{x}_{i1} + \mathrm{x}_{i2} + \mathrm{x}_{i3}
 \tag{1.5}
 \]</span></p>
-<p>Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a <em>weighting</em> of the predictors will be necessary. We will use the symbol <span class="math inline">\(\beta\)</span> for these weights. For example, maybe <span class="math inline">\(\mathrm{x}_{1}\)</span> is twice as important as the other two predictors and so <span class="math inline">\(\beta_1\)</span> is 2, while <span class="math inline">\(\beta_2\)</span> and <span class="math inline">\(\beta_1\)</span> are 1.</p>
+<p>Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a <em>weighting</em> of the predictors will be necessary. We will use the symbol <span class="math inline">\(\alpha\)</span> for these weights. For example, maybe <span class="math inline">\(\mathrm{x}_{1}\)</span> is twice as important as the other two predictors and so <span class="math inline">\(\alpha_1\)</span> is 2, while <span class="math inline">\(\alpha_2\)</span> and <span class="math inline">\(\alpha_1\)</span> are 1.</p>
 <p><span class="math display" id="eq:6">\[
-\mu_i = \beta_1*\mathrm{x}_{i1} + \beta_2*\mathrm{x}_{i2} + \beta_3*\mathrm{x}_{i3}  
+\mu_i = \alpha_1*\mathrm{x}_{i1} + \alpha_2*\mathrm{x}_{i2} + \alpha_3*\mathrm{x}_{i3}  
 \tag{1.6}
 \]</span></p>
-<p>Note that the weight terms (<span class="math inline">\(\beta\)</span>) do not get an <span class="math inline">\(i\)</span> subscript. This is because they do not change from trial to trial. The <em>values</em> of the predictors change from trial to trial, but the way that these are combined does not, they are a stable property of the model.</p>
+<p>Note that the weight terms (<span class="math inline">\(\alpha\)</span>) do not get an <span class="math inline">\(i\)</span> subscript. This is because they do not change from trial to trial. The <em>values</em> of the predictors change from trial to trial, but the way that these are combined does not, they are a stable property of the model.</p>
 <p>Decomposition of <span class="math inline">\(\mu\)</span> into sub-components makes our model something more like:</p>
 <p><span class="math display" id="eq:7">\[
 y_i = \mu_i + \mathcal{N}(0,\sigma)  
 \tag{1.7}
 \]</span></p>
 <p><span class="math display" id="eq:8">\[
-y_i =  (\beta_1*\mathrm{x}_{i1} + \beta_2*\mathrm{x}_{i2} + \beta_3*\mathrm{x}_{i3} ) + \mathcal{N}(0,\sigma)  
+y_i =  (\alpha_1*\mathrm{x}_{i1} + \alpha_2*\mathrm{x}_{i2} + \alpha_3*\mathrm{x}_{i3} ) + \mathcal{N}(0,\sigma)  
 \tag{1.8}
 \]</span></p>
 <p>Often, <span class="math inline">\(\varepsilon\)</span> is used to represent the random component, as in:</p>
 <p><span class="math display" id="eq:9">\[
-y_i = \beta_1*\mathrm{x}_{i1} + \beta_2*\mathrm{x}_{i2} + \beta_3*\mathrm{x}_{i3}+ \varepsilon_i
+y_i = \alpha_1*\mathrm{x}_{i1} + \alpha_2*\mathrm{x}_{i2} + \alpha_3*\mathrm{x}_{i3}+ \varepsilon_i
 \tag{1.9}
 \]</span></p>
 <p>Notice that the error term <em>does</em> get a, <span class="math inline">\(i\)</span> subscript, as in <span class="math inline">\(\varepsilon_i\)</span>. That is because the exact value of the error changes from trial to trial, even of the general characteristics of the error (i.e., <span class="math inline">\(\mathcal{N}(0,\sigma)\)</span>) do not.</p>

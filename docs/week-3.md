@@ -370,7 +370,7 @@ So far we have covered the fact that after picking a value to use as a reference
   
   * represent group means as deviations from the intercept.
   
-  * represent the speaker-specific parameters $\gamma_{uspeaker}$ as being centered at 0, with a standard deviation of $\sigma_{speaker}$).
+  * represent the speaker-specific deviations from the intercept ($\gamma_{uspeaker}$) as being centered at 0, with a standard deviation of $\sigma_{speaker}$.
   
   * represent the random error ($\varepsilon$) as having a mean of 0 and a standard deviation of $\sigma_{error}$. 
   
@@ -404,20 +404,18 @@ The full model specification, including prior probabilities is below. I used the
 $$
 \begin{split}
 Likelihood: \\ 
-y \sim \mathcal{N}(\mu,\sigma_{error}) \\
-\mu = Intercept + adult1 + \gamma_{uspeaker} \\\\
-\textrm{Random Variables:} \\ 
-\gamma_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\
-\varepsilon \sim \mathcal{N}(0,\sigma_{error}) \\\\
+y_i \sim \mathcal{N}(\mu_i,\sigma_{error}) \\
+\mu_i = Intercept + adult1 + \alpha_{uspeaker_i} \\\\
+
 \textrm{Priors:} \\
+\alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
+
 Intercept \sim \mathcal{t}(3, 225.5, 48) \\ 
 adult1 \sim \mathcal{t}(3, 225.5, 48) \\ 
 \sigma_{error} \sim \mathcal{t}(3, 0, 48) \\
 \sigma_{speaker} \sim \mathcal{t}(3, 0, 48) \\ 
 \end{split}
 $$
-
-Since our models are getting more complicated, I am omitting the (1) predictor from the nominal variables (Intercept, adult1), and will keep doing so going forward. 
 
 ### Interpreting the two-group model
 
@@ -604,37 +602,33 @@ Luckily, when thinking about these concepts in terms of multilevel models we can
 
 ### Random effects, priors and pooling
 
-In Chapter 1 I mentioned that every parameter in a Bayesian model needs a prior probability. If you look at our latest model definition (presented below), you will see four priors being specified: one for the Intercept, one for the effect for adult females, one for the error standard deviation ($\sigma_{error}$) and one for the expected amount of variation in speaker averages ($\sigma_{speaker}$). 
+Look at the list of priors in our latest model definition. If you look at our latest `brm` model fit, you will see where most of these are specifically defined in the function call. However, you will notice that the standard deviation of the prior ($\sigma_{speakers}$) for the speaker-specific intercept deviations ($\alpha_{speaker}$) is actually not specifically defined in the model. 
 
 $$
-\begin{split}
-y = Intercept + adult1 + \gamma_{uspeaker} + \varepsilon \\\\
-\textrm{Random Variables:} \\ 
-\gamma_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\
-\varepsilon \sim \mathcal{N}(0,\sigma_{error}) \\\\
 \textrm{Priors:} \\
+\alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
+
 Intercept \sim \mathcal{t}(3, 225.5, 48) \\ 
 adult1 \sim \mathcal{t}(3, 225.5, 48) \\ 
 \sigma_{error} \sim \mathcal{t}(3, 0, 48) \\
 \sigma_{speaker} \sim \mathcal{t}(3, 0, 48) \\ 
-\end{split}
 $$
 
-Notably missing from the list of priors are any priors for the speaker-average parameters, $\gamma_{uspeaker}$. There should be one for each speaker in our sample. It turns out that the prior for these parameters is the $\sigma_{speaker}$ parameter, and this is estimated form the data! For this reason, the prior you set on $\sigma_{speaker}$ is sometimes called a 'hyperprior', because it is the prior for your prior! 
+It turns out that the $\sigma_{speaker}$ parameter is estimated from the data! For this reason, the prior you set on $\sigma_{speaker}$ is sometimes called a 'hyperprior', because it is the prior for your prior! 
 
-Using $\sigma_{speaker}$ to determine the prior distribution of $\gamma_{uspeaker}$ actually makes perfect sense if you think about it. By definition, the speaker effects are centered around 0 (the average). The only question is, how widely are they distributed? Well, what better way to answer this question than using the distribution evident in the data itself?
+By definition, the speaker effects are centered around 0 (the average). The only question is, how widely are they distributed? Well, what better way to answer this question than using the distribution evident in the data itself? This means that the amount of variation you expect between speakers is based on the amount of between-speaker variation you observe. The idea is basically: is it believable that this one person be this far away from the 'average'? Well, it depends on what everyone else looks like!
 
 By estimating the prior for some parameters from the data itself, multilevel models can help [protect against problems that naturally arise when researchers compare many things](http://www.stat.columbia.edu/~gelman/research/published/multiple2f.pdf). This is because in a Bayesian analysis, the prior influences the estimates of your individual parameters. As a result, the variation in the *other* parameters in your sample can influence any given parameter.
 
 This process is sometimes referred to as 'partial pooling', since it refers to the partial pooling of information across subjects. Using partial pooling means the subject estimates are neither completely independent nor totally merged. They actually end up influencing each other in a logical manner. Broadly speaking, individual observations that deviate from 'typical' values of the population are maintained when there is good enough evidence for them. When there is wak evidence for them relative to the other observations in the sample, estimates may be brought closer to the group averages. As a result, partial pooling results in what is sometimes called 'shrinkage', because extreme values get 'shrunk' towards the overall mean. 
 
-In the context of a Bayesian multilevel model 'random effects' are those you estimate with partial pooling, where the prior is estimated from the data (e.g., $\sigma_{speaker}$). In contrast, 'fixed effects' are those for which you set arbitrary priors before fitting the model.
+In the context of a Bayesian multilevel model 'random effects' are those you estimate with partial pooling, where the prior is estimated from the data (e.g., $\sigma_{speaker}$). In contrast, 'fixed effects' are those predictors for which you set arbitrary priors before fitting the model.
 
 Although the terms terms 'fixed' and 'random' effects are useful (and I continue to use them to describe my models), it is important to keep in mind that the philosophical distinction between 'fixed' and 'random' variables is not relevant for the models we are discussing here. The real distinction is: do I want to fit every level totally independently as if there were all unrelated? Or do I want to use partial pooling in my estimates, thereby using all of the information present in my sample to protect against spurious findings? 
 
 In general, when you have many levels of a factor, it may be a good idea to include these as 'random' effects. There is not much downside to it, you get more information from the model (e.g., information about $\sigma_{predictor}$), and you can always fit multiple models to see what, if any differences, result form the different approaches. 
 
-Some useful things to consider are also: Do you believe that treating a predictor as a 'random' effect offers a modeling advantage? Does it better reflect the process/relationships you are trying to understand? Does it provide you with information we find useful? Is it realistic to fit this kind of model given the amount of data I have, and the nature of the relationships in the data? Right now the last point is not something we have talked about very much, but it is something we will need to worry about more as our models become more complicated. 
+Some useful things to consider are also: Do you believe that treating a predictor as a 'random' effect offers a modeling advantage? Does it better reflect the process/relationships you are trying to understand? Does it provide you with information you find useful? Is it realistic to fit this kind of model given the amount of data you have, and the nature of the relationships in the data? Right now the last point is not something we have talked about very much, but it is something we will need to worry about more as our models become more complicated. 
 
 ### Inspecting the random effects
 

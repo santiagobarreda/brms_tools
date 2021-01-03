@@ -477,7 +477,7 @@ adultchild    17.63      5.22     7.34    27.88 1.00     1987     2068</code></p
 <p>So far we have covered the fact that after picking a value to use as a reference point (the model intercept), our models:</p>
 <ul>
 <li><p>represent group means as deviations from the intercept.</p></li>
-<li><p>represent the speaker-specific parameters <span class="math inline">\(\gamma_{uspeaker}\)</span> as being centered at 0, with a standard deviation of <span class="math inline">\(\sigma_{speaker}\)</span>).</p></li>
+<li><p>represent the speaker-specific deviations from the intercept (<span class="math inline">\(\gamma_{uspeaker}\)</span>) as being centered at 0, with a standard deviation of <span class="math inline">\(\sigma_{speaker}\)</span>.</p></li>
 <li><p>represent the random error (<span class="math inline">\(\varepsilon\)</span>) as having a mean of 0 and a standard deviation of <span class="math inline">\(\sigma_{error}\)</span>.</p></li>
 </ul>
 <p>In each case, these reflect <em>deviations</em> from some reference point. As a result, when the parameters associated with different effects equal 0, this means that no effect is present.</p>
@@ -499,22 +499,21 @@ adultchild    17.63      5.22     7.34    27.88 1.00     1987     2068</code></p
 <p>237 = 229 (Intercept) - 9 (adult female mean) + 20 (speaker effect) - 3 (error)</p>
 <p>In this case, the error is -3 since the production is now 3 Hz <em>below</em> the speaker average. Regressions models basically carry out these decompositions for us, and present information regarding these decompositions in the model summaries.</p>
 <p>The full model specification, including prior probabilities is below. I used the same ordering format for the t-distributions that <code>brm</code> uses (nu, mean, sd).</p>
-<p><span class="math display">\[
-\begin{split}
+$$
+<span class="math display">\[\begin{split}
 Likelihood: \\ 
-y \sim \mathcal{N}(\mu,\sigma_{error}) \\
-\mu = Intercept + adult1 + \gamma_{uspeaker} \\\\
-\textrm{Random Variables:} \\ 
-\gamma_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\
-\varepsilon \sim \mathcal{N}(0,\sigma_{error}) \\\\
+y_i \sim \mathcal{N}(\mu_i,\sigma_{error}) \\
+\mu_i = Intercept + adult1 + \alpha_{uspeaker_i} \\\\
+
 \textrm{Priors:} \\
+\alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
+
 Intercept \sim \mathcal{t}(3, 225.5, 48) \\ 
 adult1 \sim \mathcal{t}(3, 225.5, 48) \\ 
 \sigma_{error} \sim \mathcal{t}(3, 0, 48) \\
 \sigma_{speaker} \sim \mathcal{t}(3, 0, 48) \\ 
-\end{split}
-\]</span></p>
-<p>Since our models are getting more complicated, I am omitting the (1) predictor from the nominal variables (Intercept, adult1), and will keep doing so going forward.</p>
+\end{split}\]</span>
+<p>$$</p>
 </div>
 <div id="interpreting-the-two-group-model" class="section level3" number="3.4.3">
 <h3><span class="header-section-number">3.4.3</span> Interpreting the two-group model</h3>
@@ -634,28 +633,23 @@ adult1 \sim \mathcal{t}(3, 225.5, 48) \\
 <p>Luckily, when thinking about these concepts in terms of multilevel models we can be very specific: ‘random’ effects are those for which we estimate a standard deviation term. So, we treat differences in speaker average f0 (<span class="math inline">\(\gamma_{uspeaker}\)</span>) as a variable, and estimate <span class="math inline">\(\sigma_{speaker}\)</span> for the distribution of variable.</p>
 <div id="random-effects-priors-and-pooling" class="section level3" number="3.5.1">
 <h3><span class="header-section-number">3.5.1</span> Random effects, priors and pooling</h3>
-<p>In Chapter 1 I mentioned that every parameter in a Bayesian model needs a prior probability. If you look at our latest model definition (presented below), you will see four priors being specified: one for the Intercept, one for the effect for adult females, one for the error standard deviation (<span class="math inline">\(\sigma_{error}\)</span>) and one for the expected amount of variation in speaker averages (<span class="math inline">\(\sigma_{speaker}\)</span>).</p>
-<p><span class="math display">\[
-\begin{split}
-y = Intercept + adult1 + \gamma_{uspeaker} + \varepsilon \\\\
-\textrm{Random Variables:} \\ 
-\gamma_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\
-\varepsilon \sim \mathcal{N}(0,\sigma_{error}) \\\\
-\textrm{Priors:} \\
-Intercept \sim \mathcal{t}(3, 225.5, 48) \\ 
-adult1 \sim \mathcal{t}(3, 225.5, 48) \\ 
-\sigma_{error} \sim \mathcal{t}(3, 0, 48) \\
-\sigma_{speaker} \sim \mathcal{t}(3, 0, 48) \\ 
-\end{split}
-\]</span></p>
-<p>Notably missing from the list of priors are any priors for the speaker-average parameters, <span class="math inline">\(\gamma_{uspeaker}\)</span>. There should be one for each speaker in our sample. It turns out that the prior for these parameters is the <span class="math inline">\(\sigma_{speaker}\)</span> parameter, and this is estimated form the data! For this reason, the prior you set on <span class="math inline">\(\sigma_{speaker}\)</span> is sometimes called a ‘hyperprior’, because it is the prior for your prior!</p>
-<p>Using <span class="math inline">\(\sigma_{speaker}\)</span> to determine the prior distribution of <span class="math inline">\(\gamma_{uspeaker}\)</span> actually makes perfect sense if you think about it. By definition, the speaker effects are centered around 0 (the average). The only question is, how widely are they distributed? Well, what better way to answer this question than using the distribution evident in the data itself?</p>
+<p>Look at the list of priors in our latest model definition. If you look at our latest <code>brm</code> model fit, you will see where most of these are specifically defined in the function call. However, you will notice that the standard deviation of the prior (<span class="math inline">\(\sigma_{speakers}\)</span>) for the speaker-specific intercept deviations (<span class="math inline">\(\alpha_{speaker}\)</span>) is actually not specifically defined in the model.</p>
+<p>$$
+ \
+<em>{speaker} (0,</em>{speaker}) \ \</p>
+<p>Intercept (3, 225.5, 48) \
+adult1 (3, 225.5, 48) \
+<em>{error} (3, 0, 48) \
+</em>{speaker} (3, 0, 48) \
+$$</p>
+<p>It turns out that the <span class="math inline">\(\sigma_{speaker}\)</span> parameter is estimated from the data! For this reason, the prior you set on <span class="math inline">\(\sigma_{speaker}\)</span> is sometimes called a ‘hyperprior’, because it is the prior for your prior!</p>
+<p>By definition, the speaker effects are centered around 0 (the average). The only question is, how widely are they distributed? Well, what better way to answer this question than using the distribution evident in the data itself? This means that the amount of variation you expect between speakers is based on the amount of between-speaker variation you observe. The idea is basically: is it believable that this one person be this far away from the ‘average’? Well, it depends on what everyone else looks like!</p>
 <p>By estimating the prior for some parameters from the data itself, multilevel models can help <a href="http://www.stat.columbia.edu/~gelman/research/published/multiple2f.pdf">protect against problems that naturally arise when researchers compare many things</a>. This is because in a Bayesian analysis, the prior influences the estimates of your individual parameters. As a result, the variation in the <em>other</em> parameters in your sample can influence any given parameter.</p>
 <p>This process is sometimes referred to as ‘partial pooling’, since it refers to the partial pooling of information across subjects. Using partial pooling means the subject estimates are neither completely independent nor totally merged. They actually end up influencing each other in a logical manner. Broadly speaking, individual observations that deviate from ‘typical’ values of the population are maintained when there is good enough evidence for them. When there is wak evidence for them relative to the other observations in the sample, estimates may be brought closer to the group averages. As a result, partial pooling results in what is sometimes called ‘shrinkage’, because extreme values get ‘shrunk’ towards the overall mean.</p>
-<p>In the context of a Bayesian multilevel model ‘random effects’ are those you estimate with partial pooling, where the prior is estimated from the data (e.g., <span class="math inline">\(\sigma_{speaker}\)</span>). In contrast, ‘fixed effects’ are those for which you set arbitrary priors before fitting the model.</p>
+<p>In the context of a Bayesian multilevel model ‘random effects’ are those you estimate with partial pooling, where the prior is estimated from the data (e.g., <span class="math inline">\(\sigma_{speaker}\)</span>). In contrast, ‘fixed effects’ are those predictors for which you set arbitrary priors before fitting the model.</p>
 <p>Although the terms terms ‘fixed’ and ‘random’ effects are useful (and I continue to use them to describe my models), it is important to keep in mind that the philosophical distinction between ‘fixed’ and ‘random’ variables is not relevant for the models we are discussing here. The real distinction is: do I want to fit every level totally independently as if there were all unrelated? Or do I want to use partial pooling in my estimates, thereby using all of the information present in my sample to protect against spurious findings?</p>
 <p>In general, when you have many levels of a factor, it may be a good idea to include these as ‘random’ effects. There is not much downside to it, you get more information from the model (e.g., information about <span class="math inline">\(\sigma_{predictor}\)</span>), and you can always fit multiple models to see what, if any differences, result form the different approaches.</p>
-<p>Some useful things to consider are also: Do you believe that treating a predictor as a ‘random’ effect offers a modeling advantage? Does it better reflect the process/relationships you are trying to understand? Does it provide you with information we find useful? Is it realistic to fit this kind of model given the amount of data I have, and the nature of the relationships in the data? Right now the last point is not something we have talked about very much, but it is something we will need to worry about more as our models become more complicated.</p>
+<p>Some useful things to consider are also: Do you believe that treating a predictor as a ‘random’ effect offers a modeling advantage? Does it better reflect the process/relationships you are trying to understand? Does it provide you with information you find useful? Is it realistic to fit this kind of model given the amount of data you have, and the nature of the relationships in the data? Right now the last point is not something we have talked about very much, but it is something we will need to worry about more as our models become more complicated.</p>
 </div>
 <div id="inspecting-the-random-effects" class="section level3" number="3.5.2">
 <h3><span class="header-section-number">3.5.2</span> Inspecting the random effects</h3>
