@@ -510,10 +510,10 @@ Intercept   220.40      0.97   218.33   222.30 1.00      851      557</code></pr
 <p>When you place a predictor in the formula in parenthesis and on the right-hand-side of a pipe, like this <code>( | predictor )</code>, you tell <code>brm</code> that you expect data to be clustered according to each category represented in the grouping vector. In this case, we are telling <code>brm</code> that each unique speaker is a cluster of data. Whatever you put in the left-hand-side of the parentheses <code>( in here | predictor )</code> is the model for each subcluster!</p>
 <p>So what does this model formula mean: <code>f0 ~ 1 + ( 1 | uspeaker)</code>? It tells <code>brm</code>: predict f0 based on only an intercept, but also allow intercept values to vary separately for each speaker. Effectively, this model formula is telling <code>brm</code> to figure out all the information presented in the figures above.</p>
 <p>This regression model is now something like this:</p>
-<p><span class="math display" id="eq:26" id="eq:24">\[
+<p><span class="math display" id="eq:25">\[
 f0_i \sim \mathcal{N}(\mu_i,\sigma) \\
 \mu_i = Intercept + \alpha_{uspeaker_i}
-\tag{2.4}
+\tag{2.5}
 \]</span></p>
 <p>In English, the model above says: we expect f0 to be normally distributed. The f0 value we expect for any given token is equal to some overall average (<span class="math inline">\(Intercept\)</span>), and some value associated with each the individual speaker (_{uspeaker,i}) who uttered the trial.</p>
 <p>In addition to the coefficient estimating the overall intercept, we know have another term <span class="math inline">\(\alpha_{uspeaker}\)</span>. This coefficient is actually a set of coefficients since it has a different value for each speaker (its a vector). It has a different value for each speaker because it will reflect variation in <span class="math inline">\(\mu_{speaker}\)</span>, the average f0 value produced by each speaker. However, <span class="math inline">\(\mu_{speaker}\)</span> is a random variable since it reflects the random average f0 of each person drawn from the population. If <span class="math inline">\(\mu_{speaker}\)</span> behaves like a random variable, then the coefficients that reflect this value in our model (<span class="math inline">\(\alpha_{uspeaker}\)</span>) will behave in the same way.</p>
@@ -521,20 +521,17 @@ f0_i \sim \mathcal{N}(\mu_i,\sigma) \\
 <p>A careful consideration of the model in equation 2.4 suggests that the (<span class="math inline">\(\alpha_{uspeaker}\)</span>) coefficients can’t actually be exactly equal to <span class="math inline">\(\mu_{speaker}\)</span>), the average f0 for a speaker. If the overall mean (the intercept) is 220 Hz and a speaker’s average is 230, this would suggest a predicted average of 450 (<span class="math inline">\(\mu_{overall} + \mu_{speaker}\)</span>) for this speaker. Clearly that is not how the model should be working.</p>
 <p>Recall that I previously said that regression models encode <em>differences</em>. Our model already encodes the overall data average in the intercept parameter. Thus, the speaker-specific averages only need to contain information about <em>differences</em> to this reference value. As a result, the model parameters for mean f0 across all speakers will be centered at 0 (i.e., the average), and will tend to be normally distributed with a population-specific standard deviation.</p>
 <p>Since our model parameters represent speaker-specific deviations rather than their actual mean f0s, people often use this symbol, <span class="math inline">\(\gamma\)</span>, for them instead of <span class="math inline">\(\mu\)</span>, where <span class="math inline">\(\gamma = \mu_{speaker} - \mu_{overall}\)</span>. We can show the expected distribution of this variable below, where <span class="math inline">\(\sigma_{speakers}\)</span> is a population-specific standard deviation term.</p>
-<p>$$
-<em>{i} (0,</em>{speakers}) \
-<em>{i} = </em>{i}</p>
-<p>\tag{2.6}
-$$</p>
+<p><span class="math display" id="eq:26">\[
+\gamma_{i} \sim \mathcal{N}(0,\sigma_{speakers}) \\
+\alpha_{i} = \gamma_{i}
+\tag{2.6}
+\]</span></p>
 <p>Our overall model is now as shown below, made specific for the data we have, and using expected parameter names.</p>
-$$
-<span class="math display">\[\begin{split}
+<p><span class="math display">\[
 f0_i \sim \mathcal{N}(\mu_i,\sigma_{error}) \\
-
 \mu_i = Intercept + \alpha_{uspeaker_i} \\
 \alpha_{uspeaker} \sim \mathcal{N}(0,\sigma_{speakers}) \\
-\end{split}\]</span>
-<p>$$</p>
+\]</span></p>
 <p>Each line in the model says the following:</p>
 <ul>
 <li><p>the observed f0 for a given trial is expected to be normally distributed around a trial-specific mean, with some unknown but fixed standard deviation.</p></li>

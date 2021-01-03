@@ -444,7 +444,7 @@ This regression model is now something like this:
 $$
 f0_i \sim \mathcal{N}(\mu_i,\sigma) \\
 \mu_i = Intercept + \alpha_{uspeaker_i}
-(\#eq:24)
+(\#eq:25)
 $$
 
 In English, the model above says: we expect f0 to be normally distributed. The f0 value we expect for any given token is equal to some overall average ($Intercept$), and some value associated with each the individual speaker (\alpha_{uspeaker,i}) who uttered the trial. 
@@ -462,19 +462,16 @@ Since our model parameters represent speaker-specific deviations rather than the
 $$
 \gamma_{i} \sim \mathcal{N}(0,\sigma_{speakers}) \\
 \alpha_{i} = \gamma_{i}
-
 (\#eq:26)
 $$
 
 Our overall model is now as shown below, made specific for the data we have, and using expected parameter names.
 
-$$
-\begin{split}
-f0_i \sim \mathcal{N}(\mu_i,\sigma_{error}) \\
 
+$$
+f0_i \sim \mathcal{N}(\mu_i,\sigma_{error}) \\
 \mu_i = Intercept + \alpha_{uspeaker_i} \\
 \alpha_{uspeaker} \sim \mathcal{N}(0,\sigma_{speakers}) \\
-\end{split}
 $$
 
 Each line in the model says the following:
