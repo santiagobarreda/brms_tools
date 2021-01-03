@@ -278,32 +278,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">2.2.1</span> The model</h3>
 <p>Model structures are expressed in R using a very specific syntax. Think of writing a model formula as writing a language within R. The good thing about learning to write models is then you can use this knowledge to describe your models in your work, and to interpret other people’s models.</p>
 <p>The model formulas resemble regression equations to some extent, but there are some differences. Remember that regression models can be thought of in either of two two ways:</p>
-<p><span class="math display" id="eq:212" id="eq:21">\[
-y_i = \mu_i + \varepsilon_i
-\tag{2.1} \\
-y_i \sim \mathcal{N}(\mu_i,\sigma) 
-\tag{2.2} \\
+<p><span class="math display" id="eq:21">\[
+y_i = \mu_i + \varepsilon_i \\
+y_i \sim \mathcal{N}(\mu_i,\sigma) \\
+\tag{2.1} 
 \]</span></p>
 <p>The top line says that your observed variable for any given trial <span class="math inline">\(y_i\)</span> is the sum of some of some average expected value for that trial, (<span class="math inline">\(\mu_i\)</span>) and some specific random error for that trial (<span class="math inline">\(\mu_i\)</span>). The random error is expected to be normally distributed with some unknown standard deviation (<span class="math inline">\(\varepsilon_i \sim \mathcal{N}(0,\sigma)\)</span>). The second line presents the <span class="math inline">\(y\)</span> variable as being a normally-distributed variable with a trial-specific mean of <span class="math inline">\(\mu_i\)</span>, and a fixed standard deviation <span class="math inline">\(\sigma_{error}\)</span></p>
 <p>In general, in regression models we would really like to understand orderly variation in <span class="math inline">\(\mu_i\)</span> from trial to trial by breaking it up into parts (<span class="math inline">\(\mathrm{x}_{1}, \mathrm{x}_{2},...\)</span>) when combined using some weights (<span class="math inline">\(\alpha_1, \alpha_2,...\)</span>).</p>
 <p><span class="math display" id="eq:22">\[
 \mu_i = \alpha_1*\mathrm{x}_{1i} + \alpha_2*\mathrm{x}_{2i}+...+\alpha_j*\mathrm{x}_{ji}
-\tag{2.3}
+\tag{2.2}
 \]</span></p>
 <p>‘Fitting’ a regression model consists of trying to ‘guess’ the values of the weighing factors (<span class="math inline">\(\alpha\)</span>), called the <em>model coefficients</em>. When we are only trying to estimate a single average, we don’t have any predictors to explain variation in <span class="math inline">\(\mu_i\)</span>. In fact, our model structure suggests we expect no variation in <span class="math inline">\(\mu_i\)</span> from trial to trial!.</p>
 <p>Mathematically, we can’t just say ‘we have no predictor’ since everything needs to be represented by a number. As a result, we use a single ‘predictor’ <span class="math inline">\(\mathrm{x}\)</span> with a value of 1 so that our regression equation is:</p>
 <p><span class="math display" id="eq:23">\[
 \mu_i = \alpha_1*1
-\tag{2.4}
+\tag{2.3}
 \]</span></p>
 <p>Now our model is trying to guess the value of a single parameter (<span class="math inline">\(\alpha_1\)</span>), and we expect this parameter to be equal to <span class="math inline">\(\mu_i\)</span> since it is being multiplied by a ‘predictor’ with a constant value of 1.</p>
-<p>This kind of model is called an ‘Intercept only’ model. Regression models are really about representing <em>differences</em>, differences between groups and across conditions. When you are encoding differences, you need an overall reference point. For example, saying that something is 5 miles north is only interpretable given some reference point. The ‘reference point’ used by your model is called your ‘Intercept’. Basically, our model consists <em>only</em> of a single reference point, and the <span class="math inline">\(\alpha_1\)</span> parameter reflects its value (as shown in Equation <a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#eq:23">(2.4)</a>).</p>
+<p>This kind of model is called an ‘Intercept only’ model. Regression models are really about representing <em>differences</em>, differences between groups and across conditions. When you are encoding differences, you need an overall reference point. For example, saying that something is 5 miles north is only interpretable given some reference point. The ‘reference point’ used by your model is called your ‘Intercept’. Basically, our model consists <em>only</em> of a single reference point, and the <span class="math inline">\(\alpha_1\)</span> parameter reflects its value (as shown in Equation <a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#eq:23">(2.3)</a>).</p>
 <p>As a result, the <span class="math inline">\(\alpha_1\)</span> coefficient is called the ‘intercept’ in our model. When a coefficient is just being multiplied by a ‘fake’ predictor that just equals 1, we can omit it from the regression model (but its still secretly there).</p>
 <p>Based on the above, our f0 model can be thought of like this:</p>
 <p><span class="math display" id="eq:24">\[
 f0_i \sim \mathcal{N}(\mu_i,\sigma) \\
 \mu_i = Intercept \\
-\tag{2.5}
+\tag{2.4}
 \]</span></p>
 <p>Put in plain English, each line in the model says the following:</p>
 <ul>
@@ -313,7 +312,7 @@ f0_i \sim \mathcal{N}(\mu_i,\sigma) \\
 <p>What the model also says implicitly, is that the error is drawn from a normal distribution with a mean of 0 and a standard deviation of <span class="math inline">\(\sigma\)</span>. This distribution represents all deviations in f0 around the mean f0 for the sample (<span class="math inline">\(\mu_i\)</span>). In other words, the error for this model is expected to look like:</p>
 <p><span class="math display" id="eq:25">\[
 $\varepsilon_i \sim \mathcal{N}(0,\sigma) $
-\tag{2.6}
+\tag{2.5}
 \]</span></p>
 </div>
 <div id="the-model-formula" class="section level3" number="2.2.2">
@@ -322,7 +321,7 @@ $\varepsilon_i \sim \mathcal{N}(0,\sigma) $
 <p><code>y ~ predictor</code></p>
 <p>where all variables are represented by their names in your data. The variable we are interested in understanding (<span class="math inline">\(y\)</span>) goes on the left hand side, and on our predictors go on the right hand side, separated by a <span class="math inline">\(\sim\)</span>. Notice that the random term (<span class="math inline">\(\varepsilon\)</span>) is not included in the model formula.</p>
 <p>The formula above can be read as ‘y is distributed according to some predictor’, which really means "we think there is systematic variation in our y variable that can be understood by considering its joint variation with our predictor variable(s).</p>
-<p>For intercept only models, the number <code>1</code> is included in the model formula to indicate that a single constant value is being estimated (as in <a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#eq:23">(2.4)</a>). As a result, our model formula will have the form <code>f0 ~ 1</code>. This model could be said out loud like “we are trying to estimate the mean of f0” or “we are predicting mean f0 given only an intercept”.</p>
+<p>For intercept only models, the number <code>1</code> is included in the model formula to indicate that a single constant value is being estimated (as in <a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#eq:23">(2.3)</a>). As a result, our model formula will have the form <code>f0 ~ 1</code>. This model could be said out loud like “we are trying to estimate the mean of f0” or “we are predicting mean f0 given only an intercept”.</p>
 </div>
 <div id="calling-the-brm-function" class="section level3" number="2.2.3">
 <h3><span class="header-section-number">2.2.3</span> Calling the <code>brm</code> function</h3>
@@ -514,7 +513,7 @@ Intercept   220.40      0.97   218.33   222.30 1.00      851      557</code></pr
 <p><span class="math display" id="eq:26" id="eq:24">\[
 f0_i \sim \mathcal{N}(\mu_i,\sigma) \\
 \mu_i = Intercept + \alpha_{uspeaker_i}
-\tag{2.5}
+\tag{2.4}
 \]</span></p>
 <p>In English, the model above says: we expect f0 to be normally distributed. The f0 value we expect for any given token is equal to some overall average (<span class="math inline">\(Intercept\)</span>), and some value associated with each the individual speaker (_{uspeaker,i}) who uttered the trial.</p>
 <p>In addition to the coefficient estimating the overall intercept, we know have another term <span class="math inline">\(\alpha_{uspeaker}\)</span>. This coefficient is actually a set of coefficients since it has a different value for each speaker (its a vector). It has a different value for each speaker because it will reflect variation in <span class="math inline">\(\mu_{speaker}\)</span>, the average f0 value produced by each speaker. However, <span class="math inline">\(\mu_{speaker}\)</span> is a random variable since it reflects the random average f0 of each person drawn from the population. If <span class="math inline">\(\mu_{speaker}\)</span> behaves like a random variable, then the coefficients that reflect this value in our model (<span class="math inline">\(\alpha_{uspeaker}\)</span>) will behave in the same way.</p>
@@ -525,7 +524,7 @@ f0_i \sim \mathcal{N}(\mu_i,\sigma) \\
 <p>$$
 <em>{i} (0,</em>{speakers}) \
 <em>{i} = </em>{i}</p>
-<p>\tag{2.7}
+<p>\tag{2.6}
 $$</p>
 <p>Our overall model is now as shown below, made specific for the data we have, and using expected parameter names.</p>
 $$
@@ -545,12 +544,12 @@ f0_i \sim \mathcal{N}(\mu_i,\sigma_{error}) \\
 <p>There is a very important difference in how the initial and final models we fit view and partition the variation in our model. The initial model we fit viewed the variation in the model like this:</p>
 <p><span class="math display" id="eq:28">\[
 \sigma_{total} = \sigma_{error}
-\tag{2.8}
+\tag{2.7}
 \]</span></p>
 <p>In other words, all variation was error. We don’t know why values vary from the mean. Our multilevel model views the variation in our data like this:</p>
 <p><span class="math display" id="eq:29">\[
 \sigma_{total} = \sigma_{speaker} + \sigma_{error}
-\tag{2.9}
+\tag{2.8}
 \]</span></p>
 <p>It sees only <em>some</em> of the variation in data as error. Basically, from the perspective of this multilevel model, the variation in the data is a combination of random (but systematic) between-speaker variation, and random within-speaker variation.</p>
 </div>

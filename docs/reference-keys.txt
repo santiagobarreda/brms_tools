@@ -20,7 +20,6 @@ eq:8
 eq:9
 fig:allf0s
 eq:21
-eq:212
 eq:22
 eq:23
 eq:24

@@ -55,10 +55,9 @@ Model structures are expressed in R using a very specific syntax. Think of writi
 The model formulas resemble regression equations to some extent, but there are some differences. Remember that regression models can be thought of in either of two two ways:
 
 $$
-y_i = \mu_i + \varepsilon_i
-(\#eq:21) \\
-y_i \sim \mathcal{N}(\mu_i,\sigma) 
-(\#eq:212) \\
+y_i = \mu_i + \varepsilon_i \\
+y_i \sim \mathcal{N}(\mu_i,\sigma) \\
+(\#eq:21) 
 $$
 
 The top line says that your observed variable for any given trial $y_i$ is the sum of some of some average expected value for that trial, ($\mu_i$) and some specific random error for that trial ($\mu_i$). The random error is expected to be normally distributed with some unknown standard deviation ($\varepsilon_i \sim \mathcal{N}(0,\sigma)$). The second line presents the $y$ variable as being a normally-distributed variable with a trial-specific mean of $\mu_i$, and a fixed standard deviation $\sigma_{error}$
