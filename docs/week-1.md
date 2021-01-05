@@ -827,14 +827,14 @@ lines (x, prior / max (prior),lwd=2,col=2)
 lines (x, posterior / max (posterior),lwd=2,col=4)
 ```
 
+Figure \@ref(fig:mcmc)
+
 
 
 ```r
 set.seed(1)
-## make a random sample of data
-data_1 = rnorm (100,10,1)
-## collect samples from the likelihood of the mean
-samples_1 = sampler_example (data_1,0,sd(data_1), 5000)
+## collect samples from the likelihood of the mean for our f0 sample
+samples_1 = sampler_example (f0,200,sd(f0), 5000)
 
 ## do a second one to show its not a fluke
 data_2 = rnorm (100,-50,1)
@@ -845,29 +845,27 @@ samples_2 = sampler_example (data_2,0,sd(data_2), 5000)
 # distribution of these samples, minus the burn in phase. the right column shows
 # a comparison of theoretical and observed posterior distributions
 par (mfrow = c(2,3), mar = c(4,4,1,1))
-plot (samples_1)
-hist (samples_1[-(1:250)], freq = FALSE, ylim = c(0,4.5), main="",col=4)
-x = seq (9.7,10.5,.001)
-likelihood = dnorm (x, mean (data_1), sd(data_1) / sqrt (100) )
-prior = dnorm (x, 0, 500 ) 
-posterior = likelihood * prior
-posterior = posterior / max (posterior)
-plot (x, posterior, lwd = 4, col = 2, type = 'l')
-density_1 = density (samples_1[-(1:250)])
-density_1$y = density_1$y / max (density_1$y)
-lines (density_1, lwd = 3, col = 4)
-
 plot (samples_2)
-hist (samples_2[-(1:250)], freq = FALSE, ylim = c(0,4.5), main="",col=4)
+hist (samples_2[-(1:250)], freq = FALSE, ylim = c(0,4.5), main="",col=skyblue)
 x = seq (-50.6, -49.75,.001)
 likelihood = dnorm (x, mean (data_2), sd(data_2) / sqrt (100) )
 prior = dnorm (x, 0, 500 ) 
 posterior = likelihood * prior
 posterior = posterior / max (posterior)
-plot (x, posterior, lwd = 4, col = 2, type = 'l')
+plot (x, posterior, lwd = 4, col = coral, type = 'l')
 density_2 = density (samples_2[-(1:250)])
 density_2$y = density_2$y / max (density_2$y)
-lines (density_2, lwd = 3, col = 4)
+lines (density_2, lwd = 3, col = skyblue)
+
+plot (samples_1)
+hist (samples_1[-(1:250)], freq = FALSE, ylim = c(0,0.5), main="",col=skyblue)
+x = seq (215,225,.001)
+likelihood = dnorm (x, mean (f0), sd(f0) / sqrt ( length(f0) ) )
+prior = dnorm (x, 0, 500 ) 
+posterior = likelihood * prior
+posterior = posterior / max (posterior)
+plot (x, posterior, lwd = 4, col = coral, type = 'l')
+density_1 = density (samples_1[-(1:250)])
+density_1$y = density_1$y / max (density_1$y)
+lines (density_1, lwd = 3, col = skyblue)
 ```
-
-
