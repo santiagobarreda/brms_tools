@@ -482,7 +482,7 @@ I have been referring somewhat obliquely to 'models' without really explaining w
 
 Basically it goes like this:
 
-* you have a variable you are interested in, $y$, which is is a vector containing N observations. We can refer to any one of these observations like this $y_{i}$ for the $i^{th}$ observation. In our case this is a vector of 576 f0 values (`f0[1:576]`). Although its not necessary, I am going to put the index variables associated with trial number ($i$) in brackets like this $y_{[i]}$. This is just to make it easier to identify, and to highlight the similarity to vectors (e.g., `f0[i]`).
+* you have a variable you are interested in, $y$, which is is a vector containing N observations. We can refer to any one of these observations like this $y_{[i]}$ for the $i^{th}$ observation. In our case this is a vector of 576 f0 values (`f0[1:576]`). Although its not necessary, I am going to put the index variables associated with trial number ($i$) in brackets like this $y_{[i]}$. This is just to make it easier to identify, and to highlight the similarity to vectors (e.g., `f0[i]`).
 
 
 * you assume that your data is well described by a normal probability distribution. This is a mathematical function ($\mathcal{N}(\mu,\sigma)$) that described what is and is not probable based on two parameters. 

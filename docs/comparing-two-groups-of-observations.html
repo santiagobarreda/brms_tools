@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-01-03" />
+<meta name="date" content="2021-01-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -633,7 +633,8 @@ adult1 \sim \mathcal{t}(3, 225.5, 48) \\
 <div id="random-effects-priors-and-pooling" class="section level3" number="3.5.1">
 <h3><span class="header-section-number">3.5.1</span> Random effects, priors and pooling</h3>
 <p>Look at the list of priors in our latest model definition. If you look at our latest <code>brm</code> model fit, you will see where most of these are specifically defined in the function call. However, you will notice that the standard deviation of the prior (<span class="math inline">\(\sigma_{speakers}\)</span>) for the speaker-specific intercept deviations (<span class="math inline">\(\alpha_{speaker}\)</span>) is actually not specifically defined in the model.</p>
-<span class="math display">\[\begin{split}
+<p><span class="math display">\[\begin{equation}
+\begin{split}
 
 \textrm{Priors:} \\
 \alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
@@ -643,7 +644,8 @@ adult1 \sim \mathcal{t}(3, 225.5, 48) \\
 \sigma_{error} \sim \mathcal{t}(3, 0, 48) \\
 \sigma_{speaker} \sim \mathcal{t}(3, 0, 48) \\ 
 
-\end{split}\]</span>
+\end{split}
+\end{equation}\]</span></p>
 <p>It turns out that the <span class="math inline">\(\sigma_{speaker}\)</span> parameter is estimated from the data! For this reason, the prior you set on <span class="math inline">\(\sigma_{speaker}\)</span> is sometimes called a ‘hyperprior’, because it is the prior for your prior!</p>
 <p>By definition, the speaker effects are centered around 0 (the average). The only question is, how widely are they distributed? Well, what better way to answer this question than using the distribution evident in the data itself? This means that the amount of variation you expect between speakers is based on the amount of between-speaker variation you observe. The idea is basically: is it believable that this one person be this far away from the ‘average’? Well, it depends on what everyone else looks like!</p>
 <p>By estimating the prior for some parameters from the data itself, multilevel models can help <a href="http://www.stat.columbia.edu/~gelman/research/published/multiple2f.pdf">protect against problems that naturally arise when researchers compare many things</a>. This is because in a Bayesian analysis, the prior influences the estimates of your individual parameters. As a result, the variation in the <em>other</em> parameters in your sample can influence any given parameter.</p>

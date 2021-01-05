@@ -605,6 +605,7 @@ Luckily, when thinking about these concepts in terms of multilevel models we can
 
 Look at the list of priors in our latest model definition. If you look at our latest `brm` model fit, you will see where most of these are specifically defined in the function call. However, you will notice that the standard deviation of the prior ($\sigma_{speakers}$) for the speaker-specific intercept deviations ($\alpha_{speaker}$) is actually not specifically defined in the model. 
 
+\begin{equation}
 \begin{split}
 
 \textrm{Priors:} \\
@@ -616,6 +617,7 @@ adult1 \sim \mathcal{t}(3, 225.5, 48) \\
 \sigma_{speaker} \sim \mathcal{t}(3, 0, 48) \\ 
 
 \end{split}
+\end{equation}
 
 It turns out that the $\sigma_{speaker}$ parameter is estimated from the data! For this reason, the prior you set on $\sigma_{speaker}$ is sometimes called a 'hyperprior', because it is the prior for your prior! 
 
@@ -710,7 +712,6 @@ Using a different model can result in different results given the same data, but
   1) the data you collected. Given other data you may have come to other conclusions.
   
   2) the model you chose. Given another model you may have come to other conclusions.
-
 
 
 

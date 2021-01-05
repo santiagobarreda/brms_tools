@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-01-03" />
+<meta name="date" content="2021-01-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -518,7 +518,7 @@ Figure 1.10: Likelihood of population mean given our data. Horizontal lines indi
 <p>I have been referring somewhat obliquely to ‘models’ without really explaining what I mean by this. It’s difficult to offer a precise definition because the term is so broad, but ‘regression’ modeling can be thought of as trying to understand variation the mean parameter (<span class="math inline">\(\mu\)</span>) of a normal distributions. Actually, you can use many other probability distributions, but for now we will focus on models based on the normal distribution.</p>
 <p>Basically it goes like this:</p>
 <ul>
-<li><p>you have a variable you are interested in, <span class="math inline">\(y\)</span>, which is is a vector containing N observations. We can refer to any one of these observations like this <span class="math inline">\(y_{i}\)</span> for the <span class="math inline">\(i^{th}\)</span> observation. In our case this is a vector of 576 f0 values (<code>f0[1:576]</code>). Although its not necessary, I am going to put the index variables associated with trial number (<span class="math inline">\(i\)</span>) in brackets like this <span class="math inline">\(y_{[i]}\)</span>. This is just to make it easier to identify, and to highlight the similarity to vectors (e.g., <code>f0[i]</code>).</p></li>
+<li><p>you have a variable you are interested in, <span class="math inline">\(y\)</span>, which is is a vector containing N observations. We can refer to any one of these observations like this <span class="math inline">\(y_{[i]}\)</span> for the <span class="math inline">\(i^{th}\)</span> observation. In our case this is a vector of 576 f0 values (<code>f0[1:576]</code>). Although its not necessary, I am going to put the index variables associated with trial number (<span class="math inline">\(i\)</span>) in brackets like this <span class="math inline">\(y_{[i]}\)</span>. This is just to make it easier to identify, and to highlight the similarity to vectors (e.g., <code>f0[i]</code>).</p></li>
 <li><p>you assume that your data is well described by a normal probability distribution. This is a mathematical function (<span class="math inline">\(\mathcal{N}(\mu,\sigma)\)</span>) that described what is and is not probable based on two parameters.</p></li>
 <li><p>the mean of this distribution is either fixed, or varies in a logical manner.</p></li>
 <li><p>the variation in the mean of this distribution can be understood using some other variables.</p></li>
