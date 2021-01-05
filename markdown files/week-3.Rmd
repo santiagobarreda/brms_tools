@@ -1,5 +1,5 @@
 
-# Comparing two groups
+# Comparing two groups of observations
 
 In the previous chapter, I focused on investigating values from a single group, which is the simplest data you can deal with. In this chapter we are going to compare data from two groups to see how similar/different they really are. The models we will discuss are similar to two-sample t-tests (and some ANOVA designs) in the types of research questions they can help investigate. 
 
@@ -7,7 +7,7 @@ In the previous chapter, I focused on investigating values from a single group, 
 
 We are going to be using the same Hillenbrand et al. f0 data we used in the other chapters, but this time we are going to compare the f0 measurements for adult females to those of girls between 10-12 years of age. 
 
-Below I load in the Hillenbrand et al. data, and include a new variable that indicates whether the talker is an adult or a child. I also split the data up by gender. The variable `uspeaker` is a speaker number that is unique across all speaker groups, and `type` indicates speaker group from among `b` (boys), `g` (girls), `m` (men), and `w` (women).
+Below I load in the Hillenbrand et al. data, and include a new variable that indicates whether the talker is an adult or a child. I also split the data up by gender. The variable `speaker` is a speaker number that is unique across all speaker groups, and `group` indicates speaker group from among `b` (boys), `g` (girls), `m` (men), and `w` (women).
 
 ```{r setup, include=FALSE, echo=FALSE}
 devtools::source_url("https://raw.githubusercontent.com/santiagobarreda/stats-class/master/data/functions.R")
@@ -19,18 +19,18 @@ url2 = "/stats-class/master/data/h95_vowel_data.csv"
 h95 = read.csv (url(paste0 (url1, url2)))
 ## make variable that indicates if the talker is an adult
 h95$adult = ""
-h95$adult[h95$type %in% c('w','m')] = "adult"
-h95$adult[h95$type %in% c('g','b')] = "child"
+h95$adult[h95$group %in% c('w','m')] = "adult"
+h95$adult[h95$group %in% c('g','b')] = "child"
 
 ## split up data by into male and female groups, only some columns
-males = h95[h95$type %in% c('m','b'),c('f0', 'adult', 'type', 'uspeaker')]
-females = h95[h95$type %in% c('w','g'),c('f0', 'adult', 'type', 'uspeaker')]
-f0s = females[['f0']]
+males = h95[h95$group %in% c('m','b'),c('f0', 'adult', 'group', 'speaker')]
+females = h95[h95$group %in% c('w','g'),c('f0', 'adult', 'group', 'speaker')]
+f0 = females[['f0']]
 
 # re-factor to remove excluded subjects
-males$uspeaker = factor (males$uspeaker)  
+males$speaker = factor (males$speaker)  
 # re-factor to remove excluded subjects
-females$uspeaker = factor (females$uspeaker)  
+females$speaker = factor (females$speaker)  
 ```
 
 ```{r, include=FALSE}
@@ -43,6 +43,7 @@ teal = rgb (39/255, 192/255, 216/255, 0.75)
 skyblue =rgb (58/255, 101/255, 175/255, 0.75)
 maroon = rgb (130/255, 43/255, 50/255, .75)
 deeppurple = rgb (96/255, 45/255, 69/255, 0.75)
+cols = c(lightpink,lavender,coral,yellow,deepgreen,teal,skyblue,maroon,deeppurple)
 ```
 
 One of the simplest questions a researcher can ask (from a modeling perspective) is: Are two groups of observations different or are they the same? For example in phonetics, researchers ask questions like, have these vowels merged in this dialect (are these two things different)?  Does visual information speed up speech perception or not (are two sets of reaction times the same)?
@@ -63,16 +64,14 @@ boxplot (f0 ~ adult, data = males, main = "Males", ylim = c(90,330),
 
 Clearly there is a difference in f0 between children and adults, but the difference also seems to be gender-dependent: there is more of a difference between men and boys than between women and girls. We are going to focus on the female data for now, and I leave the male data so that the reader can modify the analysis presented here to analyze that data. 
 
-Below, the figure on the left highlights both between- and within-speaker variation in f0 by women (cyan) and girls (red). On the right, we see the overall distribution (black) compared to the distribution of f0 for women (cyan) and girls (red).
-
-Obviously the distributions seem a *bit* different, but they are also not *that* different. We can also clearly see that there is substantial overlap between individual girls and women (in the figure on the left). As a result, a cautious analysis of this data would recognize this overlap even if somehow 'differentess' were found. We are going to fit a model that can help us quantify all of the variability shown in the figures below. 
+Below, the figure on the left highlights both between- and within-speaker variation in f0 by women (cyan) and girls (red). On the right, we see the overall distributions of f0 for women (cyan) and girls (red). Obviously the distributions seem a *bit* different, but they are also not *that* different. We can also clearly see that there is substantial overlap between individual girls and women (in the figure on the left). As a result, a cautious analysis of this data would recognize this overlap even if somehow 'differentess' were found. We are going to fit a model that can help us quantify all of the variability shown in the figures below. 
 
 ```{r, fig.height = 4, fig.width=8}
 colors = 
-  c(coral,teal)[ apply (table(females$uspeaker, females$adult),1,which.max) ]
+  c(coral,teal)[ apply (table(females$speaker, females$adult),1,which.max) ]
 
 par (mfrow = c(1,2)); layout (mat = t(c(1,2)), widths = c(.7,.3))
-boxplot (f0 ~ uspeaker, data=females, col = colors)
+boxplot (f0 ~ speaker, data=females, col = colors)
 
 ## I rotate the density figures so that you can see how these correspond to
 ## the boxplots on the left. 
@@ -81,15 +80,13 @@ plot (tmp$y, tmp$x, lwd = 3, col = teal, ylab = "f0",xlab="Density",
       ylim = c(140,320), xlim = c(0,0.025), type = 'l')
 tmp = density (females$f0[females$adult=="adult"])
 lines (tmp$y, tmp$x, lwd = 3, col = coral)
-tmp = density (females$f0)
-lines (tmp$y, tmp$x, lwd = 3, col = 1)
 ```
 
 ## Estimating the difference two means with 'brms'
 
-In chapter 2 the model we fit had the simplest possible formula, just an intercept. Here, we need to extend this to include an actual predictor: a vector indicating 'adultness'. Remember that formulas look like this `variable ~ predictor`. So, if we want to predict f0 based on whether the talker is an adult or not, our model is going to have a formula that looks basically like this `f0 ~ adult + (1|uspeaker)`. You can think of this meaning something like 'We expect the distribution to vary based on whether the talker is an adult or not'. 
+In chapter 2 the model we fit had the simplest possible formula, just an intercept. Here, we need to extend this to include an actual predictor: a vector indicating 'adultness'. Remember that formulas look like this `variable ~ predictor`. So, if we want to predict f0 based on whether the talker is an adult or not, our model is going to have a formula that looks basically like this `f0 ~ adult + (1|speaker)`. You can think of this meaning something like 'We expect the distribution to vary based on whether the talker is an adult or not, in addition to speaker-specific adjustments to the intercept'. 
 
-Note that the model calculates an intercept (mean value) for each speaker, but does **not** include an effect for `adult` for each speaker (i.e., the model does *not* include a term like `(adult|uspeaker)`). This is because we are estimating a mean for each speaker, but not the effect for 'adultness' for each speaker. Each speaker is only either an adult or a child, and so we cannot estimate the effect for 'adultness' for each speaker. Doing things that don't 'make sense' from the model's perspective will cause it to crash or return strange values. 
+Note that the model calculates an intercept (mean value) for each speaker, but does **not** include an effect for `adult` for each speaker (i.e., the model does *not* include a term like `(adult|speaker)`). This is because we are estimating a mean for each speaker, but not the effect for 'adultness' for each speaker. Each speaker is only either an adult or a child, and so we cannot estimate the effect for 'adultness' for each speaker. Doing things that don't 'make sense' from the model's perspective will cause it to crash or return strange values. 
 
 I'm not going to go into so much detail about the structure of the regression model right now because an explanation involves some of the less intuitive concepts relating to regression. We are going to to fit the model first and discuss its structure, and then get to the details of the model later.
 
@@ -99,8 +96,8 @@ First we find the mean and the standard deviation of our data to use in the prio
 
 ```{r}
 ## establish data statistics for priors
-mean (f0s)
-sd (f0s)
+mean (f0)
+sd (f0)
 ```
 
 We load the `brms` package and fit the model. Notice that I now include a prior for `class = "b"`, which is the class for all predictors that are not the intercept. Our model now includes a non-intercept term, and so I need to include this prior:
@@ -111,7 +108,7 @@ library (brms)
 ```{r, eval = FALSE}
 set.seed (1)
 model =  
-  brms::brm (f0 ~ adult + (1|uspeaker), data = females, chains = 4, cores = 4,
+  brms::brm (f0 ~ adult + (1|speaker), data = females, chains = 4, cores = 4,
        warmup = 1000, iter = 11000, thin = 10,
        prior = c(set_prior("student_t(3, 225.5, 48)", class = "Intercept"),
                  set_prior("student_t(3, 0, 48)", class = "b"),
@@ -131,7 +128,7 @@ Intercept    220.47      2.80   215.10   226.16 1.00     1827     2813
 adultchild    17.63      5.22     7.34    27.88 1.00     1987     2068
 ```
 
-In addition to the 'Intercept' term, we now get estimates for a term called `adultchild`. Admittedly, this is a strange name, but its how R handles predictors that are words (called 'factors' in R). What this tells us is that this is the estimate for the 'child' level of the 'adult' factor. ` 
+In addition to the 'Intercept' term, we now get estimates for a term called `adultchild`. Admittedly, this is a strange name, but its how R handles predictors that are words (called 'factors' in R). In general, r names predictors like these `factornameFactorlevel`. For example, a factor called `colors` with levels `red`, `green` and `blue` might have a level represented like `colorsred`. So, the `adultchild` name tells us is that this is the estimate for the `child` level of the `adult` factor. 
 
 A couple of questions arise. First, the 'Intercept' term in the model above seems to correspond to the mean f0 for adult females. We can confirm this: 
 
@@ -233,7 +230,7 @@ We can fit the model with sum coding using the exact same code since the options
 ```{r, eval = FALSE}
 set.seed (1)
 model_sum_coding =  
-  brms::brm (f0 ~ adult + (1|uspeaker), data = females, chains = 4, cores = 4,
+  brms::brm (f0 ~ adult + (1|speaker), data = females, chains = 4, cores = 4,
        warmup = 1000, iter = 11000, thin = 10,
        prior = c(set_prior("student_t(3, 225.5, 48)", class = "Intercept"),
                  set_prior("student_t(3, 0, 48)", class = "b"),
@@ -267,7 +264,7 @@ So far we have covered the fact that after picking a value to use as a reference
   
   * represent group means as deviations from the intercept.
   
-  * represent the speaker-specific parameters $\gamma_{uspeaker}$ as being centered at 0, with a standard deviation of $\sigma_{speaker}$).
+  * represent the speaker-specific deviations from the intercept ($\gamma_{speaker}$) as being centered at 0, with a standard deviation of $\sigma_{speaker}$.
   
   * represent the random error ($\varepsilon$) as having a mean of 0 and a standard deviation of $\sigma_{error}$. 
   
@@ -290,7 +287,7 @@ This reflects the following considerations:
   * this speaker's average f0 is 20 Hz above the average for adult females.
   * this particular production is 16 Hz higher than expected for this particular speaker. 
 
-nother observation from this talker might be: 
+Another observation from this talker might be: 
 
 237 = 229 (Intercept) - 9 (adult female mean) + 20 (speaker effect) - 3 (error)
 
@@ -298,21 +295,26 @@ In this case, the error is -3 since the production is now 3 Hz *below* the speak
 
 The full model specification, including prior probabilities is below. I used the same ordering format for the t-distributions that `brm` uses (nu, mean, sd). 
 
-$$
+
+\begin{equation}
 \begin{split}
-y = Intercept + adult1 + \gamma_{uspeaker} + \varepsilon \\\\
-\textrm{Random Variables:} \\ 
-\gamma_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\
-\varepsilon \sim \mathcal{N}(0,\sigma_{error}) \\\\
+\textrm{Likelihood:} \\
+y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
+\mu_{[i]} = Intercept + adult1 + \alpha_{speaker_{[i]}} \\\\
+
 \textrm{Priors:} \\
+\alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
+
 Intercept \sim \mathcal{t}(3, 225.5, 48) \\ 
 adult1 \sim \mathcal{t}(3, 225.5, 48) \\ 
+
 \sigma_{error} \sim \mathcal{t}(3, 0, 48) \\
 \sigma_{speaker} \sim \mathcal{t}(3, 0, 48) \\ 
 \end{split}
-$$
+\end{equation}
 
-Since our models are getting more complicated, I am omitting the (1) predictor from the nominal variables (Intercept, adult1), and will keep doing so going forward. 
+The top chunk is labeled 'likelihood' because this chunk specifies the relationships between our parameters and our data. As a result, the relationships specified in this section determine the likelihood of the model parameters. For example, in the first line we say that our data is normally distributed around some mean parameter. In turn, this specifies the shape of the likelihood function for that parameter given the data (as discussed in Figure \@ref(fig:likelihood1)). What I mean by this is that the shape of the likelihood functions for different model coefficients will be based on the relationships laid out in the section of the model description labeled 'likelihood'. 
+
 
 ### Interpreting the two-group model
 
@@ -388,10 +390,10 @@ Below I present the speaker boxplot, with different colors for each group. So fa
 
 ```{r, fig.height = 4, fig.width=8, echo = FALSE}
 colors = 
-  c(coral,teal)[ apply (table(females$uspeaker, females$adult),1,which.max) ]
+  c(coral,teal)[ apply (table(females$speaker, females$adult),1,which.max) ]
 
 par (mfrow = c(1,1)); 
-boxplot (f0 ~ uspeaker, data=females, col = colors)
+boxplot (f0 ~ speaker, data=females, col = colors)
 ```
 
 Multilevel models are sometimes also called 'random effects' or 'mixed effects' models. What is 'mixed' about them? Researchers often talk about whether effects are 'fixed' or 'random'. The general idea is that 'fixed' effects are specifically chosen from a small set of possibilities, and we are not necessarily interested in the 'other' levels. 
@@ -402,50 +404,50 @@ In contrast, 'random' effects are not chosen arbitrarily but at random. The spea
 
 Despite this primarily philosophical definition, in practice the terms 'fixed' and 'random' effects have [several inconsistent and sometimes contradictory definitions](https://statmodeling.stat.columbia.edu/2005/01/25/why_i_dont_use/). 
 
-Luckily, when thinking about these concepts in terms of multilevel models we can be very specific: 'random' effects are those for which we estimate a standard deviation term. So, we treat differences in speaker average f0 ($\gamma_{uspeaker}$) as a variable, and estimate $\sigma_{speaker}$ for the distribution of variable. 
+Luckily, when thinking about these concepts in terms of multilevel models we can be very specific: 'random' effects are those for which we estimate a standard deviation term. So, we treat differences in speaker average f0 ($\gamma_{speaker}$) as a variable, and estimate $\sigma_{speaker}$ for the distribution of variable. 
 
 ### Random effects, priors and pooling
 
-In Chapter 1 I mentioned that every parameter in a Bayesian model needs a prior probability. If you look at our latest model definition (presented below), you will see four priors being specified: one for the Intercept, one for the effect for adult females, one for the error standard deviation ($\sigma_{error}$) and one for the expected amount of variation in speaker averages ($\sigma_{speaker}$). 
+Look at the list of priors in our latest model definition. If you look at our latest `brm` model fit, you will see where most of these are specifically defined in the function call. However, you will notice that the standard deviation of the prior ($\sigma_{speakers}$) for the speaker-specific intercept deviations ($\alpha_{speaker}$) is actually not specifically defined in the model. 
 
-$$
+\begin{equation}
 \begin{split}
-y = Intercept + adult1 + \gamma_{uspeaker} + \varepsilon \\\\
-\textrm{Random Variables:} \\ 
-\gamma_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\
-\varepsilon \sim \mathcal{N}(0,\sigma_{error}) \\\\
+
 \textrm{Priors:} \\
+\alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
+
 Intercept \sim \mathcal{t}(3, 225.5, 48) \\ 
 adult1 \sim \mathcal{t}(3, 225.5, 48) \\ 
 \sigma_{error} \sim \mathcal{t}(3, 0, 48) \\
 \sigma_{speaker} \sim \mathcal{t}(3, 0, 48) \\ 
+
 \end{split}
-$$
+\end{equation}
 
-Notably missing from the list of priors are any priors for the speaker-average parameters, $\gamma_{uspeaker}$. There should be one for each speaker in our sample. It turns out that the prior for these parameters is the $\sigma_{speaker}$ parameter, and this is estimated form the data! For this reason, the prior you set on $\sigma_{speaker}$ is sometimes called a 'hyperprior', because it is the prior for your prior! 
+It turns out that the $\sigma_{speaker}$ parameter is estimated from the data! For this reason, the prior you set on $\sigma_{speaker}$ is sometimes called a 'hyperprior', because it is the prior for your prior! 
 
-Using $\sigma_{speaker}$ to determine the prior distribution of $\gamma_{uspeaker}$ actually makes perfect sense if you think about it. By definition, the speaker effects are centered around 0 (the average). The only question is, how widely are they distributed? Well, what better way to answer this question than using the distribution evident in the data itself?
+By definition, the speaker effects are centered around 0 (the average). The only question is, how widely are they distributed? Well, what better way to answer this question than using the distribution evident in the data itself? This means that the amount of variation you expect between speakers is based on the amount of between-speaker variation you observe. The idea is basically: is it believable that this one person be this far away from the 'average'? Well, it depends on what everyone else looks like!
 
 By estimating the prior for some parameters from the data itself, multilevel models can help [protect against problems that naturally arise when researchers compare many things](http://www.stat.columbia.edu/~gelman/research/published/multiple2f.pdf). This is because in a Bayesian analysis, the prior influences the estimates of your individual parameters. As a result, the variation in the *other* parameters in your sample can influence any given parameter.
 
 This process is sometimes referred to as 'partial pooling', since it refers to the partial pooling of information across subjects. Using partial pooling means the subject estimates are neither completely independent nor totally merged. They actually end up influencing each other in a logical manner. Broadly speaking, individual observations that deviate from 'typical' values of the population are maintained when there is good enough evidence for them. When there is wak evidence for them relative to the other observations in the sample, estimates may be brought closer to the group averages. As a result, partial pooling results in what is sometimes called 'shrinkage', because extreme values get 'shrunk' towards the overall mean. 
 
-In the context of a Bayesian multilevel model 'random effects' are those you estimate with partial pooling, where the prior is estimated from the data (e.g., $\sigma_{speaker}$). In contrast, 'fixed effects' are those for which you set arbitrary priors before fitting the model.
+In the context of a Bayesian multilevel model 'random effects' are those you estimate with partial pooling, where the prior is estimated from the data (e.g., $\sigma_{speaker}$). In contrast, 'fixed effects' are those predictors for which you set arbitrary priors before fitting the model.
 
 Although the terms terms 'fixed' and 'random' effects are useful (and I continue to use them to describe my models), it is important to keep in mind that the philosophical distinction between 'fixed' and 'random' variables is not relevant for the models we are discussing here. The real distinction is: do I want to fit every level totally independently as if there were all unrelated? Or do I want to use partial pooling in my estimates, thereby using all of the information present in my sample to protect against spurious findings? 
 
 In general, when you have many levels of a factor, it may be a good idea to include these as 'random' effects. There is not much downside to it, you get more information from the model (e.g., information about $\sigma_{predictor}$), and you can always fit multiple models to see what, if any differences, result form the different approaches. 
 
-Some useful things to consider are also: Do you believe that treating a predictor as a 'random' effect offers a modeling advantage? Does it better reflect the process/relationships you are trying to understand? Does it provide you with information we find useful? Is it realistic to fit this kind of model given the amount of data I have, and the nature of the relationships in the data? Right now the last point is not something we have talked about very much, but it is something we will need to worry about more as our models become more complicated. 
+Some useful things to consider are also: Do you believe that treating a predictor as a 'random' effect offers a modeling advantage? Does it better reflect the process/relationships you are trying to understand? Does it provide you with information you find useful? Is it realistic to fit this kind of model given the amount of data you have, and the nature of the relationships in the data? Right now the last point is not something we have talked about very much, but it is something we will need to worry about more as our models become more complicated. 
 
 ### Inspecting the random effects
 
 The `brms` package has several functions to help understand our 'random' effects. There is a function called `ranef` which returns random effects estimates in the same way that `fixef` provides fixed effects estimates. The leftmost column of the output below represents the estimated effects associated with each speaker average value. 
 
 ```{r}
-## I am telling it to give me the 'uspeaker' Intercepts, but only the first 
+## I am telling it to give me the 'speaker' Intercepts, but only the first 
 ## 10 rows. This is just so it doesn't take up the whole page.
-brms::ranef (model_sum_coding)$uspeaker[1:10,,"Intercept"]
+brms::ranef (model_sum_coding)$speaker[1:10,,"Intercept"]
 ```
 
 Notice that the speaker averages vary around 0, and some are even negative. That is because the speaker effects (and all random effects) are coded using sum-coding. So, what the speaker-specific mean terms tell us is: what is the average value for this speaker, relative to the overall average, and the group specific adjustment? Keep in mind, since our model encodes both the overall average *and* the group means, the speaker-effects encode differences to the group means and not to the overall means. 
@@ -467,7 +469,7 @@ We can compare the estimates of by-speaker intercepts to the distribution of act
 par (mfrow = c(1,2), mar = c(4,4,1,1))
 brmplot( brms::ranef (model_sum_coding)[["uspeaker"]][,,"Intercept"], 
          col = colors)
-boxplot (f0 ~ uspeaker, data=females, col = colors, ylim = c(150,310))
+boxplot (f0 ~ speaker, data=females, col = colors, ylim = c(150,310))
 ```
 
 ## But what does it all mean?
@@ -476,13 +478,13 @@ Ok, so are the f0s produced by women and girls different? Consider the distribut
 
 ```{r, fig.height = 6, fig.width=8, echo = FALSE}
 colors = 
-  c(coral,teal)[ apply (table(females$uspeaker, females$adult),1,which.max) ]
+  c(coral,teal)[ apply (table(females$speaker, females$adult),1,which.max) ]
 
 par (mfrow = c(2,1), mar = c(4,4,1,1));
-boxplot (f0 ~ uspeaker, data=females, col = colors, xla='f0')
+boxplot (f0 ~ speaker, data=females, col = colors, xla='f0')
 abline (h = c(220,229,238), lwd = 4, col = 1)
 abline (h = c(220,229,238), lwd = 3, col = c(coral,1,teal))
-boxplot (f0 ~ uspeaker, data=females, col = colors,add = TRUE)
+boxplot (f0 ~ speaker, data=females, col = colors,add = TRUE)
 
 ## I rotate the density figures so that you can see how these correspond to
 ## the boxplots on the left. 
@@ -516,7 +518,7 @@ Keep in mind that the "as long as reviewers (and readers in general) will believ
 
 The model is not reality and should not be confused with reality. This is a very important point! A statistical finding does not *prove* that something is *true*. This kind of thinking has [caused many problems for researchers in the social sciences recently](https://slate.com/health-and-science/2017/06/daryl-bem-proved-esp-is-real-showed-science-is-broken.html). In general, we can imagine that 10 people might approach any given research question in 10 different ways, a concept known as [researcher degrees of freedom](https://en.wikipedia.org/wiki/Researcher_degrees_of_freedom). This would cause slight differences in their results, resulting in a sort of 'distribution' for any given result. How can a fixed underlying reality result in a distribution or results? When they are all slightly wrong! 
 
-For example, we know for a fact that f0 varies, weakly but systematically, across vowel categories, a concept known as (intrinsic f0)[https://www.sciencedirect.com/science/article/abs/pii/S0095447095801650]. A model that included vowel category as a within-speaker predictor would reduce the apparent error in our model (making $sigma_{error}$ smaller), and might affect the precision of our other estimates. Would this new model invalidate our current model? Answering yes to this question is generally problematic because there is *always* a better model out there, and so every model is automatically invalid.  
+For example, we know for a fact that f0 varies, weakly but systematically, across vowel categories, a concept known as [intrinsic f0](https://www.sciencedirect.com/science/article/abs/pii/S0095447095801650). A model that included vowel category as a within-speaker predictor would reduce the apparent error in our model (making $sigma_{error}$ smaller), and might affect the precision of our other estimates. Would this new model invalidate our current model? Answering yes to this question is generally problematic because there is *always* a better model out there, and so every model is automatically invalid.  
 
 The solution is to think of your model not as a mathematical implementation of *reality* but instead as a mathematical implementation of your research questions. Your model should include the information and structure that you think are necessary to represent and investigate your questions. 
 
@@ -525,7 +527,6 @@ Using a different model can result in different results given the same data, but
   1) the data you collected. Given other data you may have come to other conclusions.
   
   2) the model you chose. Given another model you may have come to other conclusions.
-
 
 
 
