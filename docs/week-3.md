@@ -407,11 +407,11 @@ y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
 \textrm{Priors:} \\
 \alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
 
-Intercept \sim \mathcal{t}(3, 225.5, 48) \\ 
-adult1 \sim \mathcal{t}(3, 225.5, 48) \\ 
+Intercept \sim t(3, 225.5, 48) \\ 
+adult1 \sim t(3, 0, 48) \\ 
 
-\sigma_{error} \sim \mathcal{t}(3, 0, 48) \\
-\sigma_{speaker} \sim \mathcal{t}(3, 0, 48) \\ 
+\sigma_{error} \sim t(3, 0, 48) \\
+\sigma_{speaker} \sim t(3, 0, 48) \\ 
 \end{split}
 \end{equation}
 
@@ -611,10 +611,10 @@ Look at the list of priors in our latest model definition. If you look at our la
 \textrm{Priors:} \\
 \alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
 
-Intercept \sim \mathcal{t}(3, 225.5, 48) \\ 
-adult1 \sim \mathcal{t}(3, 225.5, 48) \\ 
-\sigma_{error} \sim \mathcal{t}(3, 0, 48) \\
-\sigma_{speaker} \sim \mathcal{t}(3, 0, 48) \\ 
+Intercept \sim t(3, 225.5, 48) \\ 
+adult1 \sim t(3, 225.5, 48) \\ 
+\sigma_{error} \sim t(3, 0, 48) \\
+\sigma_{speaker} \sim t(3, 0, 48) \\ 
 
 \end{split}
 \end{equation}

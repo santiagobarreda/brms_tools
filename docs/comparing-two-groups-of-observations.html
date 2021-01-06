@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-01-04" />
+<meta name="date" content="2021-01-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"/>
-
+<link rel="next" href="comparing-many-groups.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -220,6 +220,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.5.2" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#inspecting-the-random-effects"><i class="fa fa-check"></i><b>3.5.2</b> Inspecting the random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="3.6" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#but-what-does-it-all-mean"><i class="fa fa-check"></i><b>3.6</b> But what does it all mean?</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html"><i class="fa fa-check"></i><b>4</b> Comparing many groups</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#data-and-research-questions-3"><i class="fa fa-check"></i><b>4.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="4.2" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#comparing-four-or-any-number-of-groups"><i class="fa fa-check"></i><b>4.2</b> Comparing four (or any number of) groups</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#the-model-3"><i class="fa fa-check"></i><b>4.2.1</b> The model</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-many-groups-using-predictors-analysis-of-variance"><i class="fa fa-check"></i><b>4.3</b> Investigating many groups using predictors: Analysis of Variance</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#the-model-4"><i class="fa fa-check"></i><b>4.3.1</b> The model</a></li>
+<li class="chapter" data-level="4.3.2" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#fitting-the-model-and-interpreting-the-results"><i class="fa fa-check"></i><b>4.3.2</b> Fitting the model and interpreting the results</a></li>
+<li class="chapter" data-level="4.3.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-model-fit"><i class="fa fa-check"></i><b>4.3.3</b> Investigating model fit</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#interactions-and-interaction-plots"><i class="fa fa-check"></i><b>4.4</b> Interactions and interaction plots</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#interactions-in-our-f0-data"><i class="fa fa-check"></i><b>4.4.1</b> Interactions in our f0 data</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-interactions-with-a-model"><i class="fa fa-check"></i><b>4.5</b> Investigating interactions with a model</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#fitting-the-model-and-interpreting-the-results-1"><i class="fa fa-check"></i><b>4.5.1</b> Fitting the model and interpreting the results</a></li>
+<li class="chapter" data-level="4.5.2" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#assessing-model-fit"><i class="fa fa-check"></i><b>4.5.2</b> Assessing model fit</a></li>
+<li class="chapter" data-level="4.5.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-the-interactions-the-easy-way"><i class="fa fa-check"></i><b>4.5.3</b> Investigating the interactions the easy way</a></li>
+<li class="chapter" data-level="4.5.4" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#making-plots"><i class="fa fa-check"></i><b>4.5.4</b> Making plots</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="http://www.santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
@@ -505,11 +530,11 @@ y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
 \textrm{Priors:} \\
 \alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
 
-Intercept \sim \mathcal{t}(3, 225.5, 48) \\ 
-adult1 \sim \mathcal{t}(3, 225.5, 48) \\ 
+Intercept \sim t(3, 225.5, 48) \\ 
+adult1 \sim t(3, 0, 48) \\ 
 
-\sigma_{error} \sim \mathcal{t}(3, 0, 48) \\
-\sigma_{speaker} \sim \mathcal{t}(3, 0, 48) \\ 
+\sigma_{error} \sim t(3, 0, 48) \\
+\sigma_{speaker} \sim t(3, 0, 48) \\ 
 \end{split}
 \end{equation}\]</span></p>
 <p>The top chunk is labeled ‘likelihood’ because this chunk specifies the relationships between our parameters and our data. As a result, the relationships specified in this section determine the likelihood of the model parameters. For example, in the first line we say that our data is normally distributed around some mean parameter. In turn, this specifies the shape of the likelihood function for that parameter given the data (as discussed in Figure <a href="inspecting-a-single-group-of-observations.html#fig:likelihood1">1.8</a>). What I mean by this is that the shape of the likelihood functions for different model coefficients will be based on the relationships laid out in the section of the model description labeled ‘likelihood’.</p>
@@ -639,10 +664,10 @@ adult1 \sim \mathcal{t}(3, 225.5, 48) \\
 \textrm{Priors:} \\
 \alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
 
-Intercept \sim \mathcal{t}(3, 225.5, 48) \\ 
-adult1 \sim \mathcal{t}(3, 225.5, 48) \\ 
-\sigma_{error} \sim \mathcal{t}(3, 0, 48) \\
-\sigma_{speaker} \sim \mathcal{t}(3, 0, 48) \\ 
+Intercept \sim t(3, 225.5, 48) \\ 
+adult1 \sim t(3, 225.5, 48) \\ 
+\sigma_{error} \sim t(3, 0, 48) \\
+\sigma_{speaker} \sim t(3, 0, 48) \\ 
 
 \end{split}
 \end{equation}\]</span></p>
@@ -726,8 +751,8 @@ alt="Web Analytics"></a></div></noscript>
           </div>
         </div>
       </div>
-<a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="comparing-many-groups.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

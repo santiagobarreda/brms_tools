@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Comparing many groups | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</title>
+  <meta name="description" content="Bayesian Models for Linguists" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Comparing many groups | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://santiagobarreda.com" />
+  
+  <meta property="og:description" content="Bayesian Models for Linguists" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Comparing many groups | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers" />
+  
+  <meta name="twitter:description" content="Bayesian Models for Linguists" />
+  
+
+<meta name="author" content="Santiago Bareda" />
+
+
+<meta name="date" content="2021-01-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="comparing-two-groups-of-observations.html"/>
+
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-29379Y1Q2X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-29379Y1Q2X');
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bayesian Models for Linguists</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html"><i class="fa fa-check"></i><b>1</b> Inspecting a single group of observations</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#data-and-research-questions"><i class="fa fa-check"></i><b>1.1</b> Data and research questions</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#inspecting-the-central-location-and-spread-of-values"><i class="fa fa-check"></i><b>1.1.1</b> Inspecting the central location and spread of values</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#probability-distributions"><i class="fa fa-check"></i><b>1.2</b> Probability Distributions</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#the-normal-distribution"><i class="fa fa-check"></i><b>1.2.1</b> The normal distribution</a></li>
+<li class="chapter" data-level="1.2.2" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#referring-to-the-normal-distribution-to-make-inferences"><i class="fa fa-check"></i><b>1.2.2</b> Referring to the normal distribution to make inferences</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#probabilities-of-events-and-likelihoods-of-parameters"><i class="fa fa-check"></i><b>1.3</b> Probabilities of events and likelihoods of parameters</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#making-inferences-using-likelihoods"><i class="fa fa-check"></i><b>1.3.1</b> Making inferences using likelihoods</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#bayesian-models"><i class="fa fa-check"></i><b>1.4</b> Bayesian models</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#what-are-regression-models"><i class="fa fa-check"></i><b>1.4.1</b> What are regression models?</a></li>
+<li class="chapter" data-level="1.4.2" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#whats-bayesian-about-these-models"><i class="fa fa-check"></i><b>1.4.2</b> What’s ‘Bayesian’ about these models?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#posterior-distributions"><i class="fa fa-check"></i><b>1.5</b> Posterior distributions</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#sampling-from-the-posterior"><i class="fa fa-check"></i><b>1.5.1</b> Sampling from the posterior</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#plot-code"><i class="fa fa-check"></i><b>1.6</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><i class="fa fa-check"></i><b>2</b> Inspecting a ‘single group’ of observations using a Bayesian multilevel model</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#data-and-research-questions-1"><i class="fa fa-check"></i><b>2.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="2.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#estimating-a-single-mean-with-the-brms-package"><i class="fa fa-check"></i><b>2.2</b> Estimating a single mean with the <code>brms</code> package</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#the-model"><i class="fa fa-check"></i><b>2.2.1</b> The model</a></li>
+<li class="chapter" data-level="2.2.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#the-model-formula"><i class="fa fa-check"></i><b>2.2.2</b> The model formula</a></li>
+<li class="chapter" data-level="2.2.3" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#calling-the-brm-function"><i class="fa fa-check"></i><b>2.2.3</b> Calling the <code>brm</code> function</a></li>
+<li class="chapter" data-level="2.2.4" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#interpreting-the-model-print-statement"><i class="fa fa-check"></i><b>2.2.4</b> Interpreting the model print statement</a></li>
+<li class="chapter" data-level="2.2.5" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#seeing-the-samples"><i class="fa fa-check"></i><b>2.2.5</b> Seeing the samples</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#repeated-measures-data"><i class="fa fa-check"></i><b>2.3</b> Repeated measures data</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#multilevel-models"><i class="fa fa-check"></i><b>2.3.1</b> Multilevel models</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#estimating-a-multilevel-model-with-brms"><i class="fa fa-check"></i><b>2.4</b> Estimating a multilevel model with <code>brms</code></a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#the-model-1"><i class="fa fa-check"></i><b>2.4.1</b> The model</a></li>
+<li class="chapter" data-level="2.4.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#fitting-the-model"><i class="fa fa-check"></i><b>2.4.2</b> Fitting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#checking-model-convergence"><i class="fa fa-check"></i><b>2.5</b> Checking model convergence</a></li>
+<li class="chapter" data-level="2.6" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#specifying-prior-probabilities"><i class="fa fa-check"></i><b>2.6</b> Specifying prior probabilities</a></li>
+<li class="chapter" data-level="2.7" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#answering-our-research-questions"><i class="fa fa-check"></i><b>2.7</b> Answering our research questions</a></li>
+<li class="chapter" data-level="2.8" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#plot-code-1"><i class="fa fa-check"></i><b>2.8</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html"><i class="fa fa-check"></i><b>3</b> Comparing two groups of observations</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#data-and-research-questions-2"><i class="fa fa-check"></i><b>3.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="3.2" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#estimating-the-difference-two-means-with-brms"><i class="fa fa-check"></i><b>3.2</b> Estimating the difference two means with ‘brms’</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#fitting-the-model-1"><i class="fa fa-check"></i><b>3.2.1</b> Fitting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#contrasts"><i class="fa fa-check"></i><b>3.3</b> Contrasts</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#treatment-coding"><i class="fa fa-check"></i><b>3.3.1</b> Treatment coding</a></li>
+<li class="chapter" data-level="3.3.2" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#sum-coding"><i class="fa fa-check"></i><b>3.3.2</b> Sum coding</a></li>
+<li class="chapter" data-level="3.3.3" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#comparison-of-sum-and-treatment-coding"><i class="fa fa-check"></i><b>3.3.3</b> Comparison of sum and treatment coding</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#refitting-the-model-with-sum-coding"><i class="fa fa-check"></i><b>3.4</b> Refitting the model with sum coding</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#fitting-the-model-2"><i class="fa fa-check"></i><b>3.4.1</b> Fitting the model</a></li>
+<li class="chapter" data-level="3.4.2" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#the-model-2"><i class="fa fa-check"></i><b>3.4.2</b> The model</a></li>
+<li class="chapter" data-level="3.4.3" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#interpreting-the-two-group-model"><i class="fa fa-check"></i><b>3.4.3</b> Interpreting the two-group model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#random-effects"><i class="fa fa-check"></i><b>3.5</b> ‘Random’ Effects</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#random-effects-priors-and-pooling"><i class="fa fa-check"></i><b>3.5.1</b> Random effects, priors and pooling</a></li>
+<li class="chapter" data-level="3.5.2" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#inspecting-the-random-effects"><i class="fa fa-check"></i><b>3.5.2</b> Inspecting the random effects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#but-what-does-it-all-mean"><i class="fa fa-check"></i><b>3.6</b> But what does it all mean?</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html"><i class="fa fa-check"></i><b>4</b> Comparing many groups</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#data-and-research-questions-3"><i class="fa fa-check"></i><b>4.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="4.2" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#comparing-four-or-any-number-of-groups"><i class="fa fa-check"></i><b>4.2</b> Comparing four (or any number of) groups</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#the-model-3"><i class="fa fa-check"></i><b>4.2.1</b> The model</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-many-groups-using-predictors-analysis-of-variance"><i class="fa fa-check"></i><b>4.3</b> Investigating many groups using predictors: Analysis of Variance</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#the-model-4"><i class="fa fa-check"></i><b>4.3.1</b> The model</a></li>
+<li class="chapter" data-level="4.3.2" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#fitting-the-model-and-interpreting-the-results"><i class="fa fa-check"></i><b>4.3.2</b> Fitting the model and interpreting the results</a></li>
+<li class="chapter" data-level="4.3.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-model-fit"><i class="fa fa-check"></i><b>4.3.3</b> Investigating model fit</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#interactions-and-interaction-plots"><i class="fa fa-check"></i><b>4.4</b> Interactions and interaction plots</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#interactions-in-our-f0-data"><i class="fa fa-check"></i><b>4.4.1</b> Interactions in our f0 data</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-interactions-with-a-model"><i class="fa fa-check"></i><b>4.5</b> Investigating interactions with a model</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#fitting-the-model-and-interpreting-the-results-1"><i class="fa fa-check"></i><b>4.5.1</b> Fitting the model and interpreting the results</a></li>
+<li class="chapter" data-level="4.5.2" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#assessing-model-fit"><i class="fa fa-check"></i><b>4.5.2</b> Assessing model fit</a></li>
+<li class="chapter" data-level="4.5.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-the-interactions-the-easy-way"><i class="fa fa-check"></i><b>4.5.3</b> Investigating the interactions the easy way</a></li>
+<li class="chapter" data-level="4.5.4" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#making-plots"><i class="fa fa-check"></i><b>4.5.4</b> Making plots</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="http://www.santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="comparing-many-groups" class="section level1" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Comparing many groups</h1>
+<p>Last chapter we talked about comparing two groups. Although it’s very simple, it’s also fundamental and used often: more complicated problems are often broken down into sets of several two-group questions. However, real experiments don’t usually <em>begin</em> as two-group questions.</p>
+<p>In the last chapter we found a reliable, but noisy, difference between women and girls in average f0. In this chapter, we are going to consider the productions of f0 from all four groups in the data. These research questions would traditionally be addressed with a repeated-measures ANOVA. Alternatively, the speaker means could have been used as single data points for each speaker and and ANOVA might have been used. I am only pointing this out in case it is useful, we will not be talking about traditional ANOVA here!</p>
+<div id="data-and-research-questions-3" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Data and research questions</h2>
+<p>We are still going to work with the Hillenbrand et al. data. This time we are going to add a variable indicating ‘adultness’, and one indicating gender. However, this time we are going to work with all four groups at the same time: <code>b</code> (boys), <code>g</code> (girls), <code>m</code> (men), and <code>w</code> (women).</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="comparing-many-groups.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (brms)</span>
+<span id="cb169-2"><a href="comparing-many-groups.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span> (<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&quot;contr.sum&quot;</span>,<span class="st">&quot;cont.sum&quot;</span>))</span>
+<span id="cb169-3"><a href="comparing-many-groups.html#cb169-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-4"><a href="comparing-many-groups.html#cb169-4" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">=</span> <span class="st">&quot;https://raw.githubusercontent.com/santiagobarreda&quot;</span></span>
+<span id="cb169-5"><a href="comparing-many-groups.html#cb169-5" aria-hidden="true" tabindex="-1"></a>url2 <span class="ot">=</span> <span class="st">&quot;/stats-class/master/data/h95_vowel_data.csv&quot;</span></span>
+<span id="cb169-6"><a href="comparing-many-groups.html#cb169-6" aria-hidden="true" tabindex="-1"></a>h95 <span class="ot">=</span> <span class="fu">read.csv</span> (<span class="fu">url</span>(<span class="fu">paste0</span> (url1, url2)))[,<span class="fu">c</span>(<span class="st">&#39;f0&#39;</span>,<span class="st">&#39;speaker&#39;</span>,<span class="st">&#39;group&#39;</span>)]</span>
+<span id="cb169-7"><a href="comparing-many-groups.html#cb169-7" aria-hidden="true" tabindex="-1"></a><span class="do">## make variable that indicates if the talker is an adult</span></span>
+<span id="cb169-8"><a href="comparing-many-groups.html#cb169-8" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>adult <span class="ot">=</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb169-9"><a href="comparing-many-groups.html#cb169-9" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>adult[h95<span class="sc">$</span>group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;w&#39;</span>,<span class="st">&#39;m&#39;</span>)] <span class="ot">=</span> <span class="st">&quot;adult&quot;</span></span>
+<span id="cb169-10"><a href="comparing-many-groups.html#cb169-10" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>adult[h95<span class="sc">$</span>group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;g&#39;</span>,<span class="st">&#39;b&#39;</span>)] <span class="ot">=</span> <span class="st">&quot;child&quot;</span></span>
+<span id="cb169-11"><a href="comparing-many-groups.html#cb169-11" aria-hidden="true" tabindex="-1"></a><span class="do">## make variable indicating speaker gender</span></span>
+<span id="cb169-12"><a href="comparing-many-groups.html#cb169-12" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>gender <span class="ot">=</span> <span class="st">&quot;female&quot;</span></span>
+<span id="cb169-13"><a href="comparing-many-groups.html#cb169-13" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>gender[h95<span class="sc">$</span>group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;b&#39;</span>,<span class="st">&#39;m&#39;</span>)] <span class="ot">=</span> <span class="st">&quot;male&quot;</span></span>
+<span id="cb169-14"><a href="comparing-many-groups.html#cb169-14" aria-hidden="true" tabindex="-1"></a><span class="do">## make speaker number a factor</span></span>
+<span id="cb169-15"><a href="comparing-many-groups.html#cb169-15" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>speaker <span class="ot">=</span> <span class="fu">factor</span> (h95<span class="sc">$</span>speaker)  </span>
+<span id="cb169-16"><a href="comparing-many-groups.html#cb169-16" aria-hidden="true" tabindex="-1"></a><span class="do">## see data</span></span>
+<span id="cb169-17"><a href="comparing-many-groups.html#cb169-17" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (h95)</span></code></pre></div>
+<pre><code>##    f0 speaker group adult gender
+## 1 174      47     m adult   male
+## 2 102      48     m adult   male
+## 3  99      49     m adult   male
+## 4 124      50     m adult   male
+## 5 115      51     m adult   male
+## 6  96      52     m adult   male</code></pre>
+<p>Our potential research questions are substantially more complicated than in the two-group case. First, there are four groups now, meaning we could potentially make 6 2-group comparisons. Second, the groups also differ along multiple dimensions, making it more difficult to make two-group comparisons that ask one single question. For example, the man and girl groups differ according to adultness <em>and</em> gender. How could we know what part of their f0 difference we should attribute to adultness and what part we should attribute to maleness?</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="comparing-many-groups.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb171-2"><a href="comparing-many-groups.html#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span> (f0 <span class="sc">~</span> group, <span class="at">data=</span>h95, <span class="at">main =</span> <span class="st">&quot;Overall&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">90</span>,<span class="dv">330</span>),<span class="at">col=</span>cols[<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>])</span>
+<span id="cb171-3"><a href="comparing-many-groups.html#cb171-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span> (f0 <span class="sc">~</span> adult, <span class="at">data=</span>h95, <span class="at">main=</span><span class="st">&quot;Adultness&quot;</span>, <span class="at">ylim =</span><span class="fu">c</span>(<span class="dv">90</span>,<span class="dv">330</span>), <span class="at">col=</span>cols[<span class="dv">7</span><span class="sc">:</span><span class="dv">8</span>])</span>
+<span id="cb171-4"><a href="comparing-many-groups.html#cb171-4" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span> (f0 <span class="sc">~</span> gender, <span class="at">data=</span>h95, <span class="at">main=</span><span class="st">&quot;Gender&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">90</span>,<span class="dv">330</span>), <span class="at">col=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
+<p><img src="week-4_files/figure-html/datacomparison-1.png" width="768" /></p>
+<p>We can consider our data in several ways: as four independent groups, or as two 2-groups comparisons (adult vs child, female vs male). We are going to focus on the 4-way comparison first.</p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="comparing-many-groups.html#cb172-1" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">=</span> cols[<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">6</span>)][ <span class="fu">apply</span> (<span class="fu">table</span>(h95<span class="sc">$</span>speaker, h95<span class="sc">$</span>group),<span class="dv">1</span>,which.max) ]</span>
+<span id="cb172-2"><a href="comparing-many-groups.html#cb172-2" aria-hidden="true" tabindex="-1"></a><span class="do">## speaker boxplots</span></span>
+<span id="cb172-3"><a href="comparing-many-groups.html#cb172-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>)); <span class="fu">layout</span> (<span class="at">mat =</span> <span class="fu">t</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)), <span class="at">widths =</span> <span class="fu">c</span>(.<span class="dv">7</span>,.<span class="dv">3</span>))</span>
+<span id="cb172-4"><a href="comparing-many-groups.html#cb172-4" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span> (f0 <span class="sc">~</span> speaker, <span class="at">data=</span>h95, <span class="at">col =</span> colors, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">90</span>,<span class="dv">330</span>))</span>
+<span id="cb172-5"><a href="comparing-many-groups.html#cb172-5" aria-hidden="true" tabindex="-1"></a><span class="do">## The density figures are rotated </span></span>
+<span id="cb172-6"><a href="comparing-many-groups.html#cb172-6" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">=</span> <span class="fu">density</span> (h95<span class="sc">$</span>f0[h95<span class="sc">$</span>group<span class="sc">==</span><span class="st">&quot;b&quot;</span>])</span>
+<span id="cb172-7"><a href="comparing-many-groups.html#cb172-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (tmp<span class="sc">$</span>y, tmp<span class="sc">$</span>x, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> cols[<span class="dv">3</span>], <span class="at">ylab =</span> <span class="st">&quot;f0&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;Density&quot;</span>, </span>
+<span id="cb172-8"><a href="comparing-many-groups.html#cb172-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">90</span>,<span class="dv">330</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.025</span>), <span class="at">type =</span> <span class="st">&#39;l&#39;</span>)</span>
+<span id="cb172-9"><a href="comparing-many-groups.html#cb172-9" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">=</span> <span class="fu">density</span> (h95<span class="sc">$</span>f0[h95<span class="sc">$</span>group<span class="sc">==</span><span class="st">&quot;g&quot;</span>]); <span class="fu">lines</span> (tmp<span class="sc">$</span>y, tmp<span class="sc">$</span>x, <span class="at">lwd=</span><span class="dv">3</span>, <span class="at">col=</span>cols[<span class="dv">4</span>])</span>
+<span id="cb172-10"><a href="comparing-many-groups.html#cb172-10" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">=</span> <span class="fu">density</span> (h95<span class="sc">$</span>f0[h95<span class="sc">$</span>group<span class="sc">==</span><span class="st">&quot;m&quot;</span>]); <span class="fu">lines</span> (tmp<span class="sc">$</span>y, tmp<span class="sc">$</span>x, <span class="at">lwd=</span><span class="dv">3</span>, <span class="at">col=</span>cols[<span class="dv">5</span>])</span>
+<span id="cb172-11"><a href="comparing-many-groups.html#cb172-11" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">=</span> <span class="fu">density</span> (h95<span class="sc">$</span>f0[h95<span class="sc">$</span>group<span class="sc">==</span><span class="st">&quot;w&quot;</span>]); <span class="fu">lines</span> (tmp<span class="sc">$</span>y, tmp<span class="sc">$</span>x, <span class="at">lwd=</span><span class="dv">3</span>, <span class="at">col=</span>cols[<span class="dv">6</span>])</span></code></pre></div>
+<p><img src="week-4_files/figure-html/speakerboxplots-1.png" width="768" /></p>
+<p>R treats verbal predictors as ‘factors’ and assumes that each different label is a different group. Each group of a factor is called a ‘level’. Actually, we’ve been using factors all along because our <code>speaker</code> predictor is a factor and the individual participants are levels! As far as these our are concerned, participant/speaker/subject has no special status as a predictor and it is just a factor with many levels.</p>
+<p>A <code>factor</code> is actually a data type in R. It’s basically the same as a vector of words (or numbers!), but it has some additional properties that are useful. For example, consider our <code>group</code> predictor, which tells us which group each speaker falls into. Initially it is a character vector. We see that the first few tokens are produced by men (<code>m</code>), and that there is no numerical value associated with these letter labels. The <code>unique</code> function returns all unique labels in the vector, in the order that they appear.</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="comparing-many-groups.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (h95<span class="sc">$</span>group)   <span class="do">## see the first 6 observations</span></span></code></pre></div>
+<pre><code>## [1] &quot;m&quot; &quot;m&quot; &quot;m&quot; &quot;m&quot; &quot;m&quot; &quot;m&quot;</code></pre>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="comparing-many-groups.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span> (h95<span class="sc">$</span>group)   <span class="do">## class starts as a character vector</span></span></code></pre></div>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="comparing-many-groups.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (<span class="fu">as.numeric</span> (h95<span class="sc">$</span>group))  <span class="do">## no numerical values</span></span></code></pre></div>
+<pre><code>## Warning in head(as.numeric(h95$group)): NAs introduced by coercion</code></pre>
+<pre><code>## [1] NA NA NA NA NA NA</code></pre>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="comparing-many-groups.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span> (h95<span class="sc">$</span>group)  <span class="do">## we can see the number of unique groups</span></span></code></pre></div>
+<pre><code>## [1] &quot;m&quot; &quot;w&quot; &quot;b&quot; &quot;g&quot;</code></pre>
+<p>We can turn the character vector <code>group</code> into a factor vector <code>group_f</code>. The benefit of this is that these nominal labels now have an inherent ordering, and associated numerical values. Actually, R functions such as <code>brm</code> turn your character predictors into factors in the process of fitting the model. Doing this yourself gives you control over how they will be handled.</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="comparing-many-groups.html#cb182-1" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>group_f <span class="ot">=</span> <span class="fu">factor</span>(h95<span class="sc">$</span>group) <span class="do">## we can turn it into a factor in R</span></span>
+<span id="cb182-2"><a href="comparing-many-groups.html#cb182-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(h95<span class="sc">$</span>group_f)  <span class="do">## now it has official levels</span></span></code></pre></div>
+<pre><code>## [1] &quot;b&quot; &quot;g&quot; &quot;m&quot; &quot;w&quot;</code></pre>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="comparing-many-groups.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (<span class="fu">as.numeric</span> (h95<span class="sc">$</span>group_f))  <span class="do">## now it has nuerical values</span></span></code></pre></div>
+<pre><code>## [1] 3 3 3 3 3 3</code></pre>
+<p>For example, by default factor levels are ordered alphabetically. This means that if we are using sum coding we will not estimate the <code>g</code> parameter (the ‘last group’) and if we are using treatment coding, the intercept will be equal to <code>m</code> (the ‘first’ group). You can control this behavior by re-ordering the factor levels as below:</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="comparing-many-groups.html#cb186-1" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>group_f2 <span class="ot">=</span> <span class="fu">factor</span> (h95<span class="sc">$</span>group_f, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&#39;w&#39;</span>,<span class="st">&#39;m&#39;</span>,<span class="st">&#39;g&#39;</span>,<span class="st">&#39;b&#39;</span>))</span>
+<span id="cb186-2"><a href="comparing-many-groups.html#cb186-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span> (h95<span class="sc">$</span>group_f2)</span></code></pre></div>
+<pre><code>## [1] &quot;w&quot; &quot;m&quot; &quot;g&quot; &quot;b&quot;</code></pre>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="comparing-many-groups.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (<span class="fu">as.numeric</span> (h95<span class="sc">$</span>group_f2))  <span class="do">## now it has official levels</span></span></code></pre></div>
+<pre><code>## [1] 2 2 2 2 2 2</code></pre>
+</div>
+<div id="comparing-four-or-any-number-of-groups" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Comparing four (or any number of) groups</h2>
+<p>We are first going to treat the four groups as four groups with no internal structure. It makes no sense to do this for this particular data, but in many cases we would have several groups with no logical internal divisions.</p>
+<div id="the-model-3" class="section level3" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> The model</h3>
+<p>Unlike in the two-group example, this is not just a single characteristic that can be represented with a single variable. Actually, the model needs (approximately) one variable per group, but you don’t need to worry about this.</p>
+<p>Our factor <code>group</code> has four levels: <code>b</code>,<code>g</code>,<code>m</code>, and <code>w</code>. For models where the predictor is a factor with more than two levels, we can represent the predictor in a vector like this, <span class="math inline">\(group_{i}\)</span>, where <span class="math inline">\(i\)</span> is a counter variable that goes from 1 to the number of groups. Since we have four groups, our <code>group</code> predictor can be thought of as a vector like <code>[b, g, m, w]</code> where the letters represent the values of the four groups predictors. When considered this way, we see why it is useful to represent factor levels as number.</p>
+<p>Our updated model is now as seen below.</p>
+<p><span class="math display" id="eq:41">\[\begin{equation}
+\begin{split}
+\textrm{Likelihood:} \\
+y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
+\mu_{[i]} = Intercept + group_{group_{[i]}} + \alpha_{speaker_{[i]}} \\\\
+\textrm{Priors:} \\
+\alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
+Intercept \sim t(3, 220, 100) \\ 
+group_{[i]} \sim t(3, 0, 100) \\ 
+\sigma_{error} \sim t(3, 0, 100) \\
+\sigma_{speaker} \sim t(3, 0, 100) \\ 
+\end{split}
+\tag{4.1}
+\end{equation}\]</span></p>
+<p>Notice that for each trial number <span class="math inline">\(i\)</span> the group predictor is indexed by a variable called <code>group</code>. This is a bit confusing, but I am just trying to be consistent with how R does things. As noted above, a factor predictor like <code>group</code> is really just a bunch of numbers that represent group effects in a vector. So R really treats <code>group</code> as a sequence of numbers representing group numbers. But it also calls the predictor by that name! So, though it may look strange <span class="math inline">\(group_{group_{[i]}}\)</span> just says that you have a predictor in your model called ‘group’ and it has a few possible values (four in this case). Also, you have a variable in your data with the same name that tells you which value of <span class="math inline">\(group\)</span> to use for each observation!</p>
+<p>So, for example, above we saw that the first value of the <code>group</code> vector is 3. This means this speaker is a member of the <code>m</code> group. This means that in our model above, the equation determining <span class="math inline">\(\mu_{[i]}\)</span> will include the value <span class="math inline">\(group_{[3]}\)</span> in it because <span class="math inline">\(group_{group_{[i]}=3}\)</span>.</p>
+<p>We can check out the mean and standard deviations for the data to set prior probabilities for the model parameters.</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="comparing-many-groups.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span> (h95<span class="sc">$</span>f0)</span></code></pre></div>
+<pre><code>## [1] 197.027</code></pre>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="comparing-many-groups.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span> (h95<span class="sc">$</span>f0)</span></code></pre></div>
+<pre><code>## [1] 51.76277</code></pre>
+<p>We are going to use sum coding, which means that the intercept will be the mean of all the groups, and group effects will be represented as differences from this mean. Remember that the missing group effect will be equal to the negative sum of the coefficients that are present. By default, R drops the <strong>last</strong> level from your factor, which in our case will be the <code>w</code> level.</p>
+<p>We fit the model below:</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="comparing-many-groups.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span> (<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&quot;contr.sum&quot;</span>,<span class="st">&quot;cont.sum&quot;</span>))</span>
+<span id="cb194-2"><a href="comparing-many-groups.html#cb194-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span> (<span class="dv">1</span>)</span>
+<span id="cb194-3"><a href="comparing-many-groups.html#cb194-3" aria-hidden="true" tabindex="-1"></a>model_four_groups <span class="ot">=</span>  </span>
+<span id="cb194-4"><a href="comparing-many-groups.html#cb194-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span> (f0 <span class="sc">~</span> group <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>speaker), <span class="at">data =</span> h95, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>, </span>
+<span id="cb194-5"><a href="comparing-many-groups.html#cb194-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">iter =</span> <span class="dv">11000</span>, <span class="at">thin =</span> <span class="dv">10</span>, </span>
+<span id="cb194-6"><a href="comparing-many-groups.html#cb194-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 200, 100)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;Intercept&quot;</span>),</span>
+<span id="cb194-7"><a href="comparing-many-groups.html#cb194-7" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 100)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb194-8"><a href="comparing-many-groups.html#cb194-8" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 100)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;sd&quot;</span>)))</span>
+<span id="cb194-9"><a href="comparing-many-groups.html#cb194-9" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS (model_four_groups, &quot;4_model_four_groups.RDS&quot;)       </span></span></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="comparing-many-groups.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="do">## load and inspect pre-fit model</span></span>
+<span id="cb195-2"><a href="comparing-many-groups.html#cb195-2" aria-hidden="true" tabindex="-1"></a>model_four_groups <span class="ot">=</span> <span class="fu">readRDS</span> (<span class="st">&quot;4_model_four_groups.RDS&quot;</span>)</span>
+<span id="cb195-3"><a href="comparing-many-groups.html#cb195-3" aria-hidden="true" tabindex="-1"></a>model_four_groups</span></code></pre></div>
+<pre><code>##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: f0 ~ group + (1 | speaker) 
+##    Data: h95 (Number of observations: 1668) 
+## Samples: 4 chains, each with iter = 11000; warmup = 1000; thin = 10;
+##          total post-warmup samples = 4000
+## 
+## Group-Level Effects: 
+## ~speaker (Number of levels: 139) 
+##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(Intercept)    20.95      1.34    18.51    23.82 1.00     2080     2564
+## 
+## Population-Level Effects: 
+##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept   206.49      1.93   202.67   210.21 1.00     1474     2270
+## group1       29.53      3.52    22.78    36.65 1.00     1253     2236
+## group2       31.88      3.98    24.35    39.68 1.00     1565     2392
+## group3      -75.18      2.90   -80.89   -69.62 1.00     1246     2383
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma    11.86      0.22    11.46    12.31 1.00     3882     3814
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p>We can see that the intercept is the average of the group means, and our coefficients are equal to the centered group means:</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="comparing-many-groups.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="do">## grop means</span></span>
+<span id="cb197-2"><a href="comparing-many-groups.html#cb197-2" aria-hidden="true" tabindex="-1"></a>means <span class="ot">=</span> <span class="fu">tapply</span> (h95<span class="sc">$</span>f0, h95<span class="sc">$</span>group, mean)</span>
+<span id="cb197-3"><a href="comparing-many-groups.html#cb197-3" aria-hidden="true" tabindex="-1"></a><span class="do">## overall mean</span></span>
+<span id="cb197-4"><a href="comparing-many-groups.html#cb197-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span> (means)</span></code></pre></div>
+<pre><code>## [1] 206.5111</code></pre>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="comparing-many-groups.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="do">## group means</span></span>
+<span id="cb199-2"><a href="comparing-many-groups.html#cb199-2" aria-hidden="true" tabindex="-1"></a>means</span></code></pre></div>
+<pre><code>##        b        g        m        w 
+## 236.0741 238.3509 131.2185 220.4010</code></pre>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="comparing-many-groups.html#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="do">## centered means</span></span>
+<span id="cb201-2"><a href="comparing-many-groups.html#cb201-2" aria-hidden="true" tabindex="-1"></a>means <span class="sc">-</span> <span class="fu">mean</span> (means)</span></code></pre></div>
+<pre><code>##         b         g         m         w 
+##  29.56295  31.83975 -75.29261  13.88991</code></pre>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="comparing-many-groups.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="do">## parameters = centered means</span></span>
+<span id="cb203-2"><a href="comparing-many-groups.html#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesis</span> (model_four_groups, <span class="fu">c</span>(<span class="st">&quot;group1 = 0&quot;</span>,</span>
+<span id="cb203-3"><a href="comparing-many-groups.html#cb203-3" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;group2 = 0&quot;</span>,</span>
+<span id="cb203-4"><a href="comparing-many-groups.html#cb203-4" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;group3 = 0&quot;</span>, </span>
+<span id="cb203-5"><a href="comparing-many-groups.html#cb203-5" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;-(group1+group2+group3) = 0&quot;</span>))[[<span class="dv">1</span>]][,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>##                      Hypothesis  Estimate Est.Error   CI.Lower  CI.Upper
+## 1                  (group1) = 0  29.53202  3.523919  22.783088  36.64507
+## 2                  (group2) = 0  31.87791  3.976443  24.351030  39.68355
+## 3                  (group3) = 0 -75.17590  2.903665 -80.888641 -69.61975
+## 4 (-(group1+group2+group3)) = 0  13.76598  2.934586   7.923066  19.37857</code></pre>
+<p>In these Bayesian models, we can actually compare any groups we want in this model, using comparisons of the posterior samples (as shown in chapter 3). For example, the difference between girls and boys can be found by asking if one minus the other equals 0 (which would be true if these were identical):</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="comparing-many-groups.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesis</span> (model_four_groups, <span class="st">&quot;group1 - group2 = 0&quot;</span>)[[<span class="dv">1</span>]][,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>##            Hypothesis  Estimate Est.Error  CI.Lower CI.Upper
+## 1 (group1-group2) = 0 -2.345888  6.437511 -15.03817 10.28229</code></pre>
+</div>
+</div>
+<div id="investigating-many-groups-using-predictors-analysis-of-variance" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Investigating many groups using predictors: Analysis of Variance</h2>
+<div id="the-model-4" class="section level3" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> The model</h3>
+<p>In the previous section, we acted like we just had four different groups with no internal structure. Of course, we know that our groups differ systematically from each other in meaningful ways. For example, we might have chosen to fit two separate models that looked like this:</p>
+<p><code>brm (f0 ~ gender + (1|speaker)</code>
+<code>brm (f0 ~ adult + (1|speaker)</code></p>
+<p>For several reasons (some of which we will see very soon), it is preferable to fit a single model with both predictors at once, rather than fitting two separate models to each research question. Our R model formula wil now look like this, reflecting the influence of both predictors simultaneously:</p>
+<p><code>f0 ~ adult + gender + (1|speaker)</code></p>
+<p>This can be read like “f0 is distributed according to effects for speaker adultness and gender, with random intercepts for each speaker”. You may have noticed that our model no longer includes the <code>group</code> predictor. This is because the <code>group</code> label is perfectly predictable on the basis of <code>adult</code> and <code>gender</code> (a <code>g</code> must have values of <code>female</code> and <code>child</code>, and so on). Basically, we have decomposed the groups into two components to help us understand the effect of each. This is simply and extension of what we have been doing from the start. For example our model was previously:</p>
+<p><span class="math inline">\(\mu_{[i]} = Intercept + (group_{group_{[i]}}) + \alpha_{speaker_{[i]}}\)</span></p>
+<p>However, since group can be exactly represented by combinations of gender and adult, our model sort of always contained this more-complicated model inside of it:</p>
+<p><span class="math inline">\(\mu_{[i]} = Intercept + (adult_{adult_{[i]}} + gender_{gender_{[i]}}) + \alpha_{speaker_{[i]}}\)</span></p>
+<p>This is what I often refer to in my work as an ‘ANOVA-like’ decomposition. ANOVA, the ANalysis Of VAriance, is a technique, or a general approach, to understanding data by focusing on the sources of variance contained in it. We have actually been chipping away at the error variance little by little by making more complicated models.</p>
+<p>Recall that our very first approach to understanding f0 looked like this:</p>
+<p><span class="math display">\[
+\sigma_{total} = \sigma_{error}
+\]</span></p>
+<p>In other words, all variation was error. After this we added between-speaker variation to the model, and removed that from the error.</p>
+<p><span class="math display">\[
+\sigma_{total} = \sigma_{speaker} + \sigma_{error}
+\]</span></p>
+<p>Now, our model can individually estimate the variation in observed f0 due adultness, gender, to between-speaker variation and to production error.</p>
+<p><span class="math display">\[
+\sigma_{total} = \sigma_{adult} + \sigma_{gender}+\sigma_{speaker} + \sigma_{error}
+\]</span></p>
+<p>Our complete model is now:</p>
+<p><span class="math display" id="eq:42">\[\begin{equation}
+\begin{split}
+\textrm{Likelihood:} \\
+y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
+\mu_{[i]} = Intercept + adult_{adult_{[i]}}+gender_{gender_{[i]}} + \alpha_{speaker_{[i]}} \\\\
+\textrm{Priors:} \\
+\alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
+Intercept \sim t(3, 200, 100) \\ 
+adult_{[i]} \sim t(3, 0, 100) \\ 
+gender_{[i]} \sim t(3, 0, 100) \\ 
+\sigma_{error} \sim t(3, 0, 100) \\
+\sigma_{speaker} \sim t(3, 0, 100) \\ 
+\end{split}
+\tag{4.2}
+\end{equation}\]</span></p>
+</div>
+<div id="fitting-the-model-and-interpreting-the-results" class="section level3" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Fitting the model and interpreting the results</h3>
+<p>Below I fit the model using the data statistics outlined above.</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="comparing-many-groups.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span> (<span class="dv">1</span>)</span>
+<span id="cb207-2"><a href="comparing-many-groups.html#cb207-2" aria-hidden="true" tabindex="-1"></a>model_both <span class="ot">=</span>  </span>
+<span id="cb207-3"><a href="comparing-many-groups.html#cb207-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span> (f0 <span class="sc">~</span> adult <span class="sc">+</span> gender <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>speaker), <span class="at">data =</span> h95, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>, </span>
+<span id="cb207-4"><a href="comparing-many-groups.html#cb207-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">iter =</span> <span class="dv">11000</span>, <span class="at">thin =</span> <span class="dv">10</span>, </span>
+<span id="cb207-5"><a href="comparing-many-groups.html#cb207-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 200, 100)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;Intercept&quot;</span>),</span>
+<span id="cb207-6"><a href="comparing-many-groups.html#cb207-6" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 100)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb207-7"><a href="comparing-many-groups.html#cb207-7" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 100)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;sd&quot;</span>))) </span>
+<span id="cb207-8"><a href="comparing-many-groups.html#cb207-8" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span> (model_both, <span class="st">&quot;4_model_both.RDS&quot;</span>)   </span></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="comparing-many-groups.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="do">## load and inspect pre-fit model</span></span>
+<span id="cb208-2"><a href="comparing-many-groups.html#cb208-2" aria-hidden="true" tabindex="-1"></a>model_both <span class="ot">=</span> <span class="fu">readRDS</span> (<span class="st">&quot;4_model_both.RDS&quot;</span>)</span>
+<span id="cb208-3"><a href="comparing-many-groups.html#cb208-3" aria-hidden="true" tabindex="-1"></a>model_both</span></code></pre></div>
+<pre><code>##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: f0 ~ adult + gender + (1 | speaker) 
+##    Data: h95 (Number of observations: 1668) 
+## Samples: 4 chains, each with iter = 11000; warmup = 1000; thin = 10;
+##          total post-warmup samples = 4000
+## 
+## Group-Level Effects: 
+## ~speaker (Number of levels: 139) 
+##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(Intercept)    29.30      1.83    26.01    33.29 1.00     1754     2626
+## 
+## Population-Level Effects: 
+##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept   209.27      2.64   204.11   214.56 1.00     1105     1675
+## adult1      -32.84      2.73   -38.21   -27.33 1.00      924     1482
+## gender1      30.61      2.46    25.73    35.43 1.01     1181     2186
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma    11.86      0.21    11.46    12.30 1.00     4241     3814
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p>We can see that the model output is largely familiar, except now we have two non-Intercept ‘Population-Level’ effects: <code>adult1</code> and <code>gender1</code>, representing the categories ‘adult’ and ‘female’ respectively. Remember that since we used sum coding, the effects for the groups that are not represented (‘child’, ‘male’) are just the opposite of the groups that are represented.</p>
+<p>Below we can see that the Intercept is reasonably close to the mean of the group means and the adult effect is about half the difference between the mean of the adult and child groups. However, the model seems to overestimate the average differences between male and female groups.</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="comparing-many-groups.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="do">## grop means</span></span>
+<span id="cb210-2"><a href="comparing-many-groups.html#cb210-2" aria-hidden="true" tabindex="-1"></a>means <span class="ot">=</span> <span class="fu">tapply</span> (h95<span class="sc">$</span>f0, h95<span class="sc">$</span>group, mean)</span>
+<span id="cb210-3"><a href="comparing-many-groups.html#cb210-3" aria-hidden="true" tabindex="-1"></a><span class="do">## overall mean in data</span></span>
+<span id="cb210-4"><a href="comparing-many-groups.html#cb210-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span> (means)</span></code></pre></div>
+<pre><code>## [1] 206.5111</code></pre>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="comparing-many-groups.html#cb212-1" aria-hidden="true" tabindex="-1"></a><span class="do">## group means</span></span>
+<span id="cb212-2"><a href="comparing-many-groups.html#cb212-2" aria-hidden="true" tabindex="-1"></a>means</span></code></pre></div>
+<pre><code>##        b        g        m        w 
+## 236.0741 238.3509 131.2185 220.4010</code></pre>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="comparing-many-groups.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="do">## average adultness difference in data</span></span>
+<span id="cb214-2"><a href="comparing-many-groups.html#cb214-2" aria-hidden="true" tabindex="-1"></a>((means[<span class="st">&#39;b&#39;</span>]<span class="sc">+</span>means[<span class="st">&#39;g&#39;</span>])<span class="sc">/</span><span class="dv">2</span> <span class="sc">-</span> (means[<span class="st">&#39;m&#39;</span>]<span class="sc">+</span>means[<span class="st">&#39;w&#39;</span>])<span class="sc">/</span><span class="dv">2</span>) <span class="sc">/</span> <span class="dv">2</span></span></code></pre></div>
+<pre><code>##        b 
+## 30.70135</code></pre>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="comparing-many-groups.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="do">## average gender difference in data</span></span>
+<span id="cb216-2"><a href="comparing-many-groups.html#cb216-2" aria-hidden="true" tabindex="-1"></a>((means[<span class="st">&#39;g&#39;</span>]<span class="sc">+</span>means[<span class="st">&#39;w&#39;</span>])<span class="sc">/</span><span class="dv">2</span> <span class="sc">-</span> (means[<span class="st">&#39;m&#39;</span>]<span class="sc">+</span>means[<span class="st">&#39;b&#39;</span>])<span class="sc">/</span><span class="dv">2</span>) <span class="sc">/</span> <span class="dv">2</span></span></code></pre></div>
+<pre><code>##        g 
+## 22.86483</code></pre>
+<p>We can recover the group means by adding up the individual coefficients. This can be tedious and requires you to be careful and methodical, but this isn’t actually difficult. Remember that each of the four groups is uniquely identified by a combination of gender and adultness. To recover the group means we need to add the right combination of coefficients to the intercept.</p>
+<p>For example, the second hypothesis we are testing below says <code>Intercept - adult1 - gender1 = 0</code>. This could be read like "take the overall mean, add the effect for ‘child/adult2’ (<code>-adult1=adult2</code>), and add the effect for ‘male/gender2’ (<code>-gender1=gender2</code>). If you start at the overall mean f0 and add the effects for a male and a child, you are estimating the mean f0 for a boy.</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="comparing-many-groups.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span> (h95<span class="sc">$</span>f0, h95<span class="sc">$</span>group, mean)</span></code></pre></div>
+<pre><code>##        b        g        m        w 
+## 236.0741 238.3509 131.2185 220.4010</code></pre>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="comparing-many-groups.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="do">## intercept, boys, girls, men, women</span></span>
+<span id="cb220-2"><a href="comparing-many-groups.html#cb220-2" aria-hidden="true" tabindex="-1"></a><span class="do">## adult1 = &quot;adult&quot;, and gender1=&quot;child&quot; because its alphabetical.</span></span>
+<span id="cb220-3"><a href="comparing-many-groups.html#cb220-3" aria-hidden="true" tabindex="-1"></a><span class="do">## +adult1 = -adult2 since it will be the opposite value</span></span>
+<span id="cb220-4"><a href="comparing-many-groups.html#cb220-4" aria-hidden="true" tabindex="-1"></a>means_pred <span class="ot">=</span> <span class="fu">hypothesis</span> (model_both, <span class="fu">c</span>(<span class="st">&quot;Intercept = 0&quot;</span>,</span>
+<span id="cb220-5"><a href="comparing-many-groups.html#cb220-5" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;Intercept - adult1 - gender1 = 0&quot;</span>,</span>
+<span id="cb220-6"><a href="comparing-many-groups.html#cb220-6" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;Intercept - adult1 + gender1 = 0&quot;</span>,</span>
+<span id="cb220-7"><a href="comparing-many-groups.html#cb220-7" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;Intercept + adult1 - gender1 = 0&quot;</span>,</span>
+<span id="cb220-8"><a href="comparing-many-groups.html#cb220-8" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;Intercept + adult1 + gender1 = 0&quot;</span>))[[<span class="dv">1</span>]][,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb220-9"><a href="comparing-many-groups.html#cb220-9" aria-hidden="true" tabindex="-1"></a>means_pred</span></code></pre></div>
+<pre><code>##                       Hypothesis Estimate Est.Error CI.Lower CI.Upper
+## 1                (Intercept) = 0 209.2714  2.637054 204.1100 214.5586
+## 2 (Intercept-adult1-gender1) = 0 211.5077  4.849196 201.8424 220.8455
+## 3 (Intercept-adult1+gender1) = 0 272.7214  5.127175 262.5223 282.6433
+## 4 (Intercept+adult1-gender1) = 0 145.8213  4.037644 137.9749 153.7633
+## 5 (Intercept+adult1+gender1) = 0 207.0351  3.970953 199.2521 214.6761</code></pre>
+<p>The predictions above are actually not a good match for our group means, suggesting that maybe our model is not capturing something important about our data.</p>
+</div>
+<div id="investigating-model-fit" class="section level3" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span> Investigating model fit</h3>
+<p>So far we have been working with very simple models and not worrying much about how well they ‘fit’, meaning how well they represent our data. Our reconstruction of the group means above suggests our current model may have some issues.</p>
+<p>We can investigate model fit with what is called a ‘posterior predictive check’. The ‘posterior predictions’ made by your model are the most probable values predicted by your model by each data point. Effectively, these are the <span class="math inline">\(\mu_{[i]}\)</span> predicted by your model for each trial. For example, if our current model looks like this:</p>
+<p><span class="math inline">\(\mu_{[i]} = Intercept + adult_{adult_{[i]}} + gender_{gender_{[i]}} + \alpha_{speaker_{[i]}}\)</span></p>
+<p>Then the predicted value (<span class="math inline">\(\mu\)</span>) for each trial is the sum of the Intercept and appropriate coefficients for the trial. The <code>brms</code> package has a useful <code>predict</code> function which can help you make these predictions easily.</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="comparing-many-groups.html#cb222-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="ot">=</span> <span class="fu">predict</span> (model_both)</span>
+<span id="cb222-2"><a href="comparing-many-groups.html#cb222-2" aria-hidden="true" tabindex="-1"></a>y_pred_no_re <span class="ot">=</span> <span class="fu">predict</span> (model_both, <span class="at">re_formula =</span> <span class="cn">NA</span>)</span>
+<span id="cb222-3"><a href="comparing-many-groups.html#cb222-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (y_pred)</span></code></pre></div>
+<pre><code>##       Estimate Est.Error      Q2.5    Q97.5
+## [1,] 171.80602  12.26347 147.69358 195.2424
+## [2,] 107.42890  12.29034  83.48097 131.4194
+## [3,]  96.80339  12.00599  73.79027 120.0378
+## [4,] 133.29083  12.26532 109.77564 157.2018
+## [5,] 117.06618  12.16383  92.72513 140.4696
+## [6,]  99.50457  12.47530  75.72572 123.3922</code></pre>
+<p>You will note that the output of prediction, <code>y_pred</code>, has four columns, indicating a predicted value but also information about variation. That is because, actually, our model produces a different prediction for each set of samples. This means that if we have 4000 samples we actually have 4000 slightly different models and 4000 slightly different predictions! This means in addition to the most probable estimates, we can get information about expected variation around these estimates</p>
+<p>Above in the second line, I make predictions without random effects (<code>re_formula = NA</code>). This corresponds to a model like this <em>without</em> speaker adjustments:</p>
+<p><span class="math inline">\(\mu_{[i]} = Intercept + adult_{adult_{[i]}} + gender_{gender_{[i]}}\)</span></p>
+<p>These predictions will help us understand how well our model can represent average f0 without the speaker-dependent adjustments, based only on group averages.</p>
+<p>Below I plot both types of predictions. We can see that the model with speaker adjustments does a very good job of predicting f0, with most credible intervals for most predictions overlapping with the diagonal. On the other hand the predictions without speaker adjustments show systematic biases in prediction. It seems that the f0 of many high f0 speaker lie to the left of the diagonal, meaning the predictions are higher than they should be.</p>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="comparing-many-groups.html#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb224-2"><a href="comparing-many-groups.html#cb224-2" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (<span class="at">xs =</span> h95<span class="sc">$</span>f0, y_pred, <span class="at">xlim =</span> <span class="fu">range</span>(h95<span class="sc">$</span>f0));   <span class="fu">axis</span>(<span class="at">side=</span><span class="dv">1</span>);</span>
+<span id="cb224-3"><a href="comparing-many-groups.html#cb224-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="at">side=</span><span class="dv">1</span>,<span class="at">text=</span><span class="st">&quot;f0&quot;</span>,<span class="at">line=</span><span class="fl">2.5</span>);<span class="fu">mtext</span>(<span class="at">side=</span><span class="dv">2</span>,<span class="at">text=</span><span class="st">&quot;f0_pred&quot;</span>,<span class="at">line=</span><span class="fl">2.5</span>)</span>
+<span id="cb224-4"><a href="comparing-many-groups.html#cb224-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="dv">0</span>,<span class="dv">1</span>, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb224-5"><a href="comparing-many-groups.html#cb224-5" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (<span class="at">xs =</span> h95<span class="sc">$</span>f0, y_pred_no_re, <span class="at">xlim =</span> <span class="fu">range</span>(h95<span class="sc">$</span>f0));  <span class="fu">axis</span> (<span class="at">side=</span><span class="dv">1</span>);</span>
+<span id="cb224-6"><a href="comparing-many-groups.html#cb224-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="at">side=</span><span class="dv">1</span>,<span class="at">text=</span><span class="st">&quot;f0&quot;</span>,<span class="at">line=</span><span class="fl">2.5</span>);<span class="fu">mtext</span>(<span class="at">side=</span><span class="dv">2</span>,<span class="at">text=</span><span class="st">&quot;f0_pred&quot;</span>,<span class="at">line=</span><span class="fl">2.5</span>)</span>
+<span id="cb224-7"><a href="comparing-many-groups.html#cb224-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="dv">0</span>,<span class="dv">1</span>, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="week-4_files/figure-html/postpred1-1.png" width="768" /></p>
+<p>The above plots are good for basic analysis, but it is hard to get a good picture of how well our groups are being modeled. For that we need an ‘interaction plot’.</p>
+</div>
+</div>
+<div id="interactions-and-interaction-plots" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Interactions and interaction plots</h2>
+<p><a href="http://glimo.vub.ac.be/downloads/interaction.htm">Interactions</a> and understanding their graphical representations is so important that it gets its own subsection. In many if not most cases, researchers will need to at least consider the effects of interactions in their models.</p>
+<p>We can think of a single effect representing a difference between groups as a slope. For example, in the left panel below I have plotted the means for males and females at x-axis locations 0 and 1. The difference in the group means is 55 Hz (females 225 Hz, males 170 Hz). As a result, the line formed by joining these groups has a slope of -55 (i.e., it drops 55 Hz from 0 to 1). We can use any arbitrary x axis locations to calculate this slope that we want. However, there are obvious practical reasons why we choose to calculate these slopes over the arbitrary ‘distance’ of 1. In the middle panel we see the effect for adultness, which shows a positive slope for the difference from adult to child: the f0 increases by about 60 Hz.</p>
+<p>The plots highlighting the effects for adultness and gender are ‘main effects’ plots. You may have heard things like “the analysis showed a significant main effect for so n so…”. Main effects are the average effects for one predictor averaged across everything else. Saying were ‘averaging across everything else’ basically means we are ignoring it. A person looking only at the left plot would not realize our data also investigates the effect of adultness.</p>
+<p>Another way to think of main effects are that they are ‘marginal’ effects. They are the overall average difference. Someone might ask you, “whats the average difference between males and females in your sample?” and you can respond “55 Hz”. However, sometimes you can’t just answer, sometimes the answer is actually “well, it depends”. This is one of those cases.</p>
+<p>On the right we see a two-way interaction plot. Interaction plots show you what are called the <a href="http://glimo.vub.ac.be/downloads/simpleeffect.htm">simple effects</a> of your predictors. The simple effects are the ‘conditional probabilities’ the effects of yor factor, conditional on the level of another factor. For example, the left plot shows the overall (marginal) effect for gender. The right plot also shows the effect for gender. However, it uses a blue line to show the effect for adults and a green line to show this effect for children. As a result, we can consider the effects of gender <em>conditioned</em> on adultness.</p>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="comparing-many-groups.html#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>))</span>
+<span id="cb225-2"><a href="comparing-many-groups.html#cb225-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (<span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>,<span class="fu">tapply</span> (h95<span class="sc">$</span>f0,h95<span class="sc">$</span>gender,mean), <span class="at">col =</span> <span class="dv">3</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">130</span>,<span class="dv">280</span>),<span class="at">xaxt=</span><span class="st">&#39;n&#39;</span>,</span>
+<span id="cb225-3"><a href="comparing-many-groups.html#cb225-3" aria-hidden="true" tabindex="-1"></a><span class="at">lwd=</span><span class="dv">3</span>,<span class="at">type=</span><span class="st">&#39;b&#39;</span>,<span class="at">pch=</span><span class="dv">16</span>,<span class="at">cex=</span><span class="fl">1.5</span>,<span class="at">main=</span><span class="st">&quot;Gender&quot;</span>,<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">2</span>,<span class="fl">1.2</span>),<span class="at">ylab=</span><span class="st">&#39;f0&#39;</span>,<span class="at">xlab=</span><span class="st">&#39;&#39;</span>)</span>
+<span id="cb225-4"><a href="comparing-many-groups.html#cb225-4" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span> (<span class="at">at=</span><span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;female&#39;</span>,<span class="st">&#39;male&#39;</span>), <span class="at">side=</span><span class="dv">1</span>)</span>
+<span id="cb225-5"><a href="comparing-many-groups.html#cb225-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (<span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>,<span class="fu">tapply</span> (h95<span class="sc">$</span>f0,h95<span class="sc">$</span>adult,mean), <span class="at">col =</span> <span class="dv">3</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">130</span>,<span class="dv">280</span>),<span class="at">xaxt=</span><span class="st">&#39;n&#39;</span>,</span>
+<span id="cb225-6"><a href="comparing-many-groups.html#cb225-6" aria-hidden="true" tabindex="-1"></a><span class="at">lwd=</span><span class="dv">3</span>,<span class="at">type=</span><span class="st">&#39;b&#39;</span>,<span class="at">pch=</span><span class="dv">16</span>,<span class="at">cex=</span><span class="fl">1.5</span>, <span class="at">main =</span> <span class="st">&quot;Adult&quot;</span>,<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">2</span>,<span class="fl">1.2</span>),<span class="at">ylab=</span><span class="st">&#39;f0&#39;</span>,<span class="at">xlab=</span><span class="st">&#39;&#39;</span>)</span>
+<span id="cb225-7"><a href="comparing-many-groups.html#cb225-7" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span> (<span class="at">at=</span><span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;adult&#39;</span>,<span class="st">&#39;child&#39;</span>),<span class="at">side=</span><span class="dv">1</span>)</span>
+<span id="cb225-8"><a href="comparing-many-groups.html#cb225-8" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span> (h95<span class="sc">$</span>gender, h95<span class="sc">$</span>adult, h95<span class="sc">$</span>f0,<span class="at">col=</span><span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">lwd =</span> <span class="dv">3</span>, </span>
+<span id="cb225-9"><a href="comparing-many-groups.html#cb225-9" aria-hidden="true" tabindex="-1"></a><span class="at">type=</span><span class="st">&#39;b&#39;</span>,<span class="at">pch=</span><span class="fu">c</span>(<span class="dv">16</span>,<span class="dv">17</span>),<span class="at">cex=</span><span class="fl">1.5</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">130</span>,<span class="dv">280</span>),<span class="at">main=</span><span class="st">&quot;Both&quot;</span>,<span class="at">ylab=</span><span class="st">&#39;f0&#39;</span>,<span class="at">xlab=</span><span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<p><img src="week-4_files/figure-html/interactionplot-1.png" width="768" /></p>
+<p>If adultness in no way affected the gender effect, the right panel should look identical to the left panel. If adultness affected f0 in the same way across genders, we would see parallel lines in the right plot. This is because if you are adding a single, consisent value to each gender based on adultness, the line would just slide up and down the f0 axis but would not change in slope.</p>
+<p>What we see in the right panel above is that the lines are <strong>not</strong> parallel at all. When we see lines that are not parallel, that means there may be an interaction in our data. In the absence of an interaction, we could just answer the question “whats the average difference between males and females in your sample?” with a number like 55 Hz. In the presence of an interaction we need to consider the <em>conditional effects</em> of each predictor, at the levels of the other predictor.</p>
+<p>I think the above may sound complicated, but it’s just what we would all do to try to make sense of the plot on the right. There is a large negative slope for gender for adults. This tells us that gender has a large effect on f0 for adults. However, the slope for gender is basically zero for children. So, we might say “there is a large f0 difference for adult males and females in our sample, but basically no gender based difference for children”. Alternatively, we might look at the changing effect for gender across adultness levels. If we did this, we might look say "there is a small effect for adultness in the average f0 produced by females, but a very large effect for adultness for males.</p>
+<p>In summary, if the answer to “what is the effect of X on Y” is “well, it depends on the values of another one of my predictors”, you have an interaction in your data. When you have substantial interactions present in your data and you do not include these in your model, this can cause a problem for your model fit.</p>
+<div id="interactions-in-our-f0-data" class="section level3" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Interactions in our f0 data</h3>
+<p>We can take the different posterior predictions we made above and make interaction plots out of them. We can see that when the model includes random effects, prediction is quite good. This is not surprising since the speaker-specific intercept adjustments allow for eah speaker’s mean f0 to be modeled effectively. However, we see that the predictions made by our model are substantially and systematically wrong in the absence of the speaker random effect.</p>
+<p>It’s clear that the problem with our predictions in the right panel is that the lines are parallel. As we’ve just discussed, in the absence of interactions, interaction plots contain only parallel lines. Well, since our model (<code>model_both</code>) does not include interaction terms it cannot represent interactions, and so is only capable of producing effects that result in parallel lines!</p>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="comparing-many-groups.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>))</span>
+<span id="cb226-2"><a href="comparing-many-groups.html#cb226-2" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span> (h95<span class="sc">$</span>gender, h95<span class="sc">$</span>adult, h95<span class="sc">$</span>f0, <span class="at">col =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">130</span>,<span class="dv">280</span>),</span>
+<span id="cb226-3"><a href="comparing-many-groups.html#cb226-3" aria-hidden="true" tabindex="-1"></a><span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">type =</span> <span class="st">&#39;b&#39;</span>, <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">16</span>,<span class="dv">17</span>), <span class="at">cex =</span> <span class="fl">1.5</span>, <span class="at">main =</span> <span class="st">&quot;Data&quot;</span>)</span>
+<span id="cb226-4"><a href="comparing-many-groups.html#cb226-4" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span> (h95<span class="sc">$</span>gender, h95<span class="sc">$</span>adult, y_pred[,<span class="dv">1</span>], <span class="at">col =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="at">lwd=</span><span class="dv">3</span>, <span class="at">type=</span><span class="st">&#39;b&#39;</span>, </span>
+<span id="cb226-5"><a href="comparing-many-groups.html#cb226-5" aria-hidden="true" tabindex="-1"></a><span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">16</span>,<span class="dv">17</span>), <span class="at">cex =</span> <span class="fl">1.5</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">130</span>,<span class="dv">280</span>),<span class="at">main=</span><span class="st">&quot;Pred. with RE&quot;</span>)</span>
+<span id="cb226-6"><a href="comparing-many-groups.html#cb226-6" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span> (h95<span class="sc">$</span>gender, h95<span class="sc">$</span>adult, y_pred_no_re[,<span class="dv">1</span>],<span class="at">col=</span><span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">lwd =</span> <span class="dv">3</span>, </span>
+<span id="cb226-7"><a href="comparing-many-groups.html#cb226-7" aria-hidden="true" tabindex="-1"></a><span class="at">type =</span> <span class="st">&#39;b&#39;</span>, <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">16</span>,<span class="dv">17</span>), <span class="at">cex =</span> <span class="fl">1.5</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">130</span>,<span class="dv">280</span>),<span class="at">main=</span><span class="st">&quot;Pred. with RE&quot;</span>)</span></code></pre></div>
+<p><img src="week-4_files/figure-html/interactionplot3-1.png" width="768" /></p>
+<p>In order to properly model the group differences, and the real effects of gender and adultness on average f0, we need to build a model that can represent the interactions in our data.</p>
+</div>
+</div>
+<div id="investigating-interactions-with-a-model" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Investigating interactions with a model</h2>
+<p>This model requires only a slight tweak to our previous model. There are two ways to include interactions in R model formulas, as shown below:</p>
+<p><code>f0 ~ adult + gender + adult:gender + (1|speaker)</code>
+<code>f0 ~ adult * gender + (1|speaker)</code></p>
+<p>The first way includes an explicit interaction term, <code>adult:gender</code>. The syntax for these is <code>X:Z</code> for an interaction between effects <code>X</code> and <code>Z</code>, <code>W:X:Z</code> for a three-way interaction, and so on. The second way uses <code>*</code> between our two predictors. This tells R to include those predictors, and the interactions between them This can be much faster then specifying all interactions, but you lose control over which ones you include. For example the first formula implies the second, but cannot represent the third (since it omits one interaction):</p>
+<p><code>y ~ Z * X * W</code>
+<code>y ~ Z + X + W + Z:X + Z:W + X:W + Z:X:W</code>
+<code>y ~ Z + X + W + Z:X + X:W + Z:X:W</code></p>
+<p>Our full model specification now includes an ‘interaction’ term that can help variation that cannot be explained by the independent effects of adultness and gender:</p>
+<p><span class="math display" id="eq:43">\[\begin{equation}
+\begin{split}
+\textrm{Likelihood:} \\
+y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
+\mu_{[i]} = Intercept + adult_{\textrm{adult}_{[i]}} + gender_{\textrm{gender}_{[i]}}+ adult:gender + \alpha_{speaker_{[i]}} \\\\
+\textrm{Priors:} \\
+\alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
+Intercept \sim t(3, 200, 100) \\ 
+adult_{[i]} \sim t(3, 0, 100) \\ 
+gender_{[i]} \sim t(3, 0, 100) \\ 
+adult:gender \sim t(3, 0, 100) \\ 
+\sigma_{error} \sim t(3, 0, 100) \\
+\sigma_{speaker} \sim t(3, 0, 100) \\ 
+\end{split}
+\tag{4.3}
+\end{equation}\]</span></p>
+<div id="fitting-the-model-and-interpreting-the-results-1" class="section level3" number="4.5.1">
+<h3><span class="header-section-number">4.5.1</span> Fitting the model and interpreting the results</h3>
+<p>Below I fit the model which now includes an interaction term investigating the changing effect of gender and adultness on average f0.</p>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="comparing-many-groups.html#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span> (<span class="dv">1</span>)</span>
+<span id="cb227-2"><a href="comparing-many-groups.html#cb227-2" aria-hidden="true" tabindex="-1"></a>model_interaction <span class="ot">=</span>  </span>
+<span id="cb227-3"><a href="comparing-many-groups.html#cb227-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span> (f0 <span class="sc">~</span> adult <span class="sc">+</span> gender <span class="sc">+</span> adult<span class="sc">:</span>gender <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>speaker), <span class="at">data =</span> h95, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>, </span>
+<span id="cb227-4"><a href="comparing-many-groups.html#cb227-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">iter =</span> <span class="dv">11000</span>, <span class="at">thin =</span> <span class="dv">10</span>, </span>
+<span id="cb227-5"><a href="comparing-many-groups.html#cb227-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 200, 100)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;Intercept&quot;</span>),</span>
+<span id="cb227-6"><a href="comparing-many-groups.html#cb227-6" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 100)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb227-7"><a href="comparing-many-groups.html#cb227-7" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 100)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;sd&quot;</span>))) </span>
+<span id="cb227-8"><a href="comparing-many-groups.html#cb227-8" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span> (model_interaction, <span class="st">&quot;4_model_interaction.RDS&quot;</span>)   </span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="comparing-many-groups.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="do">## load and inspect pre-fit model</span></span>
+<span id="cb228-2"><a href="comparing-many-groups.html#cb228-2" aria-hidden="true" tabindex="-1"></a>model_interaction <span class="ot">=</span> <span class="fu">readRDS</span> (<span class="st">&quot;4_model_interaction.RDS&quot;</span>)</span>
+<span id="cb228-3"><a href="comparing-many-groups.html#cb228-3" aria-hidden="true" tabindex="-1"></a>model_interaction</span></code></pre></div>
+<pre><code>##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: f0 ~ adult + gender + adult:gender + (1 | speaker) 
+##    Data: h95 (Number of observations: 1668) 
+## Samples: 4 chains, each with iter = 11000; warmup = 1000; thin = 10;
+##          total post-warmup samples = 4000
+## 
+## Group-Level Effects: 
+## ~speaker (Number of levels: 139) 
+##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(Intercept)    20.90      1.32    18.60    23.69 1.00     2712     3406
+## 
+## Population-Level Effects: 
+##                Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept        206.54      1.93   202.69   210.22 1.00     2341     3337
+## adult1           -30.63      1.94   -34.36   -26.79 1.00     2409     3133
+## gender1           22.80      1.94    18.99    26.57 1.00     2363     3190
+## adult1:gender1    21.71      1.95    17.96    25.57 1.00     2291     2991
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma    11.87      0.21    11.46    12.27 1.00     3857     3818
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p>Remember that this line <code>set_prior("student_t(3, 0, 100)", class = "b")</code> sets the prior for all non-intercept ‘Population-Level’ predictors. This allows you to efficiently set priors for the adult, gender, and adult:gender predictors in your model in a single line, and becomes more and more useful as our models grow more complex.</p>
+<p>A look at the model output above indicates that we have a large interaction term. In fact, our interaction is as large as the ‘main’ effect for gender! In cases with large interactions we have to be careful about interpreting the main effects. In other words, when the answer to a question is “it depends”, you should be wary of making blanket statements.</p>
+<p>We need to talk about why there is only a single interaction term. The reason for this is related to the same reason we can’t get estimates for all our group effect (linear dependence). The number of terms you can estimate is generally one fewer than the number of levels. For interaction terms, the number of parameters is equal to (number of levels of factor A - 1)x(number of levels of factor B - 1). Since each of our factors have two levels, we can only estimate one parameter, (2-1)x(2-1).</p>
+<p>The interaction term is just another element of your prediction equation (i.e., <span class="math inline">\(\mu + x_1+x_2...\)</span>) intended to help predict variation that can’t be predicted by the independent effects of the other predictors in the model. Recovering the predicted group means based on the coefficient values is again tedious but straightforward. The only difference compared to our previous approach is that we must now either add or subtract the value of the interaction term, <code>adult1:gender1</code> from each group. We can easily determine which to do for this model because the sign on the interaction term is the product of the signs on the relevant ‘main effects’ terms.</p>
+<p>For example, the second hypothesis we are testing below says <code>Intercept - adult1 - gender1 + adult1:gender1 = 0</code>. This could be read like “take the overall mean, add the effect for ‘child’ (or <code>adult2</code>, since <code>-adult1=adult2</code>), and add the effect for ‘male’ (or <code>gender2</code> since <code>-gender1=gender2</code>), and add the effect for when the speaker is male <em>and</em> a child (<code>-adult1*-gender1 = +adult1:gender1</code>)”. If you look at the hypotheses below, you will see that the sign on the interaction terms solely depends on the signs of the corresponding main effects terms. We can see that the inclusion of an interaction term allows our model to capture group averages more accurately than the model without intercepts.</p>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="comparing-many-groups.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span> (h95<span class="sc">$</span>f0, h95<span class="sc">$</span>group, mean)</span></code></pre></div>
+<pre><code>##        b        g        m        w 
+## 236.0741 238.3509 131.2185 220.4010</code></pre>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="comparing-many-groups.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="do">## intercept, boys, girls, men, women</span></span>
+<span id="cb232-2"><a href="comparing-many-groups.html#cb232-2" aria-hidden="true" tabindex="-1"></a>means_pred_interaction <span class="ot">=</span> <span class="fu">hypothesis</span> (model_interaction, <span class="fu">c</span>(<span class="st">&quot;Intercept = 0&quot;</span>,</span>
+<span id="cb232-3"><a href="comparing-many-groups.html#cb232-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Intercept - adult1 - gender1 + adult1:gender1 = 0&quot;</span>,</span>
+<span id="cb232-4"><a href="comparing-many-groups.html#cb232-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Intercept - adult1 + gender1 - adult1:gender1 = 0&quot;</span>,</span>
+<span id="cb232-5"><a href="comparing-many-groups.html#cb232-5" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Intercept + adult1 - gender1 - adult1:gender1 = 0&quot;</span>,</span>
+<span id="cb232-6"><a href="comparing-many-groups.html#cb232-6" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Intercept + adult1 + gender1 + adult1:gender1 = 0&quot;</span>))[[<span class="dv">1</span>]][,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb232-7"><a href="comparing-many-groups.html#cb232-7" aria-hidden="true" tabindex="-1"></a>means_pred</span></code></pre></div>
+<pre><code>##                       Hypothesis Estimate Est.Error CI.Lower CI.Upper
+## 1                (Intercept) = 0 209.2714  2.637054 204.1100 214.5586
+## 2 (Intercept-adult1-gender1) = 0 211.5077  4.849196 201.8424 220.8455
+## 3 (Intercept-adult1+gender1) = 0 272.7214  5.127175 262.5223 282.6433
+## 4 (Intercept+adult1-gender1) = 0 145.8213  4.037644 137.9749 153.7633
+## 5 (Intercept+adult1+gender1) = 0 207.0351  3.970953 199.2521 214.6761</code></pre>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="comparing-many-groups.html#cb234-1" aria-hidden="true" tabindex="-1"></a>means_pred_interaction</span></code></pre></div>
+<pre><code>##                                      Hypothesis Estimate Est.Error CI.Lower
+## 1                               (Intercept) = 0 206.5369  1.931096 202.6886
+## 2 (Intercept-adult1-gender1+adult1:gender1) = 0 236.0827  4.065229 228.1277
+## 3 (Intercept-adult1+gender1-adult1:gender1) = 0 238.2590  4.924929 228.2973
+## 4 (Intercept+adult1-gender1-adult1:gender1) = 0 131.3907  3.152187 125.2071
+## 5 (Intercept+adult1+gender1+adult1:gender1) = 0 220.4150  3.108604 214.1694
+##   CI.Upper
+## 1 210.2240
+## 2 244.0703
+## 3 247.7889
+## 4 137.5445
+## 5 226.4643</code></pre>
+<p>Below I print the estimates of the ‘fixed’ effects in the model so we can focus on those. If you fit a model like this and are having trouble interpreting it, I would really encourage you to write down an interpretation using pen and paper, by focusing on the decomposition of values provided by the regression model.</p>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="comparing-many-groups.html#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span> (model_interaction)</span></code></pre></div>
+<pre><code>##                 Estimate Est.Error      Q2.5     Q97.5
+## Intercept      206.53685  1.931096 202.68860 210.22397
+## adult1         -30.63400  1.943657 -34.35968 -26.78826
+## gender1         22.80015  1.943186  18.99251  26.56927
+## adult1:gender1  21.71202  1.952504  17.96248  25.56939</code></pre>
+<p>For example, the average f0 is 206. The gender difference is 44 Hz (22 * 2) between groups, and there is a gender-based 23 Hz deviation from the mean between groups. However, the <code>adult1:gender1</code> interaction is 22 Hz. This means that when the speaker was adult (<code>adult1</code>), the gender difference was nearly doubled. We know this because the effect for <code>gender1</code> is 22.8, and the effect for <code>gender1</code> <strong>given</strong> <code>adult1</code> (<code>adult1:gender1</code>) is a further 21.7 Hz higher than that. So, the total effect for f0 across adults is about 22.8 + 21.7 = 44.5, suggesting a difference in f0 between the groups of 89 Hz (44.5 * 2).</p>
+<p>In contrast, the fact that <code>adult1:gender1 = 21.7</code> suggests that <code>adult2:gender1 = -21.7</code>. So, we can say that although the effect for gender is 22.8 overall, given that the speaker is a child (<code>adult2</code>), this effect is 21.7 Hz lower than the ‘main effect’ estimate. So, for children we expect an f0 effect of 22.8 - 21.7 = 1.1, suggesting a group difference of 2.2 Hz. In other words, the effect of gender is basically zero given that the speakers are children.</p>
+<p>We can consider the effects the other way. The marginal effect for <code>adult1</code> is -30, meaning that when speakers are adults, their f0 is 30 Hz lower than the overall average. However, the interaction is 21.7 Hz. This means that <em>if</em> the speaker is female (<code>gender1</code>), then the expected effect of adultness is reduced (-30 + 21.7 = -8.3) so that the expected group difference is only 17 Hz. On the other hands, when the speaker is a male (<code>gender2</code>) then the interaction term should be flipped in sign (<code>adult1:gender2 =  21.7</code>). This means that the effect of adultness, conditional on the speakre being male is nearly doubled (-30 + -21.7 = -51.7).</p>
+<p>When considered in this way all these coefficients are just telling us what we already knew from looking at the interaction plot: f0 varies substantially based on gender for adults but not for children.</p>
+</div>
+<div id="assessing-model-fit" class="section level3" number="4.5.2">
+<h3><span class="header-section-number">4.5.2</span> Assessing model fit</h3>
+<p>We can asses model fit for the model including interaction terms.</p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="comparing-many-groups.html#cb238-1" aria-hidden="true" tabindex="-1"></a>y_pred_int <span class="ot">=</span> <span class="fu">predict</span> (model_interaction)</span>
+<span id="cb238-2"><a href="comparing-many-groups.html#cb238-2" aria-hidden="true" tabindex="-1"></a>y_pred_no_re_int <span class="ot">=</span> <span class="fu">predict</span> (model_interaction, <span class="at">re_formula =</span> <span class="cn">NA</span>)</span>
+<span id="cb238-3"><a href="comparing-many-groups.html#cb238-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (y_pred_int)</span></code></pre></div>
+<pre><code>##       Estimate Est.Error      Q2.5    Q97.5
+## [1,] 171.34574  12.18381 148.03281 195.5576
+## [2,] 107.92013  12.37974  83.64730 132.0822
+## [3,]  97.11222  11.71712  74.12182 120.0039
+## [4,] 133.41415  12.10623 109.63628 156.7304
+## [5,] 117.15132  12.26113  92.65955 141.0407
+## [6,]  99.83885  12.42502  75.76494 124.1172</code></pre>
+<p>We can again make interaction plots using our data and our posterior predictions. Below I compare our data, the predictions of our original model, and the predictions of our model that includes interactions. Whereas the model with no interaction forced parallelism on the effects, our new model is able to capture the conditional nature of gender and adultness on our data.</p>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="comparing-many-groups.html#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>))</span>
+<span id="cb240-2"><a href="comparing-many-groups.html#cb240-2" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span> (h95<span class="sc">$</span>gender, h95<span class="sc">$</span>adult, h95<span class="sc">$</span>f0, <span class="at">col =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">130</span>,<span class="dv">280</span>),</span>
+<span id="cb240-3"><a href="comparing-many-groups.html#cb240-3" aria-hidden="true" tabindex="-1"></a><span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">type =</span> <span class="st">&#39;b&#39;</span>, <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">16</span>,<span class="dv">17</span>), <span class="at">cex =</span> <span class="fl">1.5</span>, <span class="at">main =</span> <span class="st">&quot;Data&quot;</span>)</span>
+<span id="cb240-4"><a href="comparing-many-groups.html#cb240-4" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span> (h95<span class="sc">$</span>gender, h95<span class="sc">$</span>adult, y_pred_no_re[,<span class="dv">1</span>], <span class="at">col =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="at">lwd=</span><span class="dv">3</span>, <span class="at">type=</span><span class="st">&#39;b&#39;</span>, </span>
+<span id="cb240-5"><a href="comparing-many-groups.html#cb240-5" aria-hidden="true" tabindex="-1"></a><span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">16</span>,<span class="dv">17</span>), <span class="at">cex =</span> <span class="fl">1.5</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">130</span>,<span class="dv">280</span>),<span class="at">main=</span><span class="st">&quot;No Int., no RE&quot;</span>)</span>
+<span id="cb240-6"><a href="comparing-many-groups.html#cb240-6" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span> (h95<span class="sc">$</span>gender, h95<span class="sc">$</span>adult, y_pred_no_re_int[,<span class="dv">1</span>],<span class="at">col=</span><span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">lwd =</span> <span class="dv">3</span>, </span>
+<span id="cb240-7"><a href="comparing-many-groups.html#cb240-7" aria-hidden="true" tabindex="-1"></a><span class="at">type =</span> <span class="st">&#39;b&#39;</span>, <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">16</span>,<span class="dv">17</span>), <span class="at">cex =</span> <span class="fl">1.5</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">130</span>,<span class="dv">280</span>),<span class="at">main=</span><span class="st">&quot;With Int., no RE&quot;</span>)</span></code></pre></div>
+<p><img src="week-4_files/figure-html/interactionplot2-1.png" width="768" /></p>
+<p>For the first time, we have a model that really does a reasonably-good job of representing the information in our data. The model can capture the gender-dependent nature of age-based f0 differences, and separately estimates between group variation and between group variation.</p>
+</div>
+<div id="investigating-the-interactions-the-easy-way" class="section level3" number="4.5.3">
+<h3><span class="header-section-number">4.5.3</span> Investigating the interactions the easy way</h3>
+<p>There are built-in functions in <code>brms</code> that help you investigate you effects in the presence of interactions. The <code>conditional_effects</code> function calculates the values of your effects conditional on the mean (for continuous variables). This means it adds the value of the Intercept to all its effects estimates. This function is extremely handy but also limited. You can’t get the posterior samples from this function, meaning you can’t use this output to compare the values of rows. Also, conditioning on the mean introduces noise to our effects estimates and makes their credible intervals larger. In some cases variability in the estimate of the mean can make effects seem small relative to the error in the estimates themselves.</p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="comparing-many-groups.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span> (h95<span class="sc">$</span>f0, h95<span class="sc">$</span>group, mean)</span></code></pre></div>
+<pre><code>##        b        g        m        w 
+## 236.0741 238.3509 131.2185 220.4010</code></pre>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="comparing-many-groups.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="do">## intercept, boys, girls, men, women</span></span>
+<span id="cb243-2"><a href="comparing-many-groups.html#cb243-2" aria-hidden="true" tabindex="-1"></a>model_effects <span class="ot">=</span> <span class="fu">conditional_effects</span> (model_interaction)</span>
+<span id="cb243-3"><a href="comparing-many-groups.html#cb243-3" aria-hidden="true" tabindex="-1"></a>model_effects[[<span class="dv">1</span>]]</span></code></pre></div>
+<pre><code>##   adult      f0 gender speaker cond__ effect1__ estimate__     se__  lower__
+## 1 adult 197.027 female      NA      1     adult   220.4292 3.102745 214.1694
+## 2 child 197.027 female      NA      1     child   238.2584 4.904636 228.2973
+##    upper__
+## 1 226.4643
+## 2 247.7889</code></pre>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="comparing-many-groups.html#cb245-1" aria-hidden="true" tabindex="-1"></a>model_effects[[<span class="dv">2</span>]]</span></code></pre></div>
+<pre><code>##   gender      f0 adult speaker cond__ effect1__ estimate__     se__  lower__
+## 1 female 197.027 adult      NA      1    female   220.4292 3.102745 214.1694
+## 2   male 197.027 adult      NA      1      male   131.4076 3.239214 125.2071
+##    upper__
+## 1 226.4643
+## 2 137.5445</code></pre>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="comparing-many-groups.html#cb247-1" aria-hidden="true" tabindex="-1"></a>model_effects[[<span class="dv">3</span>]]</span></code></pre></div>
+<pre><code>##   adult gender      f0 speaker cond__ effect1__ effect2__ estimate__     se__
+## 1 adult female 197.027      NA      1     adult    female   220.4292 3.102745
+## 2 adult   male 197.027      NA      1     adult      male   131.4076 3.239214
+## 3 child female 197.027      NA      1     child    female   238.2584 4.904636
+## 4 child   male 197.027      NA      1     child      male   236.0642 4.096959
+##    lower__  upper__
+## 1 214.1694 226.4643
+## 2 125.2071 137.5445
+## 3 228.2973 247.7889
+## 4 228.1277 244.0703</code></pre>
+<p>We can see that these values match those we recreated above using the<code>hypothesis</code> function and the individual coefficients:</p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="comparing-many-groups.html#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span> (h95<span class="sc">$</span>f0, h95<span class="sc">$</span>group, mean)</span></code></pre></div>
+<pre><code>##        b        g        m        w 
+## 236.0741 238.3509 131.2185 220.4010</code></pre>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="comparing-many-groups.html#cb251-1" aria-hidden="true" tabindex="-1"></a><span class="do">## intercept, boys, girls, men, women</span></span>
+<span id="cb251-2"><a href="comparing-many-groups.html#cb251-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesis</span> (model_interaction, <span class="fu">c</span>(<span class="st">&quot;Intercept = 0&quot;</span>,</span>
+<span id="cb251-3"><a href="comparing-many-groups.html#cb251-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Intercept - adult1 - gender1 + adult1:gender1 = 0&quot;</span>,</span>
+<span id="cb251-4"><a href="comparing-many-groups.html#cb251-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Intercept - adult1 + gender1 - adult1:gender1 = 0&quot;</span>,</span>
+<span id="cb251-5"><a href="comparing-many-groups.html#cb251-5" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Intercept + adult1 - gender1 - adult1:gender1 = 0&quot;</span>,</span>
+<span id="cb251-6"><a href="comparing-many-groups.html#cb251-6" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Intercept + adult1 + gender1 + adult1:gender1 = 0&quot;</span>))[[<span class="dv">1</span>]][,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>##                                      Hypothesis Estimate Est.Error CI.Lower
+## 1                               (Intercept) = 0 206.5369  1.931096 202.6886
+## 2 (Intercept-adult1-gender1+adult1:gender1) = 0 236.0827  4.065229 228.1277
+## 3 (Intercept-adult1+gender1-adult1:gender1) = 0 238.2590  4.924929 228.2973
+## 4 (Intercept+adult1-gender1-adult1:gender1) = 0 131.3907  3.152187 125.2071
+## 5 (Intercept+adult1+gender1+adult1:gender1) = 0 220.4150  3.108604 214.1694
+##   CI.Upper
+## 1 210.2240
+## 2 244.0703
+## 3 247.7889
+## 4 137.5445
+## 5 226.4643</code></pre>
+</div>
+<div id="making-plots" class="section level3" number="4.5.4">
+<h3><span class="header-section-number">4.5.4</span> Making plots</h3>
+<p>There are many ways to make ‘nice’ graphics using brms models. Many use packages like <code>ggplot2</code> and <code>bayesplot</code>. In general these figures are nice but too ‘fancy’ for many purposes. I also don’t really know how to use <code>ggplot2</code>. As a result, I am going to focus on making simple line plots (like those common in journal article) using base R graphics.</p>
+<p>The standard information provided in the output of <code>brm</code> model summaries can be used to make plots easily. I wrote a small function called <code>brmplot</code> that will help draw effects plots easily using these summaries. The standard format of these summaries is that they consist of four columns, corresponding to the mean estimate, the standard deviation, and the lower and upper credible intervals. The <code>brmplot</code> function takes in a matrix like this and makes plots showing the means and credible intervals of different effects.</p>
+<p>Below I get a summary of the fixed effects. I make plots of these effects in two orientations. In each one I omit the Intercept estimate as the magnitude of this is so different that it cannot easily be included on the plot.</p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="comparing-many-groups.html#cb253-1" aria-hidden="true" tabindex="-1"></a>fixef_interaction <span class="ot">=</span> <span class="fu">fixef</span> (model_interaction)</span>
+<span id="cb253-2"><a href="comparing-many-groups.html#cb253-2" aria-hidden="true" tabindex="-1"></a>fixef_interaction</span></code></pre></div>
+<pre><code>##                 Estimate Est.Error      Q2.5     Q97.5
+## Intercept      206.53685  1.931096 202.68860 210.22397
+## adult1         -30.63400  1.943657 -34.35968 -26.78826
+## gender1         22.80015  1.943186  18.99251  26.56927
+## adult1:gender1  21.71202  1.952504  17.96248  25.56939</code></pre>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="comparing-many-groups.html#cb255-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb255-2"><a href="comparing-many-groups.html#cb255-2" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (fixef_interaction[<span class="sc">-</span><span class="dv">1</span>,]) ; <span class="fu">abline</span> (<span class="at">h =</span> <span class="dv">0</span>,<span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb255-3"><a href="comparing-many-groups.html#cb255-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb255-4"><a href="comparing-many-groups.html#cb255-4" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (fixef_interaction[<span class="sc">-</span><span class="dv">1</span>,], <span class="at">horizontal =</span> <span class="cn">FALSE</span>) ; <span class="fu">abline</span> (<span class="at">v=</span><span class="dv">0</span>,<span class="at">lty=</span><span class="dv">3</span>)</span></code></pre></div>
+<p><img src="week-4_files/figure-html/brmsplot-1.png" width="768" /></p>
+<p>In the left panel below, I use the effects calculated using the marginal_effects function to draw figures using the brmplot function. First I isolate the columns that represent the information I need. Then I plot the effects using repeated calls to <code>brmplot</code>. I can add a second plot over the first by setting <code>add = TRUE</code>.</p>
+<p>On the right, I do the same thing using the output of the hypothesis function. This will be a plot of the group effects centered at 0, since I have not added the overall Intercept to the means. Note that to get the table of interest out of the hypothesis object we have to first select the element named “hypothesis” from the <code>group_effects</code> object. In general, you may have to dig around in the structure of the objects created by <code>brms</code> to get the information you want.</p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="comparing-many-groups.html#cb256-1" aria-hidden="true" tabindex="-1"></a>model_effects[[<span class="dv">3</span>]][,<span class="dv">8</span><span class="sc">:</span><span class="dv">11</span>]</span></code></pre></div>
+<pre><code>##   estimate__     se__  lower__  upper__
+## 1   220.4292 3.102745 214.1694 226.4643
+## 2   131.4076 3.239214 125.2071 137.5445
+## 3   238.2584 4.904636 228.2973 247.7889
+## 4   236.0642 4.096959 228.1277 244.0703</code></pre>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="comparing-many-groups.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb258-2"><a href="comparing-many-groups.html#cb258-2" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (model_effects[[<span class="dv">3</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">8</span><span class="sc">:</span><span class="dv">11</span>], <span class="at">type =</span> <span class="st">&#39;b&#39;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">120</span>,<span class="dv">250</span>), </span>
+<span id="cb258-3"><a href="comparing-many-groups.html#cb258-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Female&quot;</span>,<span class="st">&quot;Male&quot;</span>), <span class="at">col =</span> <span class="dv">3</span>, <span class="at">xlim =</span> <span class="fu">c</span>(.<span class="dv">8</span>,<span class="fl">2.2</span>))</span>
+<span id="cb258-4"><a href="comparing-many-groups.html#cb258-4" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (model_effects[[<span class="dv">3</span>]][<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="dv">8</span><span class="sc">:</span><span class="dv">11</span>], <span class="at">type =</span> <span class="st">&#39;b&#39;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="dv">4</span>,</span>
+<span id="cb258-5"><a href="comparing-many-groups.html#cb258-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">labels=</span><span class="st">&quot;&quot;</span>, <span class="at">pch=</span><span class="dv">17</span>)</span>
+<span id="cb258-6"><a href="comparing-many-groups.html#cb258-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb258-7"><a href="comparing-many-groups.html#cb258-7" aria-hidden="true" tabindex="-1"></a>group_effects <span class="ot">=</span> <span class="fu">hypothesis</span> (model_interaction, <span class="fu">c</span>(<span class="st">&quot;Intercept = 0&quot;</span>,</span>
+<span id="cb258-8"><a href="comparing-many-groups.html#cb258-8" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Intercept - adult1 - gender1 + adult1:gender1 = 0&quot;</span>,</span>
+<span id="cb258-9"><a href="comparing-many-groups.html#cb258-9" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Intercept - adult1 + gender1 - adult1:gender1 = 0&quot;</span>,</span>
+<span id="cb258-10"><a href="comparing-many-groups.html#cb258-10" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Intercept + adult1 - gender1 - adult1:gender1 = 0&quot;</span>,</span>
+<span id="cb258-11"><a href="comparing-many-groups.html#cb258-11" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Intercept + adult1 + gender1 + adult1:gender1 = 0&quot;</span>))</span>
+<span id="cb258-12"><a href="comparing-many-groups.html#cb258-12" aria-hidden="true" tabindex="-1"></a>group_effects[[<span class="st">&quot;hypothesis&quot;</span>]][,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>##   Estimate Est.Error CI.Lower CI.Upper
+## 1 206.5369  1.931096 202.6886 210.2240
+## 2 236.0827  4.065229 228.1277 244.0703
+## 3 238.2590  4.924929 228.2973 247.7889
+## 4 131.3907  3.152187 125.2071 137.5445
+## 5 220.4150  3.108604 214.1694 226.4643</code></pre>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="comparing-many-groups.html#cb260-1" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (group_effects[[<span class="st">&quot;hypothesis&quot;</span>]][<span class="dv">5</span><span class="sc">:</span><span class="dv">4</span>,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">type =</span> <span class="st">&#39;b&#39;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">120</span>,<span class="dv">250</span>), </span>
+<span id="cb260-2"><a href="comparing-many-groups.html#cb260-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Female&quot;</span>,<span class="st">&quot;Male&quot;</span>), <span class="at">col =</span> <span class="dv">3</span>, <span class="at">xlim =</span> <span class="fu">c</span>(.<span class="dv">8</span>,<span class="fl">2.2</span>))</span>
+<span id="cb260-3"><a href="comparing-many-groups.html#cb260-3" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (group_effects[[<span class="st">&quot;hypothesis&quot;</span>]][<span class="dv">3</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">type =</span> <span class="st">&#39;b&#39;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="dv">4</span>,</span>
+<span id="cb260-4"><a href="comparing-many-groups.html#cb260-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">labels=</span><span class="st">&quot;&quot;</span>, <span class="at">pch=</span><span class="dv">17</span>)</span></code></pre></div>
+<p><img src="week-4_files/figure-html/brmsplot2-1.png" width="768" /></p>
+
+</div>
+</div>
+</div>
+<!-- Default Statcounter code for statsbook
+https://santiagobarreda.github.io/stats-class/ -->
+<script type="text/javascript">
+var sc_project=12454226; 
+var sc_invisible=1; 
+var sc_security="a1959418"; 
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript><div class="statcounter"><a title="Web Analytics"
+href="https://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="https://c.statcounter.com/12454226/0/a1959418/1/"
+alt="Web Analytics"></a></div></noscript>
+<!-- End of Statcounter Code -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="comparing-two-groups-of-observations.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
