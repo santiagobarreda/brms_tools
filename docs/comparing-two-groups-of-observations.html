@@ -248,6 +248,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="divider"></li>
 <li><a href="http://www.santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
+<li><a href="A-Quick-Introduction-to-Multilevel-Bayesian-Models-for-Linguistic-Researchers.pdf" target="blank">Download possibly outdated and badly-formatted PDF</a></li>
 
 </ul>
 
@@ -526,13 +527,10 @@ adultchild    17.63      5.22     7.34    27.88 1.00     1987     2068</code></p
 \textrm{Likelihood:} \\
 y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
 \mu_{[i]} = Intercept + adult1 + \alpha_{speaker_{[i]}} \\\\
-
 \textrm{Priors:} \\
 \alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
-
 Intercept \sim t(3, 225.5, 48) \\ 
 adult1 \sim t(3, 0, 48) \\ 
-
 \sigma_{error} \sim t(3, 0, 48) \\
 \sigma_{speaker} \sim t(3, 0, 48) \\ 
 \end{split}
@@ -660,15 +658,12 @@ adult1 \sim t(3, 0, 48) \\
 <p>Look at the list of priors in our latest model definition. If you look at our latest <code>brm</code> model fit, you will see where most of these are specifically defined in the function call. However, you will notice that the standard deviation of the prior (<span class="math inline">\(\sigma_{speakers}\)</span>) for the speaker-specific intercept deviations (<span class="math inline">\(\alpha_{speaker}\)</span>) is actually not specifically defined in the model.</p>
 <p><span class="math display">\[\begin{equation}
 \begin{split}
-
 \textrm{Priors:} \\
 \alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
-
 Intercept \sim t(3, 225.5, 48) \\ 
 adult1 \sim t(3, 225.5, 48) \\ 
 \sigma_{error} \sim t(3, 0, 48) \\
 \sigma_{speaker} \sim t(3, 0, 48) \\ 
-
 \end{split}
 \end{equation}\]</span></p>
 <p>It turns out that the <span class="math inline">\(\sigma_{speaker}\)</span> parameter is estimated from the data! For this reason, the prior you set on <span class="math inline">\(\sigma_{speaker}\)</span> is sometimes called a ‘hyperprior’, because it is the prior for your prior!</p>

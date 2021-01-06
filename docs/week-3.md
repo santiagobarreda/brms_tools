@@ -403,13 +403,10 @@ The full model specification, including prior probabilities is below. I used the
 \textrm{Likelihood:} \\
 y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
 \mu_{[i]} = Intercept + adult1 + \alpha_{speaker_{[i]}} \\\\
-
 \textrm{Priors:} \\
 \alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
-
 Intercept \sim t(3, 225.5, 48) \\ 
 adult1 \sim t(3, 0, 48) \\ 
-
 \sigma_{error} \sim t(3, 0, 48) \\
 \sigma_{speaker} \sim t(3, 0, 48) \\ 
 \end{split}
@@ -607,15 +604,12 @@ Look at the list of priors in our latest model definition. If you look at our la
 
 \begin{equation}
 \begin{split}
-
 \textrm{Priors:} \\
 \alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
-
 Intercept \sim t(3, 225.5, 48) \\ 
 adult1 \sim t(3, 225.5, 48) \\ 
 \sigma_{error} \sim t(3, 0, 48) \\
 \sigma_{speaker} \sim t(3, 0, 48) \\ 
-
 \end{split}
 \end{equation}
 

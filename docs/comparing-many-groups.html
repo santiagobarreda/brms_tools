@@ -248,6 +248,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="divider"></li>
 <li><a href="http://www.santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
+<li><a href="A-Quick-Introduction-to-Multilevel-Bayesian-Models-for-Linguistic-Researchers.pdf" target="blank">Download possibly outdated and badly-formatted PDF</a></li>
 
 </ul>
 
@@ -572,12 +573,12 @@ gender_{[i]} \sim t(3, 0, 100) \\
 <span id="cb222-2"><a href="comparing-many-groups.html#cb222-2" aria-hidden="true" tabindex="-1"></a>y_pred_no_re <span class="ot">=</span> <span class="fu">predict</span> (model_both, <span class="at">re_formula =</span> <span class="cn">NA</span>)</span>
 <span id="cb222-3"><a href="comparing-many-groups.html#cb222-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (y_pred)</span></code></pre></div>
 <pre><code>##       Estimate Est.Error      Q2.5    Q97.5
-## [1,] 171.80602  12.26347 147.69358 195.2424
-## [2,] 107.42890  12.29034  83.48097 131.4194
-## [3,]  96.80339  12.00599  73.79027 120.0378
-## [4,] 133.29083  12.26532 109.77564 157.2018
-## [5,] 117.06618  12.16383  92.72513 140.4696
-## [6,]  99.50457  12.47530  75.72572 123.3922</code></pre>
+## [1,] 171.49420  12.22930 147.62523 195.5108
+## [2,] 107.18890  11.92348  83.56357 130.6007
+## [3,]  97.09596  12.25352  73.42253 120.9922
+## [4,] 133.31890  12.23698 110.05712 157.9008
+## [5,] 116.72685  12.44052  91.78161 140.5365
+## [6,]  99.68485  12.21819  76.22729 123.1292</code></pre>
 <p>You will note that the output of prediction, <code>y_pred</code>, has four columns, indicating a predicted value but also information about variation. That is because, actually, our model produces a different prediction for each set of samples. This means that if we have 4000 samples we actually have 4000 slightly different models and 4000 slightly different predictions! This means in addition to the most probable estimates, we can get information about expected variation around these estimates</p>
 <p>Above in the second line, I make predictions without random effects (<code>re_formula = NA</code>). This corresponds to a model like this <em>without</em> speaker adjustments:</p>
 <p><span class="math inline">\(\mu_{[i]} = Intercept + adult_{adult_{[i]}} + gender_{gender_{[i]}}\)</span></p>
@@ -749,12 +750,12 @@ adult:gender \sim t(3, 0, 100) \\
 <span id="cb238-2"><a href="comparing-many-groups.html#cb238-2" aria-hidden="true" tabindex="-1"></a>y_pred_no_re_int <span class="ot">=</span> <span class="fu">predict</span> (model_interaction, <span class="at">re_formula =</span> <span class="cn">NA</span>)</span>
 <span id="cb238-3"><a href="comparing-many-groups.html#cb238-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (y_pred_int)</span></code></pre></div>
 <pre><code>##       Estimate Est.Error      Q2.5    Q97.5
-## [1,] 171.34574  12.18381 148.03281 195.5576
-## [2,] 107.92013  12.37974  83.64730 132.0822
-## [3,]  97.11222  11.71712  74.12182 120.0039
-## [4,] 133.41415  12.10623 109.63628 156.7304
-## [5,] 117.15132  12.26113  92.65955 141.0407
-## [6,]  99.83885  12.42502  75.76494 124.1172</code></pre>
+## [1,] 170.98864  12.38839 146.16052 194.8080
+## [2,] 107.35424  12.34343  83.29906 132.1596
+## [3,]  97.04254  12.37383  72.62049 121.5229
+## [4,] 133.38287  12.41807 109.24117 157.3635
+## [5,] 116.94452  12.26171  92.70863 140.4540
+## [6,]  99.99772  12.47452  75.65962 123.7280</code></pre>
 <p>We can again make interaction plots using our data and our posterior predictions. Below I compare our data, the predictions of our original model, and the predictions of our model that includes interactions. Whereas the model with no interaction forced parallelism on the effects, our new model is able to capture the conditional nature of gender and adultness on our data.</p>
 <div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="comparing-many-groups.html#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>))</span>
 <span id="cb240-2"><a href="comparing-many-groups.html#cb240-2" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span> (h95<span class="sc">$</span>gender, h95<span class="sc">$</span>adult, h95<span class="sc">$</span>f0, <span class="at">col =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">130</span>,<span class="dv">280</span>),</span>
