@@ -15,19 +15,11 @@ url1 = "https://raw.githubusercontent.com/santiagobarreda"
 url2 = "/stats-class/master/data/h95_vowel_data.csv"
 ## read data from my Github page
 h95 = read.csv (url(paste0 (url1, url2)))
+## set up colors for plotting
+source (url(paste0 (url1, "/stats-class/master/data/colors.R")))
+
 # select the 'f0' vector, for women only (speaker type = 'w')
 f0 = h95[['f0']][h95$group == 'w']
-## set up colors
-lightpink = rgb (247/255, 181/255, 197/255, 0.75)
-lavender = rgb (202/255, 135/255, 185/255, 0.75)
-coral = rgb (238/255, 78/255, 98/255, 0.75)
-yellow = rgb (248/255,166/255,27/255, 0.75)
-deepgreen = rgb (12/255, 130/255, 117/255, 0.75)
-teal = rgb (39/255, 192/255, 216/255, 0.75)
-skyblue =rgb (58/255, 101/255, 175/255, 0.75)
-maroon = rgb (130/255, 43/255, 50/255, .75)
-deeppurple = rgb (96/255, 45/255, 69/255, 0.75)
-cols = c(lightpink,lavender,coral,yellow,deepgreen,teal,skyblue,maroon,deeppurple)
 ```
 
 These speakers represent a sample from a larger population. The sample is a finite set of observations that you actually have. The population is the (hypothetical) larger group of all possible observations that you are *actually* interested in. For example, Hillenbrand et al. collected this data not to study these speakers in particular, but instead to make inferences about Michigan speakers more generally. 
@@ -42,7 +34,7 @@ The second point is crucial. First, our sample will never exactly match the popu
 
 ### Inspecting the central location and spread of values 
 
-We can easily find descriptive statistics like the sample mean ($\bar{x}$), the sample standard deviation ($s_x$), and important quantiles for this sample of f0 values. The quantiles below correspond to the values of ordered observations, like in the right plot in Figure \@ref(fig:initialplot). The 0% quantile is the smallest (leftmost) observation, while 100% is the highest (rightmost) observation. Any other quantile is found by ordering the observations and selecting the observation that is higher than x% of the sample values. For example, the 50% quantile (the median) is higher than 50% of values, and the 25% quantile is higher than 1/4 of the values in the sample. 
+We can easily find important information about our sample like the sample mean ($\bar{x}$), the number of observations, the sample standard deviation ($s_x$), and important quantiles for this sample of f0 values. The quantiles below correspond to the values of ordered observations, like in the right plot in Figure \@ref(fig:initialplot). The 0% quantile is the smallest (leftmost) observation, while 100% is the highest (rightmost) observation. Any other quantile is found by ordering the observations and selecting the observation that is higher than x% of the sample values. For example, the 50% quantile (the median) is higher than 50% of values, and the 25% quantile is higher than 1/4 of the values in the sample. 
 
 
 ```r
@@ -65,6 +57,14 @@ mean (f0)
 
 ```
 ## [1] 220.401
+```
+
+```r
+length (f0)
+```
+
+```
+## [1] 576
 ```
 
 ```r
@@ -368,7 +368,7 @@ The likelihood of any parameter estimate (e.g., $\mu$ = 175 Hz in the right pane
 
   2) Find the the height of the curve of the probability distribution (the density) over each point (indicated by lines in the right panel below). 
 
-  3) The likelihood is the product of all of these densities (heights). In practice, the logarithms of the individual probabilities are added together, yielding the *log-likelihood*. This is because multiplying together too many fractions can lead to numbers so small computers have a hard time representing them, and adding logarithms is equivalent to multiplying to original values.  
+  3) The likelihood is the product of all of these densities (heights). In practice, the logarithms of the individual probabilities are added together, yielding the *log-likelihood*. This is because multiplying together too many fractions can lead to numbers so small computers have a hard time representing them, and adding logarithms is equivalent to multiplying the original values.  
 
 Imagine I follow the steps above for each position along the x axis, recording the likelihood values I calculate. I then plot the product of the densities for each corresponding x value. If I do this I have just plotted a likelihood function for $\mu$ given our data. 
   

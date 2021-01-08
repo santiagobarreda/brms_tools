@@ -16,6 +16,9 @@ Below I load in the Hillenbrand et al. data, and include a new variable that ind
 url1 = "https://raw.githubusercontent.com/santiagobarreda"
 url2 = "/stats-class/master/data/h95_vowel_data.csv"
 h95 = read.csv (url(paste0 (url1, url2)))
+## set up colors for plotting
+source (url(paste0 (url1, "/stats-class/master/data/colors.R")))
+
 ## make variable that indicates if the talker is an adult
 h95$adult = ""
 h95$adult[h95$group %in% c('w','m')] = "adult"
@@ -30,18 +33,6 @@ f0 = females[['f0']]
 males$speaker = factor (males$speaker)  
 # re-factor to remove excluded subjects
 females$speaker = factor (females$speaker)  
-
-## set up colors
-lightpink = rgb (247/255, 181/255, 197/255, 0.75)
-lavender = rgb (202/255, 135/255, 185/255, 0.75)
-coral = rgb (238/255, 78/255, 98/255, 0.75)
-yellow = rgb (248/255,166/255,27/255, 0.75)
-deepgreen = rgb (12/255, 130/255, 117/255, 0.75)
-teal = rgb (39/255, 192/255, 216/255, 0.75)
-skyblue =rgb (58/255, 101/255, 175/255, 0.75)
-maroon = rgb (130/255, 43/255, 50/255, .75)
-deeppurple = rgb (96/255, 45/255, 69/255, 0.75)
-cols = c(lightpink,lavender,coral,yellow,deepgreen,teal,skyblue,maroon,deeppurple)
 ```
 
 
