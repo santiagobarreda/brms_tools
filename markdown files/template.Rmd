@@ -1,0 +1,33 @@
+
+# Main Title
+  
+This is where I write some text
+
+## Sub-heading
+
+Some more text. 
+
+```{r}
+##here I plot some numbers
+plot (rnorm (10))
+```
+
+Below I make the plot without showing the code after:
+```{r, echo = FALSE}
+##here I plot some numbers
+plot (rnorm (10))
+```
+
+Below I run the code but do not include any output in the output file. 
+```{r, include = FALSE}
+##here I plot some numbers
+plot (rnorm (10))
+greeting = "hello"
+```
+
+However the action still runs, as demonstrated below:
+```{r}
+greeting
+```
+
+
