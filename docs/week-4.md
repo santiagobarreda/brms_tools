@@ -534,12 +534,12 @@ head (y_pred)
 
 ```
 ##       Estimate Est.Error      Q2.5    Q97.5
-## [1,] 171.49420  12.22930 147.62523 195.5108
-## [2,] 107.18890  11.92348  83.56357 130.6007
-## [3,]  97.09596  12.25352  73.42253 120.9922
-## [4,] 133.31890  12.23698 110.05712 157.9008
-## [5,] 116.72685  12.44052  91.78161 140.5365
-## [6,]  99.68485  12.21819  76.22729 123.1292
+## [1,] 172.18076  12.30080 148.23279 196.3538
+## [2,] 107.45114  12.45810  82.76583 132.0001
+## [3,]  96.62140  12.36268  71.87010 120.7142
+## [4,] 133.63795  12.43118 109.54342 157.9029
+## [5,] 116.77551  12.27430  92.48900 140.4078
+## [6,]  99.56888  12.20617  75.18617 123.5216
 ```
 
 You will note that the output of prediction, `y_pred`, has four columns, indicating a predicted value but also information about variation. That is because, actually, our model produces a different prediction for each set of samples. This means that if we have 4000 samples we actually have 4000 slightly different models and 4000 slightly different predictions! This means in addition to the most probable estimates, we can get information about expected variation around these estimates
@@ -801,12 +801,12 @@ head (y_pred_int)
 
 ```
 ##       Estimate Est.Error      Q2.5    Q97.5
-## [1,] 170.98864  12.38839 146.16052 194.8080
-## [2,] 107.35424  12.34343  83.29906 132.1596
-## [3,]  97.04254  12.37383  72.62049 121.5229
-## [4,] 133.38287  12.41807 109.24117 157.3635
-## [5,] 116.94452  12.26171  92.70863 140.4540
-## [6,]  99.99772  12.47452  75.65962 123.7280
+## [1,] 171.19542  12.55445 146.67965 195.8317
+## [2,] 107.74086  12.52163  83.13311 131.9307
+## [3,]  97.10842  12.49680  71.53065 121.9551
+## [4,] 133.19340  12.38748 108.71994 157.2356
+## [5,] 116.92529  12.35718  92.54315 140.9258
+## [6,]  99.75616  12.39541  74.93065 123.4582
 ```
 
 We can again make interaction plots using our data and our posterior predictions. Below I compare our data, the predictions of our original model, and the predictions of our model that includes interactions. Whereas the model with no interaction forced parallelism on the effects, our new model is able to capture the conditional nature of gender and adultness on our data. 

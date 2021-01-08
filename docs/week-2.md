@@ -30,9 +30,19 @@ w = h95[h95$group == 'w',]
 w$speaker = factor (w$speaker)  
 # select only the vector of interest
 f0 = w$f0
+
+## set up colors
+lightpink = rgb (247/255, 181/255, 197/255, 0.75)
+lavender = rgb (202/255, 135/255, 185/255, 0.75)
+coral = rgb (238/255, 78/255, 98/255, 0.75)
+yellow = rgb (248/255,166/255,27/255, 0.75)
+deepgreen = rgb (12/255, 130/255, 117/255, 0.75)
+teal = rgb (39/255, 192/255, 216/255, 0.75)
+skyblue =rgb (58/255, 101/255, 175/255, 0.75)
+maroon = rgb (130/255, 43/255, 50/255, .75)
+deeppurple = rgb (96/255, 45/255, 69/255, 0.75)
+cols = c(lightpink,lavender,coral,yellow,deepgreen,teal,skyblue,maroon,deeppurple)
 ```
-
-
 
 We are going to try to address the same questions we talked about last week:
 
@@ -166,8 +176,8 @@ model = brms::brm (f0 ~ 1, data = w, chains = 1, cores = 1)
 ## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 1: 
 ## Chain 1:  Elapsed Time: 0.062 seconds (Warm-up)
-## Chain 1:                0.042 seconds (Sampling)
-## Chain 1:                0.104 seconds (Total)
+## Chain 1:                0.039 seconds (Sampling)
+## Chain 1:                0.101 seconds (Total)
 ## Chain 1:
 ```
 
@@ -388,7 +398,7 @@ boxplot (f0 ~ speaker, data = w, main = "Speaker Boxplots", col=c(yellow,coral,
 abline (h = 220.4,lty=3,col='grey',lwd=2)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-11-1.png" width="768" />
+<img src="week-2_files/figure-html/unnamed-chunk-10-1.png" width="768" />
 
 ### Multilevel models
 
@@ -410,7 +420,7 @@ hist (w$f0[w$speaker == 107], main = "Histogram of speaker 107",
       xlim = c(160, 260), freq = FALSE,col=yellow)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-12-1.png" width="768" />
+<img src="week-2_files/figure-html/unnamed-chunk-11-1.png" width="768" />
 
 A multilevel model is able to simultaneously model independent variation at multiple 'levels'. For our f0 data, these are: 
 
@@ -511,7 +521,7 @@ boxplot (f0 ~ speaker, data = w, main = "Speaker Boxplots",col=cols[3:6])
 abline (h = 220.4,lty=3, lwd=3)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-13-1.png" width="768" />
+<img src="week-2_files/figure-html/unnamed-chunk-12-1.png" width="768" />
   
 There is a very important difference in how the initial and final models we fit view and partition the variation in our model. The initial model we fit viewed the variation in the model like this:
 
@@ -629,7 +639,7 @@ boxplot (f0 ~ speaker, data = w, main = "Speaker Boxplots",col=c(yellow,coral,
 abline (h = 220.4, lwd=3,lty=3)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-17-1.png" width="768" />
+<img src="week-2_files/figure-html/unnamed-chunk-16-1.png" width="768" />
 
 ## Checking model convergence
 
@@ -817,7 +827,7 @@ In the left panel below (plot code at end of chapter) I compare the t distributi
 In the middle panel we compare this prior to the data, and see that the prior distribution is much broader (more vague) than the data distribution. The right panel compares the prior for the standard deviation parameters to the absolute value of the centered f0 data. This presentation shows how far each observation is from the mean f0 (at 220 Hz). Again, the prior distribution we have assigned for these parameters is much larger than the variation in the data. As a result, neither of these priors is going to have much of an effect on our parameter estimates.
 
 
-<img src="week-2_files/figure-html/unnamed-chunk-25-1.png" width="768" />
+<img src="week-2_files/figure-html/unnamed-chunk-24-1.png" width="768" />
 
 If we compare the output of this model to `multilevel_thinned`, we see that specifying a prior has has no noticeable effect on our results. This is because the prior matters less and less when you have a lot of data, and because we have set wide priors that are appropriate (but vague) given our data. Although the priors may not matter much for models as simple as these, they can be very important when working with more complex data, and are a necessary component of Bayesian modeling. 
 
@@ -908,7 +918,7 @@ boxplot (f0 ~ speaker, data = w, main = "Speaker Boxplots",col=c(yellow,coral,
 abline (h = 220.4, lwd=3,lty=3)
 ```
 
-<img src="week-2_files/figure-html/unnamed-chunk-27-1.png" width="768" />
+<img src="week-2_files/figure-html/unnamed-chunk-26-1.png" width="768" />
 
 
 ## Plot Code

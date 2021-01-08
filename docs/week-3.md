@@ -30,8 +30,19 @@ f0 = females[['f0']]
 males$speaker = factor (males$speaker)  
 # re-factor to remove excluded subjects
 females$speaker = factor (females$speaker)  
-```
 
+## set up colors
+lightpink = rgb (247/255, 181/255, 197/255, 0.75)
+lavender = rgb (202/255, 135/255, 185/255, 0.75)
+coral = rgb (238/255, 78/255, 98/255, 0.75)
+yellow = rgb (248/255,166/255,27/255, 0.75)
+deepgreen = rgb (12/255, 130/255, 117/255, 0.75)
+teal = rgb (39/255, 192/255, 216/255, 0.75)
+skyblue =rgb (58/255, 101/255, 175/255, 0.75)
+maroon = rgb (130/255, 43/255, 50/255, .75)
+deeppurple = rgb (96/255, 45/255, 69/255, 0.75)
+cols = c(lightpink,lavender,coral,yellow,deepgreen,teal,skyblue,maroon,deeppurple)
+```
 
 
 One of the simplest questions a researcher can ask (from a modeling perspective) is: Are two groups of observations different or are they the same? For example in phonetics, researchers ask questions like, have these vowels merged in this dialect (are these two things different)?  Does visual information speed up speech perception or not (are two sets of reaction times the same)?
@@ -51,7 +62,7 @@ boxplot (f0 ~ adult, data = males, main = "Males", ylim = c(90,330),
          col = c(maroon,lightpink))
 ```
 
-<img src="week-3_files/figure-html/unnamed-chunk-3-1.png" width="768" />
+<img src="week-3_files/figure-html/unnamed-chunk-2-1.png" width="768" />
 
 Clearly there is a difference in f0 between children and adults, but the difference also seems to be gender-dependent: there is more of a difference between men and boys than between women and girls. We are going to focus on the female data for now, and I leave the male data so that the reader can modify the analysis presented here to analyze that data. 
 
@@ -74,7 +85,7 @@ tmp = density (females$f0[females$adult=="adult"])
 lines (tmp$y, tmp$x, lwd = 3, col = coral)
 ```
 
-<img src="week-3_files/figure-html/unnamed-chunk-4-1.png" width="768" />
+<img src="week-3_files/figure-html/unnamed-chunk-3-1.png" width="768" />
 
 ## Estimating the difference two means with 'brms'
 
@@ -468,7 +479,7 @@ plot (-samples[,'adult1'], col = teal, pch=16)
 plot (samples[,'Intercept']+samples[,'adult1'], col = yellow,pch=16)  
 ```
 
-<img src="week-3_files/figure-html/unnamed-chunk-18-1.png" width="768" />
+<img src="week-3_files/figure-html/unnamed-chunk-17-1.png" width="768" />
 
 We can then summarize the sum of the parameters using the `posterior_summary` function, resulting in a mean, standard deviation, and credible interval for the new parameter:
 
@@ -586,7 +597,7 @@ If I were writing this is in a paper, at this point I could present this informa
 
 Below I present the speaker boxplot, with different colors for each group. So far we have discussed the speaker-dependent deviations from averages, but we haven't actually done anything with them. One of the nice things about multilevel models is that we can actually estimate these parameters, and use them to answer our research questions. 
 
-<img src="week-3_files/figure-html/unnamed-chunk-23-1.png" width="768" />
+<img src="week-3_files/figure-html/unnamed-chunk-22-1.png" width="768" />
 
 Multilevel models are sometimes also called 'random effects' or 'mixed effects' models. What is 'mixed' about them? Researchers often talk about whether effects are 'fixed' or 'random'. The general idea is that 'fixed' effects are specifically chosen from a small set of possibilities, and we are not necessarily interested in the 'other' levels. 
 
@@ -657,7 +668,7 @@ brmplot( brms::ranef (model_sum_coding)[["uspeaker"]][,,"Intercept"], col = colo
 abline (h=0)
 ```
 
-<img src="week-3_files/figure-html/unnamed-chunk-25-1.png" width="768" />
+<img src="week-3_files/figure-html/unnamed-chunk-24-1.png" width="768" />
 
 We can compare the estimates of by-speaker intercepts to the distribution of actual data arranged by subject. There is clearly a close correspondence! 
 
@@ -670,13 +681,13 @@ brmplot( brms::ranef (model_sum_coding)[["uspeaker"]][,,"Intercept"],
 boxplot (f0 ~ speaker, data=females, col = colors, ylim = c(150,310))
 ```
 
-<img src="week-3_files/figure-html/unnamed-chunk-26-1.png" width="768" />
+<img src="week-3_files/figure-html/unnamed-chunk-25-1.png" width="768" />
 
 ## But what does it all mean?
 
 Ok, so are the f0s produced by women and girls different? Consider the distribution of productions between and within speakers and groups, as shown in the figure below (lines represent the group means). An unbiased look at our results (and figures) so far suggests that: 
 
-<img src="week-3_files/figure-html/unnamed-chunk-27-1.png" width="768" />
+<img src="week-3_files/figure-html/unnamed-chunk-26-1.png" width="768" />
 
 
 * the magnitude of between speaker variation is **larger** than the difference between girls and women (19 Hz vs 18/17 Hz). This means that random people drawn from the two groups largely overlap. 

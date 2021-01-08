@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-01-05" />
+<meta name="date" content="2021-01-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -288,7 +288,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb61-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-7" aria-hidden="true" tabindex="-1"></a><span class="co"># this is unique subject numbers across all groups</span></span>
 <span id="cb61-8"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-8" aria-hidden="true" tabindex="-1"></a>w<span class="sc">$</span>speaker <span class="ot">=</span> <span class="fu">factor</span> (w<span class="sc">$</span>speaker)  </span>
 <span id="cb61-9"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="co"># select only the vector of interest</span></span>
-<span id="cb61-10"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-10" aria-hidden="true" tabindex="-1"></a>f0 <span class="ot">=</span> w<span class="sc">$</span>f0</span></code></pre></div>
+<span id="cb61-10"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-10" aria-hidden="true" tabindex="-1"></a>f0 <span class="ot">=</span> w<span class="sc">$</span>f0</span>
+<span id="cb61-11"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-12"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-12" aria-hidden="true" tabindex="-1"></a><span class="do">## set up colors</span></span>
+<span id="cb61-13"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-13" aria-hidden="true" tabindex="-1"></a>lightpink <span class="ot">=</span> <span class="fu">rgb</span> (<span class="dv">247</span><span class="sc">/</span><span class="dv">255</span>, <span class="dv">181</span><span class="sc">/</span><span class="dv">255</span>, <span class="dv">197</span><span class="sc">/</span><span class="dv">255</span>, <span class="fl">0.75</span>)</span>
+<span id="cb61-14"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-14" aria-hidden="true" tabindex="-1"></a>lavender <span class="ot">=</span> <span class="fu">rgb</span> (<span class="dv">202</span><span class="sc">/</span><span class="dv">255</span>, <span class="dv">135</span><span class="sc">/</span><span class="dv">255</span>, <span class="dv">185</span><span class="sc">/</span><span class="dv">255</span>, <span class="fl">0.75</span>)</span>
+<span id="cb61-15"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-15" aria-hidden="true" tabindex="-1"></a>coral <span class="ot">=</span> <span class="fu">rgb</span> (<span class="dv">238</span><span class="sc">/</span><span class="dv">255</span>, <span class="dv">78</span><span class="sc">/</span><span class="dv">255</span>, <span class="dv">98</span><span class="sc">/</span><span class="dv">255</span>, <span class="fl">0.75</span>)</span>
+<span id="cb61-16"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-16" aria-hidden="true" tabindex="-1"></a>yellow <span class="ot">=</span> <span class="fu">rgb</span> (<span class="dv">248</span><span class="sc">/</span><span class="dv">255</span>,<span class="dv">166</span><span class="sc">/</span><span class="dv">255</span>,<span class="dv">27</span><span class="sc">/</span><span class="dv">255</span>, <span class="fl">0.75</span>)</span>
+<span id="cb61-17"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-17" aria-hidden="true" tabindex="-1"></a>deepgreen <span class="ot">=</span> <span class="fu">rgb</span> (<span class="dv">12</span><span class="sc">/</span><span class="dv">255</span>, <span class="dv">130</span><span class="sc">/</span><span class="dv">255</span>, <span class="dv">117</span><span class="sc">/</span><span class="dv">255</span>, <span class="fl">0.75</span>)</span>
+<span id="cb61-18"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-18" aria-hidden="true" tabindex="-1"></a>teal <span class="ot">=</span> <span class="fu">rgb</span> (<span class="dv">39</span><span class="sc">/</span><span class="dv">255</span>, <span class="dv">192</span><span class="sc">/</span><span class="dv">255</span>, <span class="dv">216</span><span class="sc">/</span><span class="dv">255</span>, <span class="fl">0.75</span>)</span>
+<span id="cb61-19"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-19" aria-hidden="true" tabindex="-1"></a>skyblue <span class="ot">=</span><span class="fu">rgb</span> (<span class="dv">58</span><span class="sc">/</span><span class="dv">255</span>, <span class="dv">101</span><span class="sc">/</span><span class="dv">255</span>, <span class="dv">175</span><span class="sc">/</span><span class="dv">255</span>, <span class="fl">0.75</span>)</span>
+<span id="cb61-20"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-20" aria-hidden="true" tabindex="-1"></a>maroon <span class="ot">=</span> <span class="fu">rgb</span> (<span class="dv">130</span><span class="sc">/</span><span class="dv">255</span>, <span class="dv">43</span><span class="sc">/</span><span class="dv">255</span>, <span class="dv">50</span><span class="sc">/</span><span class="dv">255</span>, .<span class="dv">75</span>)</span>
+<span id="cb61-21"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-21" aria-hidden="true" tabindex="-1"></a>deeppurple <span class="ot">=</span> <span class="fu">rgb</span> (<span class="dv">96</span><span class="sc">/</span><span class="dv">255</span>, <span class="dv">45</span><span class="sc">/</span><span class="dv">255</span>, <span class="dv">69</span><span class="sc">/</span><span class="dv">255</span>, <span class="fl">0.75</span>)</span>
+<span id="cb61-22"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb61-22" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">=</span> <span class="fu">c</span>(lightpink,lavender,coral,yellow,deepgreen,teal,skyblue,maroon,deeppurple)</span></code></pre></div>
 <p>We are going to try to address the same questions we talked about last week:</p>
 <ol style="list-style-type: decimal">
 <li><p>What is the average f0 of the whole <em>population</em> likely to be?</p></li>
@@ -386,8 +398,8 @@ f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\
 ## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 1: 
 ## Chain 1:  Elapsed Time: 0.062 seconds (Warm-up)
-## Chain 1:                0.042 seconds (Sampling)
-## Chain 1:                0.104 seconds (Total)
+## Chain 1:                0.039 seconds (Sampling)
+## Chain 1:                0.101 seconds (Total)
 ## Chain 1:</code></pre>
 <p>By default, <code>brms</code> takes 2000 samples, throwing out the first 1000 and returning the last 1000. The output above shows you that the sampler is working, and tells you about the progress as it works.</p>
 <p>This is the last time I will be actually fitting a model in the code chunks. I am going to be relying on pre-fit models that you can load after downloading from the book GitHub. Models can be found in the folder corresponding to each chapter.</p>
@@ -504,7 +516,7 @@ Intercept   220.40      0.97   218.33   222.30 1.00      851      557</code></pr
 <span id="cb89-4"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb89-4" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span> (f0 <span class="sc">~</span> speaker, <span class="at">data =</span> w, <span class="at">main =</span> <span class="st">&quot;Speaker Boxplots&quot;</span>, <span class="at">col=</span><span class="fu">c</span>(yellow,coral,</span>
 <span id="cb89-5"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb89-5" aria-hidden="true" tabindex="-1"></a>         deepgreen,teal), <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">140</span>,<span class="dv">320</span>)) </span>
 <span id="cb89-6"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb89-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h =</span> <span class="fl">220.4</span>,<span class="at">lty=</span><span class="dv">3</span>,<span class="at">col=</span><span class="st">&#39;grey&#39;</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="week-2_files/figure-html/unnamed-chunk-11-1.png" width="768" /></p>
+<p><img src="week-2_files/figure-html/unnamed-chunk-10-1.png" width="768" /></p>
 <div id="multilevel-models" class="section level3" number="2.3.1">
 <h3><span class="header-section-number">2.3.1</span> Multilevel models</h3>
 <p>In linguistics, and many other similar fields, almost all of our data is repeated measures data. The methods most commonly-used by linguists (e.g., experiments, interviews, corpora, … etc.) yield many observations per person, and typically all involve data from multiple people/sources. As a result, the analysis of this data requires that models be able to account for within <em>and</em> between speaker variation in our data. Multilevel models address the correlated nature of repeated measures data by estimating multiple sources of variation simultaneously.</p>
@@ -518,7 +530,7 @@ Intercept   220.40      0.97   218.33   222.30 1.00      851      557</code></pr
 <span id="cb90-6"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb90-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">v =</span> <span class="dv">16</span>,<span class="at">lty=</span><span class="dv">3</span>)</span>
 <span id="cb90-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb90-7" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span> (w<span class="sc">$</span>f0[w<span class="sc">$</span>speaker <span class="sc">==</span> <span class="dv">107</span>], <span class="at">main =</span> <span class="st">&quot;Histogram of speaker 107&quot;</span>,</span>
 <span id="cb90-8"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb90-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">160</span>, <span class="dv">260</span>), <span class="at">freq =</span> <span class="cn">FALSE</span>,<span class="at">col=</span>yellow)</span></code></pre></div>
-<p><img src="week-2_files/figure-html/unnamed-chunk-12-1.png" width="768" /></p>
+<p><img src="week-2_files/figure-html/unnamed-chunk-11-1.png" width="768" /></p>
 <p>A multilevel model is able to simultaneously model independent variation at multiple ‘levels’. For our f0 data, these are:</p>
 <ul>
 <li><p>The ‘upper’ level: Between-speaker variation in mean f0. This can be thought of like variation in <span class="math inline">\(\mu_{speaker}\)</span>. Speaker’s have an average f0 (<span class="math inline">\(\mu_{speaker}\)</span>) that they produce over time. However, speakers are chosen randomly from a larger population, and so any given speaker’s <span class="math inline">\(\mu_{speaker}\)</span> is unpredictable a priori.</p></li>
@@ -587,7 +599,7 @@ f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\ \\
 <div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">1</span>))</span>
 <span id="cb91-2"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span> (f0 <span class="sc">~</span> speaker, <span class="at">data =</span> w, <span class="at">main =</span> <span class="st">&quot;Speaker Boxplots&quot;</span>,<span class="at">col=</span>cols[<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>]) </span>
 <span id="cb91-3"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h =</span> <span class="fl">220.4</span>,<span class="at">lty=</span><span class="dv">3</span>, <span class="at">lwd=</span><span class="dv">3</span>)</span></code></pre></div>
-<p><img src="week-2_files/figure-html/unnamed-chunk-13-1.png" width="768" /></p>
+<p><img src="week-2_files/figure-html/unnamed-chunk-12-1.png" width="768" /></p>
 <p>There is a very important difference in how the initial and final models we fit view and partition the variation in our model. The initial model we fit viewed the variation in the model like this:</p>
 <p><span class="math display" id="eq:29">\[
 \sigma_{total} = \sigma_{error}
@@ -660,7 +672,7 @@ sd(Intercept)    20.19      2.10    16.65    25.06 1.00      135      192</code>
 <span id="cb102-2"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span> (f0 <span class="sc">~</span> speaker, <span class="at">data =</span> w, <span class="at">main =</span> <span class="st">&quot;Speaker Boxplots&quot;</span>,<span class="at">col=</span><span class="fu">c</span>(yellow,coral,</span>
 <span id="cb102-3"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb102-3" aria-hidden="true" tabindex="-1"></a>         deepgreen,teal)) </span>
 <span id="cb102-4"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb102-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h =</span> <span class="fl">220.4</span>, <span class="at">lwd=</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">3</span>)</span></code></pre></div>
-<p><img src="week-2_files/figure-html/unnamed-chunk-17-1.png" width="768" /></p>
+<p><img src="week-2_files/figure-html/unnamed-chunk-16-1.png" width="768" /></p>
 </div>
 </div>
 <div id="checking-model-convergence" class="section level2" number="2.5">
@@ -787,7 +799,7 @@ sd(Intercept)    20.19      2.10    16.65    25.06 1.00      135      192</code>
 ## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>In the left panel below (plot code at end of chapter) I compare the t distribution we used (blue) to the equivalent normal distribution (red). It is clear that the t distribution can tolerate more extreme values because of its ‘fatter’ tails. As we will discuss later, using t distributions can make our models more robust to outliers. This is really important in linguistics where subjects/speakers sometimes do weird stuff!</p>
 <p>In the middle panel we compare this prior to the data, and see that the prior distribution is much broader (more vague) than the data distribution. The right panel compares the prior for the standard deviation parameters to the absolute value of the centered f0 data. This presentation shows how far each observation is from the mean f0 (at 220 Hz). Again, the prior distribution we have assigned for these parameters is much larger than the variation in the data. As a result, neither of these priors is going to have much of an effect on our parameter estimates.</p>
-<p><img src="week-2_files/figure-html/unnamed-chunk-25-1.png" width="768" /></p>
+<p><img src="week-2_files/figure-html/unnamed-chunk-24-1.png" width="768" /></p>
 <p>If we compare the output of this model to <code>multilevel_thinned</code>, we see that specifying a prior has has no noticeable effect on our results. This is because the prior matters less and less when you have a lot of data, and because we have set wide priors that are appropriate (but vague) given our data. Although the priors may not matter much for models as simple as these, they can be very important when working with more complex data, and are a necessary component of Bayesian modeling.</p>
 </div>
 <div id="answering-our-research-questions" class="section level2" number="2.7">
@@ -853,7 +865,7 @@ sd(Intercept)    20.19      2.10    16.65    25.06 1.00      135      192</code>
 <span id="cb120-2"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span> (f0 <span class="sc">~</span> speaker, <span class="at">data =</span> w, <span class="at">main =</span> <span class="st">&quot;Speaker Boxplots&quot;</span>,<span class="at">col=</span><span class="fu">c</span>(yellow,coral,</span>
 <span id="cb120-3"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb120-3" aria-hidden="true" tabindex="-1"></a>         deepgreen,teal)) </span>
 <span id="cb120-4"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb120-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h =</span> <span class="fl">220.4</span>, <span class="at">lwd=</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">3</span>)</span></code></pre></div>
-<p><img src="week-2_files/figure-html/unnamed-chunk-27-1.png" width="768" /></p>
+<p><img src="week-2_files/figure-html/unnamed-chunk-26-1.png" width="768" /></p>
 </div>
 <div id="plot-code-1" class="section level2" number="2.8">
 <h2><span class="header-section-number">2.8</span> Plot Code</h2>

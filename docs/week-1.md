@@ -17,9 +17,18 @@ url2 = "/stats-class/master/data/h95_vowel_data.csv"
 h95 = read.csv (url(paste0 (url1, url2)))
 # select the 'f0' vector, for women only (speaker type = 'w')
 f0 = h95[['f0']][h95$group == 'w']
+## set up colors
+lightpink = rgb (247/255, 181/255, 197/255, 0.75)
+lavender = rgb (202/255, 135/255, 185/255, 0.75)
+coral = rgb (238/255, 78/255, 98/255, 0.75)
+yellow = rgb (248/255,166/255,27/255, 0.75)
+deepgreen = rgb (12/255, 130/255, 117/255, 0.75)
+teal = rgb (39/255, 192/255, 216/255, 0.75)
+skyblue =rgb (58/255, 101/255, 175/255, 0.75)
+maroon = rgb (130/255, 43/255, 50/255, .75)
+deeppurple = rgb (96/255, 45/255, 69/255, 0.75)
+cols = c(lightpink,lavender,coral,yellow,deepgreen,teal,skyblue,maroon,deeppurple)
 ```
-
-
 
 These speakers represent a sample from a larger population. The sample is a finite set of observations that you actually have. The population is the (hypothetical) larger group of all possible observations that you are *actually* interested in. For example, Hillenbrand et al. collected this data not to study these speakers in particular, but instead to make inferences about Michigan speakers more generally. 
 
