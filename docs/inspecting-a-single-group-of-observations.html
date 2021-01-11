@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-01-08" />
+<meta name="date" content="2021-01-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,15 +51,6 @@
 
 
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-29379Y1Q2X"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-29379Y1Q2X');
-</script>
 
 
 <style type="text/css">
@@ -193,7 +184,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#checking-model-convergence"><i class="fa fa-check"></i><b>2.5</b> Checking model convergence</a></li>
 <li class="chapter" data-level="2.6" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#specifying-prior-probabilities"><i class="fa fa-check"></i><b>2.6</b> Specifying prior probabilities</a></li>
 <li class="chapter" data-level="2.7" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#answering-our-research-questions"><i class="fa fa-check"></i><b>2.7</b> Answering our research questions</a></li>
-<li class="chapter" data-level="2.8" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#plot-code-1"><i class="fa fa-check"></i><b>2.8</b> Plot Code</a></li>
+<li class="chapter" data-level="2.8" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#lmer-corner"><i class="fa fa-check"></i><b>2.8</b> Lmer corner</a></li>
+<li class="chapter" data-level="2.9" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#plot-code-1"><i class="fa fa-check"></i><b>2.9</b> Plot Code</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html"><i class="fa fa-check"></i><b>3</b> Comparing two groups of observations</a>
 <ul>
@@ -246,6 +238,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.5.4" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#making-plots"><i class="fa fa-check"></i><b>4.5.4</b> Making plots</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a></li>
 <li class="divider"></li>
 <li><a href="http://www.santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
 <li><a href="A-Quick-Introduction-to-Multilevel-Bayesian-Models-for-Linguistic-Researchers.pdf" target="blank">Download possibly outdated and badly-formatted PDF</a></li>
@@ -297,7 +290,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-2"><a href="inspecting-a-single-group-of-observations.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (f0, <span class="at">xaxt=</span><span class="st">&#39;n&#39;</span>,<span class="at">xlab=</span><span class="st">&#39;&#39;</span>, <span class="at">ylab =</span> <span class="st">&#39;f0&#39;</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> skyblue)</span>
 <span id="cb2-3"><a href="inspecting-a-single-group-of-observations.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (<span class="fu">sort</span> (f0), <span class="at">xaxt=</span><span class="st">&#39;n&#39;</span>,<span class="at">xlab=</span><span class="st">&#39;&#39;</span>,<span class="at">ylab=</span><span class="st">&#39;f0 (sorted)&#39;</span>, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">col =</span> deepgreen)</span></code></pre></div>
 <div class="figure"><span id="fig:initialplot"></span>
-<img src="week-1_files/figure-html/initialplot-1.png" alt="(left) Plot of values in the order they appear in the original data. (right) Observations ordered by increasing value." width="768" />
+<img src="01_files/figure-html/initialplot-1.png" alt="(left) Plot of values in the order they appear in the original data. (right) Observations ordered by increasing value." width="768" />
 <p class="caption">
 Figure 1.1: (left) Plot of values in the order they appear in the original data. (right) Observations ordered by increasing value.
 </p>
@@ -320,7 +313,7 @@ Figure 1.1: (left) Plot of values in the order they appear in the original data.
 <span id="cb11-5"><a href="inspecting-a-single-group-of-observations.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span> (f0, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">140</span>, <span class="dv">320</span>), <span class="at">col =</span> coral)</span>
 <span id="cb11-6"><a href="inspecting-a-single-group-of-observations.html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span> (<span class="at">side =</span><span class="dv">1</span>, <span class="at">outer =</span> <span class="cn">TRUE</span>, <span class="at">text =</span> <span class="st">&quot;f0&quot;</span>, <span class="at">line =</span> <span class="fl">2.5</span>)</span></code></pre></div>
 <div class="figure"><span id="fig:distributioncomparison"></span>
-<img src="week-1_files/figure-html/distributioncomparison-1.png" alt="Different ways to consider our distribution of f0 values." width="576" />
+<img src="01_files/figure-html/distributioncomparison-1.png" alt="Different ways to consider our distribution of f0 values." width="576" />
 <p class="caption">
 Figure 1.2: Different ways to consider our distribution of f0 values.
 </p>
@@ -349,7 +342,7 @@ Figure 1.2: Different ways to consider our distribution of f0 values.
 <span id="cb18-3"><a href="inspecting-a-single-group-of-observations.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span> (f0, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">col =</span> lavender)</span>
 <span id="cb18-4"><a href="inspecting-a-single-group-of-observations.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span> (f0, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">col =</span> deepgreen)</span></code></pre></div>
 <div class="figure"><span id="fig:twohists1"></span>
-<img src="week-1_files/figure-html/twohists1-1.png" alt="(left) A histogram of our f0 data showing counts in each bin. (right) A histogram of our f0 data showing densities." width="768" />
+<img src="01_files/figure-html/twohists1-1.png" alt="(left) A histogram of our f0 data showing counts in each bin. (right) A histogram of our f0 data showing densities." width="768" />
 <p class="caption">
 Figure 1.3: (left) A histogram of our f0 data showing counts in each bin. (right) A histogram of our f0 data showing densities.
 </p>
@@ -361,7 +354,7 @@ Figure 1.3: (left) A histogram of our f0 data showing counts in each bin. (right
 <span id="cb19-2"><a href="inspecting-a-single-group-of-observations.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span> (<span class="fu">c</span>(f0,f0), <span class="at">breaks =</span> <span class="dv">10</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">col =</span> lavender)</span>
 <span id="cb19-3"><a href="inspecting-a-single-group-of-observations.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span> (<span class="fu">c</span>(f0,f0), <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> <span class="dv">10</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">col =</span> deepgreen)</span></code></pre></div>
 <div class="figure"><span id="fig:twohists2"></span>
-<img src="week-1_files/figure-html/twohists2-1.png" alt="The counts have been doubled relative to above." width="768" />
+<img src="01_files/figure-html/twohists2-1.png" alt="The counts have been doubled relative to above." width="768" />
 <p class="caption">
 Figure 1.4: The counts have been doubled relative to above.
 </p>
@@ -388,7 +381,7 @@ Figure 1.4: The counts have been doubled relative to above.
 <span id="cb20-5"><a href="inspecting-a-single-group-of-observations.html#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span> (<span class="fu">dnorm</span> (x, <span class="fu">mean</span>(f0), <span class="fu">sd</span>(f0)), <span class="at">from =</span> <span class="dv">100</span>, <span class="at">to =</span> <span class="dv">300</span>, </span>
 <span id="cb20-6"><a href="inspecting-a-single-group-of-observations.html#cb20-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd=</span><span class="dv">3</span>, <span class="at">col =</span> coral, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="figure"><span id="fig:theoretical"></span>
-<img src="week-1_files/figure-html/theoretical-1.png" alt="A comparison of the data distribution with a theoretical normal distribution." width="768" />
+<img src="01_files/figure-html/theoretical-1.png" alt="A comparison of the data distribution with a theoretical normal distribution." width="768" />
 <p class="caption">
 Figure 1.5: A comparison of the data distribution with a theoretical normal distribution.
 </p>
@@ -402,7 +395,7 @@ Figure 1.5: A comparison of the data distribution with a theoretical normal dist
 <span id="cb21-6"><a href="inspecting-a-single-group-of-observations.html#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">v =</span> <span class="fu">seq</span> (<span class="fu">mean</span>(f0)<span class="sc">-</span><span class="dv">3</span><span class="sc">*</span><span class="fu">sd</span>(f0),<span class="fu">mean</span>(f0)<span class="sc">+</span><span class="dv">3</span><span class="sc">*</span><span class="fu">sd</span>(f0),<span class="fu">sd</span>(f0)), <span class="at">lwd =</span> <span class="dv">2</span>, </span>
 <span id="cb21-7"><a href="inspecting-a-single-group-of-observations.html#cb21-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> coral)</span></code></pre></div>
 <div class="figure"><span id="fig:quantiles"></span>
-<img src="week-1_files/figure-html/quantiles-1.png" alt="Quantiles and standard deviations help understand the shape of a distribution." width="768" />
+<img src="01_files/figure-html/quantiles-1.png" alt="Quantiles and standard deviations help understand the shape of a distribution." width="768" />
 <p class="caption">
 Figure 1.6: Quantiles and standard deviations help understand the shape of a distribution.
 </p>
@@ -426,7 +419,7 @@ Figure 1.6: Quantiles and standard deviations help understand the shape of a dis
 <span id="cb22-9"><a href="inspecting-a-single-group-of-observations.html#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(x, y, <span class="at">col=</span><span class="st">&#39;2&#39;</span>)</span>
 <span id="cb22-10"><a href="inspecting-a-single-group-of-observations.html#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">v =</span> <span class="fl">63.8</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lty=</span><span class="dv">3</span>); <span class="fu">abline</span> (<span class="at">v =</span> <span class="dv">70</span>, <span class="at">lwd =</span> <span class="dv">2</span>,<span class="at">col=</span><span class="dv">1</span>,<span class="at">lty=</span><span class="dv">3</span>)</span></code></pre></div>
 <div class="figure"><span id="fig:prediction"></span>
-<img src="week-1_files/figure-html/prediction-1.png" alt="The read area relects the distribution of outcomes that satisfy f0 &lt; 175 Hz." width="768" />
+<img src="01_files/figure-html/prediction-1.png" alt="The read area relects the distribution of outcomes that satisfy f0 &lt; 175 Hz." width="768" />
 <p class="caption">
 Figure 1.7: The read area relects the distribution of outcomes that satisfy f0 &lt; 175 Hz.
 </p>
@@ -483,7 +476,7 @@ Here are three useful properties of the likelihood functions of <span class="mat
 <p>Imagine I follow the steps above for each position along the x axis, recording the likelihood values I calculate. I then plot the product of the densities for each corresponding x value. If I do this I have just plotted a likelihood function for <span class="math inline">\(\mu\)</span> given our data.</p>
  
 <div class="figure"><span id="fig:likelihood1"></span>
-<img src="week-1_files/figure-html/likelihood1-1.png" alt="(Left) The likelihood of the population mean given the blue points in the figure. (right) The probability of the points given an assumed mean of 175 Hz." width="768" />
+<img src="01_files/figure-html/likelihood1-1.png" alt="(Left) The likelihood of the population mean given the blue points in the figure. (right) The probability of the points given an assumed mean of 175 Hz." width="768" />
 <p class="caption">
 Figure 1.8: (Left) The likelihood of the population mean given the blue points in the figure. (right) The probability of the points given an assumed mean of 175 Hz.
 </p>
@@ -494,7 +487,7 @@ Figure 1.8: (Left) The likelihood of the population mean given the blue points i
 <p>Finally, in the right panel below we see the the maximum likelihood estimate of 225 Hz, the value representing the peak of the likelihood function (in the left panel above). When we say that 225 Hz is the most likely mean for this data, we are saying that this data is most probably the outcome of a normal distribution centered at 225 Hz, relative to the alternatives.</p>
  
 <div class="figure"><span id="fig:likelihood2"></span>
-<img src="week-1_files/figure-html/likelihood2-1.png" alt="(Left) The probability of the points given an assumed mean of 200 Hz. (right) The probability of the points given an assumed mean of 225 Hz." width="768" />
+<img src="01_files/figure-html/likelihood2-1.png" alt="(Left) The probability of the points given an assumed mean of 200 Hz. (right) The probability of the points given an assumed mean of 225 Hz." width="768" />
 <p class="caption">
 Figure 1.9: (Left) The probability of the points given an assumed mean of 200 Hz. (right) The probability of the points given an assumed mean of 225 Hz.
 </p>
@@ -522,7 +515,7 @@ Figure 1.9: (Left) The probability of the points given an assumed mean of 200 Hz
 <pre><code>## [1] 218.5047 222.2974</code></pre>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="inspecting-a-single-group-of-observations.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">v =</span> quantiles, <span class="at">lwd=</span><span class="dv">2</span>,<span class="at">col=</span>deepgreen)</span></code></pre></div>
 <div class="figure"><span id="fig:likelihood"></span>
-<img src="week-1_files/figure-html/likelihood-1.png" alt="Likelihood of population mean given our data. Horizontal lines indicate intervals enclosing 95% of the distribution." width="768" />
+<img src="01_files/figure-html/likelihood-1.png" alt="Likelihood of population mean given our data. Horizontal lines indicate intervals enclosing 95% of the distribution." width="768" />
 <p class="caption">
 Figure 1.10: Likelihood of population mean given our data. Horizontal lines indicate intervals enclosing 95% of the distribution.
 </p>
@@ -592,7 +585,7 @@ f0_{[i]} = 220.4 + \mathcal{N}(0,23.2)
 <span id="cb56-2"><a href="inspecting-a-single-group-of-observations.html#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span> (f0, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">col =</span> yellow)</span>
 <span id="cb56-3"><a href="inspecting-a-single-group-of-observations.html#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span> (f0 <span class="sc">-</span> <span class="fu">mean</span> (f0), <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">col =</span> coral)</span></code></pre></div>
 <div class="figure"><span id="fig:errorhist"></span>
-<img src="week-1_files/figure-html/errorhist-1.png" alt="(left) Histogram of data. (right) Histogram of centered data, basically the error distribution." width="768" />
+<img src="01_files/figure-html/errorhist-1.png" alt="(left) Histogram of data. (right) Histogram of centered data, basically the error distribution." width="768" />
 <p class="caption">
 Figure 1.11: (left) Histogram of data. (right) Histogram of centered data, basically the error distribution.
 </p>
@@ -643,7 +636,7 @@ y_{[i]} = \alpha_1*\mathrm{x}_{1[i]} + \alpha_2*\mathrm{x}_{2[i]} + \alpha_3*\ma
 <span id="cb57-6"><a href="inspecting-a-single-group-of-observations.html#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span> (<span class="fu">density</span> (h95<span class="sc">$</span>f0[h95<span class="sc">$</span>group<span class="sc">==</span><span class="st">&#39;m&#39;</span>]),<span class="at">col=</span><span class="dv">4</span>,<span class="at">lwd=</span><span class="dv">3</span>)</span>
 <span id="cb57-7"><a href="inspecting-a-single-group-of-observations.html#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span> (<span class="fu">density</span> (h95<span class="sc">$</span>f0[h95<span class="sc">$</span>group<span class="sc">==</span><span class="st">&#39;w&#39;</span>]),<span class="at">col=</span><span class="dv">5</span>,<span class="at">lwd=</span><span class="dv">3</span>)</span></code></pre></div>
 <div class="figure"><span id="fig:allf0s"></span>
-<img src="week-1_files/figure-html/allf0s-1.png" alt="(left) Distribution of f0 across all speakers. (right) Densities of distributions of f0 for different speaker classes: boys (red), girls (green), men (blue) and women (cyan)." width="768" />
+<img src="01_files/figure-html/allf0s-1.png" alt="(left) Distribution of f0 across all speakers. (right) Densities of distributions of f0 for different speaker classes: boys (red), girls (green), men (blue) and women (cyan)." width="768" />
 <p class="caption">
 Figure 1.12: (left) Distribution of f0 across all speakers. (right) Densities of distributions of f0 for different speaker classes: boys (red), girls (green), men (blue) and women (cyan).
 </p>
@@ -668,7 +661,7 @@ Figure 1.12: (left) Distribution of f0 across all speakers. (right) Densities of
 <p>In the bottom-left panel we see a situation where the prior dominates the estimate. Consider a situation where we actually have really good reasons to think that the mean is 250 Hz. If we really <em>know</em> this, why would we accept and estimate of 220 Hz based on only 5 samples? In this case, the posterior distribution is basically saying: your estimate is great, but come back when you have more evidence and I might believe you.</p>
 <p>In the bottom-right panel we see a situation where the likelihood and the prior are equal. In this case the posterior represents compromise between new and prior knowledge.</p>
 <div class="figure"><span id="fig:posterior"></span>
-<img src="week-1_files/figure-html/posterior-1.png" alt="Demonstration of the effect of different types of priors and likelihoods on posterior distributions." width="768" />
+<img src="01_files/figure-html/posterior-1.png" alt="Demonstration of the effect of different types of priors and likelihoods on posterior distributions." width="768" />
 <p class="caption">
 Figure 1.13: Demonstration of the effect of different types of priors and likelihoods on posterior distributions.
 </p>
@@ -728,7 +721,7 @@ Figure 1.13: Demonstration of the effect of different types of priors and likeli
 <p>In the plots below (code at end of chapter), I show this algorithm at work. In the top row, a random sample with a mean of -50 is used. You can see that the sampler starts at 0 but quickly finds the sample mean (left column). In the middle, I show the distribution of the samples on the left, minus the burn-in phase (arbitrarily chosen by me). On the right, I compare our samples (blue) to the theoretical posterior distribution for the mean given the data and prior (red). I toss out the samples during the ‘burn in’ phase, as there are used up in trying to ‘find’ the correct location in the parameter space.</p>
 <p>In the bottom row, I use this algorithm on our f0 data! This is a ‘Bayesian’ analysis since it combines information about parameter likelihood and prior probabilities. We can also see that even this simple approach yields a good correspondence to the theoretical posterior distribution of the parameter, and results in broadly the same conclusions we have arrived at by other means.</p>
 <div class="figure"><span id="fig:mcmc"></span>
-<img src="week-1_files/figure-html/mcmc-1.png" alt="Demonstration of parameter estimation using a random walk, yielding a good approximation of analytically-derived values." width="768" />
+<img src="01_files/figure-html/mcmc-1.png" alt="Demonstration of parameter estimation using a random walk, yielding a good approximation of analytically-derived values." width="768" />
 <p class="caption">
 Figure 1.14: Demonstration of parameter estimation using a random walk, yielding a good approximation of analytically-derived values.
 </p>

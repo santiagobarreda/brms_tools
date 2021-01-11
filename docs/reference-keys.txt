@@ -64,6 +64,7 @@ fitting-the-model
 checking-model-convergence
 specifying-prior-probabilities
 answering-our-research-questions
+lmer-corner
 plot-code-1
 comparing-two-groups-of-observations
 data-and-research-questions-2

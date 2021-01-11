@@ -1,3 +1,8 @@
+---
+output:
+  html_document: default
+  '': default
+---
 
 # Main Title
   
@@ -11,6 +16,8 @@ Some more text.
 ##here I plot some numbers
 plot (rnorm (10))
 ```
+
+
 
 Below I make the plot without showing the code after:
 ```{r, echo = FALSE}
@@ -29,5 +36,8 @@ However the action still runs, as demonstrated below:
 ```{r}
 greeting
 ```
+
+
+
 
 
