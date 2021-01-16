@@ -1,4 +1,4 @@
-fig:F1-initialplot
+fig:initialplot
 fig:F1-distributioncomparison
 fig:F1-twohists1
 fig:F1-twohists2
@@ -31,6 +31,7 @@ eq:27
 eq:28
 eq:29
 eq:210
+fig:unnamed-chunk-22
 fig:F3-boxplots
 fig:F3-boxplots-density
 fig:contrast-figure
