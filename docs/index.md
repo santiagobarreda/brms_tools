@@ -1,7 +1,7 @@
 --- 
 title: "A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers"
 author: "Santiago Bareda"
-date: "2021-01-15"
+date: "2021-01-16"
 site: bookdown::bookdown_site
 documentclass: book
 highlight: tango
