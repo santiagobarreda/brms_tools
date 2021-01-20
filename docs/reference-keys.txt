@@ -44,6 +44,8 @@ fig:F3-boxplots-redux
 fig:brm-random-effects
 fig:brm-boxplot-comparison
 fig:F3-final-analysis
+fig:F4-datacomparison
+fig:F4-speakerboxplots
 eq:41
 eq:42
 eq:43
@@ -114,3 +116,4 @@ fitting-the-model-and-interpreting-the-results-1
 assessing-model-fit
 investigating-the-interactions-the-easy-way
 making-plots
+plot-code-3

@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-01-18" />
+<meta name="date" content="2021-01-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -241,6 +241,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.5.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-the-interactions-the-easy-way"><i class="fa fa-check"></i><b>4.5.3</b> Investigating the interactions the easy way</a></li>
 <li class="chapter" data-level="4.5.4" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#making-plots"><i class="fa fa-check"></i><b>4.5.4</b> Making plots</a></li>
 </ul></li>
+<li class="chapter" data-level="4.6" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#plot-code-3"><i class="fa fa-check"></i><b>4.6</b> Plot Code</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a></li>
 <li class="divider"></li>
@@ -885,7 +886,7 @@ adult1       -8.89      2.65   -14.19    -3.55 1.00     2085     2825</code></pr
 <span id="cb186-3"><a href="comparing-two-groups-of-observations.html#cb186-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab=</span><span class="st">&quot;Speaker Effect (Hz)&quot;</span>)</span></code></pre></div>
 <p><img src="03_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <p>Importantly however, the values we get from both approaches are nearly identical, as seen below. The average absolute difference between the two sets of parameters was only 0.08 Hz, and the <em>largest</em> difference between the two is 0.25 Hz. So, analyzing this data using a Bayesian multilevel model provides several advantages, while still providing effectively the same ‘answers’ as a ‘frequentist’ approach to the data.</p>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="comparing-two-groups-of-observations.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.5</span>,<span class="fl">4.5</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="comparing-two-groups-of-observations.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.51</span>,<span class="fl">4.5</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
 <span id="cb187-2"><a href="comparing-two-groups-of-observations.html#cb187-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (brms_ranefs[,<span class="dv">1</span>], lmer_ranefs[,<span class="dv">1</span>], <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">cex=</span><span class="dv">2</span>,</span>
 <span id="cb187-3"><a href="comparing-two-groups-of-observations.html#cb187-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&#39;brms Random Effects&#39;</span>, <span class="at">ylab =</span> <span class="st">&#39;lme4 Random Effects&#39;</span>)</span>
 <span id="cb187-4"><a href="comparing-two-groups-of-observations.html#cb187-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col=</span><span class="dv">2</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
