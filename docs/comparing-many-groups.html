@@ -580,12 +580,12 @@ gender_{[i]} \sim t(3, 0, 100) \\
 <span id="cb241-2"><a href="comparing-many-groups.html#cb241-2" aria-hidden="true" tabindex="-1"></a>y_pred_no_re <span class="ot">=</span> <span class="fu">predict</span> (model_both, <span class="at">re_formula =</span> <span class="cn">NA</span>)</span>
 <span id="cb241-3"><a href="comparing-many-groups.html#cb241-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (y_pred)</span></code></pre></div>
 <pre><code>##      Estimate Est.Error     Q2.5    Q97.5
-## [1,] 243.5561  12.19656 219.8115 268.3380
-## [2,] 278.0214  12.21124 254.1821 301.9079
-## [3,] 207.2800  12.37763 183.2620 231.1849
-## [4,] 246.7159  12.30764 222.6212 270.4167
-## [5,] 218.5097  12.28474 194.1936 241.5124
-## [6,] 300.7955  12.69626 275.6835 326.1038</code></pre>
+## [1,] 243.2678  12.15870 219.5163 267.1237
+## [2,] 278.1261  12.23598 254.2154 302.4537
+## [3,] 207.1496  12.47305 182.6524 231.8092
+## [4,] 246.7278  12.32163 221.9246 271.1106
+## [5,] 218.6236  12.43192 193.7318 242.6001
+## [6,] 300.8353  12.51641 276.0040 325.1157</code></pre>
 <p>You will note that the output of prediction, <code>y_pred</code>, has four columns, indicating a predicted value but also information about variation. That is because, actually, our model produces a different prediction for each set of samples. This means that if we have 4000 samples we actually have 4000 slightly different models and 4000 slightly different predictions! This means in addition to the most probable estimates, we can get information about expected variation around these estimates</p>
 <p>Above in the second line, I make predictions without random effects (<code>re_formula = NA</code>). This corresponds to a model like this <em>without</em> speaker adjustments:</p>
 <p><span class="math inline">\(\mu_{[i]} = Intercept + adult_{adult_{[i]}} + gender_{gender_{[i]}}\)</span></p>
