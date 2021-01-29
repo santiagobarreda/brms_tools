@@ -42,7 +42,7 @@ divide_factors = function (model, formula = NULL){
   fe = fixef (model, summary = FALSE)
   
   if (is.null(formula)) 
-    formula = formula (strsplit (deparse(e1$formula$formula), split=" \\+ \\(")[[1]][[1]])
+    formula = formula (strsplit (deparse(model$formula$formula), split=" \\+ \\(")[[1]][[1]])
   
   mod = model.matrix (formula, data = model$data)
   num = attr (mod, "assign") + 1
