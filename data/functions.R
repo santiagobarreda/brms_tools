@@ -59,6 +59,29 @@ divide_factors = function (model, formula = NULL){
 }
 
 
+add_missing = function (x){
+  
+  n = ncol (x)
+  lab = colnames (x)[n]
+  
+  num = 1 + as.numeric(substr(lab,nchar(lab),nchar(lab)))
+  newlab = paste0 (substr(lab,1,nchar(lab)-1), num)
+  
+  output = cbind (x, - rowSums (x))
+  colnames (output)[n+1] = newlab
+  
+  return (output)
+  
+}
+
+
+summarize = function (x){
+  lapply (factors, posterior_summary)
+}
+
+
+
+
 
 plot.interaction <- function (x.factor, trace.factor, response, fun = mean,
                               type = c("l", "p", "b", "o", "c"), legend = TRUE, 
