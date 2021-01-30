@@ -5,6 +5,9 @@ brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE,
                     labels = "default",xlab='',ylab='', pch=16, lwd=2,cex=1.5, ...){
     
   n = nrow (mat)
+  if (n > 500 & ncol(mat) !=4) mat = posterior_summary (mat)
+  n = nrow (mat)
+  
   if (horizontal){
   if (is.null(xs)) xs = 1:n
     if (is.null(xlim)) xlim = range (1:n)
