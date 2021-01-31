@@ -7,4 +7,6 @@ teal = rgb (39/255, 192/255, 216/255, 0.75)
 skyblue =rgb (58/255, 101/255, 175/255, 0.75)
 maroon = rgb (130/255, 43/255, 50/255, .75)
 deeppurple = rgb (96/255, 45/255, 69/255, 0.75)
-cols = c(lightpink,lavender,coral,yellow,deepgreen,teal,skyblue,maroon,deeppurple)
+darkorange = rgb (255/255, 100/255, 0/255, 0.75)
+cols = c(lightpink,lavender,coral,yellow,deepgreen,
+         teal,skyblue,maroon,deeppurple,darkorange)
