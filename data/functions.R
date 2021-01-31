@@ -39,7 +39,6 @@ brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE,
 }
 
 
-
 divide_factors = function (model, formula = NULL){
   
   fe = fixef (model, summary = FALSE)
@@ -48,15 +47,17 @@ divide_factors = function (model, formula = NULL){
     formula = formula (strsplit (deparse(model$formula$formula), split=" \\+ \\(")[[1]][[1]])
   
   mod = model.matrix (formula, data = model$data)
-  num = attr (mod, "assign") + 1
-  name = attr (mod, "dimnames")[[2]]
-  name = gsub('[[:digit:]]+', '', name)
-  name = unique (name)
+
+  terms = attr(terms(formula), "term.labels")
+  intercept = attr(terms(formula), "intercept")
+  if (intercept) terms = c("(Intercept)",terms)
   
+  num = attr (mod, "assign") + intercept
+
   factors = list()
   for (i in 1:max(num)){
     factors[[i]] = fe[,num==i]
-    names(factors)[i] = name[i]
+    names(factors)[i] = terms[i]
   }
   return (factors)
 }
