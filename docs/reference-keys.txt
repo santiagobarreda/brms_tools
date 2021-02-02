@@ -106,6 +106,8 @@ eq:615
 eq:616
 fig:F6-12
 fig:F6-13
+fig:F6-14
+fig:F6-15
 inspecting-a-single-group-of-observations
 data-and-research-questions
 inspecting-the-central-location-and-spread-of-values
@@ -210,5 +212,6 @@ more-predictors-and-more-random-slopes
 adding-another-random-slope
 adding-random-factors
 the-independence-of-continuous-predictors
+answering-our-research-questions-1
 lmer-corner-3
 plot-code-5
