@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="" xml:lang="">
 <head>
@@ -1268,3 +1269,1275 @@ gitbook.start({
 </body>
 
 </html>
+=======
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Random slopes | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</title>
+  <meta name="description" content="Bayesian Models for Linguists" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Random slopes | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://santiagobarreda.com" />
+  
+  <meta property="og:description" content="Bayesian Models for Linguists" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Random slopes | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers" />
+  
+  <meta name="twitter:description" content="Bayesian Models for Linguists" />
+  
+
+<meta name="author" content="Santiago Bareda" />
+
+
+<meta name="date" content="2021-02-02" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="including-continuous-predictors-in-our-model.html"/>
+<link rel="next" href="appendix.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bayesian Models for Linguists</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html"><i class="fa fa-check"></i><b>1</b> Inspecting a single group of observations</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#data-and-research-questions"><i class="fa fa-check"></i><b>1.1</b> Data and research questions</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#inspecting-the-central-location-and-spread-of-values"><i class="fa fa-check"></i><b>1.1.1</b> Inspecting the central location and spread of values</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#probability-distributions"><i class="fa fa-check"></i><b>1.2</b> Probability Distributions</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#the-normal-distribution"><i class="fa fa-check"></i><b>1.2.1</b> The normal distribution</a></li>
+<li class="chapter" data-level="1.2.2" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#referring-to-the-normal-distribution-to-make-inferences"><i class="fa fa-check"></i><b>1.2.2</b> Referring to the normal distribution to make inferences</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#probabilities-of-events-and-likelihoods-of-parameters"><i class="fa fa-check"></i><b>1.3</b> Probabilities of events and likelihoods of parameters</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#making-inferences-using-likelihoods"><i class="fa fa-check"></i><b>1.3.1</b> Making inferences using likelihoods</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#bayesian-models"><i class="fa fa-check"></i><b>1.4</b> Bayesian models</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#what-are-regression-models"><i class="fa fa-check"></i><b>1.4.1</b> What are regression models?</a></li>
+<li class="chapter" data-level="1.4.2" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#whats-bayesian-about-these-models"><i class="fa fa-check"></i><b>1.4.2</b> What’s ‘Bayesian’ about these models?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#posterior-distributions"><i class="fa fa-check"></i><b>1.5</b> Posterior distributions</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#sampling-from-the-posterior"><i class="fa fa-check"></i><b>1.5.1</b> Sampling from the posterior</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#plot-code"><i class="fa fa-check"></i><b>1.6</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><i class="fa fa-check"></i><b>2</b> Inspecting a ‘single group’ of observations using a Bayesian multilevel model</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#data-and-research-questions-1"><i class="fa fa-check"></i><b>2.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="2.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#estimating-a-single-mean-with-the-brms-package"><i class="fa fa-check"></i><b>2.2</b> Estimating a single mean with the <code>brms</code> package</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#description-of-the-model"><i class="fa fa-check"></i><b>2.2.1</b> Description of the model</a></li>
+<li class="chapter" data-level="2.2.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#the-model-formula"><i class="fa fa-check"></i><b>2.2.2</b> The model formula</a></li>
+<li class="chapter" data-level="2.2.3" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#fitting-the-model-calling-the-brm-function"><i class="fa fa-check"></i><b>2.2.3</b> Fitting the model: Calling the <code>brm</code> function</a></li>
+<li class="chapter" data-level="2.2.4" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#interpreting-the-model-the-print-statement"><i class="fa fa-check"></i><b>2.2.4</b> Interpreting the model: the print statement</a></li>
+<li class="chapter" data-level="2.2.5" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#seeing-the-samples"><i class="fa fa-check"></i><b>2.2.5</b> Seeing the samples</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#repeated-measures-data"><i class="fa fa-check"></i><b>2.3</b> Repeated measures data</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#multilevel-models"><i class="fa fa-check"></i><b>2.3.1</b> Multilevel models</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#estimating-a-multilevel-model-with-brms"><i class="fa fa-check"></i><b>2.4</b> Estimating a multilevel model with <code>brms</code></a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#description-of-the-model-1"><i class="fa fa-check"></i><b>2.4.1</b> Description of the model</a></li>
+<li class="chapter" data-level="2.4.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#fitting-the-model"><i class="fa fa-check"></i><b>2.4.2</b> Fitting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#checking-model-convergence"><i class="fa fa-check"></i><b>2.5</b> Checking model convergence</a></li>
+<li class="chapter" data-level="2.6" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#specifying-prior-probabilities"><i class="fa fa-check"></i><b>2.6</b> Specifying prior probabilities</a></li>
+<li class="chapter" data-level="2.7" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#answering-our-research-questions"><i class="fa fa-check"></i><b>2.7</b> Answering our research questions</a></li>
+<li class="chapter" data-level="2.8" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#simulating-data-using-our-model-parameters"><i class="fa fa-check"></i><b>2.8</b> Simulating data using our model parameters</a></li>
+<li class="chapter" data-level="2.9" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#lmer-corner"><i class="fa fa-check"></i><b>2.9</b> Lmer corner</a></li>
+<li class="chapter" data-level="2.10" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#plot-code-1"><i class="fa fa-check"></i><b>2.10</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html"><i class="fa fa-check"></i><b>3</b> Comparing two groups of observations</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#data-and-research-questions-2"><i class="fa fa-check"></i><b>3.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="3.2" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#estimating-the-difference-between-two-means-with-brms"><i class="fa fa-check"></i><b>3.2</b> Estimating the difference between two means with ‘brms’</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#fitting-the-model-1"><i class="fa fa-check"></i><b>3.2.1</b> Fitting the model</a></li>
+<li class="chapter" data-level="3.2.2" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#interpreting-the-model"><i class="fa fa-check"></i><b>3.2.2</b> Interpreting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#contrasts"><i class="fa fa-check"></i><b>3.3</b> Contrasts</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#treatment-coding"><i class="fa fa-check"></i><b>3.3.1</b> Treatment coding</a></li>
+<li class="chapter" data-level="3.3.2" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#sum-coding"><i class="fa fa-check"></i><b>3.3.2</b> Sum coding</a></li>
+<li class="chapter" data-level="3.3.3" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#comparison-of-sum-and-treatment-coding"><i class="fa fa-check"></i><b>3.3.3</b> Comparison of sum and treatment coding</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#refitting-the-model-with-sum-coding"><i class="fa fa-check"></i><b>3.4</b> Refitting the model with sum coding</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#fitting-the-model-2"><i class="fa fa-check"></i><b>3.4.1</b> Fitting the model</a></li>
+<li class="chapter" data-level="3.4.2" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#description-of-the-model-2"><i class="fa fa-check"></i><b>3.4.2</b> Description of the model</a></li>
+<li class="chapter" data-level="3.4.3" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#interpreting-the-model-1"><i class="fa fa-check"></i><b>3.4.3</b> Interpreting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#random-effects"><i class="fa fa-check"></i><b>3.5</b> ‘Random’ Effects</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#random-effects-priors-and-pooling"><i class="fa fa-check"></i><b>3.5.1</b> Random effects, priors and pooling</a></li>
+<li class="chapter" data-level="3.5.2" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#inspecting-the-random-effects"><i class="fa fa-check"></i><b>3.5.2</b> Inspecting the random effects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#but-what-does-it-all-mean"><i class="fa fa-check"></i><b>3.6</b> But what does it all mean?</a></li>
+<li class="chapter" data-level="3.7" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#simulating-the-two-group-model"><i class="fa fa-check"></i><b>3.7</b> Simulating the two-group model</a></li>
+<li class="chapter" data-level="3.8" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#lmer-corner-1"><i class="fa fa-check"></i><b>3.8</b> Lmer corner</a></li>
+<li class="chapter" data-level="3.9" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#plot-code-2"><i class="fa fa-check"></i><b>3.9</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html"><i class="fa fa-check"></i><b>4</b> Comparing many groups</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#data-and-research-questions-3"><i class="fa fa-check"></i><b>4.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="4.2" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#comparing-four-or-any-number-of-groups"><i class="fa fa-check"></i><b>4.2</b> Comparing four (or any number of) groups</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#the-model"><i class="fa fa-check"></i><b>4.2.1</b> The model</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-many-groups-using-predictors-analysis-of-variance"><i class="fa fa-check"></i><b>4.3</b> Investigating many groups using predictors: Analysis of Variance</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#description-of-the-model-3"><i class="fa fa-check"></i><b>4.3.1</b> Description of the model</a></li>
+<li class="chapter" data-level="4.3.2" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#fitting-the-model-and-interpreting-the-results"><i class="fa fa-check"></i><b>4.3.2</b> Fitting the model and interpreting the results</a></li>
+<li class="chapter" data-level="4.3.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-model-fit"><i class="fa fa-check"></i><b>4.3.3</b> Investigating model fit</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#interactions-and-interaction-plots"><i class="fa fa-check"></i><b>4.4</b> Interactions and interaction plots</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#interactions-in-our-f0-data"><i class="fa fa-check"></i><b>4.4.1</b> Interactions in our f0 data</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-interactions-with-a-model"><i class="fa fa-check"></i><b>4.5</b> Investigating interactions with a model</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#fitting-the-model-and-interpreting-the-results-1"><i class="fa fa-check"></i><b>4.5.1</b> Fitting the model and interpreting the results</a></li>
+<li class="chapter" data-level="4.5.2" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#assessing-model-fit"><i class="fa fa-check"></i><b>4.5.2</b> Assessing model fit</a></li>
+<li class="chapter" data-level="4.5.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-the-interactions-the-easy-way"><i class="fa fa-check"></i><b>4.5.3</b> Investigating the interactions the easy way</a></li>
+<li class="chapter" data-level="4.5.4" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#making-plots"><i class="fa fa-check"></i><b>4.5.4</b> Making plots</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#lmer-corner-2"><i class="fa fa-check"></i><b>4.6</b> Lmer corner</a></li>
+<li class="chapter" data-level="4.7" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#plot-code-3"><i class="fa fa-check"></i><b>4.7</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html"><i class="fa fa-check"></i><b>5</b> Including continuous predictors in our model</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#data-and-research-questions-4"><i class="fa fa-check"></i><b>5.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="5.2" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#continuous-predictors-modeling-variation-along-lines"><i class="fa fa-check"></i><b>5.2</b> Continuous predictors: modeling variation along lines</a></li>
+<li class="chapter" data-level="5.3" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#models-with-a-single-slope-and-intercept"><i class="fa fa-check"></i><b>5.3</b> Models with a single slope and intercept</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#description-of-the-model-4"><i class="fa fa-check"></i><b>5.3.1</b> Description of the model</a></li>
+<li class="chapter" data-level="5.3.2" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#fitting-the-model-3"><i class="fa fa-check"></i><b>5.3.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="5.3.3" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#interpreting-the-model-2"><i class="fa fa-check"></i><b>5.3.3</b> Interpreting the model</a></li>
+<li class="chapter" data-level="5.3.4" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#centering-predictors"><i class="fa fa-check"></i><b>5.3.4</b> Centering predictors</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#interactions-in-our-line-parameters"><i class="fa fa-check"></i><b>5.4</b> Interactions in our line parameters</a></li>
+<li class="chapter" data-level="5.5" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#models-with-group-dependent-intercepts-but-shared-slopes"><i class="fa fa-check"></i><b>5.5</b> Models with group-dependent intercepts, but shared slopes</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#description-of-the-model-5"><i class="fa fa-check"></i><b>5.5.1</b> Description of the model</a></li>
+<li class="chapter" data-level="5.5.2" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#fitting-the-model-4"><i class="fa fa-check"></i><b>5.5.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="5.5.3" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#the-effect-of-including-a-slope"><i class="fa fa-check"></i><b>5.5.3</b> The effect of including a slope</a></li>
+<li class="chapter" data-level="5.5.4" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#interpreting-group-effects-in-the-presence-of-a-continuous-predictor"><i class="fa fa-check"></i><b>5.5.4</b> Interpreting group effects in the presence of a continuous predictor</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#models-with-group-dependent-slopes-and-intercepts"><i class="fa fa-check"></i><b>5.6</b> Models with group-dependent slopes and intercepts</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#description-of-the-model-6"><i class="fa fa-check"></i><b>5.6.1</b> Description of the model</a></li>
+<li class="chapter" data-level="5.6.2" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#fitting-the-model-5"><i class="fa fa-check"></i><b>5.6.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="5.6.3" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#interpreting-the-model-3"><i class="fa fa-check"></i><b>5.6.3</b> Interpreting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#plot-code-4"><i class="fa fa-check"></i><b>5.7</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="random-slopes.html"><a href="random-slopes.html"><i class="fa fa-check"></i><b>6</b> Random slopes</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="random-slopes.html"><a href="random-slopes.html#data-and-research-questions-5"><i class="fa fa-check"></i><b>6.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="6.2" data-path="random-slopes.html"><a href="random-slopes.html#repeated-measures-and-speaker-dependent-parameter-values"><i class="fa fa-check"></i><b>6.2</b> Repeated measures and speaker-dependent parameter values</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="random-slopes.html"><a href="random-slopes.html#description-of-the-model-7"><i class="fa fa-check"></i><b>6.2.1</b> Description of the model</a></li>
+<li class="chapter" data-level="6.2.2" data-path="random-slopes.html"><a href="random-slopes.html#fitting-the-model-6"><i class="fa fa-check"></i><b>6.2.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="6.2.3" data-path="random-slopes.html"><a href="random-slopes.html#interpreting-the-model-4"><i class="fa fa-check"></i><b>6.2.3</b> Interpreting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="random-slopes.html"><a href="random-slopes.html#random-effects-and-the-multivariate-normal-distribution"><i class="fa fa-check"></i><b>6.3</b> Random effects and the multivariate normal distribution</a></li>
+<li class="chapter" data-level="6.4" data-path="random-slopes.html"><a href="random-slopes.html#random-slopes-1"><i class="fa fa-check"></i><b>6.4</b> Random slopes</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="random-slopes.html"><a href="random-slopes.html#description-of-the-model-8"><i class="fa fa-check"></i><b>6.4.1</b> Description of the model</a></li>
+<li class="chapter" data-level="6.4.2" data-path="random-slopes.html"><a href="random-slopes.html#fitting-the-model-7"><i class="fa fa-check"></i><b>6.4.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="6.4.3" data-path="random-slopes.html"><a href="random-slopes.html#interpreting-the-model-5"><i class="fa fa-check"></i><b>6.4.3</b> Interpreting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="random-slopes.html"><a href="random-slopes.html#more-predictors-and-more-random-slopes"><i class="fa fa-check"></i><b>6.5</b> More predictors and more random slopes</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="random-slopes.html"><a href="random-slopes.html#adding-another-random-slope"><i class="fa fa-check"></i><b>6.5.1</b> Adding another random slope</a></li>
+<li class="chapter" data-level="6.5.2" data-path="random-slopes.html"><a href="random-slopes.html#adding-random-factors"><i class="fa fa-check"></i><b>6.5.2</b> Adding random factors</a></li>
+<li class="chapter" data-level="6.5.3" data-path="random-slopes.html"><a href="random-slopes.html#the-independence-of-continuous-predictors"><i class="fa fa-check"></i><b>6.5.3</b> The independence of continuous predictors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="random-slopes.html"><a href="random-slopes.html#lmer-corner-3"><i class="fa fa-check"></i><b>6.6</b> Lmer corner</a></li>
+<li class="chapter" data-level="6.7" data-path="random-slopes.html"><a href="random-slopes.html#plot-code-5"><i class="fa fa-check"></i><b>6.7</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a></li>
+<li class="divider"></li>
+<li><a href="http://www.santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
+<li><a href="A-Quick-Introduction-to-Multilevel-Bayesian-Models-for-Linguistic-Researchers.pdf" target="blank">Download possibly outdated and badly-formatted PDF</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="random-slopes" class="section level1" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Random slopes</h1>
+<p>To this point we’ve been fitting realistic, but relatively simple models. In this chapter we’re going to build models that are more similar to the sorts of models that appear in published articles (i.e. they’re more complicated). Fortunately, we have already discussed basically all of the component parts that make up our models. We’ll see that the more complicated models we’ll consider are just made up of many smaller components, all working together.</p>
+<div id="data-and-research-questions-5" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Data and research questions</h2>
+<p>In this chapter we are going to flip the dependent and independent variables from last chapter. We’re going to consider variation in perceived height as a function of f0 (and other predictors).</p>
+<p>Our data consists of the results of a listening experiment carried out using the Hillenbrand et al. data. Ten listeners heard productions of ‘aw’ and ‘iy’ produced by all 139 speakers in the Hillenbrand et al. data. The stimuli consisted of /hVd/ words presented at random (n = 278). For each trial, listeners reported the height of the speaker (in inches) and guessed whether the speaker was a boy, girl, man or woman.</p>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="random-slopes.html#cb322-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (brms)</span>
+<span id="cb322-2"><a href="random-slopes.html#cb322-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span> (<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&quot;contr.sum&quot;</span>,<span class="st">&quot;cont.sum&quot;</span>))</span>
+<span id="cb322-3"><a href="random-slopes.html#cb322-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb322-4"><a href="random-slopes.html#cb322-4" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">=</span> <span class="st">&quot;https://raw.githubusercontent.com/santiagobarreda&quot;</span></span>
+<span id="cb322-5"><a href="random-slopes.html#cb322-5" aria-hidden="true" tabindex="-1"></a>url2 <span class="ot">=</span> <span class="st">&quot;/stats-class/master/data/h95_experiment_data.csv&quot;</span></span>
+<span id="cb322-6"><a href="random-slopes.html#cb322-6" aria-hidden="true" tabindex="-1"></a>h95 <span class="ot">=</span> <span class="fu">read.csv</span> (<span class="fu">url</span>(<span class="fu">paste0</span> (url1, url2)))</span>
+<span id="cb322-7"><a href="random-slopes.html#cb322-7" aria-hidden="true" tabindex="-1"></a><span class="do">## set up colors for plotting</span></span>
+<span id="cb322-8"><a href="random-slopes.html#cb322-8" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">source_url</span> (<span class="fu">paste0</span> (url1, <span class="st">&quot;/stats-class/master/data/colors.R&quot;</span>))</span>
+<span id="cb322-9"><a href="random-slopes.html#cb322-9" aria-hidden="true" tabindex="-1"></a><span class="do">## source functions</span></span>
+<span id="cb322-10"><a href="random-slopes.html#cb322-10" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">source_url</span> (<span class="fu">paste0</span> (url1, <span class="st">&quot;/stats-class/master/data/functions.R&quot;</span>))</span>
+<span id="cb322-11"><a href="random-slopes.html#cb322-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb322-12"><a href="random-slopes.html#cb322-12" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>pheight <span class="ot">=</span> h95<span class="sc">$</span>height</span>
+<span id="cb322-13"><a href="random-slopes.html#cb322-13" aria-hidden="true" tabindex="-1"></a><span class="do">## calculate centered log f0</span></span>
+<span id="cb322-14"><a href="random-slopes.html#cb322-14" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>g0_c <span class="ot">=</span> <span class="fu">log</span> (h95<span class="sc">$</span>f0) <span class="sc">-</span> <span class="fu">mean</span> (<span class="fu">log</span>(h95<span class="sc">$</span>f0))</span></code></pre></div>
+<p>We’re going to try to understand the role of f0 in size perception because f0 is a very important predictor of apparent talker size. Below we can see the distribution of perceived height plotted according to f0, individually for each subject. Clearly, there is a general tendency for perceived height to decrease as f0 increases. This relationship is not really a straight line for most subjects, but is linear enough to try this model as a first step.</p>
+<div class="figure"><span id="fig:F6-1"></span>
+<img src="06_files/figure-html/F6-1-1.png" alt="Each plot shows responses from a single subject." width="768" />
+<p class="caption">
+Figure 6.1: Each plot shows responses from a single subject.
+</p>
+</div>
+<p>In the plot below, we compare the data from all subjects using the same colors as above. There is clearly quite a bit of general agreement between listeners. However, we can also clearly see that there is between-subject variation in responses.</p>
+<div class="figure"><span id="fig:F6-2"></span>
+<img src="06_files/figure-html/F6-2-1.png" alt="Distribution of perceived height responses as a function of f0 for all listeners." width="768" />
+<p class="caption">
+Figure 6.2: Distribution of perceived height responses as a function of f0 for all listeners.
+</p>
+</div>
+</div>
+<div id="repeated-measures-and-speaker-dependent-parameter-values" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Repeated measures and speaker-dependent parameter values</h2>
+<p>In chapter 3 I mentioned that the speaker effects are included in the model using sum coding. In chapter 5 I mentioned that nominal effects like ‘group’ are basically interactions with the model intercept for each group, resulting in group-specific intercepts in our model. Well, it turns out that the subject factor is also just basically an interaction with our intercept as well. Here we’re going to consider two approaches to including subject-specific sloped in our model: one with random slopes by subject, and one with a fixed <span class="math inline">\(predictor \colon subject\)</span> interaction.</p>
+<div id="description-of-the-model-7" class="section level3" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Description of the model</h3>
+<p>We’re going to predict perceived height (in inches) as a function of centered log-f0 (the logarithm of the fundamental frequency). We’re going to let the relationship between f0 and perceived height (related by a line) vary according to subjects. Our model formula is:</p>
+<p><code>pheight ~ g0_c * subj + (1|speaker)</code></p>
+<p>This says “model perceived height as a function of centered log-f0 (<code>g0_c</code>) and include subject effects (i.e. subject-specific intercepts). Also, allow subject-specific use of centered log-f0 in the perception of height (using the g0_c:subj interaction)”.</p>
+<p>We can build this model up from the equation for a single line using the information outlined in the previous chapter. Recall that the formula for a line is:</p>
+<p><span class="math display" id="eq:61">\[
+\mu = a + b * \mathrm{x}
+\tag{6.1}
+\]</span></p>
+<p>Where our predicted value (<span class="math inline">\(\mu\)</span>) varies along a line with an intercept of <span class="math inline">\(a\)</span> and a slope of <span class="math inline">\(b\)</span>. We can decompose the intercept and slope terms in an ’ANOVA-like decomposition as below, given predictors <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>:</p>
+<p><span class="math display" id="eq:62">\[
+\mu = (Intercept + A + B + ...) + (Slope + Slope \colon A + Slope \colon B + ...) * \mathrm{x}
+\tag{6.2}
+\]</span></p>
+<p>Above, the line intercept is broken up into a model intercept, and effects for A and B. The slope is broken up into a ‘main effect’ for slope (basically a slope intercept) and the factor by slope interactions (e.g., <span class="math inline">\(Slope \colon A\)</span>).</p>
+<p>Below, the equation is expanded further by removing the parenthesis and multiplying each slope term by our continuous predictor (<span class="math inline">\(\mathrm{x}\)</span>).</p>
+<p><span class="math display" id="eq:63">\[
+\mu = Intercept + A + B + ... + Slope* \mathrm{x} + slope \colon A* \mathrm{x} + Slope \colon B* \mathrm{x} + ...
+\tag{6.3}
+\]</span></p>
+<p>As our models get bigger and bigger, expressions like the one above can be difficult to interpret. A presentation like the one below can be clearer and easier to interpret (once you get used to it).</p>
+<p>The top line reminds you that you are modeling a line. The second and third lines provide information about expected variation in the intercept and the slope.</p>
+<p><span class="math display" id="eq:64">\[
+\mu = a + b * \mathrm{x} \\
+a = Intercept + A + B + ... \\
+b = Slope + slope \colon A + Slope \colon B + ... \\
+\tag{6.4}
+\]</span></p>
+<p>If you prefer the ‘expanded’ version of the model equation it’s easy enough to get this. You simply place all of the components of the <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> equations on the same line, and multiply each term in the <span class="math inline">\(b\)</span> equation by the continuous predictor.</p>
+<p>Below is the structure for our model that treats subject as a fixed effect (just like <span class="math inline">\(group\)</span> in the previous chapter). This model includes subject-specific intercepts for our lines (based on the <span class="math inline">\(subj\)</span> term) and subject-specific slopes for our lines (based on the <span class="math inline">\(g0\_c \colon subj\)</span> term). As with our earlier models, this model includes random intercepts for speakers (<span class="math inline">\(\alpha_{speaker}\)</span>), seen in the intercept equation. Note that our model does <em>not</em> include any random effects in the slopes equation.</p>
+<p><span class="math display" id="eq:65">\[\begin{equation}
+\begin{split}
+\textrm{Likelihood:} \\
+pheight_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
+\mu_{[i]} = a_{[i]} + b_{[i]} * \mathrm{x}_{[i]}  \\ 
+a_{[i]} = Intercept + subj_{[\mathrm{subj}_{[i]}]} + \alpha_{[\mathrm{speaker}_{[i]}]}  \\
+b_{[i]} =  g0\_c + g0\_c \colon subj_{[\mathrm{subj}_{[i]}]} \\ \\
+
+\textrm{Priors:} \\
+\alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
+
+Intercept \sim t(3, 60, 12) \\
+g0\_c \sim t(3, 0, 50) \\ 
+g0\_c \colon subj \sim t(3, 0, 50) \\ 
+subj \sim t(3, 0, 12) \\ 
+
+\sigma_{error} \sim t(3, 0, 12) \\
+\sigma_{speaker} \sim t(3, 0, 12) \\ 
+
+\end{split}
+\tag{6.5}
+\end{equation}\]</span></p>
+<p>Here’s a description of the model in plain English:</p>
+<blockquote>
+<p>Perceived height is normally distributed with a mean that varies trial to trial but a fixed standard deviation. The mean (expected value) varies along lines. The lines are specified by intercepts and slopes that vary trom trial to trial, and there is a single continuous predictor (g0_c). The intercept of these lines vary based on an overall intercept (the main effect), subject-specific deviations from the mean, and speaker-specific deviations from the mean. The slope of these lines vary based on an overall slope (the main effect) and subject-specific deviations from the average slope. The speaker intercepts were drawn from a normal distribution with a mean of zero and a standard deviation estimated from the data. All other effects (e.g., the Intercept, g0_c, etc.) were treated as ‘fixed’ and drawn from prior distributions appropriate for their expected range of values (e.g., subj ~ t(3,0,12)).</p>
+</blockquote>
+</div>
+<div id="fitting-the-model-6" class="section level3" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> Fitting the model</h3>
+<p>We fit the model that treats subject as a fixed effect:</p>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="random-slopes.html#cb323-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fit the model yourself, or</span></span>
+<span id="cb323-2"><a href="random-slopes.html#cb323-2" aria-hidden="true" tabindex="-1"></a><span class="do">## download pre-fit model from: </span></span>
+<span id="cb323-3"><a href="random-slopes.html#cb323-3" aria-hidden="true" tabindex="-1"></a><span class="do">## github.com/santiagobarreda/stats-class/tree/master/models</span></span>
+<span id="cb323-4"><a href="random-slopes.html#cb323-4" aria-hidden="true" tabindex="-1"></a><span class="do">## and load after placing in working directory</span></span>
+<span id="cb323-5"><a href="random-slopes.html#cb323-5" aria-hidden="true" tabindex="-1"></a><span class="do">## fixed_slopes_model = readRDS (&#39;6_fixed_slopes_model.RDS&#39;)</span></span>
+<span id="cb323-6"><a href="random-slopes.html#cb323-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb323-7"><a href="random-slopes.html#cb323-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span> (<span class="dv">1</span>)</span>
+<span id="cb323-8"><a href="random-slopes.html#cb323-8" aria-hidden="true" tabindex="-1"></a>fixed_slopes_model <span class="ot">=</span></span>
+<span id="cb323-9"><a href="random-slopes.html#cb323-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span> (pheight <span class="sc">~</span> g0_c <span class="sc">*</span> subj <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>speaker), <span class="at">data =</span> h95, <span class="at">chains=</span><span class="dv">4</span>, <span class="at">cores=</span><span class="dv">4</span>,  </span>
+<span id="cb323-10"><a href="random-slopes.html#cb323-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">warmup=</span><span class="dv">1000</span>, <span class="at">iter =</span> <span class="dv">7500</span>, <span class="at">thin =</span> <span class="dv">4</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> <span class="fl">0.95</span>), </span>
+<span id="cb323-11"><a href="random-slopes.html#cb323-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 60, 12)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;Intercept&quot;</span>),</span>
+<span id="cb323-12"><a href="random-slopes.html#cb323-12" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 50)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb323-13"><a href="random-slopes.html#cb323-13" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 12)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;sd&quot;</span>)))</span>
+<span id="cb323-14"><a href="random-slopes.html#cb323-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb323-15"><a href="random-slopes.html#cb323-15" aria-hidden="true" tabindex="-1"></a><span class="do">## save model</span></span>
+<span id="cb323-16"><a href="random-slopes.html#cb323-16" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS (fixed_slopes_model, &#39;6_fixed_slopes_model.RDS&#39;)</span></span></code></pre></div>
+</div>
+<div id="interpreting-the-model-4" class="section level3" number="6.2.3">
+<h3><span class="header-section-number">6.2.3</span> Interpreting the model</h3>
+<p>We’re going to focus on the model fixed effects. Since we’re calculating subject-specific intercepts and slopes, we need 20 coefficients to represents all the lines for our ten subjects. The <code>Intercept</code> and <code>g0_c</code> parameters represent our mean overall intercept and slope across all subjects. The <code>subj</code> parameters represent subject-specific deviations from the mean intercept for a given subject, while the <code>g0_c:subject</code> interactions represent subject specific deviations from the overall slope.</p>
+<p>For example, the line representing subject 8’s responses can be found by calculating <code>Intercept + subj8</code> for the intercept and <code>g0_c + g0_c:subj8</code> for the slope.</p>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="random-slopes.html#cb324-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span> (fixed_slopes_model)</span></code></pre></div>
+<pre><code>##               Estimate Est.Error       Q2.5      Q97.5
+## Intercept  60.98678449 0.4784301 60.0484335 61.9134125
+## g0_c       -6.28597349 1.4033403 -8.9682111 -3.5214787
+## subj1       1.16432587 0.2191837  0.7370882  1.5905736
+## subj2       1.15897715 0.2178242  0.7268558  1.5884516
+## subj3       0.08484842 0.2191453 -0.3439572  0.5161977
+## subj4       3.19209439 0.2196449  2.7737538  3.6216057
+## subj5      -1.99350871 0.2183408 -2.4207174 -1.5651102
+## subj6       0.03808015 0.2185083 -0.3916037  0.4690840
+## subj7      -1.35476612 0.2171118 -1.7884342 -0.9376645
+## subj8      -0.18965272 0.2172589 -0.6200814  0.2400315
+## subj9      -1.53045427 0.2166533 -1.9543467 -1.1057361
+## g0_c:subj1  0.97782028 0.7314227 -0.4547865  2.3773882
+## g0_c:subj2 -1.04728394 0.7340484 -2.4842509  0.3662594
+## g0_c:subj3  1.33942054 0.7252348 -0.1290505  2.7669004
+## g0_c:subj4  7.67663353 0.7400229  6.2212793  9.1142621
+## g0_c:subj5  2.00732223 0.7318437  0.5799876  3.4735872
+## g0_c:subj6 -4.77805879 0.7323175 -6.1988376 -3.3397408
+## g0_c:subj7  2.18304348 0.7355534  0.7304213  3.6183430
+## g0_c:subj8 -2.05792955 0.7389462 -3.4984697 -0.6021956
+## g0_c:subj9 -4.34455418 0.7365353 -5.7989383 -2.8925264</code></pre>
+<p>Since we are treating subject as a factor and using sum coding, we don’t get the final level for the subject intercepts or slopes. We can recover this using the hypothesis function, though this can be a bit tedious when there are many levels for a factor.</p>
+<p>I wrote a couple of functions that can help with recovering missing factor levels. First, there is a function called <code>divide_factors</code>. This function takes in a <code>brm</code> model and returns a list of matrices. Each matrix represents the samples for a single main effect or interaction term in your model.</p>
+<p>We can use the names function to see that our four matrices correspond to the effects for <code>(Intercept)</code>,<code>g0_c</code>, <code>subj</code>, and <code>g_c:subj</code>.</p>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="random-slopes.html#cb326-1" aria-hidden="true" tabindex="-1"></a>factors <span class="ot">=</span> <span class="fu">divide_factors</span> (fixed_slopes_model)</span>
+<span id="cb326-2"><a href="random-slopes.html#cb326-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span> (factors)</span></code></pre></div>
+<pre><code>## [1] &quot;(Intercept)&quot; &quot;g0_c&quot;        &quot;subj&quot;        &quot;g0_c:subj&quot;</code></pre>
+<p>We can use the <code>str</code> function to inspect the output. We can see that <code>(Intercept)</code> and <code>g0_c</code> are vectors of length 6500 (our number of samples), while <code>subj</code> and <code>g_c:subj</code> are matrices with 6500 rows, but 9 columns (number of subjects - 1).</p>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="random-slopes.html#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span> (factors)</span></code></pre></div>
+<pre><code>## List of 4
+##  $ (Intercept): num [1:6500] 61.3 61 61.4 60.9 61 ...
+##  $ g0_c       : num [1:6500] -6.31 -7.25 -7.65 -6.45 -7.75 ...
+##  $ subj       : num [1:6500, 1:9] 1.017 1.185 1.395 1.298 0.962 ...
+##   ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. ..$ iterations: NULL
+##   .. ..$ parameters: chr [1:9] &quot;subj1&quot; &quot;subj2&quot; &quot;subj3&quot; &quot;subj4&quot; ...
+##  $ g0_c:subj  : num [1:6500, 1:9] 0.2202 -0.0829 0.1943 1.3944 1.5306 ...
+##   ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. ..$ iterations: NULL
+##   .. ..$ parameters: chr [1:9] &quot;g0_c:subj1&quot; &quot;g0_c:subj2&quot; &quot;g0_c:subj3&quot; &quot;g0_c:subj4&quot; ...</code></pre>
+<p>We can use a function I wrote called <code>add_missing</code> which will add missing levels to single factors (it doesn’t work for interactions right now). Below, I use this function to recover the missing intercept and slope terms (those of <code>subj10</code>).</p>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="random-slopes.html#cb330-1" aria-hidden="true" tabindex="-1"></a>factors[[<span class="st">&quot;subj&quot;</span>]] <span class="ot">=</span> <span class="fu">add_missing</span> (factors[[<span class="st">&quot;subj&quot;</span>]])</span>
+<span id="cb330-2"><a href="random-slopes.html#cb330-2" aria-hidden="true" tabindex="-1"></a>factors[[<span class="st">&quot;g0_c:subj&quot;</span>]] <span class="ot">=</span> <span class="fu">add_missing</span> (factors[[<span class="st">&quot;g0_c:subj&quot;</span>]])</span></code></pre></div>
+<p>I then use <code>brmplot</code> to plot the speaker intercept and slope effects, including the final recovered set of parameters:</p>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="random-slopes.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb331-2"><a href="random-slopes.html#cb331-2" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (factors[[<span class="st">&quot;subj&quot;</span>]], <span class="at">col =</span> cols) ; <span class="fu">abline</span> (<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb331-3"><a href="random-slopes.html#cb331-3" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (factors[[<span class="st">&quot;g0_c:subj&quot;</span>]], <span class="at">col =</span> cols) ; <span class="fu">abline</span> (<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:f6-3"></span>
+<img src="06_files/figure-html/f6-3-1.png" alt="(left) Fixed-effects estimates of subject intercept effects. (right) Fixed-effects estimates of subject slope effects." width="768" />
+<p class="caption">
+Figure 6.3: (left) Fixed-effects estimates of subject intercept effects. (right) Fixed-effects estimates of subject slope effects.
+</p>
+</div>
+<p>If we want to recover the <em>actual</em> speaker-specific intercepts and slopes, we need to add the speaker effects to their corresponding main effects terms. We can do this by adding the column representing each main effect to the matrix representing each set of subject interactions, as below:</p>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="random-slopes.html#cb332-1" aria-hidden="true" tabindex="-1"></a>subj_intercepts <span class="ot">=</span> factors[[<span class="st">&quot;(Intercept)&quot;</span>]] <span class="sc">+</span> factors[[<span class="st">&quot;subj&quot;</span>]]</span>
+<span id="cb332-2"><a href="random-slopes.html#cb332-2" aria-hidden="true" tabindex="-1"></a>subj_slopes <span class="ot">=</span> factors[[<span class="st">&quot;g0_c&quot;</span>]] <span class="sc">+</span> factors[[<span class="st">&quot;g0_c:subj&quot;</span>]]</span></code></pre></div>
+<p>I want to pause for a moment to highlight that everything to this point has involved the original <strong>samples</strong> from the posterior, not <em>summaries</em> of the samples. Any manipulations done to parameters (including any comparisons) need to be carried out on the samples, and then summarized (never summarized, and then compared).</p>
+<p>For example, <code>subj_intercepts</code>, the sum of the intercept and the subbject intercept effects is <em>still</em> a matrix with ten columns and 6500 rows, representing the individual samples from the posterior distribution of each parameter.</p>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="random-slopes.html#cb333-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( <span class="fu">round</span> ( subj_intercepts , <span class="dv">3</span> ) )</span></code></pre></div>
+<pre><code>##       subj1  subj2  subj3  subj4  subj5  subj6  subj7  subj8  subj9 subj10
+## [1,] 62.339 62.790 61.641 64.905 59.008 61.347 59.750 60.958 59.741 60.750
+## [2,] 62.161 62.134 61.071 64.067 59.011 60.838 59.832 60.910 59.144 60.587
+## [3,] 62.785 62.419 61.316 64.498 59.232 61.654 60.327 61.181 59.824 60.667
+## [4,] 62.180 62.219 60.886 64.023 59.134 60.946 59.616 60.716 58.898 60.195
+## [5,] 61.964 62.323 61.121 64.120 59.261 61.075 59.532 60.542 59.761 60.321
+## [6,] 61.905 61.601 60.894 63.631 58.602 61.029 59.257 60.500 59.197 60.035</code></pre>
+<p>Only after we are done working with it, we can summarize these matrices:</p>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="random-slopes.html#cb335-1" aria-hidden="true" tabindex="-1"></a>subj_intercepts_summary <span class="ot">=</span> <span class="fu">posterior_summary</span> (factors[[<span class="st">&quot;(Intercept)&quot;</span>]] <span class="sc">+</span> factors[[<span class="st">&quot;subj&quot;</span>]])</span>
+<span id="cb335-2"><a href="random-slopes.html#cb335-2" aria-hidden="true" tabindex="-1"></a>subj_slopes_summary <span class="ot">=</span> <span class="fu">posterior_summary</span> (factors[[<span class="st">&quot;g0_c&quot;</span>]] <span class="sc">+</span> factors[[<span class="st">&quot;g0_c:subj&quot;</span>]])</span></code></pre></div>
+<p>And compare the summary of the matrix, to the matrix of samples seen above (each row presents a column mean):</p>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="random-slopes.html#cb336-1" aria-hidden="true" tabindex="-1"></a>subj_intercepts_summary</span></code></pre></div>
+<pre><code>##        Estimate Est.Error     Q2.5    Q97.5
+## subj1  62.15111 0.5290596 61.10673 63.16930
+## subj2  62.14576 0.5255985 61.09036 63.15278
+## subj3  61.07163 0.5283570 60.02235 62.10693
+## subj4  64.17888 0.5274135 63.14280 65.19576
+## subj5  58.99328 0.5243383 57.96506 60.01118
+## subj6  61.02486 0.5266767 59.98223 62.03750
+## subj7  59.63202 0.5237791 58.60875 60.64282
+## subj8  60.79713 0.5233061 59.76867 61.81433
+## subj9  59.45633 0.5243279 58.39773 60.45063
+## subj10 60.41684 0.5247678 59.37266 61.42216</code></pre>
+<p>We can plot the effects and the actual parameter estimates side by side as below. Clearly, the pattern is the same, except for two key differences. First, it is shifted along the y axis due to the addition of the appropriate main effect. Second, the error around the estimates is larger. This is because the estimates on the right represent the sum of the uncertainty in the effect and the uncertainty in the corresponding main effect.</p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="random-slopes.html#cb338-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb338-2"><a href="random-slopes.html#cb338-2" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (factors[[<span class="st">&quot;subj&quot;</span>]], <span class="at">col =</span> cols) ; <span class="fu">abline</span> (<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb338-3"><a href="random-slopes.html#cb338-3" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (subj_intercepts_summary, <span class="at">col =</span> cols)</span>
+<span id="cb338-4"><a href="random-slopes.html#cb338-4" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (factors[[<span class="st">&quot;g0_c:subj&quot;</span>]], <span class="at">col =</span> cols) ; <span class="fu">abline</span> (<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb338-5"><a href="random-slopes.html#cb338-5" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (subj_slopes_summary, <span class="at">col =</span> cols) ; <span class="fu">abline</span> (<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:f6-4"></span>
+<img src="06_files/figure-html/f6-4-1.png" alt="(top left) Fixed-effects estimates of subject intercept terms. (top left) Fixed-effects estimates of subject intercept (main effect + subject effect). (bottom left) Fixed-effects estimates of subject slope terms. (bottom right) Fixed-effects estimates of subject slopes (main effect + subject effect)." width="672" />
+<p class="caption">
+Figure 6.4: (top left) Fixed-effects estimates of subject intercept terms. (top left) Fixed-effects estimates of subject intercept (main effect + subject effect). (bottom left) Fixed-effects estimates of subject slope terms. (bottom right) Fixed-effects estimates of subject slopes (main effect + subject effect).
+</p>
+</div>
+<p>Below we can see the distribution of perceived height plotted according to f0 (centered log-f0), individually for each subject that we saw above. We can now add lines indicating predicted perceived height based on our model parameters.</p>
+<div class="figure"><span id="fig:F6-5"></span>
+<img src="06_files/figure-html/F6-5-1.png" alt="Each plot shows responses from a single subject. Lines indicate best fit line relating variables, as indicated by our fixed slopes model." width="768" />
+<p class="caption">
+Figure 6.5: Each plot shows responses from a single subject. Lines indicate best fit line relating variables, as indicated by our fixed slopes model.
+</p>
+</div>
+<p>In the plot below, we again compare the data from all subjects using the same colors as above. This time, we add the regression lines for each subject so that we can compare the similarities/differences between them. To be honest the fit of these models is not great: the predictions is makes (on the line) are basically way off for <em>everyone</em>, suggesting that our model is really missing important information with respect to size perception. However, we’re not going to worry about that for now.</p>
+<div class="figure"><span id="fig:F6-6"></span>
+<img src="06_files/figure-html/F6-6-1.png" alt="Distribution of perceived height responses as a function of f0 for all listeners. Lines indicate best-fit lines for each subject." width="768" />
+<p class="caption">
+Figure 6.6: Distribution of perceived height responses as a function of f0 for all listeners. Lines indicate best-fit lines for each subject.
+</p>
+</div>
+</div>
+</div>
+<div id="random-effects-and-the-multivariate-normal-distribution" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Random effects and the multivariate normal distribution</h2>
+<p>A model formula like this <code>y ~ 1 + x (1 + x | subject)</code> tells your model to estimate a random intercept for each subject, and also a random effect for <code>x</code> for each speaker. Thus, each level of the clustering factor (<code>subject</code>) is represented by two random parameters, the intercept and the slope for <code>x</code>. Random effects in multilevel models are usually treated as draws from multivariate normal distributions. What I mean by this is that the random intercept and slope for each speaker are treated as a single multidimensional variable, rather than as two independent variables.</p>
+<p>The main difference between treating our random coefficients as a single variable rather than two variables is that when we do this, we also estimate the correlation between them. The easiest way to imagine this is by drawing a bivariate (2-dimensional) normal variable and plotting it. This is what I’ve done below, with simulated intercept and slope parameters drawn at random from a multivariate normal distribution.</p>
+<p>In the left column below I compare three bivariate normal variables along the two dimensions. In the absence of any correlation between variables, a plot of this distribution will be <em>spherical</em> (or circular in 2 dimensions). When there is a correlation between the two dimensions, the distribution starts looking more and more like a straight line. When there is a negative correlation, the line just points down rather than up.</p>
+<p>Note the the marginal (independent) distributions of the variables (the left and right columns) don’t change as the correlation changes. The correlation is a reflection of the <em>joint</em> variation in the two variables and will not necessarily be evident in the marginal distributions of each variable.</p>
+<div class="figure"><span id="fig:unnamed-chunk-12"></span>
+<img src="06_files/figure-html/unnamed-chunk-12-1.png" alt="10,000 bivatiate normal draws of simulated intercept and slope coefficients from distributions with a mean of 0 and a standard deviation of 1. The correlation of the variables is 0 (top), 0.5 (middle) and 0.9 (bottom). The left column presents both variables together, the middle column presents intercepts and the right column presents slopes. " width="672" />
+<p class="caption">
+Figure 6.7: 10,000 bivatiate normal draws of simulated intercept and slope coefficients from distributions with a mean of 0 and a standard deviation of 1. The correlation of the variables is 0 (top), 0.5 (middle) and 0.9 (bottom). The left column presents both variables together, the middle column presents intercepts and the right column presents slopes.
+</p>
+</div>
+<p>When our dimensions are uncorrelated they are independent. The value of one does not help you understand the other. However, when the dimensions <em>are</em> correlated we can use this to make better predictions using our data. For example, an intercept of 2 in the bottom row in the figure above is very likely to be paired with a slope of 2, but <em>extremely</em> unlikely to be seen with a slope of -2. In contrast, in the top row a slope of 2 and -2 seem about equally likely given an intercept of 2. So, when we use multiple random predictors per grouping factor, we are really drawing from a multivariate normal distributions that acknowledes the relationships between random predictors in our data.</p>
+<p>The shape of the multivariate normal distribution is determined by a covariance matrix called <span class="math inline">\(\Sigma\)</span>. This matrix is a square <span class="math inline">\(n\)</span> x <span class="math inline">\(n\)</span> matrix for a variable with <span class="math inline">\(n\)</span> dimensions. When we dealt with unidimensional normal distributions for our previous random effects, we specified priors for the (unidimensional) standard deviations using t distributions. The specification of priors for our covariance matrix is only slightly more complicated.</p>
+<p>In our models, we won’t actually include priors for <span class="math inline">\(\Sigma\)</span> directly. This is because <code>brms</code> (and STAN) build up <span class="math inline">\(\Sigma\)</span> for us from the components we <em>do</em> specify. The covariance matrix for our random effects is created by multiplying the standard deviations of our individual dimensions by a correlation matrix (<span class="math inline">\(R\)</span>) specifying the correlations between each dimension. The operation is like this:</p>
+<p><span class="math display" id="eq:66">\[
+\begin{equation}
+\begin{split}
+\Sigma = \begin{bmatrix} \sigma_{\alpha_{[subj]}} &amp; 0 \\ 0 &amp; \sigma_{\beta_{[subj]}} \\ \end{bmatrix} 
+* R * 
+\begin{bmatrix} \sigma_{\alpha_{[subj]}} &amp; 0 \\ 0 &amp; \sigma_{\beta_{[subj]}} \\ \end{bmatrix} \\
+\end{split}
+\tag{6.6}
+\end{equation}
+\]</span></p>
+<p>The values in the outside matrices are the the standard deviations of the random intercepts (<span class="math inline">\(\sigma_{\alpha_{[subj]}}\)</span>) and slopes (<span class="math inline">\(\sigma_{\beta_{[subj]}}\)</span>) individually. The correlation matrix <span class="math inline">\(R\)</span> contains information about the correlation between the dimensions of the variable (e.g., <span class="math inline">\(\rho_{\alpha_{[subj]} \beta _{[subj]}}\)</span>).</p>
+<p>I am explaining this so that there is no mystery behind it, but you don’t actually need to worry about most of this. Here is what <em>does</em> need to make sense: when we have multiple random effects we have a multidimensional variable. We need to specify priors for each dimension and for the correlation between all dimensions.</p>
+<p>We provide priors for the standard deviations of the individual dimensions in the same way as we do for ‘unidimensional’ random effects (like <span class="math inline">\(alpha_{[speaker]}\)</span>).</p>
+<p>The correlation matrix will look something like below (for two dimensions). It will contain only values between -1 and 1 and will contain duplicated values in the spots off of the diagonal (since the correlation of a and b equals the correlation of b and a).</p>
+<p>We specify priors for variables of this type using the <span class="math inline">\(LKJCorr\)</span> distribution in <code>brms</code>. This distribution has a single parameter that determines how peaked the distribution is around 0. Basically, higher numbers make it harder to find larger correlations (and therefore yield more conservative estimates). <a href="https://eager-roentgen-523c83.netlify.app/2014/12/27/d-lkj-priors/">See here for an example</a>.</p>
+<p><span class="math display" id="eq:67">\[
+\begin{equation}
+\begin{split}
+R = \begin{bmatrix} x &amp; y \\ y &amp; z \\ \end{bmatrix} \\ \\
+R \sim \mathrm{LKJCorr} (2)
+\end{split}
+\tag{6.7}
+\end{equation}
+\]</span></p>
+<p>So, any time you have multiple random effects inside any grouping cluster, you need to:</p>
+<ol style="list-style-type: decimal">
+<li><p>Specify priors for the standard deviation of each dimensions.</p></li>
+<li><p>Specify a prior for the correlation matrix for the multivariate normal used for the random parameters.</p></li>
+</ol>
+</div>
+<div id="random-slopes-1" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Random slopes</h2>
+<p>The model above was a demonstration that served primarily as a comparison for the model we are going to fit now No one would actually include subjects as a ‘fixed’ effect, nor would they include the g0_c by subject interaction as a fixed effect. In both cases, researchers would tend to include these predictors as ‘random effects’. Here, we are going to refit the model as a ‘random slopes’ model, and talk about how this relates to our previous approach (treating subjects as fixed effects).</p>
+<div id="description-of-the-model-8" class="section level3" number="6.4.1">
+<h3><span class="header-section-number">6.4.1</span> Description of the model</h3>
+<p>Our previous model formula was:</p>
+<p><code>pheight ~ g0_c * subj +  ( 1 |subj) + (1|speaker)</code></p>
+<p>This formula allows for subject-specific random intercepts but not slopes. Our new model formula moves <code>g0_c</code> into the parenthesis with subject like this:</p>
+<p><code>pheight ~ g0_c + ( g0_c |subj) + (1|speaker)</code></p>
+<p>This is the first time we’ve ever put anything other than <code>1</code> on the left of the pipe in the section where we define random effects. Recall that the factors in parenthesis represent clustering factors. Each of these clusters gets a little mini-model for every level of the factor. So, if subject is our clustering factor, each subject (i.e. each level) gets their own model.</p>
+<p>To this point these models have been very simple and have only included intercepts. So, the <code>(1|speaker)</code> term says “we’re going to have an intercept for every level of speaker in our model”. In the same way, the <code>( g0_c |subj)</code> term says “we’re going to have an intercept and a g0_c slope for every level of subject in our data” (remember the intercept is assumed even if you don’t include a <code>1</code>).</p>
+<p>Our model formula could conceivably be written like this (though this won’t work because the syntax is wrong):</p>
+<p><code>pheight ~ 1 + g0_c + (pheight ~ 1 + g0_c |subj) + (pheight ~ 1|speaker)</code></p>
+<p>Again, this won’t actually work, but it might be helpful to think of your formulas this way. Notice that the formula inside the subject parenthesis is the same as the formula outside the parenthesis. In each case we are just estimating perceived height according to a slope and an intercept. The equation outside the parentheses (<code>pheight ~ 1 + g0_c</code>) tells our model to estimate an overall slope and intercept, and the part inside the parentheses (<code>(pheight ~ 1 + g0_c |subj)</code>) tells our model to do the same thing for each subject. Normally, we omit the <code>1</code> for the intercept, and we only include the dependent variable (and the <code>~</code>) in the outside formula. However, the formula above is an accurate representation of what our model formula is really doing.</p>
+<p>Ok, so our model has subject specific slopes and intercepts now. You may be thinking “subject specific intercepts and slopes, isn’t that what we did in our last model?”. The answer is yes, it is what we did in our last model! As we’ll see below, our ‘random’ and ‘fixed’ effects models are largely the same thing, and provide very similar information. However, there are a few very important differences.</p>
+<p>The model description for our random slopes model is given below. The differences relative to our previous model lie in the replacement of our <span class="math inline">\(subj\)</span> predictor with an <span class="math inline">\(\alpha_{[\mathrm{subj}]}\)</span> random effect, and in the <span class="math inline">\(g0 \_ c \colon subj\)</span> predictor with a <span class="math inline">\(\beta_{[\mathrm{subj}]}\)</span> random effect.</p>
+<p><span class="math display" id="eq:68">\[\begin{equation}
+\begin{split}
+\textrm{Likelihood:} \\
+y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
+\mu_{[i]} = a_{[i]} + b_{[i]} * \mathrm{x}_{[i]}  \\ 
+a_{[i]} = Intercept + \alpha_{[\mathrm{subj}_{[i]}]} + \alpha_{[\mathrm{speaker}_{[i]}]}  \\
+b_{[i]} =  g0\_c + \beta_{{[\mathrm{subj}_{[i]}]}} \\ \\
+
+\textrm{Priors:} \\
+\alpha_{speaker} \sim \mathrm{Normal}(0,\sigma_{speaker}) \\ \\  
+
+\begin{bmatrix} \alpha_{subj} \\ \beta_{subj} \\ \end{bmatrix}  
+\sim \mathrm{MVNormal} ( \begin{bmatrix} 0 \\ 0 \\ \end{bmatrix}, \Sigma) \\ \\
+
+Intercept \sim t(3, 60, 12) \\
+g0\_c \sim t(3, 0, 50) \\ \\
+
+\sigma_{error} \sim t(3, 0, 100) \\
+\sigma_{\alpha_{speaker}} \sim t(3, 0, 100) \\ 
+\sigma_{\alpha_{subj}} \sim t(3, 0, 12) \\ 
+\sigma_{\beta_{subj}} \sim t(3, 0, 12) \\ 
+R \sim \mathrm{LKJCorr} (2)
+
+\end{split}
+\tag{6.8}
+\end{equation}\]</span></p>
+<p>Here’s a description of the model in plain English:</p>
+<blockquote>
+<p>Perceived height is normally distributed with a mean that varies trial to trial but a fixed standard deviation. The mean (expected value) varies along lines. The lines are specified by intercepts and slopes that vary trom trial to trial, and there is a single continuous predictor (g0_c). The intercept of these lines vary based on an overall intercept (the main effect), subject-specific deviations from the mean, and speaker-specific deviations from the mean. The slope of these lines vary based on an overall slope (the main effect) and subject-specific deviations from the average slope. The speaker intercepts were drawn from a normal distribution with a mean of zero and a standard deviation estimated from the data. The subject intercepts and slopes were drawn from a bivariate normal distribution with means of 0 of zero and a covariance matrix estimated from the data. All other effects (e.g., the Intercept, g0_c, etc.) were treated as ‘fixed’ and drawn from prior distributions appropriate for their expected range of values (e.g., subj ~ t(3,0,12)).</p>
+</blockquote>
+<p>Note that the prediction equation in our last model:</p>
+<p><span class="math display" id="eq:69">\[
+\begin{equation}
+\begin{split}
+\mu_{[i]} = a_{[i]} + b_{[i]} * \mathrm{x}_{[i]}  \\ 
+a_{[i]} = Intercept + subj_{[\mathrm{subj}_{[i]}]} + \alpha_{[\mathrm{speaker}_{[i]}]}  \\
+b_{[i]} =  g0\_c + g0\_c \colon subj_{[\mathrm{subj}_{[i]}]} \\ \\
+\end{split}
+\tag{6.9}
+\end{equation}
+\]</span></p>
+<p>Is just like the one for this model, save for a one-to-one replacement of terms (<span class="math inline">\(\alpha_{[\mathrm{subj}]}\)</span> and <span class="math inline">\(\beta_{[\mathrm{subj}]}\)</span> for <span class="math inline">\(subj_{[\mathrm{subj}]}\)</span> and <span class="math inline">\(g0\_c \colon subj_{[\mathrm{subj}]}\)</span>):</p>
+<p><span class="math display" id="eq:610">\[
+\begin{equation}
+\begin{split}
+\mu_{[i]} = a_{[i]} + b_{[i]} * \mathrm{x}_{[i]}  \\ 
+a_{[i]} = Intercept + \alpha_{[\mathrm{subj}_{[i]}]} + \alpha_{[\mathrm{speaker}_{[i]}]}  \\
+b_{[i]} =  g0\_c + \beta_{{[\mathrm{subj}_{[i]}]}} \\ \\
+\end{split}
+\tag{6.10}
+\end{equation}
+\]</span></p>
+<p>Although the prediction equations are largely the same, in the previous model we treated subject as a ‘fixed’ effect. Remember that in our multilevel Bayesian models, this means that the prior distribution for these was determined entirely a priori and was not estimated from the data. For example our subject effects were drawn from a population of <span class="math inline">\(subj \sim t(3, 0, 12)\)</span> and the subject by g0_c interaction was drawn from a population of <span class="math inline">\(g0\_c \colon subj \sim t(3, 0, 50)\)</span>.</p>
+<p>In contrast, random effects are drawn from populations whose standard deviation is estimated from the data. This is the way our current (and previous) models treat the speaker effects. Notice that we estimate, rather than stipulate, the standard deviation for the population of speaker effects (<span class="math inline">\(\sigma_{speaker}\)</span>):</p>
+<p><span class="math display" id="eq:611">\[
+\begin{equation}
+\begin{split}
+\alpha_{speaker} \sim \mathrm{Normal}(0,\sigma_{speaker}) \\ \\  
+\sigma_{speaker} \sim t(3, 0, 100) \\ 
+\end{split}
+\tag{6.11}
+\end{equation}
+\]</span></p>
+<p>We might have treated our subject intercepts in the same way, except for the fact that we are also estimating random slopes for subjects. Since we are drawing two random variables for each person, we need to also model the correlation between the variables.</p>
+<p>So, when we have multiple random effects (e.g., intercepts and/or slopes) for a predictor, we draw this from a multivariate normal distribution where each predictor is a different ‘dimension’ of the variable. This requires that we estimate a standard deviation for each predictor, and a correlation between each pair of predictors.</p>
+<p>As seen below, we draw our predictors from a two-dimensional normal distribution. This distribution has a mean of zero for each dimension, and a covariance matrix equal to <span class="math inline">\(\Sigma\)</span>.</p>
+<p><span class="math display" id="eq:612">\[
+\begin{bmatrix} \alpha_{subj} \\ \beta_{subj} \\ \end{bmatrix}  
+\sim \mathrm{MVNormal} ( \begin{bmatrix} 0 \\ 0 \\ \end{bmatrix}, \Sigma) \\ \\
+\tag{6.12}
+\]</span></p>
+</div>
+<div id="fitting-the-model-7" class="section level3" number="6.4.2">
+<h3><span class="header-section-number">6.4.2</span> Fitting the model</h3>
+<p>We now fit the model that includes random intercepts and random by-subject slopes for f0. Notice that my <code>set_prior</code> section now includes a new category of parameter <code>cor</code> for which I provide a prior using the <code>lkj_corr_cholesky</code> distribution.</p>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="random-slopes.html#cb339-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fit the model yourself, or</span></span>
+<span id="cb339-2"><a href="random-slopes.html#cb339-2" aria-hidden="true" tabindex="-1"></a><span class="do">## download pre-fit model from: </span></span>
+<span id="cb339-3"><a href="random-slopes.html#cb339-3" aria-hidden="true" tabindex="-1"></a><span class="do">## github.com/santiagobarreda/stats-class/tree/master/models</span></span>
+<span id="cb339-4"><a href="random-slopes.html#cb339-4" aria-hidden="true" tabindex="-1"></a><span class="do">## and load after placing in working directory</span></span>
+<span id="cb339-5"><a href="random-slopes.html#cb339-5" aria-hidden="true" tabindex="-1"></a><span class="do">## random_slopes_model = readRDS (&#39;6_random_slopes_model.RDS&#39;)</span></span>
+<span id="cb339-6"><a href="random-slopes.html#cb339-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb339-7"><a href="random-slopes.html#cb339-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span> (<span class="dv">1</span>)</span>
+<span id="cb339-8"><a href="random-slopes.html#cb339-8" aria-hidden="true" tabindex="-1"></a>random_slopes_model <span class="ot">=</span></span>
+<span id="cb339-9"><a href="random-slopes.html#cb339-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span> (pheight <span class="sc">~</span> g0_c <span class="sc">+</span> (g0_c<span class="sc">|</span>subj) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>speaker), <span class="at">data=</span>h95, <span class="at">chains=</span><span class="dv">4</span>, <span class="at">cores=</span><span class="dv">4</span>,  </span>
+<span id="cb339-10"><a href="random-slopes.html#cb339-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">warmup=</span><span class="dv">1000</span>, <span class="at">iter =</span> <span class="dv">7500</span>, <span class="at">thin =</span> <span class="dv">4</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> <span class="fl">0.95</span>), </span>
+<span id="cb339-11"><a href="random-slopes.html#cb339-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 60, 12)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;Intercept&quot;</span>),</span>
+<span id="cb339-12"><a href="random-slopes.html#cb339-12" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 50)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb339-13"><a href="random-slopes.html#cb339-13" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 12)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;sd&quot;</span>),</span>
+<span id="cb339-14"><a href="random-slopes.html#cb339-14" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">set_prior</span>(<span class="st">&quot;lkj_corr_cholesky (2)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;cor&quot;</span>)))</span>
+<span id="cb339-15"><a href="random-slopes.html#cb339-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb339-16"><a href="random-slopes.html#cb339-16" aria-hidden="true" tabindex="-1"></a><span class="do">## save model</span></span>
+<span id="cb339-17"><a href="random-slopes.html#cb339-17" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS (random_slopes_model, &#39;6_random_slopes_model.RDS&#39;)</span></span></code></pre></div>
+</div>
+<div id="interpreting-the-model-5" class="section level3" number="6.4.3">
+<h3><span class="header-section-number">6.4.3</span> Interpreting the model</h3>
+<p>When we look at the print statement for our model, we now see multiple entries in the <code>Group-Level Effects</code> section. Under <code>speaker</code> we see <code>sd(Intercept)</code> representing the standard deviation of the talker intercepts. This tells us that we are only estimating random intercepts for our 139 speakers. These intercepts represent systematic variability in perceived height that is independent of the linear effect for f0.</p>
+<pre><code>Group-Level Effects: 
+~speaker (Number of levels: 139) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     5.52      0.47     4.65     6.51 1.00     1643     2982
+
+~subj (Number of levels: 10) 
+                    Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)           1.81      0.54     1.09     3.18 1.00     4776     5714
+sd(g0_c)                4.21      1.22     2.54     7.25 1.00     5435     5917
+cor(Intercept,g0_c)     0.34      0.27    -0.27     0.77 1.00     5602     5807</code></pre>
+<p>We see that there is also a section for <code>subj</code>, containing our by-subject random effects, that has three elements. the first is <code>sd(Intercept)</code>, representing the standard deviation of our subject intercepts. These intercepts represent differences in the average height responses of different subjects that are independent of f0. The second is <code>sd(g0_c)</code> representing the standard deviation of subject <em>slopes</em>. This represents variation in by-subject slopes, analogous to the <span class="math inline">\(g0_c \colon subj\)</span> interaction in our fixed effects model. The third item is<code>cor(Intercept,g0_c)</code>, representing the correlation of subject intercepts and subject slopes.</p>
+<p>Below, we can compare the fixed effect estimates of our random slopes model:</p>
+<pre><code>Population-Level Effects: 
+          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept    60.93      0.76    59.44    62.43 1.00     1539     3029
+g0_c         -6.34      1.94   -10.17    -2.63 1.00     2883     4064</code></pre>
+<p>To those of the fixed slopes model.</p>
+<pre><code>Population-Level Effects: 
+           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept     60.99      0.48    60.05    61.91 1.00      713     1735
+g0_c          -6.29      1.40    -8.97    -3.52 1.00     1963     3303</code></pre>
+<p>The estimates are quite close in value, though their credible intervals vary. The difference in the credible intervals comes across more clearly when we plot them to compare:</p>
+<div class="figure"><span id="fig:F6-8"></span>
+<img src="06_files/figure-html/F6-8-1.png" alt="(left) Comparison of random effect (RE) and fixed effect (FE) estimates of the intercept main effect. (right) Comparison of random effect (RE) and fixed effect (FE) estimates of the slope main effect." width="768" />
+<p class="caption">
+Figure 6.8: (left) Comparison of random effect (RE) and fixed effect (FE) estimates of the intercept main effect. (right) Comparison of random effect (RE) and fixed effect (FE) estimates of the slope main effect.
+</p>
+</div>
+<p>We can get the random effects (slopes and intercepts) from our model using the <code>ranef</code> function, and asking for the <code>subj</code> random effects.</p>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="random-slopes.html#cb343-1" aria-hidden="true" tabindex="-1"></a>random_effects <span class="ot">=</span> <span class="fu">ranef</span> (random_slopes_model)<span class="sc">$</span>subj</span>
+<span id="cb343-2"><a href="random-slopes.html#cb343-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span> (random_effects)</span></code></pre></div>
+<pre><code>##  num [1:10, 1:4, 1:2] 1.164 1.155 0.116 3.174 -1.914 ...
+##  - attr(*, &quot;dimnames&quot;)=List of 3
+##   ..$ : chr [1:10] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
+##   ..$ : chr [1:4] &quot;Estimate&quot; &quot;Est.Error&quot; &quot;Q2.5&quot; &quot;Q97.5&quot;
+##   ..$ : chr [1:2] &quot;Intercept&quot; &quot;g0_c&quot;</code></pre>
+<p>When we have a look at the output of the <code>str</code> function, we can see that this is a 3-dimensional matrix. When we look at this matrix along the third dimension (e.g., <code>random_effects[,,in here]</code>), we get a series of 2-d matrices that are a summary of a single random effect. Below we see that the first matrix (<code>random_effects[,,1]</code>) corresponds to the random intercepts, and the second matrix (<code>random_effects[,,2]</code>) corresponding to the random slopes.</p>
+<p>You’ll note that we actually get all ten subject effects and there is no omitted value. This is because when you use partial pooling to estimate parameters, you actually <em>can</em> estimate all levels of a factor (for technical reasons related to shrinkage).</p>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="random-slopes.html#cb345-1" aria-hidden="true" tabindex="-1"></a>random_effects</span></code></pre></div>
+<pre><code>## , , Intercept
+## 
+##       Estimate Est.Error        Q2.5       Q97.5
+## 1   1.16377527 0.6268821 -0.04942324  2.46153571
+## 2   1.15505273 0.6275566 -0.03510937  2.42001233
+## 3   0.11623493 0.6231278 -1.10121480  1.38309357
+## 4   3.17445575 0.6258360  1.99622247  4.49472090
+## 5  -1.91413822 0.6259466 -3.12790488 -0.63922912
+## 6   0.04515396 0.6257749 -1.18640204  1.32431108
+## 7  -1.28080815 0.6267446 -2.50106938 -0.03644058
+## 8  -0.16633822 0.6317497 -1.39801195  1.11656287
+## 9  -1.47968132 0.6320220 -2.71728703 -0.21591965
+## 10 -0.53282781 0.6300846 -1.74720063  0.75334092
+## 
+## , , g0_c
+## 
+##      Estimate Est.Error      Q2.5     Q97.5
+## 1   1.0157799  1.577586 -2.117585  4.117939
+## 2  -0.9027227  1.566411 -4.070686  2.179692
+## 3   1.3279988  1.577451 -1.798952  4.516177
+## 4   7.4737121  1.591885  4.444100 10.670002
+## 5   1.8695128  1.569712 -1.300681  5.008267
+## 6  -4.4944108  1.569323 -7.674207 -1.418619
+## 7   2.0829323  1.582772 -1.030887  5.365565
+## 8  -1.9113901  1.578336 -5.155632  1.199296
+## 9  -4.1408383  1.578127 -7.315184 -1.035547
+## 10 -1.8307910  1.561144 -4.991040  1.268622</code></pre>
+<p>Below we see a comparison of the subject intercept and slope terms provided by the random and fixed slopes models. We can see that the effects are extremely similar, however, credible intervals are substantially wider for the estimates provided by the random effects model.</p>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="random-slopes.html#cb347-1" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb347-2"><a href="random-slopes.html#cb347-2" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 6.10</span></span>
+<span id="cb347-3"><a href="random-slopes.html#cb347-3" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb347-4"><a href="random-slopes.html#cb347-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb347-5"><a href="random-slopes.html#cb347-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb347-6"><a href="random-slopes.html#cb347-6" aria-hidden="true" tabindex="-1"></a><span class="do">## plot random intercepts</span></span>
+<span id="cb347-7"><a href="random-slopes.html#cb347-7" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (<span class="at">xs =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)<span class="sc">-</span>.<span class="dv">2</span>,  random_effects[,,<span class="dv">1</span>], <span class="at">col=</span>cols, <span class="at">labels =</span> <span class="st">&quot;&quot;</span>, <span class="at">pch=</span><span class="dv">15</span>)</span>
+<span id="cb347-8"><a href="random-slopes.html#cb347-8" aria-hidden="true" tabindex="-1"></a><span class="do">## plot fixed intercepts</span></span>
+<span id="cb347-9"><a href="random-slopes.html#cb347-9" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (<span class="at">xs =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)<span class="sc">+</span>.<span class="dv">2</span>, factors[[<span class="st">&quot;subj&quot;</span>]], <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col=</span>cols)</span>
+<span id="cb347-10"><a href="random-slopes.html#cb347-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb347-11"><a href="random-slopes.html#cb347-11" aria-hidden="true" tabindex="-1"></a><span class="do">## plot random slopes</span></span>
+<span id="cb347-12"><a href="random-slopes.html#cb347-12" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (<span class="at">xs =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)<span class="sc">-</span>.<span class="dv">2</span>, random_effects[,,<span class="dv">2</span>], <span class="at">col =</span> cols, <span class="at">labels =</span> <span class="st">&quot;&quot;</span>, <span class="at">pch=</span><span class="dv">15</span>)</span>
+<span id="cb347-13"><a href="random-slopes.html#cb347-13" aria-hidden="true" tabindex="-1"></a><span class="do">## plot fixed slopes</span></span>
+<span id="cb347-14"><a href="random-slopes.html#cb347-14" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (<span class="at">xs =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)<span class="sc">+</span>.<span class="dv">2</span>, factors[[<span class="st">&quot;g0_c:subj&quot;</span>]], <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col=</span>cols)</span>
+<span id="cb347-15"><a href="random-slopes.html#cb347-15" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:F6-9"></span>
+<img src="06_files/figure-html/F6-9-1.png" alt="(top) Comparison of random effects (squares) and fixed effect (circles) estimates for speaker intercept effects. (bottom) Same as above but for the slope terms." width="768" />
+<p class="caption">
+Figure 6.9: (top) Comparison of random effects (squares) and fixed effect (circles) estimates for speaker intercept effects. (bottom) Same as above but for the slope terms.
+</p>
+</div>
+<p>Below, we compare the random and fixed effects for the subject intercept effects. Note that the difference between the random and fixed effect estimates is largest for the effects with the largest magnitude. For example, on the left edge of the right figure below we see that the green effect with a fixed effect estimates near -2 has a random effect that is nearly 0.1 larger than that (near to -1.9).</p>
+<div class="figure"><span id="fig:F6-10"></span>
+<img src="06_files/figure-html/F6-10-1.png" alt="(left) Comparison of fixed and random estimates for subject effects (intercept terms). (right) Plot of the difference between the estimates for each parameter, plotted against the value of the fixed-effect estimate of the same parameter." width="768" />
+<p class="caption">
+Figure 6.10: (left) Comparison of fixed and random estimates for subject effects (intercept terms). (right) Plot of the difference between the estimates for each parameter, plotted against the value of the fixed-effect estimate of the same parameter.
+</p>
+</div>
+<p>The same pattern is evident below: more extreme values are ‘shrunk’ towards the mean. This is partial-pooling and shrinkage in action! Because parameters in a ‘random effect’ are jointly estimated (to some extent), extreme values can be pulled towards the mean when they are weakly supported. Here we see a tiny bit of shrinkage indicating that: 1) the values were not so extreme, and 2) the ‘extreme’ values had a reasonable amount of support.</p>
+<div class="figure"><span id="fig:F6-11"></span>
+<img src="06_files/figure-html/F6-11-1.png" alt="(left) Comparison of fixed and random estimates for g0_c:subject effects (slope terms). (right) Plot of the difference between the estimates for each parameter, plotted against the value of the fixed-effect estimate of the same parameter." width="768" />
+<p class="caption">
+Figure 6.11: (left) Comparison of fixed and random estimates for g0_c:subject effects (slope terms). (right) Plot of the difference between the estimates for each parameter, plotted against the value of the fixed-effect estimate of the same parameter.
+</p>
+</div>
+</div>
+</div>
+<div id="more-predictors-and-more-random-slopes" class="section level2" number="6.5">
+<h2><span class="header-section-number">6.5</span> More predictors and more random slopes</h2>
+<div id="adding-another-random-slope" class="section level3" number="6.5.1">
+<h3><span class="header-section-number">6.5.1</span> Adding another random slope</h3>
+<p>Imagine we were to add another continuous predictor to our model. We can use the centered logarithm of F1 (<code>g1_c</code>) as an example. Inclusion of random slopes for this predictor would mean our equation now looks like:</p>
+<p><code>pheight ~ g0_c + g1_c (g0_c + g1_c|subj) + (1|speaker)</code></p>
+<p>In turn, this means that the likelihood section of our model now looks like below. Basically, we have just added a new continuous predictor (<span class="math inline">\(\mathrm{x}_{2[i]}\)</span>) and slope term (<span class="math inline">\(b_{2}\)</span>), with its own corresponding decomposition into a main effect and a random subject effect.</p>
+<p><span class="math display" id="eq:613">\[
+\begin{equation}
+\begin{split}
+y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
+\mu_{[i]} = a_{[i]} + b_{1[i]} * \mathrm{x}_{1[i]} + b_{2[i]} * \mathrm{x}_{2[i]}  \\ 
+a_{[i]} = Intercept + \alpha_{[\mathrm{subj}_{[i]}]} + \alpha_{[\mathrm{speaker}_{[i]}]}  \\
+b_{1[i]} =  g0\_c + \beta_{1{[\mathrm{subj}_{[i]}]}} \\ 
+b_{2[i]} =  g1\_c + \beta_{2{[\mathrm{subj}_{[i]}]}} \\ 
+\end{split}
+\tag{6.13}
+\end{equation}
+\]</span></p>
+<p>The two random slopes (<span class="math inline">\(\beta_{1{[\mathrm{subj}]}},\beta_{2{[\mathrm{subj}]}}\)</span>) and the random intercept (<span class="math inline">\(\alpha_{{[\mathrm{subj}]}}\)</span>) are all drawn from a multivariate normal distribution:</p>
+<p><span class="math display" id="eq:613">\[
+\begin{equation}
+\begin{split}
+\begin{bmatrix} \alpha_{[subj]} \\ \beta_{1[subj]} \\ \beta_{2[subj]} \\ \end{bmatrix}  
+\sim \mathrm{MVNormal} ( \begin{bmatrix} 0 \\ 0 \\ 0 \\ \end{bmatrix}, \Sigma) \\ 
+\end{split}
+\tag{6.13}
+\end{equation}
+\]</span></p>
+<p>Just as for our first random slopes model, we just need to worry about specifying the priors for the effects standard deviations (<span class="math inline">\(\sigma_{\alpha_{[\mathrm{speaker}]}}, \sigma_{\beta_{[\mathrm{speaker}]}}\)</span>) and the correlation matrix (<span class="math inline">\(R\)</span>) (like below) and <code>brm</code> does the rest of the work for us.</p>
+<p>$$
+<span class="math display" id="eq:614">\[\begin{equation}
+\begin{split}
+
+\sigma_{\alpha_{[speaker]}} \sim t(3, 0, 100) \\ 
+\sigma_{\beta_{1[subj]}} \sim t(3, 0, 100) \\ 
+\sigma_{\beta_{2[subj]}} \sim t(3, 0, 100) \\ 
+R \sim \mathrm{LKJCorr} (2)
+
+\end{split}
+\tag{6.14}
+\end{equation}\]</span>
+$$</p>
+</div>
+<div id="adding-random-factors" class="section level3" number="6.5.2">
+<h3><span class="header-section-number">6.5.2</span> Adding random factors</h3>
+<p>We can also add random effects for factors. For example, we could include <code>adult</code> inside our <code>subj</code> parentheses in the model formula. This would tell our model to calculate a subject-specific effect for <code>adult</code>:</p>
+<p><code>pheight ~ g0_c + g1_c + adult (g0_c + g1_c + adult |subj) + (1|speaker)</code></p>
+<p>The likelihood section of our model will now look like below. Note that the random effect associated with adultness is added to the intercept equation. This is because this effect does not interact with our continuous predictors. Since there are no interactions between our continuous predictors and the adult effect, the slopes cannot vary based on adultness. As a result, the adultness parameter can only affect the intercepts of the shapes being drawn and not the slopes.</p>
+<p><span class="math display" id="eq:614">\[
+\begin{equation}
+\begin{split}
+y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
+\mu_{[i]} = a_{[i]} + b_{1[i]} * \mathrm{x}_{1[i]} + b_{2[i]} * \mathrm{x}_{2[i]}  \\ 
+a_{[i]} = Intercept + \alpha_{[\mathrm{subj}_{[i]}]} + \alpha_{adult[\mathrm{subj}_{[i]}]} + \alpha_{[\mathrm{speaker}_{[i]}]}  \\
+b_{1[i]} =  g0\_c + \beta_{1{[\mathrm{subj}_{[i]}]}} \\ \\
+b_{2[i]} =  g1\_c + \beta_{2{[\mathrm{subj}_{[i]}]}} \\ \\
+\end{split}
+\tag{6.14}
+\end{equation}
+\]</span></p>
+<p>Since we now have 4 random effects for subject, we draw our subject random effects from a four-dimensional normal distribution like this:</p>
+<p><span class="math display" id="eq:615">\[
+\begin{equation}
+\begin{split}
+\begin{bmatrix} \alpha_{[subj]} \\ \alpha_{adult[subj]} \\ \beta_{1[subj]} \\ \beta_{2[subj]} \\ \end{bmatrix}  
+\sim \mathrm{MVNormal} ( \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \\ \end{bmatrix}, \Sigma) \\ \\
+\end{split}
+\tag{6.15}
+\end{equation}
+\]</span></p>
+</div>
+<div id="the-independence-of-continuous-predictors" class="section level3" number="6.5.3">
+<h3><span class="header-section-number">6.5.3</span> The independence of continuous predictors</h3>
+<p>It’s important to note that each continuous predictor is treated independently in our model. We could, for example, include an interaction between adultness and F1 in our model. This would make the formula look like this:</p>
+<p><code>pheight ~ g0_c + g1_c + adult + g1_c:adult + (g0_c + g1_c + adult + g1_c:adult|subj) + (1|speaker)</code></p>
+<p>Note that this only causes a change for one of our slopes (<span class="math inline">\(b_2\)</span>). It causes no change at all for our intercept or the other slope:</p>
+<p><span class="math display" id="eq:616">\[
+\begin{equation}
+\begin{split}
+y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
+\mu_{[i]} = a_{[i]} + b_{1[i]} * \mathrm{x}_{1[i]} + b_{2[i]} * \mathrm{x}_{2[i]}  \\ 
+a_{[i]} = Intercept + \alpha_{[\mathrm{subj}_{[i]}]} + \alpha_{adult[\mathrm{subj}_{[i]}]} + \alpha_{[\mathrm{speaker}_{[i]}]}  \\
+b_{1[i]} =  g0\_c + \beta_{1{[\mathrm{subj}_{[i]}]}} \\ \\
+b_{2[i]} =  g1\_c + \beta_{2{[\mathrm{subj}_{[i]}]}} + \beta_{2,adult[\mathrm{subj}_{[i]}]} \\ \\
+\sim \mathrm{MVNormal} ( \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \\ \end{bmatrix}, \Sigma) \\ \\
+\end{split}
+\tag{6.16}
+\end{equation}
+\]</span></p>
+<p>Since we now have five random effects, we now draw our subject random effects from a five-dimensional normal distribution like:</p>
+<p><span class="math display" id="eq:616">\[
+\begin{equation}
+\begin{split}
+\begin{bmatrix} \alpha_{[subj]} \\ \alpha_{adult[subj]} \\ \beta_{1[subj]} \\ \beta_{2[subj]} \\ \beta_{2,adult[\mathrm{subj}_{[i]}]} \\ \end{bmatrix}  
+\sim \mathrm{MVNormal} ( \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ \end{bmatrix}, \Sigma) \\ \\
+\end{split}
+\tag{6.16}
+\end{equation}
+\]</span></p>
+<p>Keep in mind that the correlation matrix for this distribution is a 5x5 matrix with 25 elements, meaning we have to estimate 10 correlation parameters and 5 variance parameters in order to estimate these random effects. Many of the convergence problems that <code>lmer</code> has seem to relate to the estimation of the correlation parameters for random slopes. Since our Bayesian models have prior distributions on these correlation parameters, they can do a much better job of investigating the random effects correlations and can therefore easily (but perhaps slowly) find solutions for models with even large numbers of random effects.</p>
+</div>
+</div>
+<div id="lmer-corner-3" class="section level2" number="6.6">
+<h2><span class="header-section-number">6.6</span> Lmer corner</h2>
+<p>We can fit a ‘random slopes’ model with <code>lmer</code> using the code below:</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="random-slopes.html#cb348-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">=</span> lme4<span class="sc">::</span><span class="fu">lmer</span> (pheight <span class="sc">~</span> g0_c <span class="sc">+</span>  (g0_c<span class="sc">|</span>subj) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>speaker), <span class="at">data =</span> h95)</span></code></pre></div>
+<p>Below I recreate the middle part of the <code>lmer</code> model print statement, except I added numbers to some rows. This is because <code>lmer</code> and <code>brm</code> present much of the same information but with different labels and in a different order.</p>
+<pre><code>Random effects:
+    Groups   Name        Variance Std.Dev.  Corr
+(1) speaker  (Intercept) 29.903   5.468        
+(2) subj     (Intercept)  2.326   1.525        
+(3)          g0_c        12.908   3.593  (7) 0.52
+(4) Residual             14.649   3.827        
+Number of obs: 2780, groups:  speaker, 139; subj, 10
+
+Fixed effects:
+               Estimate Std. Error t value
+(5) (Intercept)  60.9939     0.6731  90.621
+(6) g0_c         -6.3488     1.5340  -4.139</code></pre>
+<p>Below I show the <code>random_slopes_model</code> print statement with numbers that match the labels in the print statement above. We see that both models provide reasonably similar estimates for our parameters, with the <code>brm</code> model providing more information about parameter intervals.</p>
+<pre><code>Group-Level Effects: 
+~speaker (Number of levels: 139) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+(1) sd(Intercept)     5.52      0.47     4.65     6.51 1.00     1643     2982
+
+~subj (Number of levels: 10) 
+                    Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+(2) sd(Intercept)           1.81      0.54     1.09     3.18 1.00     4776     5714
+(3) sd(g0_c)                4.21      1.22     2.54     7.25 1.00     5435     5917
+(7) cor(Intercept,g0_c)     0.34      0.27    -0.27     0.77 1.00     5602     5807
+
+Population-Level Effects: 
+          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+(5) Intercept    60.93      0.76    59.44    62.43 1.00     1539     3029
+(6) g0_c         -6.34      1.94   -10.17    -2.63 1.00     2883     4064
+
+Family Specific Parameters: 
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+(4) sigma     3.83      0.05     3.73     3.94 1.00     5831     6083</code></pre>
+<p>Below is a comparison of the subject intercepts and slopes fit by both approches:</p>
+<div class="figure"><span id="fig:F6-12"></span>
+<img src="06_files/figure-html/F6-12-1.png" alt="(left) Subject random intercepts and credible intervals estimated using brms models. Crosses indicate random effects estimated by lmer. (right) Same as right but for random slopes." width="768" />
+<p class="caption">
+Figure 6.12: (left) Subject random intercepts and credible intervals estimated using brms models. Crosses indicate random effects estimated by lmer. (right) Same as right but for random slopes.
+</p>
+</div>
+<p>And the speaker random intercepts estimates by both approaches. In both cases we see that we arrive at basically the same results.</p>
+<div class="figure"><span id="fig:F6-13"></span>
+<img src="06_files/figure-html/F6-13-1.png" alt="Speaker random intercepts and credible intervals estimated using brms models. Crosses indicate random effects estimated by lmer." width="768" />
+<p class="caption">
+Figure 6.13: Speaker random intercepts and credible intervals estimated using brms models. Crosses indicate random effects estimated by lmer.
+</p>
+</div>
+<p>I’m also going to fit a model that was described but not fit above. Below we see a model predicting perceived height as a function of centered log F1 and f0. It also included an effect for adultness and an adultness by F1 interaction. The model includes random intercepts for subject and by subject slopes for all predictors. A random by-speaker intercept was also included.</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="random-slopes.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="do">## make variable that indicates if the talker is an adult</span></span>
+<span id="cb351-2"><a href="random-slopes.html#cb351-2" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>adult <span class="ot">=</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb351-3"><a href="random-slopes.html#cb351-3" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>adult[h95<span class="sc">$</span>group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;w&#39;</span>,<span class="st">&#39;m&#39;</span>)] <span class="ot">=</span> <span class="st">&quot;adult&quot;</span></span>
+<span id="cb351-4"><a href="random-slopes.html#cb351-4" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>adult[h95<span class="sc">$</span>group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;g&#39;</span>,<span class="st">&#39;b&#39;</span>)] <span class="ot">=</span> <span class="st">&quot;child&quot;</span></span>
+<span id="cb351-5"><a href="random-slopes.html#cb351-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb351-6"><a href="random-slopes.html#cb351-6" aria-hidden="true" tabindex="-1"></a><span class="do">## make centered log F1</span></span>
+<span id="cb351-7"><a href="random-slopes.html#cb351-7" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>g1_c <span class="ot">=</span> <span class="fu">log</span>(h95<span class="sc">$</span>f1) <span class="sc">-</span> <span class="fu">mean</span> (<span class="fu">log</span>(h95<span class="sc">$</span>f1))</span>
+<span id="cb351-8"><a href="random-slopes.html#cb351-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb351-9"><a href="random-slopes.html#cb351-9" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">=</span> pheight <span class="sc">~</span> g0_c <span class="sc">+</span> g1_c <span class="sc">+</span> adult <span class="sc">+</span> g1_c<span class="sc">:</span>adult <span class="sc">+</span> </span>
+<span id="cb351-10"><a href="random-slopes.html#cb351-10" aria-hidden="true" tabindex="-1"></a>                   (g0_c <span class="sc">+</span> g1_c <span class="sc">+</span> adult <span class="sc">+</span> g1_c<span class="sc">:</span>adult<span class="sc">|</span>subj) <span class="sc">+</span> </span>
+<span id="cb351-11"><a href="random-slopes.html#cb351-11" aria-hidden="true" tabindex="-1"></a>                   (<span class="dv">1</span><span class="sc">|</span>speaker)</span>
+<span id="cb351-12"><a href="random-slopes.html#cb351-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb351-13"><a href="random-slopes.html#cb351-13" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">=</span> lme4<span class="sc">::</span><span class="fu">lmer</span> (formula, <span class="at">data =</span> h95)</span></code></pre></div>
+<pre><code>## boundary (singular) fit: see ?isSingular</code></pre>
+<p>Notice that <code>lmer</code> also treats our subject random effects as draws from a 5-dimensional normal distribution. It provides estimates of the standard deviations of the five dimensions (under <code>Random effects:</code> and <code>subj</code>), and also estimates of the correlations between the dimensions.</p>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="random-slopes.html#cb353-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span> (model_2)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
+## Formula: pheight ~ g0_c + g1_c + adult + g1_c:adult + (g0_c + g1_c + adult +  
+##     g1_c:adult | subj) + (1 | speaker)
+##    Data: h95
+## 
+## REML criterion at convergence: 15283.3
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -4.0394 -0.5447  0.0323  0.6015  4.7086 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev. Corr                   
+##  speaker  (Intercept)  3.1497  1.7747                          
+##  subj     (Intercept)  2.8332  1.6832                          
+##           g0_c        12.9476  3.5983    0.25                  
+##           g1_c         0.6224  0.7889    0.75 -0.33            
+##           adult1       2.0034  1.4154   -0.41  0.31 -0.21      
+##           g1_c:adult1  0.8725  0.9341    0.35 -0.04  0.55  0.12
+##  Residual             12.5969  3.5492                          
+## Number of obs: 2780, groups:  speaker, 139; subj, 10
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)  59.4982     0.5618 105.907
+## g0_c        -11.1545     1.2864  -8.671
+## g1_c         -2.4530     0.3383  -7.250
+## adult1        4.1865     0.4920   8.509
+## g1_c:adult1  -1.2790     0.3709  -3.448
+## 
+## Correlation of Fixed Effects:
+##             (Intr) g0_c   g1_c   adult1
+## g0_c         0.179                     
+## g1_c         0.501 -0.154              
+## adult1      -0.402  0.345 -0.091       
+## g1_c:adult1  0.286 -0.034  0.176  0.071
+## optimizer (nloptwrap) convergence code: 0 (OK)
+## boundary (singular) fit: see ?isSingular</code></pre>
+</div>
+<div id="plot-code-5" class="section level2" number="6.7">
+<h2><span class="header-section-number">6.7</span> Plot Code</h2>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="random-slopes.html#cb355-1" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-2"><a href="random-slopes.html#cb355-2" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 6.1</span></span>
+<span id="cb355-3"><a href="random-slopes.html#cb355-3" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-4"><a href="random-slopes.html#cb355-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-5"><a href="random-slopes.html#cb355-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">5</span>), <span class="at">oma =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb355-6"><a href="random-slopes.html#cb355-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){</span>
+<span id="cb355-7"><a href="random-slopes.html#cb355-7" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">=</span> h95[h95<span class="sc">$</span>subj <span class="sc">==</span> i,]</span>
+<span id="cb355-8"><a href="random-slopes.html#cb355-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span> (pheight <span class="sc">~</span> g0, <span class="at">data =</span> tmp, <span class="at">col=</span>cols[i],<span class="at">pch=</span><span class="dv">16</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">40</span>,<span class="dv">80</span>),</span>
+<span id="cb355-9"><a href="random-slopes.html#cb355-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlim=</span><span class="fu">log</span>(<span class="fu">c</span>(<span class="dv">85</span>,<span class="dv">340</span>)),<span class="at">xlab=</span><span class="st">&quot;&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb355-10"><a href="random-slopes.html#cb355-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb355-11"><a href="random-slopes.html#cb355-11" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span> (<span class="at">side =</span> <span class="dv">1</span>, <span class="at">outer =</span> <span class="cn">TRUE</span>, <span class="at">text =</span> <span class="st">&quot;f0 (log Hz)&quot;</span>, <span class="at">line =</span> <span class="fl">1.5</span>)</span>
+<span id="cb355-12"><a href="random-slopes.html#cb355-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span> (<span class="at">side =</span> <span class="dv">2</span>, <span class="at">outer =</span> <span class="cn">TRUE</span>, <span class="at">text =</span> <span class="st">&quot;Perceived Height (inches)&quot;</span>, <span class="at">line =</span> <span class="fl">1.5</span>)</span>
+<span id="cb355-13"><a href="random-slopes.html#cb355-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-14"><a href="random-slopes.html#cb355-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-15"><a href="random-slopes.html#cb355-15" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-16"><a href="random-slopes.html#cb355-16" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 6.2</span></span>
+<span id="cb355-17"><a href="random-slopes.html#cb355-17" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-18"><a href="random-slopes.html#cb355-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-19"><a href="random-slopes.html#cb355-19" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb355-20"><a href="random-slopes.html#cb355-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-21"><a href="random-slopes.html#cb355-21" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (pheight <span class="sc">~</span> g0, <span class="at">data =</span> h95, <span class="at">col=</span>cols[h95<span class="sc">$</span>subj],<span class="at">pch=</span><span class="dv">16</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">40</span>,<span class="dv">80</span>),<span class="at">xlab=</span><span class="st">&quot;f0 (log Hz)&quot;</span>,</span>
+<span id="cb355-22"><a href="random-slopes.html#cb355-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab=</span><span class="st">&quot;Height (inches)&quot;</span>, <span class="at">xlim=</span><span class="fu">log</span>(<span class="fu">c</span>(<span class="dv">85</span>,<span class="dv">340</span>)), <span class="at">cex =</span> .<span class="dv">75</span>)</span>
+<span id="cb355-23"><a href="random-slopes.html#cb355-23" aria-hidden="true" tabindex="-1"></a><span class="co">#points (pheight ~ g0, data = h95, col=h95$subj,pch=16, cex = .75)</span></span>
+<span id="cb355-24"><a href="random-slopes.html#cb355-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-25"><a href="random-slopes.html#cb355-25" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-26"><a href="random-slopes.html#cb355-26" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 6.5</span></span>
+<span id="cb355-27"><a href="random-slopes.html#cb355-27" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-28"><a href="random-slopes.html#cb355-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-29"><a href="random-slopes.html#cb355-29" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">5</span>), <span class="at">oma =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb355-30"><a href="random-slopes.html#cb355-30" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){</span>
+<span id="cb355-31"><a href="random-slopes.html#cb355-31" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">=</span> h95[h95<span class="sc">$</span>subj <span class="sc">==</span> i,]</span>
+<span id="cb355-32"><a href="random-slopes.html#cb355-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span> (pheight <span class="sc">~</span> g0_c, <span class="at">data =</span> tmp, <span class="at">col=</span>cols[i],<span class="at">pch=</span><span class="dv">16</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">40</span>,<span class="dv">80</span>),</span>
+<span id="cb355-33"><a href="random-slopes.html#cb355-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>),<span class="at">xlab=</span><span class="st">&quot;&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb355-34"><a href="random-slopes.html#cb355-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span> (subj_intercepts_summary[i,<span class="dv">1</span>],subj_slopes_summary[i,<span class="dv">1</span>], </span>
+<span id="cb355-35"><a href="random-slopes.html#cb355-35" aria-hidden="true" tabindex="-1"></a>          <span class="at">lwd=</span><span class="dv">4</span>,<span class="at">col=</span>cols[i])</span>
+<span id="cb355-36"><a href="random-slopes.html#cb355-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-37"><a href="random-slopes.html#cb355-37" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb355-38"><a href="random-slopes.html#cb355-38" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span> (<span class="at">side =</span> <span class="dv">1</span>, <span class="at">outer =</span> <span class="cn">TRUE</span>, <span class="at">text =</span> <span class="st">&quot;Centered f0 (log Hz)&quot;</span>, <span class="at">line =</span> <span class="fl">1.5</span>)</span>
+<span id="cb355-39"><a href="random-slopes.html#cb355-39" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span> (<span class="at">side =</span> <span class="dv">2</span>, <span class="at">outer =</span> <span class="cn">TRUE</span>, <span class="at">text =</span> <span class="st">&quot;Perceived Height (inches)&quot;</span>, <span class="at">line =</span> <span class="fl">1.5</span>)</span>
+<span id="cb355-40"><a href="random-slopes.html#cb355-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-41"><a href="random-slopes.html#cb355-41" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-42"><a href="random-slopes.html#cb355-42" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 6.6</span></span>
+<span id="cb355-43"><a href="random-slopes.html#cb355-43" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-44"><a href="random-slopes.html#cb355-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-45"><a href="random-slopes.html#cb355-45" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb355-46"><a href="random-slopes.html#cb355-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-47"><a href="random-slopes.html#cb355-47" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (pheight <span class="sc">~</span> g0_c, <span class="at">data =</span> h95, <span class="at">col=</span>cols[h95<span class="sc">$</span>subj],<span class="at">pch=</span><span class="dv">16</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">40</span>,<span class="dv">80</span>),</span>
+<span id="cb355-48"><a href="random-slopes.html#cb355-48" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">8</span>,.<span class="dv">8</span>), <span class="at">cex =</span> <span class="fl">0.75</span>)</span>
+<span id="cb355-49"><a href="random-slopes.html#cb355-49" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){</span>
+<span id="cb355-50"><a href="random-slopes.html#cb355-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span> (subj_intercepts_summary[i,<span class="dv">1</span>],subj_slopes_summary[i,<span class="dv">1</span>], </span>
+<span id="cb355-51"><a href="random-slopes.html#cb355-51" aria-hidden="true" tabindex="-1"></a>          <span class="at">lwd=</span><span class="dv">4</span>,<span class="at">col=</span>cols[i])</span>
+<span id="cb355-52"><a href="random-slopes.html#cb355-52" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb355-53"><a href="random-slopes.html#cb355-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-54"><a href="random-slopes.html#cb355-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-55"><a href="random-slopes.html#cb355-55" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-56"><a href="random-slopes.html#cb355-56" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 6.8</span></span>
+<span id="cb355-57"><a href="random-slopes.html#cb355-57" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-58"><a href="random-slopes.html#cb355-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-59"><a href="random-slopes.html#cb355-59" aria-hidden="true" tabindex="-1"></a>fe_1 <span class="ot">=</span> <span class="fu">fixef</span> ( random_slopes_model )</span>
+<span id="cb355-60"><a href="random-slopes.html#cb355-60" aria-hidden="true" tabindex="-1"></a>fe_2 <span class="ot">=</span> <span class="fu">fixef</span> ( fixed_slopes_model ) </span>
+<span id="cb355-61"><a href="random-slopes.html#cb355-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-62"><a href="random-slopes.html#cb355-62" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">1</span>))</span>
+<span id="cb355-63"><a href="random-slopes.html#cb355-63" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (<span class="fu">rbind</span> (fe_1[<span class="dv">1</span>,], fe_2[<span class="dv">1</span>,]), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">59</span>,<span class="dv">63</span>),<span class="at">ylab=</span><span class="st">&quot;Effect&quot;</span>,</span>
+<span id="cb355-64"><a href="random-slopes.html#cb355-64" aria-hidden="true" tabindex="-1"></a>         <span class="at">col=</span>cols[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">7</span>)], <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.8</span>,<span class="fl">2.2</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;RE&quot;</span>,<span class="st">&quot;FE&quot;</span>), </span>
+<span id="cb355-65"><a href="random-slopes.html#cb355-65" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Intercept&quot;</span>, <span class="at">cex.main=</span><span class="dv">1</span>)</span>
+<span id="cb355-66"><a href="random-slopes.html#cb355-66" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (<span class="fu">rbind</span> (fe_1[<span class="dv">2</span>,], fe_2[<span class="dv">2</span>,]), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">12</span>,<span class="sc">-</span><span class="dv">2</span>),<span class="at">ylab=</span><span class="st">&quot;Effect&quot;</span>,</span>
+<span id="cb355-67"><a href="random-slopes.html#cb355-67" aria-hidden="true" tabindex="-1"></a>         <span class="at">col=</span>cols[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">7</span>)],<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.8</span>,<span class="fl">2.2</span>),<span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;RE&quot;</span>,<span class="st">&quot;FE&quot;</span>), <span class="at">main=</span><span class="st">&quot;g0_c&quot;</span>,</span>
+<span id="cb355-68"><a href="random-slopes.html#cb355-68" aria-hidden="true" tabindex="-1"></a>         <span class="at">cex.main=</span><span class="dv">1</span>)</span>
+<span id="cb355-69"><a href="random-slopes.html#cb355-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-70"><a href="random-slopes.html#cb355-70" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-71"><a href="random-slopes.html#cb355-71" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 6.10</span></span>
+<span id="cb355-72"><a href="random-slopes.html#cb355-72" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-73"><a href="random-slopes.html#cb355-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-74"><a href="random-slopes.html#cb355-74" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb355-75"><a href="random-slopes.html#cb355-75" aria-hidden="true" tabindex="-1"></a><span class="do">## plot random intercepts</span></span>
+<span id="cb355-76"><a href="random-slopes.html#cb355-76" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (<span class="at">xs =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)<span class="sc">-</span>.<span class="dv">2</span>,  random_effects[,,<span class="dv">1</span>], <span class="at">col=</span>cols, <span class="at">labels =</span> <span class="st">&quot;&quot;</span>, <span class="at">pch=</span><span class="dv">15</span>)</span>
+<span id="cb355-77"><a href="random-slopes.html#cb355-77" aria-hidden="true" tabindex="-1"></a><span class="do">## plot fixed intercepts</span></span>
+<span id="cb355-78"><a href="random-slopes.html#cb355-78" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (<span class="at">xs =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)<span class="sc">+</span>.<span class="dv">2</span>, factors[[<span class="st">&quot;subj&quot;</span>]], <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col=</span>cols)</span>
+<span id="cb355-79"><a href="random-slopes.html#cb355-79" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb355-80"><a href="random-slopes.html#cb355-80" aria-hidden="true" tabindex="-1"></a><span class="do">## plot random slopes</span></span>
+<span id="cb355-81"><a href="random-slopes.html#cb355-81" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (<span class="at">xs =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)<span class="sc">-</span>.<span class="dv">2</span>, random_effects[,,<span class="dv">2</span>], <span class="at">col =</span> cols, <span class="at">labels =</span> <span class="st">&quot;&quot;</span>, <span class="at">pch=</span><span class="dv">15</span>)</span>
+<span id="cb355-82"><a href="random-slopes.html#cb355-82" aria-hidden="true" tabindex="-1"></a><span class="do">## plot fixed slopes</span></span>
+<span id="cb355-83"><a href="random-slopes.html#cb355-83" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (<span class="at">xs =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)<span class="sc">+</span>.<span class="dv">2</span>, factors[[<span class="st">&quot;g0_c:subj&quot;</span>]], <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col=</span>cols)</span>
+<span id="cb355-84"><a href="random-slopes.html#cb355-84" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb355-85"><a href="random-slopes.html#cb355-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-86"><a href="random-slopes.html#cb355-86" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-87"><a href="random-slopes.html#cb355-87" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 6.10</span></span>
+<span id="cb355-88"><a href="random-slopes.html#cb355-88" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-89"><a href="random-slopes.html#cb355-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-90"><a href="random-slopes.html#cb355-90" aria-hidden="true" tabindex="-1"></a>summaries <span class="ot">=</span> <span class="fu">summarize</span> (factors)</span>
+<span id="cb355-91"><a href="random-slopes.html#cb355-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-92"><a href="random-slopes.html#cb355-92" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb355-93"><a href="random-slopes.html#cb355-93" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (summaries[[<span class="st">&quot;subj&quot;</span>]][,<span class="dv">1</span>],random_effects[,<span class="dv">1</span>,<span class="dv">1</span>],<span class="at">lwd=</span><span class="dv">3</span>,<span class="at">cex=</span><span class="dv">3</span>,<span class="at">col=</span>cols,<span class="at">pch=</span><span class="dv">4</span>,</span>
+<span id="cb355-94"><a href="random-slopes.html#cb355-94" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&quot;FE Estimate&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;RE Estimate&quot;</span>, </span>
+<span id="cb355-95"><a href="random-slopes.html#cb355-95" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="fl">4.5</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="fl">4.5</span>))</span>
+<span id="cb355-96"><a href="random-slopes.html#cb355-96" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col=</span><span class="dv">1</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb355-97"><a href="random-slopes.html#cb355-97" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb355-98"><a href="random-slopes.html#cb355-98" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span> (summaries[[<span class="st">&quot;subj&quot;</span>]][,<span class="dv">1</span>],random_effects[,<span class="dv">1</span>,<span class="dv">1</span>],<span class="at">lwd=</span><span class="dv">3</span>,<span class="at">cex=</span><span class="dv">3</span>,<span class="at">col=</span>cols,<span class="at">pch=</span><span class="dv">4</span>)</span>
+<span id="cb355-99"><a href="random-slopes.html#cb355-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-100"><a href="random-slopes.html#cb355-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-101"><a href="random-slopes.html#cb355-101" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (summaries[[<span class="st">&quot;subj&quot;</span>]][,<span class="dv">1</span>],random_effects[,<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">-</span>summaries[[<span class="st">&quot;subj&quot;</span>]][,<span class="dv">1</span>],</span>
+<span id="cb355-102"><a href="random-slopes.html#cb355-102" aria-hidden="true" tabindex="-1"></a>      <span class="at">lwd=</span><span class="dv">3</span>,<span class="at">cex=</span><span class="dv">3</span>,<span class="at">col=</span>cols,<span class="at">pch=</span><span class="dv">4</span>,<span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">3</span>,.<span class="dv">3</span>),<span class="at">xlab =</span> <span class="st">&quot;FE Estimate&quot;</span>,</span>
+<span id="cb355-103"><a href="random-slopes.html#cb355-103" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">&quot;RE Estimate - FE Estimate&quot;</span>,<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="fl">4.5</span>),</span>
+<span id="cb355-104"><a href="random-slopes.html#cb355-104" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb355-105"><a href="random-slopes.html#cb355-105" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h=</span><span class="dv">0</span>,<span class="at">col=</span><span class="dv">1</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb355-106"><a href="random-slopes.html#cb355-106" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb355-107"><a href="random-slopes.html#cb355-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-108"><a href="random-slopes.html#cb355-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-109"><a href="random-slopes.html#cb355-109" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-110"><a href="random-slopes.html#cb355-110" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 6.11</span></span>
+<span id="cb355-111"><a href="random-slopes.html#cb355-111" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-112"><a href="random-slopes.html#cb355-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-113"><a href="random-slopes.html#cb355-113" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb355-114"><a href="random-slopes.html#cb355-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-115"><a href="random-slopes.html#cb355-115" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (summaries[[<span class="st">&quot;g0_c:subj&quot;</span>]][,<span class="dv">1</span>],random_effects[,<span class="dv">1</span>,<span class="dv">2</span>],<span class="at">lwd=</span><span class="dv">3</span>,<span class="at">cex=</span><span class="dv">3</span>,<span class="at">col=</span>cols,</span>
+<span id="cb355-116"><a href="random-slopes.html#cb355-116" aria-hidden="true" tabindex="-1"></a>      <span class="at">pch=</span><span class="dv">4</span>,<span class="at">xlab =</span> <span class="st">&quot;FE Estimate&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;RE Estimate&quot;</span>, </span>
+<span id="cb355-117"><a href="random-slopes.html#cb355-117" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">7</span>,<span class="dv">10</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">9</span>))</span>
+<span id="cb355-118"><a href="random-slopes.html#cb355-118" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col=</span><span class="dv">1</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb355-119"><a href="random-slopes.html#cb355-119" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb355-120"><a href="random-slopes.html#cb355-120" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span> (summaries[[<span class="st">&quot;g0_c:subj&quot;</span>]][,<span class="dv">1</span>],random_effects[,<span class="dv">1</span>,<span class="dv">2</span>],<span class="at">lwd=</span><span class="dv">3</span>,</span>
+<span id="cb355-121"><a href="random-slopes.html#cb355-121" aria-hidden="true" tabindex="-1"></a>        <span class="at">cex=</span><span class="dv">3</span>,<span class="at">col=</span>cols,<span class="at">pch=</span><span class="dv">4</span>)</span>
+<span id="cb355-122"><a href="random-slopes.html#cb355-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-123"><a href="random-slopes.html#cb355-123" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (summaries[[<span class="st">&quot;g0_c:subj&quot;</span>]][,<span class="dv">1</span>],</span>
+<span id="cb355-124"><a href="random-slopes.html#cb355-124" aria-hidden="true" tabindex="-1"></a>      random_effects[,<span class="dv">1</span>,<span class="dv">2</span>]<span class="sc">-</span>summaries[[<span class="st">&quot;g0_c:subj&quot;</span>]][,<span class="dv">1</span>],</span>
+<span id="cb355-125"><a href="random-slopes.html#cb355-125" aria-hidden="true" tabindex="-1"></a>      <span class="at">lwd=</span><span class="dv">3</span>,<span class="at">cex=</span><span class="dv">3</span>,<span class="at">col=</span>cols,<span class="at">pch=</span><span class="dv">4</span>,<span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">6</span>,.<span class="dv">6</span>),<span class="at">xlab =</span> <span class="st">&quot;FE Estimate&quot;</span>,</span>
+<span id="cb355-126"><a href="random-slopes.html#cb355-126" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">&quot;RE Estimate - FE Estimate&quot;</span>,<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">7</span>,<span class="dv">10</span>),</span>
+<span id="cb355-127"><a href="random-slopes.html#cb355-127" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb355-128"><a href="random-slopes.html#cb355-128" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h=</span><span class="dv">0</span>,<span class="at">col=</span><span class="dv">1</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb355-129"><a href="random-slopes.html#cb355-129" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb355-130"><a href="random-slopes.html#cb355-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-131"><a href="random-slopes.html#cb355-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-132"><a href="random-slopes.html#cb355-132" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-133"><a href="random-slopes.html#cb355-133" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 6.12</span></span>
+<span id="cb355-134"><a href="random-slopes.html#cb355-134" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-135"><a href="random-slopes.html#cb355-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-136"><a href="random-slopes.html#cb355-136" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb355-137"><a href="random-slopes.html#cb355-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-138"><a href="random-slopes.html#cb355-138" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (random_effects[,,<span class="dv">1</span>], <span class="at">col =</span> cols)</span>
+<span id="cb355-139"><a href="random-slopes.html#cb355-139" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span> (<span class="fu">ranef</span> (model)<span class="sc">$</span>subj[,<span class="dv">1</span>], <span class="at">pch=</span><span class="dv">4</span>,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">cex=</span><span class="dv">3</span>, <span class="at">col =</span> cols)</span>
+<span id="cb355-140"><a href="random-slopes.html#cb355-140" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h=</span><span class="dv">0</span>,<span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb355-141"><a href="random-slopes.html#cb355-141" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (random_effects[,,<span class="dv">2</span>], <span class="at">col =</span> cols)</span>
+<span id="cb355-142"><a href="random-slopes.html#cb355-142" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span> (<span class="fu">ranef</span> (model)<span class="sc">$</span>subj[,<span class="dv">2</span>], <span class="at">pch=</span><span class="dv">4</span>,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">cex=</span><span class="dv">3</span>, <span class="at">col =</span> cols)</span>
+<span id="cb355-143"><a href="random-slopes.html#cb355-143" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h=</span><span class="dv">0</span>,<span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb355-144"><a href="random-slopes.html#cb355-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-145"><a href="random-slopes.html#cb355-145" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-146"><a href="random-slopes.html#cb355-146" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 6.13</span></span>
+<span id="cb355-147"><a href="random-slopes.html#cb355-147" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb355-148"><a href="random-slopes.html#cb355-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-149"><a href="random-slopes.html#cb355-149" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb355-150"><a href="random-slopes.html#cb355-150" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> ( <span class="fu">ranef</span> (random_slopes_model)<span class="sc">$</span>speaker[,,<span class="dv">1</span>], <span class="at">col=</span> skyblue)</span>
+<span id="cb355-151"><a href="random-slopes.html#cb355-151" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span> (<span class="fu">ranef</span> (model)<span class="sc">$</span>speaker[,<span class="dv">1</span>], <span class="at">col =</span> skyblue, <span class="at">pch=</span><span class="dv">4</span>,<span class="at">lwd=</span><span class="dv">2</span>, <span class="at">cex=</span><span class="dv">2</span>)</span>
+<span id="cb355-152"><a href="random-slopes.html#cb355-152" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h=</span><span class="dv">0</span>,<span class="at">lty=</span><span class="dv">3</span>)</span></code></pre></div>
+
+</div>
+</div>
+<!-- Default Statcounter code for statsbook
+https://santiagobarreda.github.io/stats-class/ -->
+<script type="text/javascript">
+var sc_project=12454226; 
+var sc_invisible=1; 
+var sc_security="a1959418"; 
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript><div class="statcounter"><a title="Web Analytics"
+href="https://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="https://c.statcounter.com/12454226/0/a1959418/1/"
+alt="Web Analytics"></a></div></noscript>
+<!-- End of Statcounter Code -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="including-continuous-predictors-in-our-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendix.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
+>>>>>>> 2c426639f44348bc3588277df29bf9670d3667bf
