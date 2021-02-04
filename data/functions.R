@@ -2,7 +2,7 @@
 ## function to make summary plots for coefficients
 
 brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE, xs = NULL, col = 1, 
-                    labels = "default",xlab='',ylab='', pch=16, lwd=2,cex=1.5, las=NA, ...){
+                    labels = "default",xlab='',ylab='', pch=16, lwd=2,cex=1.5, las=NA,cex.axis=1, ...){
     
   n = nrow (mat)
   if (n > 500 & ncol(mat) !=4) mat = posterior_summary (mat)
@@ -15,10 +15,11 @@ brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE,
     if (labels[1]=="default") labels = rownames(mat)  
     if (is.null(labels)) labels = 1:nrow(mat)  
     
-    if (!add) plot (xs,mat[,1], col=col,pch=pch,cex=cex, ylim = ylim,xlim=xlim, xlab=xlab,xaxt='n',ylab = ylab,...)
+    if (!add) plot (xs,mat[,1], col=col,pch=pch,cex=cex, ylim = ylim,xlim=xlim, 
+                    xlab=xlab,xaxt='n',ylab = ylab,cex.axis=cex.axis,...)
     if (add) points (xs, mat[,1], col=col, pch=pch,cex=cex, ...)
     if (is.na(las))las=1
-    if (labels[1]!="") axis (side=1, at = 1:n, labels = labels, las=las)
+    if (labels[1]!="") axis (side=1, at = xs, labels = labels, las=las, cex.axis=cex.axis)
     
     if (length(col)==1) col = rep (col, length(xs))
     for (i in 1:n) segments (xs[i],mat[i,3],xs[i],mat[i,4],lwd=lwd, col=col[i])
@@ -30,10 +31,11 @@ brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE,
     if (is.null(labels)) labels = 1:nrow(mat)  
     
     if (is.null(ylim)) ylim = range (1:n)
-    if (!add) plot (mat[,1],xs, pch=pch, col=col,cex=cex, ylim = ylim,xlim=xlim, ylab=ylab,yaxt='n',xlab = ylab,...)
+    if (!add) plot (mat[,1],xs, pch=pch, col=col,cex=cex, ylim = ylim,xlim=xlim, 
+                    ylab=ylab,yaxt='n',xlab = ylab,cex.axis=cex.axis,...)
     if (add) points (mat[,1],xs, pch=pch,cex=cex, col=col, ...)
     if (is.na(las))las=2
-    if (labels[1]!="") axis (side=2, at = n:1, labels = labels, las=las)
+    if (labels[1]!="") axis (side=2, at = xs, labels = labels, las=las, cex.axis=cex.axis)
     
     if (length(col)==1) col = rep (col, length(xs))
     for (i in n:1) segments (mat[i,3],xs[i],mat[i,4],xs[i],lwd=lwd, col=col[i])
