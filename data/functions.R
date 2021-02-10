@@ -1,8 +1,9 @@
 
 ## function to make summary plots for coefficients
 
-brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE, xs = NULL, col = 1, 
-                    labels = "default",xlab='',ylab='', pch=16, lwd=2,cex=1.5, las=NA,cex.axis=1, ...){
+brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE, 
+                    xs = NULL, col = 1, labels = "default",xlab='',ylab='', 
+                    pch=16, lwd=2,cex=1.5, las=NA,cex.axis=1,grid=TRUE, ...){
     
   n = nrow (mat)
   if (n > 500 & ncol(mat) !=4) mat = posterior_summary (mat)
@@ -15,9 +16,13 @@ brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE,
     if (labels[1]=="default") labels = rownames(mat)  
     if (is.null(labels)) labels = 1:nrow(mat)  
     
-    if (!add) plot (xs,mat[,1], col=col,pch=pch,cex=cex, ylim = ylim,xlim=xlim, 
-                    xlab=xlab,xaxt='n',ylab = ylab,cex.axis=cex.axis,...)
-    if (add) points (xs, mat[,1], col=col, pch=pch,cex=cex, ...)
+    if (!add){
+      plot (0,type='n', ylim = ylim,xlim=xlim, xlab=xlab,xaxt='n',ylab = ylab,
+            cex.axis=cex.axis,...)
+      if (grid) grid()
+      points (xs,mat[,1], col=col,pch=pch,cex=cex,...)
+    }
+    if (add)  points (xs, mat[,1], col=col, pch=pch,cex=cex, ...)
     if (is.na(las))las=1
     if (labels[1]!="") axis (side=1, at = xs, labels = labels, las=las, cex.axis=cex.axis)
     
@@ -31,8 +36,13 @@ brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE,
     if (is.null(labels)) labels = 1:nrow(mat)  
     
     if (is.null(ylim)) ylim = range (1:n)
-    if (!add) plot (mat[,1],xs, pch=pch, col=col,cex=cex, ylim = ylim,xlim=xlim, 
-                    ylab=ylab,yaxt='n',xlab = ylab,cex.axis=cex.axis,...)
+    if (!add){
+      plot (0,type='n', ylim = ylim,xlim=xlim, ylab=ylab,yaxt='n',xlab = ylab,
+            cex.axis=cex.axis,...)
+      if (grid) grid()
+      points (mat[,1],xs, pch=pch, col=col,cex=cex,...)
+      
+    }
     if (add) points (mat[,1],xs, pch=pch,cex=cex, col=col, ...)
     if (is.na(las))las=2
     if (labels[1]!="") axis (side=2, at = xs, labels = labels, las=las, cex.axis=cex.axis)
