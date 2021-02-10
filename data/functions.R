@@ -192,7 +192,11 @@ plot.interaction <- function (x.factor, trace.factor, response, fun = mean,
 
 ztop = function (z) 1 / (1 + exp (-z) )
 
-ptoz = function (p) log(p) - log(1-p)
+ptoz = function (p){
+  p[p==1] = .99  # if p=1, change to 0.99
+  p[p==0] = .01  # if p=0, change to 0.01 (i.e. 1-0.99)
+  log (p) - log(1-p)
+}
 
 mae = function (x) mean (abs(x))
 
