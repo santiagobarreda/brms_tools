@@ -50,7 +50,7 @@ eq:40
 eq:41
 eq:42
 fig:F4-postpred1
-fig:interactionplot
+fig:F4-interactionplot
 fig:interactionplot3
 eq:43
 fig:interactionplot2
