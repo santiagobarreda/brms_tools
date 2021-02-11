@@ -91,13 +91,14 @@ fig:F6-6
 fig:unnamed-chunk-12
 eq:66
 eq:67
+eq:672
 eq:68
 eq:69
 eq:610
 eq:611
 eq:612
 fig:F6-8
-fig:F6-9
+fig:p6-10
 fig:F6-10
 fig:F6-11
 eq:613
