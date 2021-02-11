@@ -54,6 +54,7 @@ fig:F4-interactionplot
 fig:interactionplot3
 eq:43
 fig:interactionplot2
+fig:brmsplot
 fig:brmsplot2
 fig:F5-fig1
 eq:51
@@ -253,3 +254,17 @@ fitting-the-model-8
 interpreting-the-model-6
 answering-our-research-question
 plot-code-6
+fig:unnamed-chunk-32
+fig:F2-1
+fig:F2-2
+fig:F2-3
+fig:unnamed-chunk-11
+fig:unnamed-chunk-16
+fig:unnamed-chunk-28
+fig:unnamed-chunk-30
+fig:F2-4
+fig:F2-5
+fig:F2-6
+fig:F2-7
+fig:F2-8
+fig:F2-9
