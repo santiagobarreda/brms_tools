@@ -3,10 +3,11 @@
 
 brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE, 
                     xs = NULL, col = 1, labels = "default",xlab='',ylab='', 
-                    pch=16, lwd=2,cex=1.5, las=NA,cex.axis=1,grid=TRUE, ...){
+                    pch=16, lwd=2,cex=1.5, las=NA,cex.axis=1,grid=TRUE,
+                    robust = FALSE, ...){
     
   n = nrow (mat)
-  if (n > 500 & ncol(mat) !=4) mat = posterior_summary (mat)
+  if (n > 500 & ncol(mat) !=4) mat = posterior_summary (mat, robust=robust)
   n = nrow (mat)
   
   if (horizontal){

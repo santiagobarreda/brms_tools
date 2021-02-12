@@ -1,8 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 
 # Inspecting a 'single group' of observations using a Bayesian multilevel model   
 
@@ -18,12 +13,14 @@ The 'traditional' designs equivalent to these models are: one-sample t-test, and
 
 We are going to keep analyzing the female f0 data from the Hillenbrand et al. (1995) dataset, discussed in chapter 1. 
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 url1 = "https://raw.githubusercontent.com/santiagobarreda"
 url2 = "/stats-class/master/data/h95_vowel_data.csv"
 h95 = read.csv (url(paste0 (url1, url2)))
 ## set up colors for plotting
-source (url(paste0 (url1, "/stats-class/master/data/colors.R")))
+devtools::source_url (paste0 (url1, "/stats-class/master/data/colors.R"))
+## source functions
+devtools::source_url (paste0 (url1, "/stats-class/master/data/functions.R"))
 
 # select women only
 w = h95[h95$group == 'w',]
@@ -47,7 +44,7 @@ The `brms` [Bayesian regression models](https://github.com/paul-buerkner/brms) p
 
 `brms` should be installed in R so that the models described below will work. Make sure you have the latest version of R (and Rstudio) and the latest version of the `brms' package installed. Sometimes using older versions can cause R to crash when fitting models.
 
-### The model
+### Description of the model
 
 Model structures are expressed in R using a very specific syntax. Think of writing a model formula as writing a language within R. The good thing about learning to write models is then you can use this knowledge to describe your models in your work, and to interpret other people's models. 
 
@@ -122,14 +119,15 @@ The formula above can be read as 'y is distributed according to some predictor',
 
 For intercept only models, the number `1` is included in the model formula to indicate that a single constant value is being estimated (as in  \@ref(eq:23)). As a result, our model formula will have the form `f0 ~ 1`. This model could be said out loud like "we are trying to estimate the mean of f0" or "we are predicting mean f0 given only an intercept". 
 
-### Calling the `brm` function
+### Fitting the model: Calling the `brm` function
 
 Below, I load the `brms` package, which contains the `brm` function. The `brm` function takes a model specification, data and some other information, and fits a model that estimates all the model parameters. Unless otherwise specified, `brm` assumes that the error component ($\varepsilon$) of your model is normally distributed. The first argument in the function call is the model formula, and the second argument tells the function where to find the data. The other arguments tell the function to estimates a single set of samples (chains = 1) using a single processor on your CPU (cores = 1). These arguments will be discussed more later.
 
-```{r, warning = FALSE, cache = TRUE}
+```{r, warning = FALSE, cache = TRUE, collapse = TRUE}
 # To ensure predictable results in examples, I will be using the same random  
 # seed throughout, and resetting it before running any 'random' process.  
 set.seed (1)
+
 model = brms::brm (f0 ~ 1, data = w, chains = 1, cores = 1)
 ```
 
@@ -137,16 +135,36 @@ By default, `brms` takes 2000 samples, throwing out the first 1000 and returning
 
 This is the last time I will be actually fitting a model in the code chunks. I am going to be relying on pre-fit models that you can load after downloading from the book GitHub. Models can be found in the folder corresponding to each chapter.
 
-```{r}
-## load pre fit model
+```{r, eval = FALSE}
+# download pre-fit model from: 
+# github.com/santiagobarreda/stats-class/tree/master/models
+# and load after placing in working directory
 model = readRDS ('2_model.RDS')
 ```
+```{r, include = FALSE}
+# load downloaded model from working directory
+model = readRDS ('../../models/2_model.RDS')
+```
 
-### Interpreting the model print statement
+recompiling to avoid crashing R session
+
+Warning messages:
+1: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See 
+http://mc-stan.org/misc/warnings.html#bulk-ess
+2: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See 
+http://mc-stan.org/misc/warnings.html#tail-ess
+
+
+
+
+### Interpreting the model: the print statement
 
 We can evaluate the model name to show the default `brms` model print statement:
 
-```{r}
+```{r, collapse = TRUE}
+# inspect model
 model
 ```
 
@@ -175,10 +193,11 @@ The *x% credible interval* for a parameter is the smallest interval that enclose
 
 Notice that the parameter estimate and intervals almost exactly match the estimate and intervals we obtain by referencing the theoretical likelihood function (discussed in Chapter 1):
 
-```{r}
-## sample mean
+```{r, collapse = TRUE}
+# sample mean
 mean (f0)
-## theoretical quantiles for likelihood of mean
+
+# theoretical quantiles for likelihood of mean
 qnorm (c(0.025, 0.975), mean (f0), sd (f0) / sqrt (length (f0) ) )
 ```
 
@@ -204,20 +223,29 @@ In Chapter 1 I discussed that samplers (like `brm`, or STAN) take samples of the
 
 Below I get the posterior samples from the model. We have 1000 samples, as indicated in the model output above. The first column represents the model intercept, the middle column is the error, and the third column is a statistic related to model fit. 
 
-```{r}
-## get posterior samples from model
+```{r, collapse = TRUE}
+# get posterior samples from model
 samples = brms::posterior_samples (model)
 str (samples)
-## inspect values
+
+# inspect values
 head (samples)
 ```
 
 I can plot the individual samples for the mean parameter on the left below. On the right I plot a histogram of the same samples, superimposed with the theoretical distribution of the likelihood. Although this is not the posterior, with so many data points we expect our posterior to be dominated by the likelihood so they should be similar.  
 
-```{r posteriorplot1, fig.width = 8, fig.height = 3.5, fig.caption = "(left) Individual samples from posterior of mean f0 parameter. "}
+```{r F2-1, fig.width = 8, fig.height = 3.5, fig.cap = "(left) Individual samples from posterior of mean f0 parameter. (right) a histogram of the same samples.", echo = FALSE}
+
+################################################################################
+### Figure 2.1
+################################################################################
+
 par (mfrow = c(1,2), mar = c(4,4,1,1))
+
 plot (samples[,1], xlab = 'Sample number',ylab = 'f0',col=teal,pch=16)
+
 hist (samples[,1], freq = FALSE, breaks = 20,main='',xlab='f0',col=maroon)
+
 curve (dnorm (x, mean (f0), sd (f0) / sqrt (length (f0) )), add = TRUE,
        lwd = 4, col = yellow)
 ```
@@ -232,19 +260,19 @@ Intercept   220.40      0.97   218.33   222.30 1.00      851      557
 
 These simply correspond to the quantiles of the posterior samples!
 
-```{r}
+```{r, collapse = TRUE}
 quantile (samples[,1], c(.025, .5, .975))
 ```
 
 There is no special status for these quantiles. We can check the values of other ones: 
 
-```{r}
+```{r, collapse = TRUE}
 quantile (samples[,1], c(.25, .75))
 ```
 
 Or even use the posterior distribution to find the probability that the mean parameter is over/under any arbitrary value:
 
-```{r}
+```{r, collapse = TRUE}
 mean (samples[,1] < 221)
 ```
 
@@ -264,15 +292,21 @@ This can be seen quite clearly below. The top panel shows the distribution of al
 
 These boxplots shows that each speaker has their own average f0, and that their productions tend to vary around their 'natural average. As a result, we might have closer to 46 observations (one average value per speaker) than 576. For example, the 'outliers' around 150 Hz may seem like huge 'errors' in the top plot. In the bottom plot we see that these productions all come from one speaker, and actually reflect her average f0. These are not errors but systematic between-speaker *variation*. 
 
-```{r, fig.height = 6, fig.width = 8}
+```{r F2-2, fig.height = 6, fig.width = 8, fig.cap = "(top) Boxplot of overall distribution. (bottom) Speaker-specific boxplot of our f0 data.", echo = FALSE}
+
+################################################################################
+### Figure 2.2
+################################################################################
+
 par (mar = c(4,4,2,1)); layout (mat = c(1,2), heights = c(.3,.7))
+
 boxplot (f0, main = "Overall Boxplot", col="lavender", 
          horizontal = TRUE, ylim = c(140,320)) 
+
 boxplot (f0 ~ speaker, data = w, main = "Speaker Boxplots", col=c(yellow,coral,
          deepgreen,teal), horizontal = TRUE, ylim = c(140,320)) 
+
 abline (h = 220.4,lty=3,col='grey',lwd=2)
-
-
 ```
 
 ### Multilevel models
@@ -283,7 +317,12 @@ Repeated-measures data leads to random variation in parameters that is *indistin
 
 If you are trying to estimate a speaker's mean f0, then the individual productions might be 'data' and the mean can be thought of as a 'parameter'. If you were instead only interested in the population average, maybe now your subject mean is actually just a single data point, and the *population* mean is actually your 'parameter'. 
 
-```{r, fig.height = 5, fig.width = 8}
+```{r F2-3, fig.height = 5, fig.width = 8, fig.cap = "(top left) All the f0 data (top right) A boxplot of the same data. (bottom left) Speaker-specific boxplots, with a vertical line for speaker 107. (bottom right) The histogram of data produced by speaker 107.", echo = FALSE}
+
+################################################################################
+### Figure 2.3
+################################################################################
+
 par (mfrow = c(2,2), mar = c(4,4,3,1))
 hist (w$f0, main = "Histogram of all f0",xlim = c(140, 290), freq = FALSE,
       col=4)
@@ -309,7 +348,7 @@ Basically, each subject's productions form a little normal distribution around t
 
 We are now going to fit the same model we fit above, but with a structure that reflects the repeated-measures nature of the data. 
 
-### The model 
+### Description of the model 
 
 To specify a multilevel model, you need to write a slightly more complicated model formula. This explanation assumes that you have a dataframe or matrix where one column contains the variable you are interested and predicting (in this case `f0`), and another column contains a vector containing unique labels for each speaker or source of data (in this case a unique speaker label `speaker`). 
 
@@ -386,7 +425,12 @@ Each line in the model says the following:
   
 All of this information can be seen in the speaker boxplots below. The observed error around some unknown mean is what causes there to be a *distribution* of f0 values around each speaker's mean. The model intercept (horizontal dotted line) represents the overall mean, and the variation in $\alpha_{speaker}$ is what causes the middle of each little box to differ from the mean. 
   
-```{r, fig.height = 5, fig.width = 8}
+```{r F2-4, fig.height = 3.5, fig.width = 8, fig.cap = "Speaker-specific boxplots for the f0 data.", echo = FALSE}
+
+################################################################################
+### Figure 2.4
+################################################################################
+
 par (mfrow = c(1,1), mar = c(4,4,3,1))
 boxplot (f0 ~ speaker, data = w, main = "Speaker Boxplots",col=cols[3:6]) 
 abline (h = 220.4,lty=3, lwd=3)
@@ -413,13 +457,23 @@ It sees only *some* of the variation in data as error. In terms of the boxplot a
 We can fit a model with a formula that appropriately specifies the clustering we expect in our data. As a result, this model can estimate both between- and within-speaker variability. 
 
 ```{r,eval = FALSE}
+# Fit the model yourself, or
 set.seed (1)
 multilevel_model =  
   brm (f0 ~ (1|speaker), data = w, chains = 1, cores = 1)
-```
-```{r}
-## loand and inspect pre-fit model
+
+# download pre-fit model from: 
+# github.com/santiagobarreda/stats-class/tree/master/models
+# and load after placing in working directory
 multilevel_model = readRDS ("2_multilevel_model.RDS")
+```
+
+```{r, include = FALSE}
+# load downloaded model from working directory
+multilevel_model = readRDS ('../../models/2_multilevel_model.RDS')
+```
+```{r, collapse = TRUE}
+# inspect model
 multilevel_model
 ```
 
@@ -434,52 +488,88 @@ sd(Intercept)    20.19      2.10    16.65    25.06 1.00      135      192
 
 This sections contains information about the standard deviation of between-speaker averages ($\mu_{speaker}$) in the sample. We can see that the information provided by `brms` is quite similar to what we can estimate directly using our data. However, *brms* does this all for us, in addition to giving us a lot more information. 
 
-```{r}
-## find mean f0 for each speaker
+```{r, collapse = TRUE}
+# find mean f0 for each speaker
 speaker_means = aggregate (f0 ~ speaker, data = w, FUN = mean) 
-## find the within speaker variance. This is the within-talker 'error'.
+
+# find the within speaker variance. This is the within-talker 'error'.
 speaker_vars = aggregate (f0 ~ speaker, data = w, FUN = var) 
 
-## the mean of the speaker means corresponds to our overall mean estimate
+# the mean of the speaker means corresponds to our overall mean estimate
 mean (speaker_means$f0)
-## sd(Intercept) in the model reflects the amount of variation in talker 
-## intercepts. This is the between speaker variation in our model. See how it is 
-## similar to the sd of the actual speaker means.
+
+# sd(Intercept) in the model reflects the amount of variation in talker 
+# intercepts. This is the between speaker variation in our model. See how it 
+# is similar to the sd of the actual speaker means.
 sd (speaker_means$f0)
-## sigma in the model reflects the amount of variation in talker intercepts.
-## This is the between speaker variation in our model. 
+
+# sigma in the model reflects the amount of variation in talker intercepts.
+# This is the between speaker variation in our model. 
 sqrt (sd (speaker_vars$f0))
 ```
 
 The overall mean f0 in our data (220.4) corresponds quite well to our model estimate of 220.4. This reflects the central location of the overall distribution below (the horizontal line in the figure below). The standard deviation of the speaker means (Intercept = 20.1) is again very similar to our model estimate (sd(Intercept) = 20.1). This reflects the average distance from each speaker's average, and the overall average. Finally, the average of the within speaker standard deviation in our data (12.4) corresponds closely to our model's error estimate (sigma = 12.5). This reflects the average spread of each speaker's data relative to their own mean, within their own little boxplot.
 
-```{r, fig.height = 3.54, fig.width = 8}
+```{r F2-5, fig.height = 3.5, fig.width = 8, fig.cap = "Speaker-specific boxplots for the f0 data.", echo = FALSE}
+
+################################################################################
+### Figure 2.5
+################################################################################
+
 par (mfrow = c(1,1), mar = c(4,4,2,1))
+
 boxplot (f0 ~ speaker, data = w, main = "Speaker Boxplots",col=c(yellow,coral,
          deepgreen,teal)) 
+
 abline (h = 220.4, lwd=3,lty=3)
 ```
 
 ## Checking model convergence
 
-Remember that our model parameter estimates consist of a set of samples from the posterior distribution of a parameter. If we don't take enough of these samples, our parameter estimates will be unreliable.    
+Remember that our model parameter estimates consist of a set of samples from the posterior distribution of a parameter. If we don't take enough of these samples, our parameter estimates will be unreliable. 
 
 For this reason, it's important to look at the ESS values (the 'expected sample size'), and the 'Rhat' values provided by `brm`. ESS tells you about how many independent samples you have taken from the likelihood. Bulk ESS is how many samples the sampler took in the thick part of the density, and Tail ESS reflects how much time the sampler spent in the thin part, the 'tails'. Rhat tells you about whether your 'chains' have converged (more on this later). As noted above, values of Rhat near 1 are good, and values higher than around 1.1 are a bad sign. 
 
-We haven't really taken many samples here, so we can't be confident in our parameter estimates. Ideally we would like several hundred samples (at least) for mean estimates, and thousands to be confident in the 95% confidence intervals.
+We haven't really taken many samples here, so we can't be confident in our parameter estimates. Ideally we would like several hundred samples (at least) for mean estimates, and thousands to be confident in the 95% confidence intervals. If you fit a model and get a warning message like this:
 
-To get more samples we can run the model longer, or we can use more *chains*. A chain is basically a separate set of samples for your parameter values. Just imagine you had estimated the model 4 times in a row and mixed your estimations. A model can be fit in parallel across several chains, and then the estimates can be merged across chains. When you do this across multiple cores, you can get N times as many samples when you use N cores. Since many computers these days have 4-8 (or more) cores, we can take advantage of parallel processing to fit models faster.
+```
+Warning messages:
+1: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See
+http://mc-stan.org/misc/warnings.html#bulk-ess
+2: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+http://mc-stan.org/misc/warnings.html#tail-ess
+```
+
+That is `brms` telling you that you need to collect more samples in order to be confident in your parameter estimates. To get more samples we can run the model longer, or we can use more *chains*. A chain is basically a separate set of samples for your parameter values. Just imagine you had estimated the model 4 times in a row and mixed your estimations. A model can be fit in parallel across several chains, and then the estimates can be merged across chains. When you do this across multiple cores, you can get N times as many samples when you use N cores. Since many computers these days have 4-8 (or more) cores, we can take advantage of parallel processing to fit models faster.
+
+Before fitting a model across multiple cores, you should confirm how many you have. You can use the following commend (you may need to install the `parallel` package):
+
+```{r, eval = FALSE}
+parallel::detectCores()
+```
+
+I will be using four cores to fit models throughout. If you only have 4 total cores, consider changing the model fits to 2-3 chains and cores. However, one thing to keep in mind is that these models are computationally intensive to fit. As the datasets become larger and the models become more complicated, more powerful computers are needed in order to fit a model in a reasonable amount of time.
 
 Below, I refit the same model from above but run it on 4 chains, and on 4 cores at once. This doesn't take any longer but it does give us a higher ESS. Just make sure you leave a couple of cores free on your computer when you fit a model! 
 
 ```{r, eval = FALSE}
+# Fit the model yourself, or
 set.seed (1)
 multilevel_multicore =  
-  brm (f0 ~ 1 + (1|speaker), data = w, chains = 4, cores = 4)
-```
-```{r}
-## load and inspect pre-fit model
+  brms::brm (f0 ~ 1 + (1|speaker), data = w, chains = 4, cores = 4)
+
+# download pre-fit model from: 
+# github.com/santiagobarreda/stats-class/tree/master/models
+# and load after placing in working directory
 multilevel_multicore = readRDS ('2_multilevel_multicore.RDS')
+```
+```{r, include = FALSE}
+multilevel_multicore = readRDS ('../../models/2_multilevel_multicore.RDS')
+```
+```{r, collapse = TRUE}
+# inspect model
 multilevel_multicore
 ```
 
@@ -494,14 +584,22 @@ To do this you have to set the `iter`, `warmup` and `thin` parameters. You will 
 Below, I ask for 11,000 sample per chain, 10,000 post warm-up. However, since I plan to keep only 1/10, I will have 1000 per core, so 4000 samples in total. However, despite having the same number of samples as the `multilevel_multicore`, the ESS for this model is much higher for important parameters such as the model intercept. 
 
 ```{r, eval = FALSE}
+# Fit the model yourself, or
 set.seed (1)
 multilevel_thinned =  
   brm (f0 ~ 1 + (1|speaker), data = w, chains = 4, cores = 4,
        warmup = 1000, iter = 11000, thin = 10)
-```
-```{r}
-## load and inspect pre-fit model
+
+# download pre-fit model from: 
+# github.com/santiagobarreda/stats-class/tree/master/models
+# and load after placing in working directory
 multilevel_thinned = readRDS ('2_multilevel_thinned.RDS')
+```
+```{r, include = FALSE}
+multilevel_thinned = readRDS ('../../models/2_multilevel_thinned.RDS')
+```
+```{r, collapse = TRUE}
+# inspect model
 multilevel_thinned
 ```
 
@@ -513,8 +611,9 @@ If you don't specify prior probabilities for your parameters, `brm` will use a '
 
 `brms` makes it really easy to specify prior probabilities for specific parameters or whole groups of parameters. First we figure out the overall mean and the standard deviation of the data.  
 
-```{r}
+```{r, collapse = TRUE}
 mean(f0)
+
 sd(f0)
 ```
 
@@ -532,16 +631,24 @@ So, for the overall intercept ($\mu_{overall}$) I am using a prior with the same
 
 
 ```{r, eval = FALSE}
+# Fit the model yourself, or
 set.seed (1)
 multilevel_priors =  
   brm (f0 ~ 1 + (1|speaker), data = w, chains = 4, cores = 4,
        warmup = 1000, iter = 11000, thin = 10,
        prior = c(set_prior("student_t(3, 220.4, 46.4)", class = "Intercept"),
                  set_prior("student_t(3, 0, 46.4)", class = "sd")))
-```
-```{r}
-## load and inspect pr-fit model
+
+# download pre-fit model from: 
+# github.com/santiagobarreda/stats-class/tree/master/models
+# and load after placing in working directory
 multilevel_priors = readRDS ('2_multilevel_priors.RDS')
+```
+```{r, include = FALSE}
+multilevel_priors = readRDS ('../../models/2_multilevel_priors.RDS')
+```
+```{r, collapse = TRUE}
+# inspect model
 multilevel_priors
 ```
 
@@ -550,7 +657,12 @@ In the left panel below (plot code at end of chapter) I compare the t distributi
 In the middle panel we compare this prior to the data, and see that the prior distribution is much broader (more vague) than the data distribution. The right panel compares the prior for the standard deviation parameters to the absolute value of the centered f0 data. This presentation shows how far each observation is from the mean f0 (at 220 Hz). Again, the prior distribution we have assigned for these parameters is much larger than the variation in the data. As a result, neither of these priors is going to have much of an effect on our parameter estimates.
 
 
-```{r, fig.height = 3.5, fig.width = 8, echo = FALSE}
+```{r F2-6, fig.height = 3.5, fig.width = 8, echo = FALSE, fig.cap = "TBD"}
+
+################################################################################
+### Figure 2.6
+################################################################################
+
 # get t density
 x1 = seq (-4,4,.1)
 y1 = dt (x1, 3); y1 = y1 / max (y1) / 50
@@ -589,8 +701,9 @@ Let's return again to the research questions I posed initially:
 
 And we can compare the answers provided to this question by our initial and final models. 
 
-```{r}
+```{r, collapse = TRUE}
 model
+
 multilevel_priors
 ```
 
@@ -600,48 +713,205 @@ Another difference is that the final model has a much smaller `sigma` parameter 
 
 Usually, when I report parameters I provide the mean and standard deviations of the posterior distribution, in addition to the bounds of the 95% credible interval of the parameter. Based on the result of our final model, I think a thorough description of the general properties of our data might go something like: 
 
-> "Based on our model the average f0 produced by adult females in Michigan is likely to be 220 Hz (s.d. = 2.97, 95% CI = 214.4, 226.4). However, consistent between-speaker variation averages about 20 Hz (s.d. = 2.24, 95% CI = 16.29, 25.06), meaning that we can expect the average f0 produced by individuals to deviate substantially from 220 Hz. Finally, the standard deviation of production error was about 12.5 Hz (s.d. = 0.39, 95% CI = 11.81, 13.34) indicating that the amount of random between speaker variation in production is about half the magnitude of the stable, between-speaker differences in f0.   
+> "Based on our model the average f0 produced by adult females in Michigan is likely to be 220 Hz (s.d. = 2.97, 95% CI = 214.4, 226.4). However, consistent between-speaker variation averages about 20 Hz (s.d. = 2.24, 95% CI = 16.29, 25.06), meaning that we can expect the average f0 produced by individuals to deviate substantially from 220 Hz. Finally, the standard deviation of production error was about 12.5 Hz (s.d. = 0.39, 95% CI = 11.81, 13.34) indicating that the amount of random within-speaker variation in production is about half the magnitude of the systematic between-speaker differences in f0.   
 
 I'm again including the speaker boxplots below because I think this image basically presents the same information as the paragraph above, but in visual form. In general, any data relationship or result can be presented in a figure, and the relationships presented in a figure can also be expressed as a mathematical model. 
 
 When you are thinking about the relationships in your data, or that you expect in your data, its a good idea to think: what kind of picture could illustrate this relationship? Conversely, if you see a figure of your results that you feel really expresses something interesting about your data you should think, how can these relationships be represented in a model?
 
-```{r, fig.height = 3.54, fig.width = 8}
+```{r F2-7, fig.height = 3.5, fig.width = 8, fig.cap = "Speaker-specific boxplots for the f0 data.", echo = FALSE}
+
+################################################################################
+### Figure 2.7
+################################################################################
+
 par (mfrow = c(1,1), mar = c(4,4,2,1))
+
 boxplot (f0 ~ speaker, data = w, main = "Speaker Boxplots",col=c(yellow,coral,
          deepgreen,teal)) 
+
 abline (h = 220.4, lwd=3,lty=3)
 ```
 
+## Simulating data using our model parameters
+
+One way to think about what all these numbers mean is to simulate data that has the same characteristics, and build fake data from component parts.  
+
+First there is an intercept equal to 220.4 Hz. Then, I create effects representing 48 simulated 'female talkers' from a population just like our observed population. These effects are stored in a vector called `alpha_speaker`, and they represent the values of $\alpha_{speaker}$ for our different speakers. These speaker effects come from a population with a mean of 0 and a standard deviation ($\sigma_{speaker}$) equal to 20.4 (like our data). Each of these simulated speakers produces 12 productions, and so we need a `speakers` vector with values that repeat 12 times each to index the `alpha_speaker` vector containing the effects. 
+
+I also draw our error, $\varepsilon$. This error comes from a distribution with a mean of 0 and a standard deviation equal to $\sigma_{error}$. It's important to note that the error is just 48x12 random draws from this population. There is no distinction between one person's productions and another when it comes to the error. If there were, this would indicate differences in sigma between speakers! Our model assumes a single error population for all speakers (but it doesn't *have* to be this way). 
+
+After creating our components, we add the Intercept, speaker deflections and random error to make our face 'replicated' data. Since this data has the same statistical properties, it should look a lot like our real data. 
+
+```{r}
+## don't run this line if you want a new simulated dataset. 
+set.seed(5)
+## this is the value of our intercept
+Intercept = 220.4
+## this is a vector of 48 speaker effects
+alpha_speaker = rnorm (48, 0, 20.2)
+## this is a vector indicating which speaker produced which utterance
+speaker = rep (1:48, each = 12)
+## this vector contains the error
+epsilon = rnorm (48 * 12, 0, 12.5)
+## the sum of the above components equals our observations
+f0_rep = Intercept + alpha_speaker[speaker] + epsilon
+```
+
+Below I compare the results of our simulation to our real data. If you didn't have a clear impression of what the data looked like, I doubt you could tell which is the real data. This tells us our model is a good reflection of the data!
+
+```{r F2-8, echo = FALSE, fig.width = 7, fig.height = 6, fig.cap = "Comparison of real and simulated f0 production data."}
+
+################################################################################
+### Figure 2.8
+################################################################################
+
+par (mfrow = c(2,1), mar = c(1,2,1,1), oma = c(0,2,0,0))
+boxplot (f0_rep ~ speaker, ylim = c(140,320), xaxt='n',xlab='',
+         col=c(yellow,coral,deepgreen,teal))
+abline (h = 220.4, lwd=3,lty=3)
+boxplot (f0 ~ speaker, data = w, ylim = c(140,320), xaxt='n',xlab='',
+         col=c(yellow,coral,deepgreen,teal))
+abline (h = 220.4, lwd=3,lty=3)
+mtext (text = "f0", side=2, outer=TRUE, line = 1)
+```
+
+Below I make two datasets that are 'incomplete': the first contains the intercept and noise only, the second contains the intercept and speaker effects only. 
+
+```{r, collapse = TRUE}
+f0_rep_1 = Intercept + epsilon
+
+f0_rep_2 = Intercept + alpha_speaker[speaker]
+```
+
+In the figure below, I compare these 'incomplete' datasets to the full simulated data. The top row contains only error ($\varepsilon, \sigma_{error}$). As a result, f0 varies around the intercept, but there is no speaker to speaker variation. Notice that each little box is not centered at 0. Although the error distribution is centered at 0, the small number of errors added to the speaker mean are **extremely** unlikely to add up to 0. This makes estimations of the *real* speaker effect impossible in practice. 
+
+In the middle plot, the figure shows only between-speaker variation ($\alpha_{speaker}, \sigma_{speaker}$) but no within-speaker variation (i.e., no noise/error). Now we see that speakers vary from the intercept, but this representation does not show the fact that speakers also vary relative to their own average. 
+
+The final plot is the combination of the variation in the top two figures. The final plot shows the simulated data: the sum of the intercept, the within speaker variation and the between-speaker variation reflected in the values of the speaker intercepts.
+
+```{r F2-9, fig.width = 7, fig.height = 6, fig.cap="(top) Simulated error variation around the intercept. (middle) Simulated between-speaker variation, but no production error. (bottom) Simulated data containing both within and between-speaker variation in f0.", echo = FALSE,fig.align = 'center'}
+
+################################################################################
+### Figure 2.9
+################################################################################
+
+par (mfrow = c(3,1), mar = c(1,3,1,1), oma = c(0,2,0,0))
+boxplot (f0_rep_1 ~ speaker, ylim = c(140,320),xaxt='n',
+         col=c(yellow,coral,deepgreen,teal))
+text (5, 290, label = expression(paste(sigma["error"])), cex = 1.5)
+abline (h=220,lty=2)
+
+boxplot (f0_rep_2 ~ speaker, ylim = c(140,320),xaxt='n',
+         col=c(yellow,coral,deepgreen,teal))
+abline (h=220,lty=2)
+text (5, 290, label = expression(paste(sigma["speaker"])), cex = 1.5)
+
+boxplot (f0_rep ~ speaker, ylim = c(140,320),xaxt='n',
+         col=c(yellow,coral,deepgreen,teal)  )
+abline (h=220,lty=2)
+text (5, 290, label = expression(paste(sigma["error"]+sigma["speaker"])), cex = 1.5)
+
+mtext (side=2,text="f0", outer = TRUE, line=0)
+```
+
+## Lmer corner
+
+Here I compare the output of `brms` to the output of the `lmer` ("linear mixed-effects regression") function, a very popular function for fitting multilevel models in the lme4 R package. I am not going to talk about the traditional models in any detail. The focus of this section is simply to highlight the potential similarities between different approaches, and to point out where to find this information. This will mostly be useful to people familiar with the traditional approaches! 
+
+```{r, warning=FALSE, message = FALSE, collapse = TRUE}
+library (lme4)
+
+set.seed (1)
+lmer_model = lmer (f0 ~ (1|speaker), data = w)
+
+summary (lmer_model)
+```
+
+The print statement for our `lmer` model is above. In terms of model structure, this a model is just like our `multilevel_priors` model. I am going to do a line by line comparison of the `lmer` output above, and show the same information presented in our `brm` model print statement. The very top lines:
+
+```
+Linear mixed model fit by REML ['lmerMod']
+Formula: f0 ~ (1 | speaker)
+   Data: w
+```
+are basic information about data and model structure, equivalent to these lines in `brms`:
+
+```
+ Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: f0 ~ 1 + (1 | uspeaker) 
+   Data: w (Number of observations: 576) 
+Samples: 4 chains, each with iter = 11000; warmup = 1000; thin = 10;
+         total post-warmup samples = 4000
+```
+the next lines in the `lmer` output are about the model fit and not usually of much direct interest. 
+```
+REML criterion at convergence: 4705.8
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.3792 -0.5962 -0.1005  0.4771  3.9273 
+```
+the next lines talk about our random effects. `lmer` groups together the random error (`Residual`) and the random, between-speaker intercepts (`speaker  (Intercept)`).
+
+```
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ speaker  (Intercept) 389.9    19.75   
+ Residual             156.8    12.52   
+Number of obs: 576, groups:  speaker, 48
+```
+We can find the standard deviation for our by-speaker intercepts in these lines in `brms`. Notice that in addition to a 'point estimate' of the most probable posterior estimates, we get a credible interval for this parameter. 
+
+```
+Group-Level Effects: 
+~uspeaker (Number of levels: 48) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)    20.19      2.24    16.29    25.06 1.00     3114     3663
+```
+Information about the 'residual' (or error) is presented in these lines in `brms`. Again, notice that `brms` returns credible intervals for this parameter rather than just a point estimate. 
+
+```
+Family Specific Parameters: 
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sigma    12.54      0.39    11.81    13.34 1.00     3968     3972
+```
+
+Finally, the fixed effects in `lmer`:
+
+```
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)  220.401      2.897   76.07
+```
+Correspond to the 'Population-Level' parameters in `brms`:
+
+```
+Population-Level Effects: 
+          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept   220.42      2.97   214.44   226.38 1.00     1796     2841
+```
+
+In each case, you can see a close correspondence between the two sets of estimates.
 
 ## Plot Code
 
-Plot for comparison of prior distributions with f0 data
-
-```{r, fig.height = 3.5, fig.width = 8, eval = FALSE}
-# get t density
-x1 = seq (-4,4,.1)
-y1 = dt (x1, 3); y1 = y1 / max (y1) / 50
-x2 = 220+(x1*46.4)
-y2 = dnorm (x2, 220, 46.4); y2 = y2 / max (y2) / 50
-
-par (mfrow = c(1,3), mar = c(4,4,1,1))
-## plot t
-plot (x2, y1, type = 'l', lwd = 2, ylab = 'Density', xlab = 'f0', col = 4)
-## compare to equivalent normal
-lines (x2, y2, lwd=2,col=2)
-
-## plot t
-plot (x2, y1, type = 'l', lwd = 2, ylab = 'Density', xlab = 'f0', col = 4)
-## compare to equivalent normal
-hist (f0, add = TRUE, freq = FALSE)
-
-## plot prior for standard deviations
-x3 = x2 - mean (x2)
-y3 = dt (x1, 3); y3 = y3 / max (y3) / 20
-plot (x3[x3>0], y3[x3>0], type = 'l', lwd = 2, ylab = 'Density', 
-      xlab = 'f0', col = 4)
-hist (abs (f0 - mean (f0)), add = TRUE, freq = FALSE)
+```{r get-labels, echo = FALSE}
+labs = knitr::all_labels()
+labs = labs[grep ("F2", labs)]
 ```
+
+```{r all-code, ref.label=labs, eval=FALSE}
+```
+
+
+
+
+
+
+
+
+
+
 
 

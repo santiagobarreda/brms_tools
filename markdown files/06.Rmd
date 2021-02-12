@@ -1,0 +1,981 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
+# Random slopes 
+
+To this point we've been fitting realistic, but relatively simple models. In this chapter we're going to build models that are more similar to the sorts that appear in published articles (i.e. they're more complicated). Fortunately, we've already discussed all of the component parts that make up our models. We'll see that more complicated models are just made up of many smaller components, all working together. 
+
+## Data and research questions 
+
+In this chapter we're going to flip the dependent and independent variables from last chapter. We're going to consider variation in perceived height as a function of f0 (and other predictors). 
+
+Our data consists of the results of a listening experiment carried out using the Hillenbrand et al. data. Ten listeners heard productions of 'aw' and 'iy' produced by all 139 speakers in the dataset. The stimuli consisted of /hVd/ words presented at random (n = 278). For each trial, listeners reported the height of the speaker (in feet and inches) and guessed whether the speaker was a boy, girl, man or woman. 
+
+```{r, message = FALSE, warning = FALSE}
+library (brms)
+options (contrasts = c("contr.sum","cont.sum"))
+
+url1 = "https://raw.githubusercontent.com/santiagobarreda"
+url2 = "/stats-class/master/data/h95_experiment_data.csv"
+h95 = read.csv (url(paste0 (url1, url2)))
+# set up colors for plotting
+devtools::source_url (paste0 (url1, "/stats-class/master/data/colors.R"))
+# source functions
+devtools::source_url (paste0 (url1, "/stats-class/master/data/functions.R"))
+
+# calculate centered log f0
+h95$g0_c = log (h95$f0) - mean (log(h95$f0))
+```
+
+We're going to try to understand the role of f0 in size perception because f0 is a very important predictor of apparent talker size. Below we can see the distribution of perceived height plotted according to f0, individually for each subject (i.e. listener). Clearly, there is a general tendency for perceived height to decrease as f0 increases. This relationship is not really a straight line for most subjects, but is linear enough to try this model as a first step. 
+
+```{r F6-1, fig.width = 8, fig.height = 5, fig.cap="Each plot shows responses from a single subject.", echo = FALSE, cache=TRUE}
+
+################################################################################
+### Figure 6.1
+################################################################################
+
+par (mar = c(2,2,1,1), mfrow = c(2,5), oma = c(3,3,1,1))
+for (i in 1:10){
+  tmp = h95[h95$subj == i,]
+  plot (pheight ~ g0, data = tmp, col=cols[i],pch=16,ylim=c(40,80),
+        xlim=log(c(85,340)),xlab="",ylab="")
+  grid()
+}
+mtext (side = 1, outer = TRUE, text = "f0 (log Hz)", line = 1.5)
+mtext (side = 2, outer = TRUE, text = "Perceived Height (inches)", line = 1.5)
+
+```
+In Figure \@ref(fig:F6-2), we compare the data from all subjects using the same colors as above. There is clearly quite a bit of general agreement between listeners. However, we can also clearly see that there is between-subject variation in responses. 
+
+```{r F6-2, fig.width = 8, fig.height = 4, fig.cap="Distribution of perceived height responses as a function of f0 for all listeners.", echo = FALSE, cache=TRUE}
+
+################################################################################
+### Figure 6.2
+################################################################################
+
+par (mar = c(4,4,1,1), mfrow = c(1,1))
+
+plot (pheight ~ g0, data = h95, col=cols[h95$subj],pch=16,ylim=c(40,80),xlab="f0 (log Hz)",
+      ylab="Height (inches)", xlim=log(c(85,340)), cex = .75)
+grid()
+```
+
+## Repeated measures and speaker-dependent parameter values
+
+In chapter 5 I mentioned that nominal effects like 'group' are effectively interactions with the model intercept for each group, resulting in group-specific intercepts in our model. Interactions between nominal predictors and slope terms (e.g., $g0\_c \colon group$) reflect group-specific variation in slopes. 
+
+This means that a factor like listener/subject/participant is basically also just an interaction with our intercept representing subject-specific intercepts, and the interactions between subject and our slope term represent subject-specific slopes in our model. 
+
+We're going to consider two approaches to including subject-specific slopes and intercepts in our model: one with random slopes by subject, and one with a fixed $predictor \colon subject$ interaction. 
+
+### Description of the model
+
+We're going to predict perceived height (in inches) as a function of centered log-f0 (the logarithm of the fundamental frequency). We're going to let the relationship between f0 and perceived height (related by a line) vary according to subjects. Our model formula is:
+
+`pheight ~ g0_c * subj + (1|speaker)`
+
+This says "model perceived height as a function of centered log-f0 (`g0_c`) and include subject effects (i.e. subject-specific intercepts). Also, allow subject-specific use of centered log-f0 in the perception of height (using the  g0_c:subj interaction)".
+
+We can build this model up from the equation for a single line using the information outlined in the previous chapter. Recall that the formula for a line is:
+
+$$
+\mu = a + b * \mathrm{x}
+(\#eq:61)
+$$
+
+Where our predicted value ($\mu$) varies along a line with an intercept of $a$ and a slope of $b$. We can decompose the intercept and slope terms in an 'ANOVA-like decomposition' as below, given predictors $A$ and $B$:
+
+$$
+\mu = (Intercept + A + B + ...) + (Slope + Slope \colon A + Slope \colon B + ...) * \mathrm{x}
+(\#eq:62)
+$$
+
+Above, the line intercept is broken up into a model intercept, and effects for A and B. The slope is broken up into a 'main effect' for slope (basically a slope intercept) and the factor by slope interactions (e.g., $Slope \colon A$). 
+
+Below, the equation is expanded further by removing the parenthesis and multiplying each slope term by our continuous predictor ($\mathrm{x}$). 
+
+$$
+\mu = Intercept + A + B + ... + Slope* \mathrm{x} + slope \colon A* \mathrm{x} + Slope \colon B* \mathrm{x} + ...
+(\#eq:63)
+$$
+
+As our models get bigger and bigger, expressions like the one above can be difficult to interpret. A presentation like the one below can be clearer and easier to interpret (once you get used to it). 
+
+The top line reminds you that you are modeling a line. The second and third lines provide information about expected variation in the intercept and the slope.
+
+\begin{equation}
+\begin{split}
+\mu = a + b * \mathrm{x} \\
+a = Intercept + A + B + ... \\
+b = Slope + slope \colon A + Slope \colon B + ... \\
+\end{split}
+(\#eq:64)
+\end{equation}
+
+If you prefer the 'expanded' version of the model equation it's easy enough to get this. You simply place all of the components of the $a$ and $b$ equations on the same line, and multiply each term in the $b$ equation by the continuous predictor. 
+
+Below is the structure for our model that treats subject as a fixed effect (just like $group$ in the previous chapter). This model includes subject-specific intercepts for our lines (based on the $subj$ term) and subject-specific slopes for our lines (based on the $g0\_c \colon subj$ term). As with our earlier models, this model includes random intercepts for speakers ($\alpha_{speaker}$), seen in the intercept equation. Note that our model does *not* include any random effects in the slopes equation.  
+
+
+\begin{equation}
+\begin{split}
+\textrm{Likelihood:} \\
+pheight_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
+\mu_{[i]} = a_{[i]} + b_{[i]} * \mathrm{x}_{[i]}  \\ 
+a_{[i]} = Intercept + subj_{[\mathrm{subj}_{[i]}]} + \alpha_{[\mathrm{speaker}_{[i]}]}  \\
+b_{[i]} =  g0\_c + g0\_c \colon subj_{[\mathrm{subj}_{[i]}]} \\ \\
+
+\textrm{Priors:} \\
+\alpha_{speaker} \sim \mathcal{N}(0,\sigma_{speaker}) \\ \\ 
+
+Intercept \sim t(3, 60, 12) \\
+g0\_c \sim t(3, 0, 50) \\ 
+g0\_c \colon subj \sim t(3, 0, 50) \\ 
+subj \sim t(3, 0, 12) \\ 
+
+\sigma_{error} \sim t(3, 0, 12) \\
+\sigma_{speaker} \sim t(3, 0, 12) \\ 
+
+\end{split}
+(\#eq:65)
+\end{equation}
+
+
+Here's a description of the model in plain English:
+
+> Perceived height is normally distributed with a mean that varies trial to trial but a fixed standard deviation. The mean (expected value) varies along lines. The lines are specified by intercepts and slopes that vary trom trial to trial, and there is a single continuous predictor (g0_c). The intercept of these lines vary based on an overall intercept (the main effect), subject-specific deviations from the mean, and speaker-specific deviations from the mean. The slope of these lines vary based on an overall slope (the main effect) and subject-specific deviations from the average slope. 
+
+> The speaker intercepts were drawn from a normal distribution with a mean of zero and a standard deviation estimated from the data. All other effects (e.g., the Intercept, g0_c, etc.) were treated as 'fixed' and drawn from prior distributions appropriate for their expected range of values (e.g., subj ~ t(3,0,12)). 
+
+### Fitting the model
+
+We fit the model that treats subject as a fixed effect:
+
+```{r, eval = FALSE}
+# Fit the model yourself, or
+# download pre-fit model from: 
+# github.com/santiagobarreda/stats-class/tree/master/models
+# and load after placing in working directory
+# fixed_slopes_model = readRDS ('6_fixed_slopes_model.RDS')
+
+set.seed (1)
+fixed_slopes_model =
+  brm (pheight ~ g0_c * subj + (1|speaker), data = h95, chains=4, cores=4,  
+       warmup=1000, iter = 7500, thin = 4, control = list(adapt_delta = 0.95), 
+       prior = c(set_prior("student_t(3, 60, 12)", class = "Intercept"),
+                 set_prior("student_t(3, 0, 50)", class = "b"),
+                 set_prior("student_t(3, 0, 12)", class = "sd")))
+
+# save model
+# saveRDS (fixed_slopes_model, '6_fixed_slopes_model.RDS')
+```
+```{r, include = FALSE}
+fixed_slopes_model = readRDS ('../../models/6_fixed_slopes_model.RDS')
+```
+
+### Interpreting the model
+
+We're going to focus on the model fixed effects. Since we're calculating subject-specific intercepts and slopes, we need 20 coefficients to represents all the lines for our ten subjects. Because we are using sum coding, the `Intercept` and `g0_c` parameters represent our mean overall intercept and slope across all subjects. The `subj` parameters represent subject-specific deviations from the mean intercept for a given subject, while the `g0_c:subject` interactions represent subject specific deviations from the overall slope.  
+
+For example, the line representing subject 8's responses can be found by calculating `Intercept + subj8` for the intercept and `g0_c + g0_c:subj8` for the slope. 
+
+```{r, cache=TRUE, collapse = TRUE}
+fixef (fixed_slopes_model)
+```
+
+Since we're treating subject as a factor and using sum coding, we don't get the final level for the subject intercepts or slopes. We can recover this using the hypothesis function, though this can be a bit tedious when there are many levels for a factor.
+
+I wrote a couple of functions that can help with recovering missing factor levels. First, there is a function called `divide_factors`. This function takes in a `brm` model and returns a list of matrices. Each matrix represents the samples for a single main effect or interaction term in your model. 
+
+We can apply this function to the model we fit above to inspect the output of the `divide_factors` function. Using the `names` function shows us that our output has four matrices corresponding to the effects for `(Intercept)`,`g0_c`, `subj`, and `g_c:subj`.   
+
+```{r, cache=TRUE, collapse = TRUE}
+factors = divide_factors (fixed_slopes_model)
+names (factors)
+```
+
+We can use the `str` function to inspect the output. We can see that `(Intercept)` and `g0_c` are vectors of length 6500 (our number of samples), while `subj` and `g_c:subj` are matrices with 6500 rows, but 9 columns (number of subjects - 1). 
+
+```{r, cache=TRUE, collapse = TRUE}
+str (factors)
+```
+
+We can use a function I wrote called `add_missing` which will add missing levels to single factors (it doesn't work for interactions for now). Below, I use this function to recover the missing intercept and slope terms (those of `subj10`). 
+
+```{r, cache=TRUE}
+factors[["subj"]] = add_missing (factors[["subj"]])
+factors[["g0_c:subj"]] = add_missing (factors[["g0_c:subj"]])
+```
+
+I then use `brmplot` to plot the speaker intercept and slope effects, including the final recovered set of parameters:
+
+```{r f6-3, fig.width = 8, fig.height = 3.5, fig.cap="(left) Fixed-effects estimates of subject intercept effects. (right) Fixed-effects estimates of subject slope effects.", cache=TRUE}
+par (mfrow = c(1,2), mar = c(4,4,1,1))
+brmplot (factors[["subj"]], col = cols) ; abline (h = 0, lty = 3)
+brmplot (factors[["g0_c:subj"]], col = cols) ; abline (h = 0, lty = 3)
+```
+
+If we want to recover the *actual* speaker-specific intercepts and slopes, we need to add the speaker effects to their corresponding main effects terms. We can do this by adding the column representing each main effect to the matrix representing each set of subject interactions, as below. We could also do this with the hypothesis function but this way we can add all ten subjects' slopes in a single operation, instead of having to write (or even copy) ten lines of code.
+
+```{r, cache=TRUE}
+subj_intercepts = factors[["(Intercept)"]] + factors[["subj"]]
+subj_slopes = factors[["g0_c"]] + factors[["g0_c:subj"]]
+```
+
+I want to pause for a moment to highlight that everything to this point has involved the original **samples** from the posterior, not *summaries* of the samples. Any manipulations done to parameters (including any comparisons) need to be carried out on the samples, and then summarized (never summarized, and then compared). 
+
+For example, `subj_intercepts`, the sum of the overall intercept and the subject-specific intercept effects is still a matrix with ten columns and 6500 rows, representing the individual samples from the posterior distribution of each parameter. 
+
+```{r, cache=TRUE, collapse = TRUE}
+head( round ( subj_intercepts , 3 ) )
+```
+
+Only after we are done working with it, we can summarize these matrices:
+
+```{r, cache=TRUE, cache = TRUE}
+subj_intercepts_summary = posterior_summary (factors[["(Intercept)"]] + factors[["subj"]])
+subj_slopes_summary = posterior_summary (factors[["g0_c"]] + factors[["g0_c:subj"]])
+```
+
+Resulting in a summary of the matrix where each row corresponds to a column from the `subj_intercepts` matrix above. 
+
+```{r, cache = TRUE, collapse = TRUE}
+subj_intercepts_summary
+```
+
+We can plot the subject effects and the actual subject-specific parameter estimates side by side as in Figure \@ref(fig:f6-4). Clearly, the pattern is the same except for two key differences. First, it is shifted along the y axis due to the addition of the appropriate main effect. Second, the error around the estimates is larger. This is because the estimates on the right represent the sum of the uncertainty in the effect and the uncertainty in the corresponding main effect. 
+
+```{r f6-4, fig.widgth = 8, fig.height = 5, fig.cap="(top left) Fixed-effects estimates of subject intercept terms. (top left) Fixed-effects estimates of subject intercept (main effect + subject effect). (bottom left) Fixed-effects estimates of subject slope terms. (bottom right) Fixed-effects estimates of subject slopes (main effect + subject effect).", cache = TRUE}
+par (mfrow = c(2,2), mar = c(4,4,1,1))
+brmplot (factors[["subj"]], col = cols) ; abline (h = 0, lty = 3)
+brmplot (subj_intercepts_summary, col = cols)
+brmplot (factors[["g0_c:subj"]], col = cols) ; abline (h = 0, lty = 3)
+brmplot (subj_slopes_summary, col = cols) ; abline (h = 0, lty = 3)
+```
+
+In in Figure \@ref(fig:F6-5) we again see the distribution of perceived height plotted according to f0 (centered log-f0), individually for each subject. We can now add lines indicating predicted perceived height based on our model parameters. 
+
+```{r F6-5, fig.width = 8, fig.height = 5, fig.cap="Each plot shows responses from a single subject. Lines indicate best fit line relating variables, as indicated by our fixed slopes model.", cache=TRUE, echo = FALSE}
+
+################################################################################
+### Figure 6.5
+################################################################################
+
+par (mar = c(2,2,1,1), mfrow = c(2,5), oma = c(3,3,1,1))
+for (i in 1:10){
+  tmp = h95[h95$subj == i,]
+  plot (pheight ~ g0_c, data = tmp, col=cols[i],pch=16,ylim=c(40,80),
+        xlim=c(-1,1),xlab="",ylab="")
+  abline (subj_intercepts_summary[i,1],subj_slopes_summary[i,1], 
+          lwd=4,col=cols[i])
+
+}
+mtext (side = 1, outer = TRUE, text = "Centered f0 (log Hz)", line = 1.5)
+mtext (side = 2, outer = TRUE, text = "Perceived Height (inches)", line = 1.5)
+```
+In Figure in Figure \@ref(fig:F6-6), we again compare the data from all subjects using the same colors as above. This time, we add the regression lines for each subject so that we can compare the similarities/differences between them. 
+
+The fit of these models is not great: the predictions they make predictions (the lines) that don't match the data well for *anyone*, suggesting that our model is really missing important information with respect to size perception. However, we're not going to worry about that for now. 
+
+```{r F6-6, fig.width = 8, fig.height = 4, fig.cap="Distribution of perceived height responses as a function of f0 for all listeners. Lines indicate best-fit lines for each subject.", cache = TRUE, echo = FALSE}
+
+################################################################################
+### Figure 6.6
+################################################################################
+
+par (mar = c(4,4,1,1), mfrow = c(1,1))
+
+plot (pheight ~ g0_c, data = h95, col=cols[h95$subj],pch=16,ylim=c(40,80),
+      xlim=c(-.8,.8), cex = 0.75)
+for (i in 1:10){
+  abline (subj_intercepts_summary[i,1],subj_slopes_summary[i,1], 
+          lwd=4,col=cols[i])
+}
+```
+
+## Random effects and the multivariate normal distribution
+
+A model formula like this `y ~ 1 + x (1 + x | subject)` tells your model to estimate a random intercept for each subject, and also a random effect for `x` for each speaker. Thus, each level of the clustering factor (`subject`) is represented by two random parameters, the intercept and the slope for `x`. Random effects in multilevel models are usually treated as draws from multivariate normal distributions. What I mean by this is that the random intercept and slope for each speaker are treated as a single multidimensional variable, rather than as two independent variables. 
+
+The main difference between treating our random coefficients as a single variable rather than two variables is that when we do this, we also estimate the correlation between them. The easiest way to imagine this is by drawing a bivariate (2-dimensional) normal variable and plotting it. This is what I've done below, with simulated intercept and slope parameters drawn at random from a multivariate normal distribution. 
+
+In the left column below I compare three bivariate normal variables along the two dimensions. In the absence of any correlation between variables, a plot of this distribution will be *spherical* (or circular in 2 dimensions). When there is a correlation between the two dimensions, the distribution starts looking more and more like a straight line. When there is a negative correlation, the line just points down rather than up. 
+
+Note the the marginal (independent) distributions of the variables (the left and right histograms) don't change as the correlation changes. The correlation is a reflection of the *joint* variation in the two variables and will not necessarily be evident in the marginal distributions of each variable.  
+
+```{r, fig.height = 6.5, fig.width = 7, fig.cap="10,000 bivatiate normal draws of simulated intercept and slope coefficients from distributions with a mean of 0 and a standard deviation of 1. The correlation of the variables is 0 (top), 0.5 (middle) and 0.9 (bottom). The left column presents both variables together, the middle column presents intercepts and the right column presents slopes. ", cache = TRUE, echo = FALSE}
+
+################################################################################
+### Figure 6.7
+################################################################################
+
+par (mfrow = c(3,3), mar = c(4,4,3,1))
+
+ranefs = phonTools::rmvtnorm (10000)
+plot (ranefs, pch=16,col=4,xlim=c(-4,4),ylim=c(-4,4),xlab='Intercept',
+      ylab='Slope')
+grid()
+phonTools::sdellipse (ranefs,add = TRUE, lwd=2,col=2,stdev =3)
+hist (ranefs[,1],main='',col=4,xlab='Intercept',freq = FALSE,breaks=50)
+hist (ranefs[,2],main='',col=4,xlab='Slope',freq = FALSE,breaks=50)
+
+ranefs = phonTools::rmvtnorm (10000, sigma = 0.5)
+plot (ranefs, pch=16,col=4,xlim=c(-4,4),ylim=c(-4,4),xlab='Intercept',
+      ylab='Slope')
+grid()
+phonTools::sdellipse (ranefs,add = TRUE, lwd=2,col=2,stdev =3)
+hist (ranefs[,1],main='',col=4,xlab='Intercept',freq = FALSE,breaks=50)
+hist (ranefs[,2],main='',col=4,xlab='Slope',freq = FALSE,breaks=50)
+
+ranefs = phonTools::rmvtnorm (10000, sigma = 0.9)
+plot (ranefs, pch=16,col=4,xlim=c(-4,4),ylim=c(-4,4),xlab='Intercept',
+      ylab='Slope')
+grid()
+phonTools::sdellipse (ranefs,add = TRUE, lwd=2,col=2,stdev =3)
+hist (ranefs[,1],main='',col=4,xlab='Intercept',freq = FALSE,breaks=50)
+hist (ranefs[,2],main='',col=4,xlab='Slope',freq = FALSE,breaks=50)
+
+```
+
+When our dimensions are uncorrelated they are independent. The value of one does not help you understand the other. However, when the dimensions *are* correlated we can use this to make better predictions using our data. For example, an intercept of 2 in the bottom row in the figure above is very likely to be paired with a slope of 2, but *extremely* unlikely to be seen with a slope of -2. In contrast, in the top row a slope of 2 and -2 seem about equally likely given an intercept of 2. So, when we use multiple random predictors per grouping factor, we are really drawing from a multivariate normal distributions that acknowledges the relationships between random predictors in our data, within-cluster (e.g. subject/participant/speaker).  
+
+The shape of the multivariate normal distribution is determined by a covariance matrix called sigma ($\Sigma$). This matrix is a square $n$ x $n$ matrix for a variable with $n$ dimensions. When we dealt with unidimensional normal distributions for our previous random effects, we specified priors for the (unidimensional) standard deviations using t distributions. The specification of priors for our covariance matrix is only slightly more complicated. 
+
+In our models, we won't actually include priors for $\Sigma$ directly. This is because `brms` (and STAN) build up $\Sigma$ for us from the components we *do* specify. This is more information that you *really* need, but it helps to understand why the priors are specified the way they are for our random effects.
+
+The covariance matrix for our random effects is created by multiplying the standard deviations of our individual dimensions by a correlation matrix ($R$) specifying the correlations between each dimension. The operation is like this:
+
+$$
+\begin{equation}
+\begin{split}
+\Sigma = \begin{bmatrix} \sigma_{\alpha_{[subj]}} & 0 \\ 0 & \sigma_{\beta_{[subj]}} \\ \end{bmatrix} 
+* R * 
+\begin{bmatrix} \sigma_{\alpha_{[subj]}} & 0 \\ 0 & \sigma_{\beta_{[subj]}} \\ \end{bmatrix} \\
+\end{split}
+(\#eq:66)
+\end{equation}
+$$
+
+The values in the outside matrices are the the standard deviations of the random intercepts ($\sigma_{\alpha_{[subj]}}$) and slopes ($\sigma_{\beta_{[subj]}}$) individually. The correlation matrix $R$ contains information about the correlation between the dimensions of the variable (e.g., $\rho_{\alpha_{[subj]} \beta _{[subj]}}$).
+  
+So, when we have multiple random effects we have a multidimensional variable, and we need to specify priors for each dimension and for the correlation between all dimensions (but not for $\Sigma$ directly). 
+
+We provide priors for the standard deviations of the individual dimensions in the same way as we do for 'unidimensional' random effects (like $\alpha_{[speaker]}$). 
+
+The correlation matrix $R$ will look something like below (for two dimensions). It will contain only values of 1 on the main diagonal and have mirrored values between -1 and 1 off of the diagonal (since the correlation of a and b equals the correlation of b and a).
+
+
+$$
+\begin{equation}
+\begin{split}
+R = \begin{bmatrix} x & y \\ y & z \\ \end{bmatrix} \\ \\
+\end{split}
+(\#eq:67)
+\end{equation}
+$$
+
+We specify priors for variables of this type using the $LKJCorr$ distribution in `brms`. This distribution has a single parameter that determines how peaked the distribution is around 0. Basically, higher numbers make it harder to find larger correlations (and therefore yield more conservative estimates). [See here for an example](https://eager-roentgen-523c83.netlify.app/2014/12/27/d-lkj-priors/).   
+
+$$
+\begin{equation}
+\begin{split}
+R \sim \mathrm{LKJCorr} (2)
+\end{split}
+(\#eq:672)
+\end{equation}
+$$
+
+So, any time you have multiple random effects inside any grouping cluster, you need to:
+
+  1) Specify priors for the standard deviation of each dimension.
+  
+  2) Specify a prior for the correlation matrix for the multivariate normal used for the random parameters.
+
+## Random slopes
+
+The model above was a demonstration that served primarily as a comparison for the model we are going to fit now. No one would actually include subjects as a 'fixed' effect, nor would they include the $g0_c$ by $subject$ interaction as a fixed effect. In both cases, researchers would tend to include these predictors as 'random effects'. Here, we're going to refit the model as a 'random slopes' model, and talk about how this is similar/different to our previous approach of treating subjects as fixed effects. 
+
+### Description of the model
+
+Our previous model formula was:
+
+`pheight ~ g0_c * subj +  ( 1 |subj) + (1|speaker)`
+
+This formula allows for subject-specific random intercepts but not slopes. Our new model formula moves `g0_c` into the parenthesis with subject like this: 
+
+`pheight ~ g0_c + ( g0_c |subj) + (1|speaker)`
+
+This is the first time we've ever put anything other than `1` on the left of the pipe in the section where we define random effects. Recall that the factors in parenthesis represent clustering factors. Each of these clusters gets a little mini-model for every level of the factor. So, if subject is our clustering factor, each individual subject (i.e. each level) gets their own model.
+
+To this point these models have been very simple and have only included intercepts. So, the `(1|speaker)` term says "we're going to have an intercept for every level of speaker in our model". In the same way, the `( g0_c |subj)` term says "we're going to have an intercept and a g0_c slope for every level of subject in our data" (remember the intercept is assumed even if you don't include a `1`). 
+
+Our model formula could conceivably be written like this (though this won't work because the syntax is wrong):
+
+`pheight ~ 1 + g0_c + (pheight ~ 1 + g0_c |subj) + (pheight ~ 1|speaker)`
+
+Again, this won't actually work, but it might be helpful to think of your formulas this way. Notice that the formula inside the subject parenthesis is the same as the formula outside the parenthesis. In each case we are just estimating perceived height according to a slope and an intercept. The equation outside the parentheses (`pheight ~ 1 + g0_c`) tells our model to estimate an overall slope and intercept, and the part inside the parentheses (`(pheight ~ 1 + g0_c |subj)`) tells our model to do the same thing for each subject. Normally, we omit the `1` for the intercept, and we only include the dependent variable (and the `~`) in the outside formula. However, the formula above is an accurate representation of what our model formula is really doing. 
+
+Ok, so our model has subject specific slopes and intercepts now. You may be thinking "subject specific intercepts and slopes, isn't that what we did in our last model?". The answer is yes, it is what we did in our last model! As we'll see below, our 'random' and 'fixed' effects models are largely the same thing, and provide very similar information. However, there are a few very important differences.
+
+The model description for our random slopes model is given below. The differences relative to our previous model lie in the replacement of our $subj$ predictor with an $\alpha_{[\mathrm{subj}]}$ random effect, and the $g0 \_ c \colon subj$ predictor with a $\beta_{[\mathrm{subj}]}$ random effect.
+
+\begin{equation}
+\begin{split}
+\textrm{Likelihood:} \\
+y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
+\mu_{[i]} = a_{[i]} + b_{[i]} * \mathrm{x}_{[i]}  \\ 
+a_{[i]} = Intercept + \alpha_{[\mathrm{subj}_{[i]}]} + \alpha_{[\mathrm{speaker}_{[i]}]}  \\
+b_{[i]} =  g0\_c + \beta_{[\mathrm{subj}_{[i]}]} \\ \\
+
+\textrm{Priors:} \\
+\alpha_{speaker} \sim \mathrm{Normal}(0,\sigma_{speaker}) \\ \\  
+
+\begin{bmatrix} \alpha_{subj} \\ \beta_{subj} \\ \end{bmatrix}	
+\sim \mathrm{MVNormal} ( \begin{bmatrix} 0 \\ 0 \\ \end{bmatrix}, \Sigma) \\ \\
+
+Intercept \sim t(3, 60, 12) \\
+g0\_c \sim t(3, 0, 50) \\ \\
+
+\sigma_{error} \sim t(3, 0, 100) \\
+\sigma_{\alpha_{speaker}} \sim t(3, 0, 100) \\ 
+\sigma_{\alpha_{subj}} \sim t(3, 0, 12) \\ 
+\sigma_{\beta_{subj}} \sim t(3, 0, 12) \\ 
+R \sim \mathrm{LKJCorr} (2)
+
+\end{split}
+(\#eq:68)
+\end{equation}
+
+Here's a description of the model in plain English:
+
+> Perceived height is normally distributed with a mean that varies trial to trial but a fixed standard deviation. The mean (expected value) varies along lines. The lines are specified by intercepts and slopes that vary trom trial to trial, and there is a single continuous predictor (g0_c). The intercept of these lines vary based on an overall intercept (the main effect), subject-specific deviations from the mean, and speaker-specific deviations from the mean. The slope of these lines vary based on an overall slope (the main effect) and subject-specific deviations from the average slope. 
+
+> The speaker intercepts were drawn from a normal distribution with a mean of zero and a standard deviation estimated from the data. The subject intercepts and slopes were drawn from a bivariate normal distribution with means of 0 of zero and a covariance matrix estimated from the data. All other effects (e.g., the Intercept, g0_c, etc.) were treated as 'fixed' and drawn from prior distributions appropriate for their expected range of values (e.g., subj ~ t(3,0,12)). 
+
+Note that the prediction equation in our last model:
+
+$$
+\begin{equation}
+\begin{split}
+\mu_{[i]} = a_{[i]} + b_{[i]} * \mathrm{x}_{[i]}  \\ 
+a_{[i]} = Intercept + subj_{[\mathrm{subj}_{[i]}]} + \alpha_{[\mathrm{speaker}_{[i]}]}  \\
+b_{[i]} =  g0\_c + g0\_c \colon subj_{[\mathrm{subj}_{[i]}]} \\ \\
+\end{split}
+(\#eq:69)
+\end{equation}
+$$
+
+Is just like the one for this model, save for a one-to-one replacement of the terms $\alpha_{[\mathrm{subj}]}$ and $\beta_{[\mathrm{subj}]}$ for $subj_{[\mathrm{subj}]}$ and $g0\_c \colon subj_{[\mathrm{subj}]}$:
+
+$$
+\begin{equation}
+\begin{split}
+\mu_{[i]} = a_{[i]} + b_{[i]} * \mathrm{x}_{[i]}  \\ 
+a_{[i]} = Intercept + \alpha_{[\mathrm{subj}_{[i]}]} + \alpha_{[\mathrm{speaker}_{[i]}]}  \\
+b_{[i]} =  g0\_c + \beta_{[\mathrm{subj}_{[i]}]} \\ \\
+\end{split}
+(\#eq:610)
+\end{equation}
+$$
+
+Although the prediction equations are largely the same, in the previous model we treated subject as a 'fixed' effect. Remember that in our multilevel Bayesian models, this means that the prior distribution for these was determined entirely a priori and was not estimated from the data. For example our subject effects were drawn from a population of $subj \sim t(3, 0, 12)$ and the subject by g0_c interaction was drawn from a population of $g0\_c \colon subj \sim t(3, 0, 50)$. 
+
+In contrast, random effects are drawn from populations whose standard deviation is estimated from the data. This is the way our current (and previous) models treat the speaker effects. Notice that we estimate, rather than stipulate, the standard deviation for the population of speaker effects ($\sigma_{speaker}$): 
+
+$$
+\begin{equation}
+\begin{split}
+\alpha_{speaker} \sim \mathrm{Normal}(0,\sigma_{speaker}) \\ \\  
+\sigma_{speaker} \sim t(3, 0, 100) \\ 
+\end{split}
+(\#eq:611)
+\end{equation}
+$$
+
+We might have treated our subject intercepts in the same way, except for the fact that we are also estimating random slopes for subjects. Since we are drawing two random variables for each person, we need to also model the correlation between the variables. 
+
+So, when we have multiple random effects (e.g., intercepts and/or slopes) for a predictor, we draw this from a multivariate normal distribution where each predictor is a different 'dimension' of the variable. This requires that we estimate a standard deviation for each predictor, and a correlation between each pair of predictors. 
+
+As seen below, we draw our predictors from a two-dimensional normal distribution. This distribution has a mean of zero for each dimension, and a covariance matrix equal to $\Sigma$.
+
+$$
+\begin{bmatrix} \alpha_{subj} \\ \beta_{subj} \\ \end{bmatrix}	
+\sim \mathrm{MVNormal} ( \begin{bmatrix} 0 \\ 0 \\ \end{bmatrix}, \Sigma) \\ \\
+(\#eq:612)
+$$
+
+### Fitting the model
+
+We now fit the model that includes random intercepts and by-subject slopes for f0. Notice that my `set_prior` section now includes a new category of parameter `cor` for which I provide a prior using the `lkj_corr_cholesky` distribution. 
+
+```{r, eval = FALSE}
+# Fit the model yourself, or
+# download pre-fit model from: 
+# github.com/santiagobarreda/stats-class/tree/master/models
+# and load after placing in working directory
+# random_slopes_model = readRDS ('6_random_slopes_model.RDS')
+
+set.seed (1)
+random_slopes_model =
+  brm (pheight ~ g0_c + (g0_c|subj) + (1|speaker), data=h95, chains=4, cores=4,  
+       warmup=1000, iter = 7500, thin = 4, control = list(adapt_delta = 0.95), 
+       prior = c(set_prior("student_t(3, 60, 12)", class = "Intercept"),
+                 set_prior("student_t(3, 0, 50)", class = "b"),
+                 set_prior("student_t(3, 0, 12)", class = "sd"),
+                 set_prior("lkj_corr_cholesky (2)", class = "cor")))
+
+# save model
+# saveRDS (random_slopes_model, '6_random_slopes_model.RDS')
+```
+```{r, include = FALSE}
+random_slopes_model = readRDS ('../../models/6_random_slopes_model.RDS')
+```
+
+### Interpreting the model
+
+When we look at the print statement for our model, we now see multiple entries in the `Group-Level Effects` section. Under `speaker` we see `sd(Intercept)` representing the standard deviation of the talker intercepts. This tells us that we are only estimating random intercepts for our 139 speakers. These intercepts represent systematic variability in perceived height that is independent of the linear effect for f0. 
+
+```
+Group-Level Effects: 
+~speaker (Number of levels: 139) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     5.52      0.47     4.65     6.51 1.00     1643     2982
+
+~subj (Number of levels: 10) 
+                    Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)           1.81      0.54     1.09     3.18 1.00     4776     5714
+sd(g0_c)                4.21      1.22     2.54     7.25 1.00     5435     5917
+cor(Intercept,g0_c)     0.34      0.27    -0.27     0.77 1.00     5602     5807
+```
+
+We see that there is also a section for `subj`, containing our by-subject random effects, that has three elements. the first is `sd(Intercept)`, representing the standard deviation of our subject intercepts. These intercepts represent differences in the average height responses of different subjects that are independent of f0. The second is `sd(g0_c)` representing the standard deviation of subject *slopes*. This represents variation in by-subject slopes, analogous to the $g0_c \colon subj$ interaction in our fixed effects model. The third item is`cor(Intercept,g0_c)`, representing the correlation of subject intercepts and subject slopes.   
+
+Below, we can compare the fixed effect estimates of our random slopes model:
+
+```
+Population-Level Effects: 
+          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept    60.93      0.76    59.44    62.43 1.00     1539     3029
+g0_c         -6.34      1.94   -10.17    -2.63 1.00     2883     4064
+```
+
+To those of the fixed slopes model. 
+
+```
+Population-Level Effects: 
+           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept     60.99      0.48    60.05    61.91 1.00      713     1735
+g0_c          -6.29      1.40    -8.97    -3.52 1.00     1963     3303
+```
+
+The estimates are quite close in value, though their credible intervals vary. The difference in the credible intervals comes across more clearly when we plot them to compare:
+
+```{r F6-8, fig.width = 8, fig.height = 3.5, fig.cap="(left) Comparison of random effect (RE) and fixed effect (FE) estimates of the intercept main effect. (right) Comparison of random effect (RE) and fixed effect (FE) estimates of the slope main effect.", echo=FALSE}
+
+################################################################################
+### Figure 6.8
+################################################################################
+
+fe_1 = fixef ( random_slopes_model )
+fe_2 = fixef ( fixed_slopes_model ) 
+
+par (mfrow = c(1,2), mar = c(3,4,3,1))
+brmplot (rbind (fe_1[1,], fe_2[1,]), ylim = c(59,63),ylab="Effect",
+         col=cols[c(2,7)], xlim = c(0.8,2.2), labels = c("RE","FE"), 
+         main = "Intercept", cex.main=1)
+brmplot (rbind (fe_1[2,], fe_2[2,]), ylim = c(-12,-2),ylab="Effect",
+         col=cols[c(2,7)],xlim = c(0.8,2.2),labels=c("RE","FE"), main="g0_c",
+         cex.main=1)
+```
+
+We can get the random effects (slopes and intercepts) from our model using the `ranef` function, and asking for the `subj` random effects.
+
+```{r, collapse = TRUE}
+random_effects = ranef (random_slopes_model)$subj
+str (random_effects)
+```
+
+When we have a look at the output of the `str` function, we can see that this is a 3-dimensional matrix. When we look at this matrix along the third dimension (e.g., `random_effects[,,in here]`), we get a series of 2-d matrices that are a summary of a single random effect. Below we see that the first matrix (`random_effects[,,1]`) corresponds to the random intercepts, and the second matrix (`random_effects[,,2]`) corresponding to the random slopes.
+
+You'll note that we actually get all ten subject effects and there is no omitted value. This is because when you use partial pooling to estimate parameters, you actually *can* estimate all levels of a factor (for technical reasons related to shrinkage).
+
+```{r, collapse = TRUE}
+random_effects
+```
+
+In Figure \@ref(fig:p6-10), we see a comparison of the subject intercept and slope terms provided by the random and fixed slopes models. We can see that the effects are extremely similar, however, credible intervals are substantially wider for the estimates provided by the random effects model.
+
+```{r p6-10, fig.width = 8, fig.height = 7, fig.cap="(top) Comparison of random effects (squares) and fixed effect (circles) estimates for speaker intercept effects. (bottom) Same as above but for the slope terms."}
+par (mfrow = c(2,1), mar = c(4,4,1,1))
+# plot random intercepts
+brmplot (xs = (1:10)-.2,  random_effects[,,1], col=cols, labels = "", pch=15)
+# plot fixed intercepts
+brmplot (xs = (1:10)+.2, factors[["subj"]], add = TRUE, col=cols)
+abline (h=0, lty=3)
+# plot random slopes
+brmplot (xs = (1:10)-.2, random_effects[,,2], col = cols, labels = "", pch=15)
+# plot fixed slopes
+brmplot (xs = (1:10)+.2, factors[["g0_c:subj"]], add = TRUE, col=cols)
+abline (h=0, lty=3)
+```
+
+In Figure \@ref(fig:F6-10), we compare the random and fixed effects estimates for the subject intercepts. Note that the difference between the random and fixed effect estimates is largest for the effects with the largest magnitude. For example, on the left edge of the right figure below we see that the green effect with a fixed effect estimates near -2 has a random effect that is nearly 0.1 larger than that (near to -1.9). 
+
+```{r F6-10, fig.width = 8, fig.height =3.5, fig.cap="(left) Comparison of fixed and random estimates for subject effects (intercept terms). (right) Plot of the difference between the estimates for each parameter, plotted against the value of the fixed-effect estimate of the same parameter.", echo=FALSE, cache=FALSE}
+
+################################################################################
+### Figure 6.10
+################################################################################
+
+summaries = summarize (factors)
+
+par (mfrow = c(1,2), mar = c(4,4,1,1))
+plot (summaries[["subj"]][,1],random_effects[,1,1],lwd=3,cex=3,col=cols,pch=4,
+      xlab = "FE Estimate", ylab = "RE Estimate", 
+      main = "", xlim = c(-3,4.5), ylim = c(-3,4.5))
+abline (0,1,col=1,lwd=2,lty=3)
+grid()
+points (summaries[["subj"]][,1],random_effects[,1,1],lwd=3,cex=3,col=cols,pch=4)
+
+
+plot (summaries[["subj"]][,1],random_effects[,1,1]-summaries[["subj"]][,1],
+      lwd=3,cex=3,col=cols,pch=4,ylim = c(-.3,.3),xlab = "FE Estimate",
+      ylab = "RE Estimate - FE Estimate",xlim = c(-3,4.5),
+      main = "")
+abline (h=0,col=1,lwd=2,lty=3)
+grid()
+
+```
+
+The same pattern is evident in Figure \@ref(fig:F6-11), : more extreme values are 'shrunk' towards the mean. This is partial-pooling and shrinkage in action! Because parameters in a 'random effect' are jointly estimated (to some extent), extreme values can be pulled towards the mean when they are weakly supported. Here we see a tiny bit of shrinkage indicating that: 1) the values were not so extreme, and 2) the 'extreme' values had a reasonable amount of support. 
+
+```{r F6-11, fig.width = 8, fig.height =3.5, fig.cap="(left) Comparison of fixed and random estimates for g0_c:subject effects (slope terms). (right) Plot of the difference between the estimates for each parameter, plotted against the value of the fixed-effect estimate of the same parameter.", echo=FALSE,cache=TRUE}
+
+################################################################################
+### Figure 6.11
+################################################################################
+
+par (mfrow = c(1,2), mar = c(4,4,1,1))
+
+plot (summaries[["g0_c:subj"]][,1],random_effects[,1,2],lwd=3,cex=3,col=cols,
+      pch=4,xlab = "FE Estimate", ylab = "RE Estimate", 
+      main = "", xlim = c(-7,10), ylim = c(-5,9))
+abline (0,1,col=1,lwd=2,lty=3)
+grid()
+points (summaries[["g0_c:subj"]][,1],random_effects[,1,2],lwd=3,
+        cex=3,col=cols,pch=4)
+
+plot (summaries[["g0_c:subj"]][,1],
+      random_effects[,1,2]-summaries[["g0_c:subj"]][,1],
+      lwd=3,cex=3,col=cols,pch=4,ylim = c(-.6,.6),xlab = "FE Estimate",
+      ylab = "RE Estimate - FE Estimate",xlim = c(-7,10),
+      main = "")
+abline (h=0,col=1,lwd=2,lty=3)
+grid()
+
+```
+
+## More predictors and more random slopes
+
+### Adding another random slope
+
+Imagine we were to add another continuous predictor to our model. We can use the centered logarithm of F1 (`g1_c`) as an example. Inclusion of random slopes for this predictor would mean our equation now looks like: 
+
+`pheight ~ g0_c + g1_c (g0_c + g1_c|subj) + (1|speaker)`
+
+In turn, this means that the likelihood section of our model now looks like below. Basically, we have just added a new continuous predictor ($\mathrm{x}_{2[i]}$) and slope term ($b_{2}$), with its own corresponding decomposition into a main effect and a random subject effect. 
+
+$$
+\begin{equation}
+\begin{split}
+y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
+\mu_{[i]} = a_{[i]} + b_{1[i]} * \mathrm{x}_{1[i]} + b_{2[i]} * \mathrm{x}_{2[i]}  \\ 
+a_{[i]} = Intercept + \alpha_{[\mathrm{subj}_{[i]}]} + \alpha_{[\mathrm{speaker}_{[i]}]}  \\
+b_{1[i]} =  g0\_c + \beta_{1{[\mathrm{subj}_{[i]}]}} \\ 
+b_{2[i]} =  g1\_c + \beta_{2{[\mathrm{subj}_{[i]}]}} \\ 
+\end{split}
+(\#eq:613)
+\end{equation}
+$$
+
+The two random slopes ($\beta_{1{[\mathrm{subj}]}},\beta_{2{[\mathrm{subj}]}}$) and the random intercept ($\alpha_{[\mathrm{subj}]}$) are all drawn from a multivariate normal distribution:
+
+$$
+\begin{equation}
+\begin{split}
+\begin{bmatrix} \alpha_{[subj]} \\ \beta_{1[subj]} \\ \beta_{2[subj]} \\ \end{bmatrix}	
+\sim \mathrm{MVNormal} ( \begin{bmatrix} 0 \\ 0 \\ 0 \\ \end{bmatrix}, \Sigma) \\ 
+\end{split}
+(\#eq:613)
+\end{equation}
+$$
+
+Just as for our first random slopes model, we just need to worry about specifying the priors for the effects standard deviations ($\sigma_{\alpha_{[\mathrm{speaker}]}}, \sigma_{\beta_{[\mathrm{speaker}]}}$) and the correlation matrix ($R$) (like below) and `brm` does the rest of the work for us. 
+
+\begin{equation}
+\begin{split}
+
+\sigma_{\alpha_{[speaker]}} \sim t(3, 0, 100) \\ 
+\sigma_{\beta_{1[subj]}} \sim t(3, 0, 100) \\ 
+\sigma_{\beta_{2[subj]}} \sim t(3, 0, 100) \\ 
+R \sim \mathrm{LKJCorr} (2)
+
+\end{split}
+(\#eq:614)
+\end{equation}
+
+### Adding random factors
+
+We can also add random effects for factors. For example, we could include `adult` inside our `subj` parentheses in the model formula. This would tell our model to calculate a subject-specific effect for `adult`:
+
+`pheight ~ g0_c + g1_c + adult (g0_c + g1_c + adult |subj) + (1|speaker)`
+
+The likelihood section of our model will now look like below. Note that the random effect associated with adultness is added to the intercept equation. This is because this effect does not interact with our continuous predictors. Since there are no interactions between our continuous predictors and the adult effect, the slopes cannot vary based on adultness. As a result, the adultness parameter can only affect the intercepts of the shapes being drawn and not the slopes. 
+
+$$
+\begin{equation}
+\begin{split}
+y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
+\mu_{[i]} = a_{[i]} + b_{1[i]} * \mathrm{x}_{1[i]} + b_{2[i]} * \mathrm{x}_{2[i]}  \\ 
+a_{[i]} = Intercept + \alpha_{[\mathrm{subj}_{[i]}]} + \alpha_{adult[\mathrm{subj}_{[i]}]} + \alpha_{[\mathrm{speaker}_{[i]}]}  \\
+b_{1[i]} =  g0\_c + \beta_{1{[\mathrm{subj}_{[i]}]}} \\ 
+b_{2[i]} =  g1\_c + \beta_{2{[\mathrm{subj}_{[i]}]}} \\ \\
+\end{split}
+(\#eq:614)
+\end{equation}
+$$
+
+Since we now have 4 random effects for subject, we draw our subject random effects from a four-dimensional normal distribution like this:
+
+$$
+\begin{equation}
+\begin{split}
+\begin{bmatrix} \alpha_{[subj]} \\ \alpha_{adult[subj]} \\ \beta_{1[subj]} \\ \beta_{2[subj]} \\ \end{bmatrix}	
+\sim \mathrm{MVNormal} ( \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \\ \end{bmatrix}, \Sigma) \\ \\
+\end{split}
+(\#eq:615)
+\end{equation}
+$$
+
+
+### The independence of continuous predictors
+
+It's important to note that each continuous predictor is treated independently in our model. We could, for example, include an interaction between adultness and F1 in our model. This would make the formula look like this:
+
+`pheight ~ g0_c + g1_c + adult + g1_c:adult + (g0_c + g1_c + adult + g1_c:adult|subj) + (1|speaker)`
+
+Note that this only causes a change for one of our slopes ($b_2$). It causes no change at all for our intercept or the other slope:
+
+$$
+\begin{equation}
+\begin{split}
+y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
+\mu_{[i]} = a_{[i]} + b_{1[i]} * \mathrm{x}_{1[i]} + b_{2[i]} * \mathrm{x}_{2[i]}  \\ 
+a_{[i]} = Intercept + \alpha_{[\mathrm{subj}_{[i]}]} + \alpha_{adult[\mathrm{subj}_{[i]}]} + \alpha_{[\mathrm{speaker}_{[i]}]}  \\
+b_{1[i]} =  g0\_c + \beta_{1{[\mathrm{subj}_{[i]}]}} \\ 
+b_{2[i]} =  g1\_c + \beta_{2{[\mathrm{subj}_{[i]}]}} + \beta_{2,adult[\mathrm{subj}_{[i]}]} \\ 
+\end{split}
+(\#eq:616)
+\end{equation}
+$$
+
+
+Since we now have five random effects, we now draw our subject random effects from a five-dimensional normal distribution like:
+
+$$
+\begin{equation}
+\begin{split}
+\begin{bmatrix} \alpha_{[subj]} \\ \alpha_{adult[subj]} \\ \beta_{1[subj]} \\ \beta_{2[subj]} \\ \beta_{2,adult[\mathrm{subj}_{[i]}]} \\ \end{bmatrix}	
+\sim \mathrm{MVNormal} ( \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ \end{bmatrix}, \Sigma) \\ \\
+\end{split}
+(\#eq:616)
+\end{equation}
+$$
+
+Keep in mind that the correlation matrix for this distribution is a 5x5 matrix with 25 elements, meaning we have to estimate 10 correlation parameters and 5 variance parameters in order to estimate these random effects. Many of the convergence problems that `lmer` has seem to relate to the estimation of the correlation parameters for random slopes. Since our Bayesian models have prior distributions on these correlation parameters, they can do a much better job of investigating the random effects correlations and can therefore easily (but perhaps slowly) find solutions for models with even large numbers of random effects.  
+
+## Answering our research questions
+
+Let's look at the output of our random slopes model again to see where we stand with respect to our research question:
+
+```{r, echo = FALSE}
+random_slopes_model
+```
+
+There is clearly an effect for f0 on perceived height. If we were so inclined we could leave it at that. However, we can do a very simple form of posterior prediction by considering the lines generated by our models. In the figure below (recreated from above) we can see that the lines are actually doing a pretty terrible job of predicting where the data is. In most cases, there is no data where the line actually is!
+
+```{r F6-12, fig.width = 8, fig.height = 5, fig.cap="Each plot shows responses from a single subject. Lines indicate best fit line relating variables, as indicated by our fixed slopes model.", cache=TRUE, echo = FALSE}
+
+################################################################################
+### Figure 6.12
+################################################################################
+
+par (mar = c(2,2,1,1), mfrow = c(2,5), oma = c(3,3,1,1))
+for (i in 1:10){
+  tmp = h95[h95$subj == i,]
+  plot (pheight ~ g0_c, data = tmp, col=cols[i],pch=16,ylim=c(40,80),
+        xlim=c(-1,1),xlab="",ylab="")
+  abline (subj_intercepts_summary[i,1],subj_slopes_summary[i,1], 
+          lwd=4,col=cols[i])
+
+}
+mtext (side = 1, outer = TRUE, text = "Centered f0 (log Hz)", line = 1.5)
+mtext (side = 2, outer = TRUE, text = "Perceived Height (inches)", line = 1.5)
+```
+
+When we look at the model statement above, we can see that the residual error (`sigma`, $\sigma_{error}$) is only 3.8 inches, meaning our model can predict perceived height with an expected error of 3.8 inches. That doesn't seem that bad. However, if we look at the standard deviation for the speaker intercepts (`sd(Intercept)` under `~speaker`, $\sigma_{\alpha_{[speaker]}}$) we can see that this is 5.5 inches. In other words, our model contains large amounts of speaker specific variation in perceived height. This variation is 'explained' by the random effects in our model, but is not being explained by f0. We can inspect these below:
+
+
+```{r F6-13, fig.width = 8, fig.height =3.5, fig.cap="Speaker random intercepts and credible intervals colored by group (red = boys, yellow = girls, green = men, blue = women).", echo=FALSE,cache=TRUE}
+
+################################################################################
+### Figure 6.13
+################################################################################
+
+group_colors = cols[c(rep (3,27),rep(4,19),rep(5,45),rep(6,48))]
+
+par (mfrow = c(1,1), mar = c(4,4,1,1))
+brmplot ( ranef (random_slopes_model)$speaker[,,1], col= group_colors)
+abline (h=0,lty=3)
+```
+
+Remember, these 'random' effects are being modeled as being normally distributed with a mean of 0. The distribution of random effects clearly shows a systematic pattern according to speaker group. In general, boys and girls are perceived as smaller than expected given their f0, men are perceived as taller than expected given their f0, and women are perceived as being about as tall as expected given their f0. 
+
+The speaker intercepts above show a remarkable amount of consistency within group. Keep in mind that listeners were not told the group the speaker belonged to, so either 1) listener guessed speaker group and used this to guess size, or 2) there are other acoustic cues that vary systematically between groups, and listeners used this to estimate size. In either case, this suggests that our model need to change in order to really capture how listeners are arriving at size judgments for these speakers. 
+
+## Lmer corner
+
+We can fit a 'random slopes' model with `lmer` using the code below: 
+
+```{r, cache = TRUE}
+model = lme4::lmer (pheight ~ g0_c +  (g0_c|subj) + (1|speaker), data = h95)
+```
+
+Below I recreate the middle part of the `lmer` model print statement, except I added numbers to some rows. This is because `lmer` and `brm` present much of the same information but with different labels and in a different order. 
+
+```
+Random effects:
+    Groups   Name        Variance Std.Dev.  Corr
+(1) speaker  (Intercept) 29.903   5.468        
+(2) subj     (Intercept)  2.326   1.525        
+(3)          g0_c        12.908   3.593  (7) 0.52
+(4) Residual             14.649   3.827        
+Number of obs: 2780, groups:  speaker, 139; subj, 10
+
+Fixed effects:
+               Estimate Std. Error t value
+(5) (Intercept)  60.9939     0.6731  90.621
+(6) g0_c         -6.3488     1.5340  -4.139
+```
+
+Below I show the `random_slopes_model` print statement with numbers that match the labels in the print statement above. We see that both models provide reasonably similar estimates for our parameters, with the `brm` model providing more information about parameter intervals. 
+
+```
+Group-Level Effects: 
+~speaker (Number of levels: 139) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+(1) sd(Intercept)     5.52      0.47     4.65     6.51 1.00     1643     2982
+
+~subj (Number of levels: 10) 
+                    Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+(2) sd(Intercept)           1.81      0.54     1.09     3.18 1.00     4776     5714
+(3) sd(g0_c)                4.21      1.22     2.54     7.25 1.00     5435     5917
+(7) cor(Intercept,g0_c)     0.34      0.27    -0.27     0.77 1.00     5602     5807
+
+Population-Level Effects: 
+          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+(5) Intercept    60.93      0.76    59.44    62.43 1.00     1539     3029
+(6) g0_c         -6.34      1.94   -10.17    -2.63 1.00     2883     4064
+
+Family Specific Parameters: 
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+(4) sigma     3.83      0.05     3.73     3.94 1.00     5831     6083
+```
+
+Below is a comparison of the subject intercepts and slopes fit by both approches:
+
+```{r F6-14, fig.width = 8, fig.height =3.5, fig.cap="(left) Subject random intercepts and credible intervals estimated using brms models. Crosses indicate random effects estimated by lmer. (right) Same as right but for random slopes.", echo=FALSE,cache=TRUE}
+
+################################################################################
+### Figure 6.14
+################################################################################
+
+par (mfrow = c(1,2), mar = c(4,4,1,1))
+
+brmplot (random_effects[,,1], col = cols)
+points (ranef (model)$subj[,1], pch=4,lwd=2, cex=3, col = cols)
+abline (h=0,lty=3)
+brmplot (random_effects[,,2], col = cols)
+points (ranef (model)$subj[,2], pch=4,lwd=2, cex=3, col = cols)
+abline (h=0,lty=3)
+```
+
+And the speaker random intercepts estimates by both approaches. In both cases we see that we arrive at basically the same results. 
+
+```{r F6-15, fig.width = 8, fig.height =3.5, fig.cap="Speaker random intercepts and credible intervals estimated using brms models. Crosses indicate random effects estimated by lmer.", echo=FALSE,cache=TRUE}
+
+################################################################################
+### Figure 6.15
+################################################################################
+
+par (mfrow = c(1,1), mar = c(4,4,1,1))
+brmplot ( ranef (random_slopes_model)$speaker[,,1], col= skyblue)
+points (ranef (model)$speaker[,1], col = skyblue, pch=4,lwd=2, cex=2)
+abline (h=0,lty=3)
+```
+
+I'm also going to fit a model that was described but not fit above. Below we see a model predicting perceived height as a function of centered log F1 and f0. It also included an effect for adultness and an adultness by F1 interaction. The model includes random intercepts for subject and by subject slopes for all predictors. A random by-speaker intercept was also included. 
+
+```{r, cache = TRUE, warning = FALSE}
+# make variable that indicates if the talker is an adult
+h95$adult = ""
+h95$adult[h95$group %in% c('w','m')] = "adult"
+h95$adult[h95$group %in% c('g','b')] = "child"
+
+# make centered log F1
+h95$g1_c = log(h95$f1) - mean (log(h95$f1))
+
+formula = pheight ~ g0_c + g1_c + adult + g1_c:adult + 
+                   (g0_c + g1_c + adult + g1_c:adult|subj) + 
+                   (1|speaker)
+
+model_2 = lme4::lmer (formula, data = h95)
+```
+
+Notice that `lmer` also treats our subject random effects as draws from a 5-dimensional normal distribution. It provides estimates of the standard deviations of the five dimensions (under `Random effects:` and `subj`), and also estimates of the correlations between the dimensions. 
+
+```{r, cache = TRUE}
+summary (model_2)
+```
+
+
+## Plot Code
+
+```{r get-labels, echo = FALSE}
+labs = knitr::all_labels()
+labs = labs[grep ("F6", labs)]
+```
+
+```{r all-code, ref.label=labs, eval=FALSE}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
