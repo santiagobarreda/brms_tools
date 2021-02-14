@@ -227,23 +227,23 @@ banova = function (model, superpopulation = FALSE, collapse = TRUE){
   output = list() 
   
   if (!superpopulation){
-    fixefs_finite = fixef(model, summary = FALSE)  
-    fixefs_finite = posterior_summary (abs(fixefs_finite))
+    fixefs_finite = brms::fixef(model, summary = FALSE)  
+    fixefs_finite = brms::posterior_summary (abs(fixefs_finite))
     
     if (model$family$family == "gaussian"){
-      sigma_finite = residuals (model, summary = FALSE)
+      sigma_finite = brms::residuals (model, summary = FALSE)
       sigma_finite = apply (sigma_finite, 1, sd)
-      sigma_finite = posterior_summary (sigma_finite)
+      sigma_finite = brms::posterior_summary (sigma_finite)
       rownames(sigma_finite)[1] = "sigma"
       fixefs_finite = rbind(sigma_finite, fixefs_finite)
     }
-    res = ranef (model, summary = FALSE)
+    res = brms::ranef (model, summary = FALSE)
     res_summary = list()
     for (i in 1:length(res)){
       tmp = res[[i]]
       if (dim(tmp)[3]>1) tmp = apply (tmp[,,],c(1,3),sd)
       else tmp = apply (tmp[,,],1,sd)
-      tmp = posterior_summary (tmp)
+      tmp = brms::posterior_summary (tmp)
       if (nrow (tmp)==1) rownames(tmp)[1] = "Intercept"
       res_summary[[i]] = tmp
       rownames(res_summary[[i]]) = 
@@ -257,17 +257,17 @@ banova = function (model, superpopulation = FALSE, collapse = TRUE){
     names(output) = c("fixefs", names (res_summary))
   }
   if (superpopulation){
-    fixefs_finite = fixef(model, summary = FALSE)  
-    fixefs_finite = posterior_summary (abs(fixefs_finite))
+    fixefs_finite = brms::fixef(model, summary = FALSE)  
+    fixefs_finite = brms::posterior_summary (abs(fixefs_finite))
     
     gaussian = model$family$family == "gaussian"
     if (gaussian){
-      sigma_super = VarCorr(model)$residual$sd
+      sigma_super = brms::VarCorr(model)$residual$sd
       rownames(sigma_super)[1] = "sigma"
       fixefs_finite = rbind(sigma_super, fixefs_finite)
     }
     
-    res = VarCorr(model)
+    res = brms::VarCorr(model)
     res_summary = list()
     for (i in 1:(length(res)-gaussian)){
       res_summary[[i]] = res[[i]][["sd"]]
@@ -289,16 +289,3 @@ banova = function (model, superpopulation = FALSE, collapse = TRUE){
   
   return (output)
 }
-
-
-banova (logistic_g0)
-
-
-
-
-
-
-
-
-
-
