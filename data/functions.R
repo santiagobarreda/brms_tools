@@ -4,7 +4,7 @@
 brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE, 
                     xs = NULL, col = 1, labels = "default",xlab='',ylab='', 
                     pch=16, lwd=2,cex=1.5, las=NA,cex.axis=1,grid=TRUE,
-                    robust = FALSE, ...){
+                    robust = FALSE, yaxs="r",xaxs="r",line=TRUE,...){
     
   n = nrow (mat)
   if (n > 500 & ncol(mat) !=4) mat = posterior_summary (mat, robust=robust)
@@ -19,8 +19,10 @@ brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE,
     
     if (!add){
       plot (0, type='n', ylim = ylim,xlim=xlim, xlab=xlab,xaxt='n',ylab = ylab,
-            cex.axis=cex.axis)
+            cex.axis=cex.axis,yaxs=yaxs,xaxs=xaxs)
       if (grid) grid()
+      if (line) abline(h=0)
+      if (line) abline(v=0)
       points (xs,mat[,1], col=col,pch=pch,cex=cex)
     }
     if (add)  points (xs, mat[,1], col=col, pch=pch,cex=cex)
@@ -39,8 +41,9 @@ brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE,
     if (is.null(ylim)) ylim = range (1:n)
     if (!add){
       plot (0,type='n', ylim = ylim,xlim=xlim, ylab=ylab,yaxt='n',xlab = ylab,
-            cex.axis=cex.axis)
+            cex.axis=cex.axis,yaxs=yaxs,xaxs=xaxs)
       if (grid) grid()
+      if (line) abline(v=0)
       points (mat[,1],xs, pch=pch, col=col,cex=cex)
       
     }
@@ -216,3 +219,86 @@ HDI = function( x , mass = 0.95 ) {
   HDI = as.numeric(c( HDImin , HDImax ))
   return( HDI )
 }
+
+
+
+banova = function (model, superpopulation = FALSE, collapse = TRUE){
+
+  output = list() 
+  
+  if (!superpopulation){
+    fixefs_finite = fixef(model, summary = FALSE)  
+    fixefs_finite = posterior_summary (abs(fixefs_finite))
+    
+    if (model$family$family == "gaussian"){
+      sigma_finite = residuals (model, summary = FALSE)
+      sigma_finite = apply (sigma_finite, 1, sd)
+      sigma_finite = posterior_summary (sigma_finite)
+      rownames(sigma_finite)[1] = "sigma"
+      fixefs_finite = rbind(sigma_finite, fixefs_finite)
+    }
+    res = ranef (model, summary = FALSE)
+    res_summary = list()
+    for (i in 1:length(res)){
+      tmp = res[[i]]
+      if (dim(tmp)[3]>1) tmp = apply (tmp[,,],c(1,3),sd)
+      else tmp = apply (tmp[,,],1,sd)
+      tmp = posterior_summary (tmp)
+      if (nrow (tmp)==1) rownames(tmp)[1] = "Intercept"
+      res_summary[[i]] = tmp
+      rownames(res_summary[[i]]) = 
+        paste0 (rownames(res_summary[[i]]), ":", names(res)[i])
+      
+    }
+    names (res_summary) = names (res)
+  
+    output[[1]] = fixefs_finite
+    for (i in 1:length (res_summary))  output[[i+1]] = res_summary[[i]]
+    names(output) = c("fixefs", names (res_summary))
+  }
+  if (superpopulation){
+    fixefs_finite = fixef(model, summary = FALSE)  
+    fixefs_finite = posterior_summary (abs(fixefs_finite))
+    
+    gaussian = model$family$family == "gaussian"
+    if (gaussian){
+      sigma_super = VarCorr(model)$residual$sd
+      rownames(sigma_super)[1] = "sigma"
+      fixefs_finite = rbind(sigma_super, fixefs_finite)
+    }
+    
+    res = VarCorr(model)
+    res_summary = list()
+    for (i in 1:(length(res)-gaussian)){
+      res_summary[[i]] = res[[i]][["sd"]]
+      rownames(res_summary[[i]]) = 
+        paste0 (rownames(res_summary[[i]]), ":", names(res)[i])
+    }
+    names (res_summary) = names (res)[1:(length(res)-gaussian)]
+    
+    output[[1]] = fixefs_finite
+    for (i in 1:length (res_summary))  output[[i+1]] = res_summary[[i]]
+    names(output) = c("fixefs", names (res_summary))
+  }
+  
+  if (collapse){
+    label = rep (names (output), sapply (output, nrow))
+    output = data.frame (do.call (rbind, output))
+    output$cluster = label
+  }
+  
+  return (output)
+}
+
+
+banova (logistic_g0)
+
+
+
+
+
+
+
+
+
+
