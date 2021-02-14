@@ -231,7 +231,7 @@ banova = function (model, superpopulation = FALSE, collapse = TRUE){
     fixefs_finite = brms::posterior_summary (abs(fixefs_finite))
     
     if (model$family$family == "gaussian"){
-      sigma_finite = brms::residuals (model, summary = FALSE)
+      sigma_finite = residuals (model, summary = FALSE)
       sigma_finite = apply (sigma_finite, 1, sd)
       sigma_finite = brms::posterior_summary (sigma_finite)
       rownames(sigma_finite)[1] = "sigma"
