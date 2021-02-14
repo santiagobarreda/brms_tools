@@ -289,3 +289,5 @@ banova = function (model, superpopulation = FALSE, collapse = TRUE){
   
   return (output)
 }
+
+
