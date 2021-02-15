@@ -280,11 +280,13 @@ banova = function (model, superpopulation = FALSE, collapse = TRUE){
     for (i in 1:length (res_summary))  output[[i+1]] = res_summary[[i]]
     names(output) = c("fixefs", names (res_summary))
   }
-  
   if (collapse){
     label = rep (names (output), sapply (output, nrow))
     output = data.frame (do.call (rbind, output))
     output$cluster = label
+    
+    use = which(rownames(output)=="sigma")
+    if (length(use)>0) output$cluster[use] = "sigma" 
   }
   
   return (output)
