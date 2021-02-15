@@ -294,7 +294,7 @@ banova = function (model, superpopulation = FALSE, collapse = TRUE){
 
 
 
-banova.plot = function (baov, ylim=NULL, xlim = NULL, horizontal = TRUE, 
+banovaplot = function (baov, ylim=NULL, xlim = NULL, horizontal = TRUE, 
               cols = NULL, labels = "default", xlab='',ylab='', pch=16, lwd=2,
               cex=1.5, las=NA, cex.axis=1,grid=TRUE, robust = FALSE, yaxs="r",
               xaxs="r",line=TRUE,...){
