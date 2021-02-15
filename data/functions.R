@@ -291,3 +291,21 @@ banova = function (model, superpopulation = FALSE, collapse = TRUE){
 }
 
 
+
+banova.plot = function (baov, ylim=NULL, xlim = NULL, horizontal = TRUE, 
+              cols = NULL, labels = "default", xlab='',ylab='', pch=16, lwd=2,
+              cex=1.5, las=NA, cex.axis=1,grid=TRUE, robust = FALSE, yaxs="r",
+              xaxs="r",line=TRUE,...){
+
+  cols = c("#EE4E62BF","#F8A61BBF","#0C8275BF","#27C0D8BF","#3A65AFBF",
+           "#822B32BF","#602D45BF","#FF6400BF","#F7B5C5BF","#CA87B9BF")
+  
+  cols = cols[as.numeric (factor (baov$cluster))]
+  
+  brmplot (baov, ylim=ylim, xlim = xlim, horizontal = horizontal, col=cols, 
+           labels = labels,xlab=xlab,ylab=ylab, pch=pch, lwd=lwd,cex=cex,
+           las=las,cex.axis=cex.axis,grid=grid,  robust = robust, 
+           yaxs=yaxs,xaxs=xaxs, line=line,...)
+}
+
+
