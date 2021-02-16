@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 Bayesian ANOVA and interpreting complicated models | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</title>
+  <meta name="description" content="Bayesian Models for Linguists" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 Bayesian ANOVA and interpreting complicated models | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://santiagobarreda.com" />
+  
+  <meta property="og:description" content="Bayesian Models for Linguists" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 Bayesian ANOVA and interpreting complicated models | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers" />
+  
+  <meta name="twitter:description" content="Bayesian Models for Linguists" />
+  
+
+<meta name="author" content="Santiago Bareda" />
+
+
+<meta name="date" content="2021-02-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="logistic-regression.html"/>
+<link rel="next" href="appendix.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bayesian Models for Linguists</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html"><i class="fa fa-check"></i><b>1</b> Inspecting a single group of observations</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#data-and-research-questions"><i class="fa fa-check"></i><b>1.1</b> Data and research questions</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#inspecting-the-central-location-and-spread-of-values"><i class="fa fa-check"></i><b>1.1.1</b> Inspecting the central location and spread of values</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#probability-distributions"><i class="fa fa-check"></i><b>1.2</b> Probability Distributions</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#the-normal-distribution"><i class="fa fa-check"></i><b>1.2.1</b> The normal distribution</a></li>
+<li class="chapter" data-level="1.2.2" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#referring-to-the-normal-distribution-to-make-inferences"><i class="fa fa-check"></i><b>1.2.2</b> Referring to the normal distribution to make inferences</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#probabilities-of-events-and-likelihoods-of-parameters"><i class="fa fa-check"></i><b>1.3</b> Probabilities of events and likelihoods of parameters</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#making-inferences-using-likelihoods"><i class="fa fa-check"></i><b>1.3.1</b> Making inferences using likelihoods</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#bayesian-models"><i class="fa fa-check"></i><b>1.4</b> Bayesian models</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#what-are-regression-models"><i class="fa fa-check"></i><b>1.4.1</b> What are regression models?</a></li>
+<li class="chapter" data-level="1.4.2" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#whats-bayesian-about-these-models"><i class="fa fa-check"></i><b>1.4.2</b> What’s ‘Bayesian’ about these models?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#posterior-distributions"><i class="fa fa-check"></i><b>1.5</b> Posterior distributions</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#sampling-from-the-posterior"><i class="fa fa-check"></i><b>1.5.1</b> Sampling from the posterior</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#plot-code"><i class="fa fa-check"></i><b>1.6</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><i class="fa fa-check"></i><b>2</b> Inspecting a ‘single group’ of observations using a Bayesian multilevel model</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#data-and-research-questions-1"><i class="fa fa-check"></i><b>2.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="2.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#estimating-a-single-mean-with-the-brms-package"><i class="fa fa-check"></i><b>2.2</b> Estimating a single mean with the <code>brms</code> package</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#description-of-the-model"><i class="fa fa-check"></i><b>2.2.1</b> Description of the model</a></li>
+<li class="chapter" data-level="2.2.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#the-model-formula"><i class="fa fa-check"></i><b>2.2.2</b> The model formula</a></li>
+<li class="chapter" data-level="2.2.3" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#fitting-the-model-calling-the-brm-function"><i class="fa fa-check"></i><b>2.2.3</b> Fitting the model: Calling the <code>brm</code> function</a></li>
+<li class="chapter" data-level="2.2.4" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#interpreting-the-model-the-print-statement"><i class="fa fa-check"></i><b>2.2.4</b> Interpreting the model: the print statement</a></li>
+<li class="chapter" data-level="2.2.5" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#seeing-the-samples"><i class="fa fa-check"></i><b>2.2.5</b> Seeing the samples</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#repeated-measures-data"><i class="fa fa-check"></i><b>2.3</b> Repeated measures data</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#multilevel-models"><i class="fa fa-check"></i><b>2.3.1</b> Multilevel models</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#estimating-a-multilevel-model-with-brms"><i class="fa fa-check"></i><b>2.4</b> Estimating a multilevel model with <code>brms</code></a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#description-of-the-model-1"><i class="fa fa-check"></i><b>2.4.1</b> Description of the model</a></li>
+<li class="chapter" data-level="2.4.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#fitting-the-model"><i class="fa fa-check"></i><b>2.4.2</b> Fitting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#checking-model-convergence"><i class="fa fa-check"></i><b>2.5</b> Checking model convergence</a></li>
+<li class="chapter" data-level="2.6" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#specifying-prior-probabilities"><i class="fa fa-check"></i><b>2.6</b> Specifying prior probabilities</a></li>
+<li class="chapter" data-level="2.7" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#answering-our-research-questions"><i class="fa fa-check"></i><b>2.7</b> Answering our research questions</a></li>
+<li class="chapter" data-level="2.8" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#simulating-data-using-our-model-parameters"><i class="fa fa-check"></i><b>2.8</b> Simulating data using our model parameters</a></li>
+<li class="chapter" data-level="2.9" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#lmer-corner"><i class="fa fa-check"></i><b>2.9</b> Lmer corner</a></li>
+<li class="chapter" data-level="2.10" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#plot-code-1"><i class="fa fa-check"></i><b>2.10</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html"><i class="fa fa-check"></i><b>3</b> Comparing two groups of observations</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#data-and-research-questions-2"><i class="fa fa-check"></i><b>3.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="3.2" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#estimating-the-difference-between-two-means-with-brms"><i class="fa fa-check"></i><b>3.2</b> Estimating the difference between two means with ‘brms’</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#fitting-the-model-1"><i class="fa fa-check"></i><b>3.2.1</b> Fitting the model</a></li>
+<li class="chapter" data-level="3.2.2" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#interpreting-the-model"><i class="fa fa-check"></i><b>3.2.2</b> Interpreting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#contrasts"><i class="fa fa-check"></i><b>3.3</b> Contrasts</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#treatment-coding"><i class="fa fa-check"></i><b>3.3.1</b> Treatment coding</a></li>
+<li class="chapter" data-level="3.3.2" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#sum-coding"><i class="fa fa-check"></i><b>3.3.2</b> Sum coding</a></li>
+<li class="chapter" data-level="3.3.3" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#comparison-of-sum-and-treatment-coding"><i class="fa fa-check"></i><b>3.3.3</b> Comparison of sum and treatment coding</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#refitting-the-model-with-sum-coding"><i class="fa fa-check"></i><b>3.4</b> Refitting the model with sum coding</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#fitting-the-model-2"><i class="fa fa-check"></i><b>3.4.1</b> Fitting the model</a></li>
+<li class="chapter" data-level="3.4.2" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#description-of-the-model-2"><i class="fa fa-check"></i><b>3.4.2</b> Description of the model</a></li>
+<li class="chapter" data-level="3.4.3" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#interpreting-the-model-1"><i class="fa fa-check"></i><b>3.4.3</b> Interpreting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#random-effects"><i class="fa fa-check"></i><b>3.5</b> ‘Random’ Effects</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#random-effects-priors-and-pooling"><i class="fa fa-check"></i><b>3.5.1</b> Random effects, priors and pooling</a></li>
+<li class="chapter" data-level="3.5.2" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#inspecting-the-random-effects"><i class="fa fa-check"></i><b>3.5.2</b> Inspecting the random effects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#but-what-does-it-all-mean"><i class="fa fa-check"></i><b>3.6</b> But what does it all mean?</a></li>
+<li class="chapter" data-level="3.7" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#simulating-the-two-group-model"><i class="fa fa-check"></i><b>3.7</b> Simulating the two-group model</a></li>
+<li class="chapter" data-level="3.8" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#lmer-corner-1"><i class="fa fa-check"></i><b>3.8</b> Lmer corner</a></li>
+<li class="chapter" data-level="3.9" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#plot-code-2"><i class="fa fa-check"></i><b>3.9</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html"><i class="fa fa-check"></i><b>4</b> Comparing many groups</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#data-and-research-questions-3"><i class="fa fa-check"></i><b>4.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="4.2" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#comparing-four-or-any-number-of-groups"><i class="fa fa-check"></i><b>4.2</b> Comparing four (or any number of) groups</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#the-model"><i class="fa fa-check"></i><b>4.2.1</b> The model</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-many-groups-using-predictors-analysis-of-variance"><i class="fa fa-check"></i><b>4.3</b> Investigating many groups using predictors: Analysis of Variance</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#description-of-the-model-3"><i class="fa fa-check"></i><b>4.3.1</b> Description of the model</a></li>
+<li class="chapter" data-level="4.3.2" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#fitting-the-model-and-interpreting-the-results"><i class="fa fa-check"></i><b>4.3.2</b> Fitting the model and interpreting the results</a></li>
+<li class="chapter" data-level="4.3.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-model-fit"><i class="fa fa-check"></i><b>4.3.3</b> Investigating model fit</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#interactions-and-interaction-plots"><i class="fa fa-check"></i><b>4.4</b> Interactions and interaction plots</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#interactions-in-our-f0-data"><i class="fa fa-check"></i><b>4.4.1</b> Interactions in our f0 data</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-interactions-with-a-model"><i class="fa fa-check"></i><b>4.5</b> Investigating interactions with a model</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#fitting-the-model-and-interpreting-the-results-1"><i class="fa fa-check"></i><b>4.5.1</b> Fitting the model and interpreting the results</a></li>
+<li class="chapter" data-level="4.5.2" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#assessing-model-fit"><i class="fa fa-check"></i><b>4.5.2</b> Assessing model fit</a></li>
+<li class="chapter" data-level="4.5.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-the-interactions-the-easy-way"><i class="fa fa-check"></i><b>4.5.3</b> Investigating the interactions the easy way</a></li>
+<li class="chapter" data-level="4.5.4" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#making-plots"><i class="fa fa-check"></i><b>4.5.4</b> Making plots</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#lmer-corner-2"><i class="fa fa-check"></i><b>4.6</b> Lmer corner</a></li>
+<li class="chapter" data-level="4.7" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#plot-code-3"><i class="fa fa-check"></i><b>4.7</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html"><i class="fa fa-check"></i><b>5</b> Including continuous predictors in our model</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#data-and-research-questions-4"><i class="fa fa-check"></i><b>5.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="5.2" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#continuous-predictors-modeling-variation-along-lines"><i class="fa fa-check"></i><b>5.2</b> Continuous predictors: modeling variation along lines</a></li>
+<li class="chapter" data-level="5.3" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#models-with-a-single-slope-and-intercept"><i class="fa fa-check"></i><b>5.3</b> Models with a single slope and intercept</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#description-of-the-model-4"><i class="fa fa-check"></i><b>5.3.1</b> Description of the model</a></li>
+<li class="chapter" data-level="5.3.2" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#fitting-the-model-3"><i class="fa fa-check"></i><b>5.3.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="5.3.3" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#interpreting-the-model-2"><i class="fa fa-check"></i><b>5.3.3</b> Interpreting the model</a></li>
+<li class="chapter" data-level="5.3.4" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#centering-predictors"><i class="fa fa-check"></i><b>5.3.4</b> Centering predictors</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#interactions-in-our-line-parameters"><i class="fa fa-check"></i><b>5.4</b> Interactions in our line parameters</a></li>
+<li class="chapter" data-level="5.5" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#models-with-group-dependent-intercepts-but-shared-slopes"><i class="fa fa-check"></i><b>5.5</b> Models with group-dependent intercepts, but shared slopes</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#description-of-the-model-5"><i class="fa fa-check"></i><b>5.5.1</b> Description of the model</a></li>
+<li class="chapter" data-level="5.5.2" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#fitting-the-model-4"><i class="fa fa-check"></i><b>5.5.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="5.5.3" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#the-effect-of-including-a-slope"><i class="fa fa-check"></i><b>5.5.3</b> The effect of including a slope</a></li>
+<li class="chapter" data-level="5.5.4" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#interpreting-group-effects-in-the-presence-of-a-continuous-predictor"><i class="fa fa-check"></i><b>5.5.4</b> Interpreting group effects in the presence of a continuous predictor</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#models-with-group-dependent-slopes-and-intercepts"><i class="fa fa-check"></i><b>5.6</b> Models with group-dependent slopes and intercepts</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#description-of-the-model-6"><i class="fa fa-check"></i><b>5.6.1</b> Description of the model</a></li>
+<li class="chapter" data-level="5.6.2" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#fitting-the-model-5"><i class="fa fa-check"></i><b>5.6.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="5.6.3" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#interpreting-the-model-3"><i class="fa fa-check"></i><b>5.6.3</b> Interpreting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#plot-code-4"><i class="fa fa-check"></i><b>5.7</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="random-slopes.html"><a href="random-slopes.html"><i class="fa fa-check"></i><b>6</b> Random slopes</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="random-slopes.html"><a href="random-slopes.html#data-and-research-questions-5"><i class="fa fa-check"></i><b>6.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="6.2" data-path="random-slopes.html"><a href="random-slopes.html#repeated-measures-and-speaker-dependent-parameter-values"><i class="fa fa-check"></i><b>6.2</b> Repeated measures and speaker-dependent parameter values</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="random-slopes.html"><a href="random-slopes.html#description-of-the-model-7"><i class="fa fa-check"></i><b>6.2.1</b> Description of the model</a></li>
+<li class="chapter" data-level="6.2.2" data-path="random-slopes.html"><a href="random-slopes.html#fitting-the-model-6"><i class="fa fa-check"></i><b>6.2.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="6.2.3" data-path="random-slopes.html"><a href="random-slopes.html#interpreting-the-model-4"><i class="fa fa-check"></i><b>6.2.3</b> Interpreting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="random-slopes.html"><a href="random-slopes.html#random-effects-and-the-multivariate-normal-distribution"><i class="fa fa-check"></i><b>6.3</b> Random effects and the multivariate normal distribution</a></li>
+<li class="chapter" data-level="6.4" data-path="random-slopes.html"><a href="random-slopes.html#random-slopes-1"><i class="fa fa-check"></i><b>6.4</b> Random slopes</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="random-slopes.html"><a href="random-slopes.html#description-of-the-model-8"><i class="fa fa-check"></i><b>6.4.1</b> Description of the model</a></li>
+<li class="chapter" data-level="6.4.2" data-path="random-slopes.html"><a href="random-slopes.html#fitting-the-model-7"><i class="fa fa-check"></i><b>6.4.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="6.4.3" data-path="random-slopes.html"><a href="random-slopes.html#interpreting-the-model-5"><i class="fa fa-check"></i><b>6.4.3</b> Interpreting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="random-slopes.html"><a href="random-slopes.html#more-predictors-and-more-random-slopes"><i class="fa fa-check"></i><b>6.5</b> More predictors and more random slopes</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="random-slopes.html"><a href="random-slopes.html#adding-another-random-slope"><i class="fa fa-check"></i><b>6.5.1</b> Adding another random slope</a></li>
+<li class="chapter" data-level="6.5.2" data-path="random-slopes.html"><a href="random-slopes.html#adding-random-factors"><i class="fa fa-check"></i><b>6.5.2</b> Adding random factors</a></li>
+<li class="chapter" data-level="6.5.3" data-path="random-slopes.html"><a href="random-slopes.html#the-independence-of-continuous-predictors"><i class="fa fa-check"></i><b>6.5.3</b> The independence of continuous predictors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="random-slopes.html"><a href="random-slopes.html#answering-our-research-questions-1"><i class="fa fa-check"></i><b>6.6</b> Answering our research questions</a></li>
+<li class="chapter" data-level="6.7" data-path="random-slopes.html"><a href="random-slopes.html#lmer-corner-3"><i class="fa fa-check"></i><b>6.7</b> Lmer corner</a></li>
+<li class="chapter" data-level="6.8" data-path="random-slopes.html"><a href="random-slopes.html#plot-code-5"><i class="fa fa-check"></i><b>6.8</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7</b> Logistic regression</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html#data-and-research-questions-6"><i class="fa fa-check"></i><b>7.1</b> Data and research questions</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="logistic-regression.html"><a href="logistic-regression.html#dichotomous-variables-and-data"><i class="fa fa-check"></i><b>7.1.1</b> Dichotomous variables and data</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="logistic-regression.html"><a href="logistic-regression.html#generalizing-our-linear-models"><i class="fa fa-check"></i><b>7.2</b> Generalizing our linear models</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#link-functions"><i class="fa fa-check"></i><b>7.2.1</b> Link functions</a></li>
+<li class="chapter" data-level="7.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#logits"><i class="fa fa-check"></i><b>7.2.2</b> Logits</a></li>
+<li class="chapter" data-level="7.2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#the-logistic-link-function"><i class="fa fa-check"></i><b>7.2.3</b> The logistic link function</a></li>
+<li class="chapter" data-level="7.2.4" data-path="logistic-regression.html"><a href="logistic-regression.html#building-intuitions-about-logits"><i class="fa fa-check"></i><b>7.2.4</b> Building intuitions about logits</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-regression-with-one-predictor"><i class="fa fa-check"></i><b>7.3</b> Logistic regression with one predictor</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#description-of-the-model-9"><i class="fa fa-check"></i><b>7.3.1</b> Description of the model</a></li>
+<li class="chapter" data-level="7.3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#fitting-the-model-8"><i class="fa fa-check"></i><b>7.3.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="7.3.3" data-path="logistic-regression.html"><a href="logistic-regression.html#interpreting-the-model-6"><i class="fa fa-check"></i><b>7.3.3</b> Interpreting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="logistic-regression.html"><a href="logistic-regression.html#answering-our-research-question"><i class="fa fa-check"></i><b>7.4</b> Answering our research question</a></li>
+<li class="chapter" data-level="7.5" data-path="logistic-regression.html"><a href="logistic-regression.html#plot-code-6"><i class="fa fa-check"></i><b>7.5</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html"><i class="fa fa-check"></i><b>8</b> Bayesian ANOVA and interpreting complicated models</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#data-and-research-questions-7"><i class="fa fa-check"></i><b>8.1</b> Data and research questions</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#the-experiment"><i class="fa fa-check"></i><b>8.1.1</b> The experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#deciding-on-a-model"><i class="fa fa-check"></i><b>8.2</b> Deciding on a model</a></li>
+<li class="chapter" data-level="8.3" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#fitting-the-models"><i class="fa fa-check"></i><b>8.3</b> Fitting the models</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#the-maximal-models"><i class="fa fa-check"></i><b>8.3.1</b> The ‘maximal’ models</a></li>
+<li class="chapter" data-level="8.3.2" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#fitting-the-final-models-in-lmer-and-brms"><i class="fa fa-check"></i><b>8.3.2</b> Fitting the ‘final’ models in lmer and brms</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#comparing-the-maximal-and-final-models"><i class="fa fa-check"></i><b>8.4</b> Comparing the maximal and final models</a></li>
+<li class="chapter" data-level="8.5" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#bayesian-analysis-of-variance"><i class="fa fa-check"></i><b>8.5</b> Bayesian Analysis of Variance</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#getting-the-superpopulation-standard-deviations-from-our-models"><i class="fa fa-check"></i><b>8.5.1</b> Getting the superpopulation standard deviations from our models</a></li>
+<li class="chapter" data-level="8.5.2" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#getting-the-finite-population-standard-deviations-from-our-models"><i class="fa fa-check"></i><b>8.5.2</b> Getting the finite-population standard deviations from our models</a></li>
+<li class="chapter" data-level="8.5.3" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#using-the-banova-function"><i class="fa fa-check"></i><b>8.5.3</b> Using the <code>banova</code> function</a></li>
+<li class="chapter" data-level="8.5.4" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#applying-the-banova-function-to-our-gender-perception-model"><i class="fa fa-check"></i><b>8.5.4</b> Applying the <code>banova</code> function to our gender perception model</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#applying-a-bayesian-anova-to-a-more-complicated-model"><i class="fa fa-check"></i><b>8.6</b> Applying a Bayesian ANOVA to a more-complicated model</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#description-of-the-model-10"><i class="fa fa-check"></i><b>8.6.1</b> Description of the model</a></li>
+<li class="chapter" data-level="8.6.2" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#fitting-the-model-9"><i class="fa fa-check"></i><b>8.6.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="8.6.3" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#interpreting-the-model-7"><i class="fa fa-check"></i><b>8.6.3</b> Interpreting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#plot-code-7"><i class="fa fa-check"></i><b>8.7</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a></li>
+<li class="divider"></li>
+<li><a href="http://www.santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
+<li><a href="A-Quick-Introduction-to-Multilevel-Bayesian-Models-for-Linguistic-Researchers.pdf" target="blank">Download possibly outdated and badly-formatted PDF</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bayesian-anova-and-interpreting-complicated-models" class="section level1" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Bayesian ANOVA and interpreting complicated models</h1>
+<p>At this point we have enough model components to build very large and complicated models. Traditionally, models with many predictors have had three general problems:</p>
+<ol style="list-style-type: decimal">
+<li>A model may return spurious values for the ‘extra’ predictors, leading to incorrect conclusions.</li>
+<li>The model may not fit/converge, meaning you can’t get the model coefficients.</li>
+<li>It can be difficult to interpret a model with <em>hundreds</em> of parameters.</li>
+</ol>
+<p>In this chapter we’re going to cover a Bayesian approach to working with large models. We’re going to discuss how working with multilevel Bayesian models can naturally help us with problems (1) and (2) above, and we’re going to discuss an easy way to approach the third problem also.</p>
+<div id="data-and-research-questions-7" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Data and research questions</h2>
+<p>We’re going to change course slightly and focus on entirely new data, called <code>kb07</code>. The data is from this paper:</p>
+<ul>
+<li><a href="https://github.com/dalejbarr/kronmueller-barr-2007">Kronmüller, E., &amp; Barr, D. J. (2007). Perspective-free pragmatics: Broken precedents and the recovery-from-preemption hypothesis. Journal of Memory and Language, 56, 436–455.</a></li>
+</ul>
+<p>This chapter will focus on the comparison of analyses for the <code>kb07</code> data presented in this paper:</p>
+<ul>
+<li><a href="https://arxiv.org/abs/1506.04967">Bates, D., Kliegl, R., Vasishth, S., &amp; Baayen, H. (2015). Parsimonious mixed models. arXiv preprint arXiv:1506.04967</a></li>
+</ul>
+<p>The above paper discusses what kinds of random effects structures to include in our models. The paper focuses on use of the <code>lmer</code> function. I haven’t discussed <code>lmer</code> very much, although it is extremely popular and extremely useful. Think of it like this: <code>lmer</code> is basically a ‘special case’ of <code>brm</code>. There is an equivalent <code>brm</code> model for every <code>lmer</code> model but not vice versa. However, generally speaking, <code>brm</code> and <code>lmer</code> should provide the same answers when fitting the same models.</p>
+<p>One major difference between <code>lmer</code> and <code>brms</code> is in the way the <code>lmer</code> estimates parameter values. Rather than provide a set of samples, <code>lmer</code> returns <em>point estimates</em> representing the <em>best</em> values of parameters. This can cause a problem when parameters are bounded, or grow without bound. For example, standard deviation parameters (e.g., <span class="math inline">\(\sigma\)</span>) cannot be 0 or negative, but sometimes they are very, very small. So, when <code>lmer</code> tries to find the ‘best’ value, it can get closer, and closer, and closer to zero, leading to problems involving calculations with very small values (e.g., as <span class="math inline">\(x\)</span> approaches <span class="math inline">\(0\)</span>, <span class="math inline">\(1/x\)</span> approaches <span class="math inline">\(\infty\)</span>).</p>
+<p>In contrast, Bayesian models don’t try to find the single ‘best’ value but instead collect a series of samples. As a result, the models are less likely to encounter problems when they try to estimate values that are very close to boundaries (they just ‘bounce’ of the boundary as they randomly walk!).</p>
+<p>A second difference between the <code>lmer</code> estimation method and that of our Bayesian multilevel models is that <code>lmer</code> doesn’t use prior probabilities for all of its parameters. This can cause some problems when estimating a large number of parameters without enough data. In contrast, <code>brms</code> applies ‘shrinkage’ to all its parameters (at least in principle), which can help avoid some of the problems encountered by <code>lmer</code>.</p>
+<p>Just to be clear, I hope to compare in this chapter is just two different estimation/fitting methods, rather than two different <em>philosophies</em>. The models fit by <code>lmer</code> and <code>brms</code> are much more similar than they are different. This chapter will simply serve to highlight how using Bayesian multilevel models can help us resolve some of the difficult issues that can present when we fit complicated models using approaches more similar to <code>lmer</code>, in addition to discussion how we can interpret models with large numbers of parameters.</p>
+<div id="the-experiment" class="section level3" number="8.1.1">
+<h3><span class="header-section-number">8.1.1</span> The experiment</h3>
+<p>We first load the <code>lme4</code> and <code>brms</code> packages, and the data.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (lme4)</span>
+<span id="cb1-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (brms)</span>
+<span id="cb1-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span> (<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&quot;contr.sum&quot;</span>,<span class="st">&quot;cont.sum&quot;</span>))</span>
+<span id="cb1-4"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb1-5" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">=</span> <span class="st">&quot;https://raw.githubusercontent.com/santiagobarreda&quot;</span></span>
+<span id="cb1-6"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># source colors</span></span>
+<span id="cb1-7"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb1-7" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">source_url</span> (<span class="fu">paste0</span> (url1, <span class="st">&quot;/stats-class/master/data/colors.R&quot;</span>))</span>
+<span id="cb1-8"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># source functions</span></span>
+<span id="cb1-9"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb1-9" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">source_url</span> (<span class="fu">paste0</span> (url1, <span class="st">&quot;/stats-class/master/data/functions.R&quot;</span>))</span></code></pre></div>
+<p>The data comes from an experiment by Kronmüller and Barr (2007). The version of the data I’m using <a href="https://github.com/dmbates/RePsychLing/tree/master/data">is hosted here</a>. You need to download it, place it in your working directory, and then load it:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span> (<span class="st">&quot;kb07_data.RDA&quot;</span>)</span></code></pre></div>
+<p>Kronmüller and Barr ran an experiment where subjects had to select one of several visual objects on a monitor, with a cursor.</p>
+<p>Here’s information about the experimental structure:</p>
+<ul>
+<li><p>The dependent variable is reaction times measures in milliseconds (<code>RTtrunc</code>).</p></li>
+<li><p>56 subjects responded to 32 items (n = 1790, 2 missing observations).</p></li>
+</ul>
+<p>The experiment involved several manipulations. These are our <em>predictors</em>, because they are the things the authors did in order to affect reaction times. The manipulations were:</p>
+<ul>
+<li><p>Speaker (<span class="math inline">\(S\)</span>): Instructions presented by a new or old speaker (a factor with two levels: new and old).</p></li>
+<li><p>Precedent (<span class="math inline">\(P\)</span>): Instructions maintained or broke a precedent of reference (a factor with two levels: maintained and broke).</p></li>
+<li><p>Cognitive Load (<span class="math inline">\(C\)</span>): the task had to be performed without or with a cognitive load (a factor with two levels: with and without).</p></li>
+</ul>
+<p>The experimental conditions were <em>crossed</em>. This means that all possible combinations were presented. Since we have 3 factors with two levels each we can call this a 2 x 2 x 2, crossed design. A 2x2x2 crossed design results in 8 (2x2x2=8) unique conditions (combination of factor levels).</p>
+<p>Since we’re using sum coding, remember that we can only calculate 1 parameter for every 2-level factor. A model that included all main effects and interactions for our three factors would include the following terms:</p>
+<ul>
+<li><p>Main effects: <span class="math inline">\(Intercept, S, P, C\)</span>.</p></li>
+<li><p>2-way interactions: <span class="math inline">\(SP, SC, PC\)</span>.</p></li>
+<li><p>3-way interactions: <span class="math inline">\(SPC\)</span>.</p></li>
+</ul>
+<p>Our model requires 8 parameters to represent the 8 combinations of the three factors. By using these predictors (<span class="math inline">\(Intercept, S, P, C, SP, SC, PC, SPC\)</span>) rather than modeling group means directly, our model is able to estimate the independent effect of each predictor (main effects), in addition to any interaction effects.</p>
+<p>The model also includes three ‘random’ sources of variation:</p>
+<ul>
+<li><p><span class="math inline">\(Subject\)</span>: the individual subject/listener in the experiment.</p></li>
+<li><p><span class="math inline">\(Item\)</span>: the item presented to the subject on the trial.</p></li>
+<li><p><span class="math inline">\(Error\)</span>: the random trial to trial variation (i.e., <span class="math inline">\(\sigma_{error}\)</span>).</p></li>
+</ul>
+</div>
+</div>
+<div id="deciding-on-a-model" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Deciding on a model</h2>
+<p>The authors manipulated listening conditions for a task and observed variation in reaction times as a result of the manipulations. The main goal of this experiment is to see what does (and does <em>not</em>) affect reaction times for this task.</p>
+<p>The most complicated possible answer to this question is that <strong>everything</strong> matters. You have unpredictable variation across all groups, meaning you need all eight fixed parameters (i.e., Int., S, P, C, SP, SC, PC, SPC) to distinguish the groups. Furthermore, the way that these main effects and interactions affect reaction times also varies <em>unpredictably</em> from subject to subject. And on top of all that, these effects also vary substantially and unpredictably from item to item.</p>
+<p>The statement above represents what’s sometimes called the <em>maximal</em> model, the model containing all possible random slopes and intercepts. The <em>maximal</em> model for this experiment is:</p>
+<pre><code>RTtrunc ~  1 + S + P + C + SP + SC + PC + SPC + 
+         ( 1 + S + P + C + SP + SC + PC + SPC | subj) + 
+         ( 1 + S + P + C + SP + SC + PC + SPC | item)</code></pre>
+<p>This model estimates speaker and item-dependent effects for all predictors, basically a <em>lot</em> of <code>effect:subject</code> and <code>effect:item</code> interactions. We could compare this to a ‘minimal’ model so small it fits on one line:</p>
+<pre><code>RTtrunc ~  1 + S + P + C + SP + SC + PC + SPC + ( 1 | subj) + ( 1 | item)</code></pre>
+<p>This model does not contain <em>any</em> random effects other than intercepts. This means this model acts as if we do not have any systematic/substantial variation in our predictors by item or subject (random or otherwise). We could take this even further and make the model like this:</p>
+<pre><code>RTtrunc ~  1 + S + P + C + ( 1 | subj) + ( 1 | item)</code></pre>
+<p>Which basically says we expect only main effects and no interactions. We may know instinctively that it’s a bad idea to start with the last model above. If you assume almost nothing matters how can you find out if it does? But is the opposite necessary, it is necessary to always use the maximal model?</p>
+<p>There are at least two reasons why people may not use the maximal model as their final model:</p>
+<ol style="list-style-type: decimal">
+<li><p>It may not be practical. These models can take a long time to fit since they are complicated. For example, since the random effects are treated as draws from a multivariate normal distribution (as discussed in chapter 6), we need to calculate correlations between all dimensions. This means calculating 8 standard deviations and 28 (!) correlations for the random slopes for subject, and then doing the same for the random slopes for item. When many of these standard deviations or correlations are near zero and/or there is not very much data, <code>lmer</code> can have problems converging on a solution.</p></li>
+<li><p>It may not be necessary. If some predictors really have no effect on our outcomes, and especially when these interfere with our ability to fit or interpret our models, it may not be necessary to leave them in the model.</p></li>
+</ol>
+<p>In Bates et al., the authors outline a way to select a final model based on an initial ‘maximal’ model. The authors propose an:</p>
+<blockquote>
+<p>“iterative method that reduces model complexity to arrive at an optimal [linear mixed model] for this experiment. […] We qualify this procedure at the outset: We do not claim that this is the only way to proceed, but the strategy has consistently yielded satisfactory results for all data sets we have examined so far” p. 8.</p>
+</blockquote>
+<p>Notice that the authors are clear that this is not the best or only approach, but simply <em>an</em> approach, albeit one that is based on sound reasoning and with a proven track record. I’m not going to discuss the process outlined by the authors in detail. However, the general strategy can be summarized as:</p>
+<ol style="list-style-type: decimal">
+<li><p>Fit the maximal model.</p></li>
+<li><p>Investigate which random effects likely don’t matter. This is done based on which ones have very small variances and/or a small amount of independent variation between the dimensions of the random effects.</p></li>
+<li><p>Fit a smaller model without the unimportant random effects.</p></li>
+</ol>
+<p>In this chapter, I’m going to present a slightly different, but largely analogous approach to dealing with large models, as described in this paper:</p>
+<p><a href="https://projecteuclid.org/euclid.aos/1112967698">Gelman, A. (2005). Analysis of variance—why it is more important than ever. Annals of statistics, 33(1), 1-53.</a></p>
+<p>And in Chapter 22 of this book:</p>
+<p><a href="http://www.stat.columbia.edu/~gelman/arm/">Gelman, A., &amp; Hill, J. (2006). Data analysis using regression and multilevel/hierarchical models. Cambridge university press.</a></p>
+<p>Basically, Gelman and colleagues suggest that we inspect the variance components (the <span class="math inline">\(\sigma\)</span> terms) of our multilevel models in order to figure out what does and doesn’t matter. This is analogous to step 2 in the process outlined above. Once you have established which parameters are not a source of variance in your data, you can re-fit a smaller model, or you can sometimes just keep your maximal model.</p>
+</div>
+<div id="fitting-the-models" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Fitting the models</h2>
+<div id="the-maximal-models" class="section level3" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> The ‘maximal’ models</h3>
+<p>First we fit the maximal <code>brm</code> model</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model yourself, or</span></span>
+<span id="cb6-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># download pre-fit model from: </span></span>
+<span id="cb6-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># github.com/santiagobarreda/stats-class/tree/master/models</span></span>
+<span id="cb6-4"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># and load after placing in working directory</span></span>
+<span id="cb6-5"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># maximal_brms = readRDS (&#39;8_maximal_brms.RDS&#39;)</span></span>
+<span id="cb6-6"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span> (<span class="dv">1</span>)</span>
+<span id="cb6-8"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-8" aria-hidden="true" tabindex="-1"></a>maximal_brms <span class="ot">=</span></span>
+<span id="cb6-9"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span> (RTtrunc <span class="sc">~</span> <span class="dv">1</span><span class="sc">+</span>S<span class="sc">+</span>P<span class="sc">+</span>C<span class="sc">+</span>SP<span class="sc">+</span>SC<span class="sc">+</span>PC<span class="sc">+</span>SPC <span class="sc">+</span> (<span class="dv">1</span><span class="sc">+</span>S<span class="sc">+</span>P<span class="sc">+</span>C<span class="sc">+</span>SP<span class="sc">+</span>SC<span class="sc">+</span>PC<span class="sc">+</span>SPC<span class="sc">|</span>subj) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-10" aria-hidden="true" tabindex="-1"></a>                                        (<span class="dv">1</span><span class="sc">+</span>S<span class="sc">+</span>P<span class="sc">+</span>C<span class="sc">+</span>SP<span class="sc">+</span>SC<span class="sc">+</span>PC<span class="sc">+</span>SPC<span class="sc">|</span>item), </span>
+<span id="cb6-11"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> kb07,  <span class="at">chains=</span><span class="dv">4</span>, <span class="at">cores=</span><span class="dv">4</span>, <span class="at">warmup=</span><span class="dv">1000</span>, <span class="at">iter =</span> <span class="dv">3500</span>, <span class="at">thin =</span> <span class="dv">2</span>,</span>
+<span id="cb6-12"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 2000, 500)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;Intercept&quot;</span>),</span>
+<span id="cb6-13"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-13" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 500)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb6-14"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-14" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 500)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;sd&quot;</span>),</span>
+<span id="cb6-15"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-15" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">set_prior</span>(<span class="st">&quot;lkj_corr_cholesky (2)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;cor&quot;</span>)))</span>
+<span id="cb6-16"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># save model</span></span>
+<span id="cb6-18"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#  saveRDS (maximal_brms, &#39;8_maximal_brms.RDS&#39;)</span></span></code></pre></div>
+<p>And then the analogous, maximal <code>lmer</code> model. I got the parameter settings used for the model from <a href="https://github.com/dmbates/RePsychLing/blob/master/vignettes/KB.Rmd">this webpage</a>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model yourself, or</span></span>
+<span id="cb7-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># download pre-fit model from: </span></span>
+<span id="cb7-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># github.com/santiagobarreda/stats-class/tree/master/models</span></span>
+<span id="cb7-4"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># and load after placing in working directory</span></span>
+<span id="cb7-5"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># maximal_lmer = readRDS (&#39;8_maximal_lmer.RDS&#39;)</span></span>
+<span id="cb7-6"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-7" aria-hidden="true" tabindex="-1"></a>maximal_lmer <span class="ot">&lt;-</span> <span class="fu">lmer</span>(RTtrunc <span class="sc">~</span> <span class="dv">1</span><span class="sc">+</span>S<span class="sc">+</span>P<span class="sc">+</span>C<span class="sc">+</span>SP<span class="sc">+</span>SC<span class="sc">+</span>PC<span class="sc">+</span>SPC <span class="sc">+</span> </span>
+<span id="cb7-8"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-8" aria-hidden="true" tabindex="-1"></a>                                    (<span class="dv">1</span><span class="sc">+</span>S<span class="sc">+</span>P<span class="sc">+</span>C<span class="sc">+</span>SP<span class="sc">+</span>SC<span class="sc">+</span>PC<span class="sc">+</span>SPC<span class="sc">|</span>subj) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-9" aria-hidden="true" tabindex="-1"></a>                                    (<span class="dv">1</span><span class="sc">+</span>S<span class="sc">+</span>P<span class="sc">+</span>C<span class="sc">+</span>SP<span class="sc">+</span>SC<span class="sc">+</span>PC<span class="sc">+</span>SPC<span class="sc">|</span>item), </span>
+<span id="cb7-10"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-10" aria-hidden="true" tabindex="-1"></a>                           kb07, <span class="at">REML=</span><span class="cn">FALSE</span>, <span class="at">start=</span>thcvg<span class="sc">$</span>kb07<span class="sc">$</span>m0,</span>
+<span id="cb7-11"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-11" aria-hidden="true" tabindex="-1"></a>                           <span class="at">control=</span><span class="fu">lmerControl</span>(<span class="at">optimizer=</span><span class="st">&quot;Nelder_Mead&quot;</span>,</span>
+<span id="cb7-12"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-12" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">optCtrl=</span><span class="fu">list</span>(<span class="at">maxfun=</span>50000L),</span>
+<span id="cb7-13"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-13" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">check.conv.grad=</span><span class="st">&quot;ignore&quot;</span>,</span>
+<span id="cb7-14"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-14" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">check.conv.hess=</span><span class="st">&quot;ignore&quot;</span>),</span>
+<span id="cb7-15"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-15" aria-hidden="true" tabindex="-1"></a>                           <span class="at">verbose=</span><span class="cn">TRUE</span>)</span>
+<span id="cb7-16"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># save model</span></span>
+<span id="cb7-17"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#  saveRDS (maximal_lmer, &#39;8_maximal_lmer.RDS&#39;)</span></span></code></pre></div>
+</div>
+<div id="fitting-the-final-models-in-lmer-and-brms" class="section level3" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> Fitting the ‘final’ models in lmer and brms</h3>
+<p>We can also fit the ‘final’ model as determined by Bates et al. using the selection process proposed by the authors. This model includes only random by-subject intercepts, and random intercepts and <span class="math inline">\(P\)</span> effects for item. First, we fit the final model in <code>brms</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span> (<span class="dv">1</span>)</span>
+<span id="cb8-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb8-2" aria-hidden="true" tabindex="-1"></a>final_brms <span class="ot">=</span></span>
+<span id="cb8-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span> (RTtrunc <span class="sc">~</span> <span class="dv">1</span><span class="sc">+</span>S<span class="sc">+</span>P<span class="sc">+</span>C<span class="sc">+</span>SP<span class="sc">+</span>SC<span class="sc">+</span>PC<span class="sc">+</span>SPC <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>subj) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">+</span>P<span class="sc">|</span>item), </span>
+<span id="cb8-4"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb8-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> kb07,  <span class="at">chains=</span><span class="dv">4</span>, <span class="at">cores=</span><span class="dv">4</span>, <span class="at">warmup=</span><span class="dv">1000</span>, <span class="at">iter =</span> <span class="dv">3500</span>, <span class="at">thin =</span> <span class="dv">2</span>,</span>
+<span id="cb8-5"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb8-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 2000, 500)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;Intercept&quot;</span>),</span>
+<span id="cb8-6"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb8-6" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 500)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb8-7"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb8-7" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 500)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;sd&quot;</span>),</span>
+<span id="cb8-8"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb8-8" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">set_prior</span>(<span class="st">&quot;lkj_corr_cholesky (2)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;cor&quot;</span>)))</span>
+<span id="cb8-9"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># save model</span></span>
+<span id="cb8-11"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS (final_brms, &#39;final_brms.RDS&#39;)</span></span></code></pre></div>
+<p>And then fit the final model in <code>lmer</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb9-1" aria-hidden="true" tabindex="-1"></a>final_lmer <span class="ot">&lt;-</span> <span class="fu">lmer</span>(RTtrunc <span class="sc">~</span> <span class="dv">1</span><span class="sc">+</span>S<span class="sc">+</span>P<span class="sc">+</span>C<span class="sc">+</span>SP<span class="sc">+</span>SC<span class="sc">+</span>PC<span class="sc">+</span>SPC <span class="sc">+</span></span>
+<span id="cb9-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb9-2" aria-hidden="true" tabindex="-1"></a>                     (<span class="dv">1</span><span class="sc">|</span>subj) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">+</span>P<span class="sc">|</span>item), kb07, <span class="at">REML=</span><span class="cn">FALSE</span>, </span>
+<span id="cb9-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb9-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">control=</span><span class="fu">lmerControl</span>(<span class="at">optimizer=</span><span class="st">&quot;Nelder_Mead&quot;</span>,</span>
+<span id="cb9-4"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb9-4" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">optCtrl=</span><span class="fu">list</span>(<span class="at">maxfun=</span>50000L),</span>
+<span id="cb9-5"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb9-5" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">check.conv.grad=</span><span class="st">&quot;ignore&quot;</span>,</span>
+<span id="cb9-6"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb9-6" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">check.conv.hess=</span><span class="st">&quot;ignore&quot;</span>),</span>
+<span id="cb9-7"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb9-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">verbose=</span><span class="cn">TRUE</span>)</span>
+<span id="cb9-8"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># save model</span></span>
+<span id="cb9-10"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS (final_lmer, &#39;final_lmer.RDS&#39;)</span></span></code></pre></div>
+</div>
+</div>
+<div id="comparing-the-maximal-and-final-models" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> Comparing the maximal and final models</h2>
+<p>Bates et al. compare the maximal and final models fit in <code>lmer</code> with the same models fit using STAN (the language <code>brms</code> uses to fit its models). We’re going to make the same comparisons that Bates et al. make, and recreate some of the figures in their paper (with some modifications). Instead of using STAN directly, we’re going to fit models in <code>brms</code> and compare these to the equivalent models fit in <code>lmer</code>.</p>
+<p>In Figure <a href="bayesian-anova-and-interpreting-complicated-models.html#fig:F8-1">8.1</a> you can see a recreation of Figure 1 from Bates et al., which compares fixed-effect parameter estimates and intervals for the different models. Clearly, the four models provide essentially the same output for these predictors. That’s reassuring! If results changed dramatically as a result of our model selection, we would need to think very carefully about the different models we’re considering and what might have caused the changes.</p>
+<div class="figure"><span id="fig:F8-1"></span>
+<img src="08_files/figure-html/F8-1-1.png" alt="Comparison of means and confidence/credible intervals for 'fixed-effects' parameter estimates by the four models being considered." width="768" />
+<p class="caption">
+Figure 8.1: Comparison of means and confidence/credible intervals for ‘fixed-effects’ parameter estimates by the four models being considered.
+</p>
+</div>
+<p>In Figure <a href="bayesian-anova-and-interpreting-complicated-models.html#fig:F8-2">8.2</a>, I recreate Figure 2 from Bates et al., which compares the standard deviations estimates for the random effects included in the different models. It’s worth stopping to think about what these standard deviations are. Recall that random effects like subject-specific random intercepts are modeled as coming from a normal distribution with a mean of 0 and a standard deviation based on the data, like this:</p>
+<p><span class="math display" id="eq:801">\[
+\alpha_{[subj]} \sim \mathrm{Normal}(0, \sigma_{\alpha_{[subj]}})
+\tag{8.1}
+\]</span></p>
+<p>So, the <span class="math inline">\(\sigma_{\alpha_{[subj]}}\)</span> reflects the variation in the subject-specific intercepts in the data. Similarly, we draw the subject-specific effects for <span class="math inline">\(P\)</span> (define) from a normal distribution with a standard deviation of <span class="math inline">\(\sigma_{\alpha_{[subj]}}\)</span>.</p>
+<p><span class="math display" id="eq:802">\[
+\alpha_{P[subj]} \sim \mathrm{Normal}(0, \sigma_{\alpha_{P[subj]}})
+\tag{8.2}
+\]</span></p>
+<p>These standard deviations directly reflect the amount of variation in these parameters in our model. Parameters that vary a lot reflect large effects on our data. These will be represented by large standard deviations. In contrast, parameters that do not vary much will be represented by small standard deviations do not have a large effect on our data (since they do not vary much).</p>
+<p>So, the individual values of <span class="math inline">\(\sigma_{\alpha_{[subj]}}\)</span> and <span class="math inline">\(\sigma_{\alpha_{P[subj]}}\)</span> in our model will tell us whether the subject intercepts and the subject-specific effect for <span class="math inline">\(P\)</span> are important sources of variation in our model. We can take one look at Figure <a href="bayesian-anova-and-interpreting-complicated-models.html#fig:F8-2">8.2</a> and tell that there are really four dominant sources of variance in our random effects: the item-specific intercepts and effects for <span class="math inline">\(P\)</span>, the subject-specific intercepts, and the random error (‘sigma’).</p>
+<div class="figure"><span id="fig:F8-2"></span>
+<img src="08_files/figure-html/F8-2-1.png" alt="Comparison of random effects standard deviation estimates for the frou models being considered." width="768" />
+<p class="caption">
+Figure 8.2: Comparison of random effects standard deviation estimates for the frou models being considered.
+</p>
+</div>
+<p>As you can see, the models all provide very similar standard deviation estimates. Note that the <code>brm</code> models provide credible intervals for all parameters, while the <code>lmer</code> models only provide point estimates for these parameters.</p>
+<p>The lack of intervals on parameter estimates makes it difficult to ‘rule out’ parameters since they will <em>never</em> equal exactly zero. So, we will always have non-zero numbers for these parameters, and ‘secretly’ some of these are zero or nearly zero.</p>
+<p>We can use our credible intervals to figure out which variance components are unlikely to matter: Variance components whose credible intervals are concentrated near zero. There are several such components in the Figure below. In the <em>best case</em>, many of these components reflect a tiny amount of systematic variation in our outcomes.</p>
+<p>In Figure <a href="bayesian-anova-and-interpreting-complicated-models.html#fig:F8-3">8.3</a> we compare the correlations for the subject random effects, recreating Figure 3 from Bates et al. These are the correlations between the dimensions of the 8-dimensional variable representing the subject random effects in the maximal model. As I noted earlier, there are 28 of these correlations. Note that the plot below only contains information from the maximal model because the final models included only a single subject random effect (subject random intercepts), and so did not involve correlations.</p>
+<p>As with the standard deviations, <code>brms</code> gives us intervals for these parameters while <code>lmer</code> returns point estimates. We see that the <code>lmer</code> estimates vary substantially around 0 while the <code>brms</code> estimates are all close to zero, and have intervals that include zero. Here we see two advantages of our Bayesian model:</p>
+<ol style="list-style-type: decimal">
+<li><p>Credible intervals for all parameters let us accept values of zero as likely values for the correlations (this can’t be done with point estimates).</p></li>
+<li><p>The prior on the covariance matrix pulls weakly-supported correlations to zero, thereby protecting against spurious results.</p></li>
+</ol>
+<p>Thus, we can actually use the results below to conclude that the most likely value for these correlations is zero or something close to zero.</p>
+<div class="figure"><span id="fig:F8-3"></span>
+<img src="08_files/figure-html/F8-3-1.png" alt="Compraison of subject random effect correlation estimates for brm (green) and lmer (red)." width="768" />
+<p class="caption">
+Figure 8.3: Compraison of subject random effect correlation estimates for brm (green) and lmer (red).
+</p>
+</div>
+<p>Figure <a href="bayesian-anova-and-interpreting-complicated-models.html#fig:F8-4">8.4</a> shows the correlations between the dimensions of the item random effects (a recreation of the other half of Figure 3 in Bates et al.). Recall that that final model included by-item intercepts and by-item effects for <span class="math inline">\(P\)</span>, and so involved a single correlation parameter (Int:P in the figure below).</p>
+<p>Notice that the <code>lmer</code> estimates for the maximal model all vary around zero. There is nothing qualitatively different about the correlation that is found to actually be ‘real’ as opposed to the other ones. In fact, the value of the Int:P correlation is about the same magnitude across both <code>lmer</code> models.</p>
+<p>The fact that the correlation mainted in the final model looks about the same as the ones that are omitted from the final model is a problem for us, when we rely on <code>lmer</code>. In the absence of intervals, it is difficult to judge parameters based on magnitudes alone. The method outlined in Bates et al. is a proposed solution to this problem.</p>
+<p>However, note that our Bayesian models <em>do</em> let us distinguish the correlations that matter from the ones that don’t. Even in the maximal model, the correlation that is included in the final model <em>is</em> qualitatively different from the others: its credible interval is substantially narrower and does not include 0. Furthermore, the correlations that do <em>not</em> represent reliable variation in the data are pulled toward zero, allowing us to establish that these are likely not important to our understanding of the data.</p>
+<p>So, in effect, our maximal Bayesian model give us the same information as the final model, without having to ever refit the model. It allows us to rule out the same variance components, and provides the same parameter estimates and intervals for the fixed effects.</p>
+<div class="figure"><span id="fig:F8-4"></span>
+<img src="08_files/figure-html/F8-4-1.png" alt="Compraison of item random effect correlation estimates for the maximal brm (green) and lmer (red) models, and the final brm (blue)." width="768" />
+<p class="caption">
+Figure 8.4: Compraison of item random effect correlation estimates for the maximal brm (green) and lmer (red) models, and the final brm (blue).
+</p>
+</div>
+<p>Bates et al. conclude that:</p>
+<blockquote>
+<p>“The Bayesian analysis shows two important things. First, the estimates of the fixed effects in the lme4 model and the Bayesian model are nearly identical. This shows that the ‘maximal’ lmm fit using lme4 is essentially equivalent to fitting a Bayesian lmm with regularizing priors of the sort described above.” (p. 13)</p>
+</blockquote>
+<p>and that:</p>
+<blockquote>
+<p>“Second, the relevant variance component parameters that were identified above using principal components analysis (pca) and likelihood ratio tests (lrts) are exactly the parameters that clearly dominate in the Bayesian analysis.” (p. 13)</p>
+</blockquote>
+<p>As a result of this general equivalence, fitting a maximal model using <code>brms</code> and focusing on the relative magnitudes of individual variance components can be a way to do model selection without necessarily ‘selecting’ your model.</p>
+</div>
+<div id="bayesian-analysis-of-variance" class="section level2" number="8.5">
+<h2><span class="header-section-number">8.5</span> Bayesian Analysis of Variance</h2>
+<p>Here’s what Gelman and Hill have to say about the analysis of variance using multilevel models:</p>
+<blockquote>
+<p>“When moving to multilevel modeling, the key idea we want to take from the analysis of variance is the estimation of the importance of different batches of predictors (“components of variation” in ANOVA terminology). As usual, we focus on estimation rather than testing: instead of testing the null hypothesis that a variance component is zero, we estimate the standard deviation of the corresponding batch of coefficients. If this standard deviation is estimated to be small, then the source of variation is minor—we do not worry about whether it is exactly zero. In the social science and public health examples that we focus on, it can be a useful research goal to identify important sources of variation, but it is rare that anything is truly zero." (p. 490)</p>
+</blockquote>
+<blockquote>
+<p>“the standard deviation of a set of coefficients gives a sense of their predictive importance in the model. An analysis-of-variance plot, which shows the relative scale of different variance components, can be a useful tool in understanding a model.” (p. 492)</p>
+</blockquote>
+<p>Gelman and Hill distinguish between two types of standard deviations for a random effect with <span class="math inline">\(J\)</span> levels (p. 459):</p>
+<blockquote>
+<p>“• The superpopulation standard deviation [<span class="math inline">\(\sigma_{\alpha_{[subj]}}\)</span>], which represents the variation among the modeled probability distribution from which the [<span class="math inline">\(\alpha_{[subj]}\)</span>] were drawn, is relevant for determining the uncertainty about the value of a new group not in the original set of J.”</p>
+</blockquote>
+<blockquote>
+<p>“• The finite-population standard deviation [<span class="math inline">\(\mathrm{sd}(\alpha_{[subj]})\)</span>] of the particular J values of [<span class="math inline">\(\alpha_{[subj]}\)</span>] describes variation within the existing data.”</p>
+</blockquote>
+<p>The superpopulation standard deviation estimates correspond to <span class="math inline">\(\sigma\)</span> terms actually estimated by our model. The finite-population standard deviation terms are estimated by us using our model parameter estimates.</p>
+<p>The authors note that (p. 464):</p>
+<blockquote>
+<p>“The superpopulation [σ] and finite-population [s] standard deviations are not two different statistical “estimators” of a common quantity; rather, they are two different quantities that can both be estimated from the multilevel model. We can get a point estimate and uncertainty intervals for both. In general, the point estimates of σ and s will be similar to each other, but s will have less uncertainty than σ. That is, the variation is more precisely estimated for the finite population than the superpopulation. This makes sense because we have more information about the units we observe than the full population from which they are sampled."</p>
+</blockquote>
+<p>Gelman and colleagues suggest the following general process:</p>
+<ol style="list-style-type: decimal">
+<li><p>Fit the model with the structure you think it required to capture the variation in the data.</p></li>
+<li><p>Calculate the superpopulation and finite-population standard deviations for predictors or groups of predictors.</p></li>
+<li><p>Make an ANOVA plot comparing the magnitudes of different predictors, and of the uncertainty in the estimates.</p></li>
+<li><p>Us the ANOVA plot to make inferences about the relative importance of your predictors, and to guide your analysis.</p></li>
+</ol>
+<div id="getting-the-superpopulation-standard-deviations-from-our-models" class="section level3" number="8.5.1">
+<h3><span class="header-section-number">8.5.1</span> Getting the superpopulation standard deviations from our models</h3>
+<p>The superpopulation standard deviation is our model’s estimate of the standard deviation of the population from which our random effects are drawn.</p>
+<p>We can extract the superpopulation standard deviations for <code>subj</code> and <code>item</code> using the <code>VarCorr</code> function and the code below.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subject random effect standard deviations</span></span>
+<span id="cb10-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb10-2" aria-hidden="true" tabindex="-1"></a>subj_ranefs_super <span class="ot">=</span> <span class="fu">VarCorr</span>(maximal_brms)[[<span class="st">&quot;subj&quot;</span>]][[<span class="st">&quot;sd&quot;</span>]]</span>
+<span id="cb10-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># item random effect standard deviations</span></span>
+<span id="cb10-5"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb10-5" aria-hidden="true" tabindex="-1"></a>item_ranefs_super <span class="ot">=</span> <span class="fu">VarCorr</span>(maximal_brms)[[<span class="st">&quot;item&quot;</span>]][[<span class="st">&quot;sd&quot;</span>]]</span></code></pre></div>
+<p>We can use the same <code>VarCorr</code> function to get the superpopulation estimate of <code>sigma</code>, the residual error in our model.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># superpopulation residual estimate</span></span>
+<span id="cb11-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb11-2" aria-hidden="true" tabindex="-1"></a>sigma_super <span class="ot">=</span> <span class="fu">VarCorr</span>(maximal_brms)<span class="sc">$</span>residual<span class="sc">$</span>sd</span>
+<span id="cb11-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># give it a name because its unnamed by default</span></span>
+<span id="cb11-5"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sigma_super)<span class="ot">=</span><span class="st">&quot;sigma&quot;</span></span></code></pre></div>
+<p>We can then take these three matrices representing our standard deviations estimates and stick them together:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># all superpopulation effects together</span></span>
+<span id="cb12-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-2" aria-hidden="true" tabindex="-1"></a>superpopulation_effects <span class="ot">=</span> <span class="fu">rbind</span> (subj_ranefs_super,</span>
+<span id="cb12-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-3" aria-hidden="true" tabindex="-1"></a>                                 item_ranefs_super,</span>
+<span id="cb12-4"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-4" aria-hidden="true" tabindex="-1"></a>                                 sigma_super)</span>
+<span id="cb12-5"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-5" aria-hidden="true" tabindex="-1"></a>superpopulation_effects</span>
+<span id="cb12-6"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="do">##            Estimate Est.Error        Q2.5     Q97.5</span></span>
+<span id="cb12-7"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept 309.09416  35.53155 246.8724335 386.22851</span></span>
+<span id="cb12-8"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="do">## S          52.82829  25.84257   4.5430876 103.37759</span></span>
+<span id="cb12-9"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="do">## P          56.48286  26.14443   6.2896184 107.05695</span></span>
+<span id="cb12-10"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="do">## C          71.57066  26.91964  12.0642003 121.35244</span></span>
+<span id="cb12-11"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="do">## SP         78.33043  27.22390  17.3887223 128.61832</span></span>
+<span id="cb12-12"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="do">## SC         29.93360  20.47755   1.3632664  75.99486</span></span>
+<span id="cb12-13"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="do">## PC         71.32010  27.32401  12.0298328 123.19472</span></span>
+<span id="cb12-14"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="do">## SPC        37.38488  23.35164   1.7069461  87.59383</span></span>
+<span id="cb12-15"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept 373.33136  50.32515 288.4503545 487.84638</span></span>
+<span id="cb12-16"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="do">## S          31.38349  20.97907   1.5702143  77.30445</span></span>
+<span id="cb12-17"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="do">## P         259.40602  37.96109 196.3904691 342.17678</span></span>
+<span id="cb12-18"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="do">## C          46.16567  27.18196   2.7059299 101.91536</span></span>
+<span id="cb12-19"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="do">## SP         20.62007  15.54163   0.9615122  58.42353</span></span>
+<span id="cb12-20"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="do">## SC         34.24261  23.47740   1.7819649  86.05518</span></span>
+<span id="cb12-21"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="do">## PC         58.00565  28.52386   4.3813078 112.79112</span></span>
+<span id="cb12-22"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="do">## SPC        54.96571  27.19562   4.8733710 109.68920</span></span>
+<span id="cb12-23"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="do">## sigma     653.35867  13.06193 628.5384992 679.31325</span></span></code></pre></div>
+<p>And plot this in what Gelman and colleagues call a Bayesian Anova plot. This allows us to quickly asses the large sources of variance in the data, and allows us to compare this to the residual error in our model.</p>
+<div class="figure"><span id="fig:F8-5"></span>
+<img src="08_files/figure-html/F8-5-1.png" alt="Estimates of superpopulation standard deviations for different random effects in our maximal KB07 model." width="768" />
+<p class="caption">
+Figure 8.5: Estimates of superpopulation standard deviations for different random effects in our maximal KB07 model.
+</p>
+</div>
+</div>
+<div id="getting-the-finite-population-standard-deviations-from-our-models" class="section level3" number="8.5.2">
+<h3><span class="header-section-number">8.5.2</span> Getting the finite-population standard deviations from our models</h3>
+<p>Gelman actually suggests using the finite-sample standard deviation estimates, and comparing the magnitude of these across our ‘fixed’ effects, ‘random’ effects, and residual error. When we focus on the finite-population standard deviation estimates we can compare the relative magnitudes of difference sources of variance on a more or less equal playing field.</p>
+<p>To calculate the standard deviations of different groups of parameters you need to calculate the standard deviation for each bundle, <em>for each sample</em>. This means you end up with 5000 (or however many) samples of the standard deviation based on each set of posterior samples. The code below shows how to calculate the finite-population standard deviations for item based on the random effects parameter estimates.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract matrix representing all random effects from our model</span></span>
+<span id="cb13-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-2" aria-hidden="true" tabindex="-1"></a>item_ranefs_finite <span class="ot">=</span> <span class="fu">ranef</span>(maximal_brms, <span class="at">summary =</span> <span class="cn">FALSE</span>)[[<span class="st">&quot;item&quot;</span>]]</span>
+<span id="cb13-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># the output is a 3d matrix. dimensions are:</span></span>
+<span id="cb13-5"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-5" aria-hidden="true" tabindex="-1"></a>   <span class="co"># 1) sample number (1-5000)</span></span>
+<span id="cb13-6"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-6" aria-hidden="true" tabindex="-1"></a>   <span class="co"># 2) item number (1-32)</span></span>
+<span id="cb13-7"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-7" aria-hidden="true" tabindex="-1"></a>   <span class="co"># 3) random effect number (1-8)</span></span>
+<span id="cb13-8"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span> (item_ranefs_finite)</span>
+<span id="cb13-9"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  num [1:5000, 1:32, 1:8] -353 -434 -469 -468 -365 ...</span></span>
+<span id="cb13-10"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  - attr(*, &quot;dimnames&quot;)=List of 3</span></span>
+<span id="cb13-11"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ : NULL</span></span>
+<span id="cb13-12"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ : chr [1:32] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...</span></span>
+<span id="cb13-13"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ : chr [1:8] &quot;Intercept&quot; &quot;S&quot; &quot;P&quot; &quot;C&quot; ...</span></span>
+<span id="cb13-14"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># we need to find the standard deviation for the item random effects for each </span></span>
+<span id="cb13-16"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co"># random effect, for each set of samples. The function below calculates the</span></span>
+<span id="cb13-17"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co"># standard deviation along the 1st and 3rd dimensions of our 3d matrix, </span></span>
+<span id="cb13-18"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co"># collapsing the second (item) dimension</span></span>
+<span id="cb13-19"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-19" aria-hidden="true" tabindex="-1"></a>item_ranefs_finite <span class="ot">=</span> <span class="fu">apply</span> (item_ranefs_finite[,,],<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>),sd)</span>
+<span id="cb13-20"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co"># the output is a 2d matrix. dimensions are:</span></span>
+<span id="cb13-22"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-22" aria-hidden="true" tabindex="-1"></a>   <span class="co"># 1) sample number (1-5000)</span></span>
+<span id="cb13-23"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-23" aria-hidden="true" tabindex="-1"></a>   <span class="co"># 2) random effect number (1-8)</span></span>
+<span id="cb13-24"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span> (item_ranefs_finite)</span>
+<span id="cb13-25"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="do">##  num [1:5000, 1:8] 365 361 361 366 368 ...</span></span>
+<span id="cb13-26"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="do">##  - attr(*, &quot;dimnames&quot;)=List of 2</span></span>
+<span id="cb13-27"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ : NULL</span></span>
+<span id="cb13-28"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ : chr [1:8] &quot;Intercept&quot; &quot;S&quot; &quot;P&quot; &quot;C&quot; ...</span></span>
+<span id="cb13-29"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-30"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="co"># we summarize the output into a matrix where each row represents a single</span></span>
+<span id="cb13-31"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="co"># finite-population random effect estimate</span></span>
+<span id="cb13-32"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb13-32" aria-hidden="true" tabindex="-1"></a>item_ranefs_finite <span class="ot">=</span> <span class="fu">posterior_summary</span> (item_ranefs_finite)</span></code></pre></div>
+<p>For the fixed effects, we use the absolute value of the parameters because they are each a single ‘degree of freedom’ (i.e. a single parameter). The code below shows how to get the fixed effects standard deviation estimates.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get individual parameter samples</span></span>
+<span id="cb14-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb14-2" aria-hidden="true" tabindex="-1"></a>fixefs_finite <span class="ot">=</span> <span class="fu">fixef</span>(maximal_brms, <span class="at">summary =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb14-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># summarize absolute value</span></span>
+<span id="cb14-5"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb14-5" aria-hidden="true" tabindex="-1"></a>fixefs_finite <span class="ot">=</span> <span class="fu">posterior_summary</span> (<span class="fu">abs</span> (fixefs_finite))</span></code></pre></div>
+<p>Finally, we can find the prediction error (the residuals) with the <code>residuals</code> function, and then calculate the standard deviation of the residuals for each set of samples.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get residuals</span></span>
+<span id="cb15-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb15-2" aria-hidden="true" tabindex="-1"></a>sigma_finite <span class="ot">=</span> <span class="fu">residuals</span> (maximal_brms, <span class="at">summary =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># find standard deviation for each set of samples</span></span>
+<span id="cb15-5"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb15-5" aria-hidden="true" tabindex="-1"></a>sigma_finite <span class="ot">=</span> <span class="fu">apply</span> (sigma_finite, <span class="dv">1</span>, sd)</span>
+<span id="cb15-6"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># summarize</span></span>
+<span id="cb15-8"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb15-8" aria-hidden="true" tabindex="-1"></a>sigma_finite <span class="ot">=</span> <span class="fu">posterior_summary</span> (sigma_finite)</span>
+<span id="cb15-9"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># name row, because it has no name by default</span></span>
+<span id="cb15-11"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(sigma_finite) <span class="ot">=</span> <span class="st">&#39;sigma&#39;</span></span></code></pre></div>
+</div>
+<div id="using-the-banova-function" class="section level3" number="8.5.3">
+<h3><span class="header-section-number">8.5.3</span> Using the <code>banova</code> function</h3>
+<p>I wrote a simple function that does the above steps for you. You can choose whether you want the finite-population or superpopulation standard deviations (though it can only ever use the finite-population for the fixed effects). The output is a single dataframe that contains a summary of all fixed and random effects, and sigma if the model contains normally-distributed error.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-1" aria-hidden="true" tabindex="-1"></a>maximal_banova <span class="ot">=</span> <span class="fu">banova</span> (maximal_brms)</span>
+<span id="cb16-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect output</span></span>
+<span id="cb16-4"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-4" aria-hidden="true" tabindex="-1"></a>maximal_banova</span>
+<span id="cb16-5"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="do">##                  Estimate Est.Error         Q2.5      Q97.5 cluster</span></span>
+<span id="cb16-6"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="do">## sigma           653.09494  6.595197  640.3732775  666.17096   sigma</span></span>
+<span id="cb16-7"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept      2172.28858 78.430699 2020.3507829 2324.35811  fixefs</span></span>
+<span id="cb16-8"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="do">## S                66.94226 18.129586   30.7611733  101.79869  fixefs</span></span>
+<span id="cb16-9"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="do">## P               329.20511 49.402456  235.3017587  429.06277  fixefs</span></span>
+<span id="cb16-10"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="do">## C                79.03061 20.412822   39.7167610  119.10522  fixefs</span></span>
+<span id="cb16-11"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="do">## SP               23.96781 16.158583    1.0133929   58.71126  fixefs</span></span>
+<span id="cb16-12"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="do">## SC               21.42102 14.563791    0.9812082   54.11046  fixefs</span></span>
+<span id="cb16-13"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="do">## PC               17.80075 13.449979    0.7310491   49.68008  fixefs</span></span>
+<span id="cb16-14"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="do">## SPC              26.09428 16.864884    1.2687924   62.72075  fixefs</span></span>
+<span id="cb16-15"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept:item  366.92509 16.770748  333.8218755  399.86701    item</span></span>
+<span id="cb16-16"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="do">## S:item           29.87270 19.509138    1.5404471   71.39403    item</span></span>
+<span id="cb16-17"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="do">## P:item          255.40122 19.336650  218.8252527  293.91863    item</span></span>
+<span id="cb16-18"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="do">## C:item           43.50635 24.599073    2.6019614   91.63498    item</span></span>
+<span id="cb16-19"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="do">## SP:item          19.60249 14.311265    0.8789549   53.60589    item</span></span>
+<span id="cb16-20"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="do">## SC:item          32.32763 21.328790    1.7038979   77.96548    item</span></span>
+<span id="cb16-21"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="do">## PC:item          54.28645 25.396590    4.3513090   99.94241    item</span></span>
+<span id="cb16-22"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="do">## SPC:item         52.00120 24.461426    4.7274922   98.07662    item</span></span>
+<span id="cb16-23"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept:subj  302.17599 18.044662  267.0665426  339.00046    subj</span></span>
+<span id="cb16-24"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="do">## S:subj           51.67352 24.683656    4.4734142   98.15312    subj</span></span>
+<span id="cb16-25"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="do">## P:subj           55.14963 24.893009    6.2876688  101.85838    subj</span></span>
+<span id="cb16-26"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="do">## C:subj           70.04796 25.308165   11.9181579  113.55929    subj</span></span>
+<span id="cb16-27"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="do">## SP:subj          76.33887 25.383581   16.8116679  120.32346    subj</span></span>
+<span id="cb16-28"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-28" aria-hidden="true" tabindex="-1"></a><span class="do">## SC:subj          29.11213 19.640120    1.3413590   72.14067    subj</span></span>
+<span id="cb16-29"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="do">## PC:subj          69.74025 25.820290   11.5482570  116.14938    subj</span></span>
+<span id="cb16-30"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb16-30" aria-hidden="true" tabindex="-1"></a><span class="do">## SPC:subj         36.44247 22.377150    1.6708271   82.42874    subj</span></span></code></pre></div>
+<p>The output of the <code>banova</code> function can be used to make a Bayesian ANOVA plot of our model. If we were to do this right after fitting the model, we would have a pretty good idea of what matters and what doesn’t in our data.</p>
+<div class="figure"><span id="fig:F8-6"></span>
+<img src="08_files/figure-html/F8-6-1.png" alt="Standard deviation estimates for each component of our KB07 model. Lines indicate 95% credible intervals." width="768" />
+<p class="caption">
+Figure 8.6: Standard deviation estimates for each component of our KB07 model. Lines indicate 95% credible intervals.
+</p>
+</div>
+<p>The process Gelman proposes is potentially more complicated that what I’m doing here. For example, consider the random effects for a factor like vowel category. Imagine there are four categories, so four levels, for each of 50 listeners. The process I’ve described treats each of the 50 random effects for each vowel separately (i.e., 4 groups of 50 vowel random effects).</p>
+<p>The process described by Gelman would treat the 200 vowel random effects (across the four vowels) as one ‘batch’ of coefficients. This single batch would reflect all of the <span class="math inline">\(Listener \colon Vowel\)</span> interaction. The way we are approaching instead separates each <span class="math inline">\(Listener \colon Vowel\)</span> ‘simple effect’ and treats it separately.</p>
+<p>The main reason to do it the way way I’ve shown above is because it can be done easily for all models, and you get roughly equivalent information from the analysis. If you do want to investigate the variation associated with entire clusters of multiple predictors at a time, please see the Gelman articles linked to above, as there are a few important details that are not discussed here (e.g., the need to ‘recover’ missing parameters, the need to calculate ‘degrees of freedom’, etc.).</p>
+</div>
+<div id="applying-the-banova-function-to-our-gender-perception-model" class="section level3" number="8.5.4">
+<h3><span class="header-section-number">8.5.4</span> Applying the <code>banova</code> function to our gender perception model</h3>
+<p>We can load the model we fit in Chapter 7 (<code>logistic_g0</code>) and apply the <code>banova</code> function to it.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb17-1" aria-hidden="true" tabindex="-1"></a>logistic_banova <span class="ot">=</span> <span class="fu">banova</span> (logistic_g0)</span>
+<span id="cb17-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect output</span></span>
+<span id="cb17-4"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb17-4" aria-hidden="true" tabindex="-1"></a>logistic_banova</span>
+<span id="cb17-5"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="do">##                    Estimate Est.Error        Q2.5     Q97.5 cluster</span></span>
+<span id="cb17-6"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept         0.7416706 0.4648814 0.045743928 1.7789047  fixefs</span></span>
+<span id="cb17-7"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="do">## g0_s              3.2941081 0.5917762 2.167940600 4.5000468  fixefs</span></span>
+<span id="cb17-8"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="do">## pfemale           2.3067717 0.2466901 1.840272045 2.8007507  fixefs</span></span>
+<span id="cb17-9"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="do">## g0_s:pfemale      1.1873830 0.5334107 0.196241521 2.2988926  fixefs</span></span>
+<span id="cb17-10"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept:speaker 2.7511229 0.2986038 2.254733741 3.4057535 speaker</span></span>
+<span id="cb17-11"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept:subj    1.1743633 0.1925801 0.816857707 1.5575303    subj</span></span>
+<span id="cb17-12"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="do">## g0_s:subj         1.3204798 0.2889046 0.821822086 1.9690607    subj</span></span>
+<span id="cb17-13"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="do">## pfemale:subj      0.2319804 0.1629290 0.009011726 0.5947397    subj</span></span>
+<span id="cb17-14"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="do">## g0_s:pfemale:subj 1.1496191 0.3009733 0.617755680 1.7851284    subj</span></span></code></pre></div>
+<p>We can then take the output and plot it using another simple function I wrote called <code>banovaplot</code>, which will plot the output of the <code>banova</code> function. This plot shows us which fixed effects have the largest magnitudes, and also lets us compare the magnitude of fixed effects to their between-subject variation. For example, notice that although the effect for <span class="math inline">\(pfemale\)</span> is relatively large, there is almost no between-subject variation in this parameter. In contrast, between-subject variation in intercepts is larger than the overall model intercept.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">5.2</span>,<span class="fl">9.2</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb18-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">banovaplot</span> (logistic_banova, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">5</span>), <span class="at">xaxs=</span><span class="st">&#39;i&#39;</span>, <span class="at">horizontal =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb18-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb18-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">xlab =</span> <span class="st">&quot;Logits&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:g8-7"></span>
+<img src="08_files/figure-html/g8-7-1.png" alt="Banova plot of our logistic model from Chapter 7." width="768" />
+<p class="caption">
+Figure 8.7: Banova plot of our logistic model from Chapter 7.
+</p>
+</div>
+</div>
+</div>
+<div id="applying-a-bayesian-anova-to-a-more-complicated-model" class="section level2" number="8.6">
+<h2><span class="header-section-number">8.6</span> Applying a Bayesian ANOVA to a more-complicated model</h2>
+<div id="description-of-the-model-10" class="section level3" number="8.6.1">
+<h3><span class="header-section-number">8.6.1</span> Description of the model</h3>
+<p>We’re going to fit our most complicated model yet. The model includes the following variables:</p>
+<ul>
+<li><p><code>padult</code>: a dichotomous variable, 1=adult response, 0=child response.</p></li>
+<li><p><code>g0_s</code>: a continuous predictor, scaled log-f0.</p></li>
+<li><p><code>gbar_s</code>: a continuous predictor, scaled log-mean formant frequency (a measure of vocal-tract length).</p></li>
+<li><p><code>pfemale</code>: a factor indicating whether subjects indicated hearing a female speaker, <code>pfemale1=female</code>, <code>-pfemale1=female</code>.</p></li>
+<li><p><code>vowel</code>: a factor with two levels, <code>vowel1=a</code>, <code>-vowel1=i</code>.</p></li>
+<li><p><code>subj</code>: a factor indicating subject/listener (n=10).</p></li>
+<li><p><code>speaker</code>: a factor indicating speaker (n=139).</p></li>
+</ul>
+<p>The model formula looks like this:</p>
+<pre><code>padult ~   ( g0_s + gbar_s) * pfemale + vowel + 
+          (( g0_s + gbar_s) * pfemale + vowel | subj ) + 
+                                          ( 1 | speaker )</code></pre>
+<p>It’s broken up into three lines only so that it will fit on the page. I’ve aligned the line to make the structure of the three components (main effects, subject effects, speaker effects) clearer. The model says:</p>
+<blockquote>
+<p>"Model the perception of adultness using the continuous predictors g0 and gbar. These predictors interact with pfemale. This tells us that in addition to intercept shifts for the perception of femaleness, there can also be differences in the slopes of our continuous predictors. We also include vowel category as a predictor. Since this does <em>not</em> interact with our continuous predictors, it represents only interecept shifts. Our entire model is replicated inside the <code>subj</code> cluster, meaning we are fitting a ‘maximal’ model with respect to subjects. We are only including random intercepts for speakers.</p>
+</blockquote>
+<p>Notice that we are not using a really <em>maximal</em> model since we are not including random effects for all speakers. This is because I don’t think our data supports the inclusion of random slopes for speaker! With only two different tokens per speaker we don’t have much information about f0 variation <em>within</em> speaker. We also have no repetitions of the vowel for each person, so our speaker-specific measurements of vowel effects would be imprecise. Finally, many voices were likely not perceived as both male or female often enough to really test for the effect of perception of perceived femaleness, <em>within-speaker</em>.</p>
+</div>
+<div id="fitting-the-model-9" class="section level3" number="8.6.2">
+<h3><span class="header-section-number">8.6.2</span> Fitting the model</h3>
+<p>We load and set up the data below:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># source data</span></span>
+<span id="cb20-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-2" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">=</span> <span class="st">&quot;https://raw.githubusercontent.com/santiagobarreda&quot;</span></span>
+<span id="cb20-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-3" aria-hidden="true" tabindex="-1"></a>url2 <span class="ot">=</span> <span class="st">&quot;/stats-class/master/data/h95_experiment_data.csv&quot;</span></span>
+<span id="cb20-4"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-4" aria-hidden="true" tabindex="-1"></a>h95 <span class="ot">=</span> <span class="fu">read.csv</span> (<span class="fu">url</span>(<span class="fu">paste0</span> (url1, url2)))</span>
+<span id="cb20-5"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># padult = 1 for adult responses, 0 for child responses</span></span>
+<span id="cb20-7"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-7" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>padult <span class="ot">=</span> <span class="fu">as.numeric</span> (h95<span class="sc">$</span>pgroup <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;w&#39;</span>,<span class="st">&#39;m&#39;</span>))</span>
+<span id="cb20-8"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># factor with f for female responses and m for male responses</span></span>
+<span id="cb20-10"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-10" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>pfemale <span class="ot">=</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb20-11"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-11" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>pfemale[h95<span class="sc">$</span>pgroup <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;w&#39;</span>,<span class="st">&#39;g&#39;</span>)] <span class="ot">=</span> <span class="st">&quot;f&quot;</span></span>
+<span id="cb20-12"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-12" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>pfemale[h95<span class="sc">$</span>pgroup <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;m&#39;</span>,<span class="st">&#39;b&#39;</span>)] <span class="ot">=</span> <span class="st">&quot;m&quot;</span></span>
+<span id="cb20-13"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-13" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>pfemale <span class="ot">=</span> <span class="fu">factor</span>(h95<span class="sc">$</span>pfemale)</span>
+<span id="cb20-14"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="co"># standardize log f0</span></span>
+<span id="cb20-16"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-16" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>gbar_s <span class="ot">=</span> (h95<span class="sc">$</span>g0<span class="sc">-</span><span class="fu">mean</span>(h95<span class="sc">$</span>g0)) <span class="sc">/</span> <span class="fu">sd</span>(h95<span class="sc">$</span>g0)</span>
+<span id="cb20-17"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-18"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="co"># standardize log geometric mean formant frequency</span></span>
+<span id="cb20-19"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb20-19" aria-hidden="true" tabindex="-1"></a>h95<span class="sc">$</span>gbar_s <span class="ot">=</span> (h95<span class="sc">$</span>gbar<span class="sc">-</span><span class="fu">mean</span>(h95<span class="sc">$</span>gbar)) <span class="sc">/</span> <span class="fu">sd</span>(h95<span class="sc">$</span>gbar)</span></code></pre></div>
+<p>And then fit the model:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span> (<span class="dv">1</span>)</span>
+<span id="cb21-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb21-2" aria-hidden="true" tabindex="-1"></a>logistic_g0_gbar <span class="ot">=</span></span>
+<span id="cb21-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span> (padult <span class="sc">~</span>  (g0_s<span class="sc">+</span>gbar_s) <span class="sc">*</span> pfemale <span class="sc">+</span> vowel <span class="sc">+</span> </span>
+<span id="cb21-4"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb21-4" aria-hidden="true" tabindex="-1"></a>                ((g0_s<span class="sc">+</span>gbar_s) <span class="sc">*</span> pfemale <span class="sc">+</span> vowel <span class="sc">|</span> subj) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>speaker), </span>
+<span id="cb21-5"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb21-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">data=</span>h95, <span class="at">chains=</span><span class="dv">4</span>, <span class="at">cores=</span><span class="dv">4</span>, <span class="at">family=</span><span class="st">&quot;bernoulli&quot;</span>, </span>
+<span id="cb21-6"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb21-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">warmup=</span><span class="dv">1000</span>, <span class="at">iter =</span> <span class="dv">3000</span>, <span class="at">thin =</span> <span class="dv">2</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> <span class="fl">0.95</span>),  </span>
+<span id="cb21-7"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb21-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 3)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;Intercept&quot;</span>),</span>
+<span id="cb21-8"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb21-8" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 3)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb21-9"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb21-9" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">set_prior</span>(<span class="st">&quot;student_t(3, 0, 3)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;sd&quot;</span>),</span>
+<span id="cb21-10"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb21-10" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">set_prior</span>(<span class="st">&quot;lkj_corr_cholesky (2)&quot;</span>, <span class="at">class =</span> <span class="st">&quot;cor&quot;</span>)))</span>
+<span id="cb21-11"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co"># save model</span></span>
+<span id="cb21-13"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS (logistic_g0_gbar, &#39;8_logistic_g0_gbar.RDS&#39;)</span></span></code></pre></div>
+</div>
+<div id="interpreting-the-model-7" class="section level3" number="8.6.3">
+<h3><span class="header-section-number">8.6.3</span> Interpreting the model</h3>
+<p>After inspecting the model to check for convergence and an adequate ESS, we can make a Bayesian ANOVA for the model, and plot the results.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb22-1" aria-hidden="true" tabindex="-1"></a>logistic_g0_gbar_banova <span class="ot">=</span> <span class="fu">banova</span> (logistic_g0_gbar)</span></code></pre></div>
+<div class="figure"><span id="fig:g8-8"></span>
+<img src="08_files/figure-html/g8-8-1.png" alt="Banova plot for a multivariate regression model predicting the perception of adultness from f0 and formant frequencies." width="768" />
+<p class="caption">
+Figure 8.8: Banova plot for a multivariate regression model predicting the perception of adultness from f0 and formant frequencies.
+</p>
+</div>
+<p>We’re going to leave the interpretation of this model for the next chapter. However, the ANOVA plot lets us easily consider the important sources of variation in our data, and can guide our interpretation of the model. If predictors are only small sources of variance, and especially if these are accompanied by credible intervals that are wide relative to their small values, these may be very small and meaningless values (even if not equal to exactly zero). As a result, it makes sense to begin interpreting a model based on the largest sources of variance.</p>
+</div>
+</div>
+<div id="plot-code-7" class="section level2" number="8.7">
+<h2><span class="header-section-number">8.7</span> Plot Code</h2>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb23-2"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 8.1</span></span>
+<span id="cb23-3"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb23-4"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb23-6"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-7" aria-hidden="true" tabindex="-1"></a>shift <span class="ot">=</span> <span class="sc">-</span>.<span class="dv">3</span></span>
+<span id="cb23-8"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (<span class="at">xs =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>)<span class="sc">+</span>shift, fe_f[<span class="dv">8</span><span class="sc">:</span><span class="dv">2</span>,], <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> deepgreen,</span>
+<span id="cb23-9"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlim =</span> <span class="fu">c</span>(.<span class="dv">5</span>,<span class="fl">7.5</span>), <span class="at">xlab =</span> <span class="st">&#39;Predictors&#39;</span>, <span class="at">ylab =</span> <span class="st">&#39;RT (msec)&#39;</span>,<span class="at">labels=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb23-10"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb23-11"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-12" aria-hidden="true" tabindex="-1"></a>shift <span class="ot">=</span> <span class="sc">-</span>.<span class="dv">15</span></span>
+<span id="cb23-13"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span> ((<span class="dv">7</span><span class="sc">:</span><span class="dv">1</span>)<span class="sc">+</span>shift, sumf[[<span class="dv">10</span>]][<span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>,<span class="dv">1</span>], <span class="at">col=</span>coral,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">cex=</span><span class="fl">1.5</span>,<span class="at">pch=</span><span class="dv">0</span>)</span>
+<span id="cb23-14"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span> ((<span class="dv">7</span><span class="sc">:</span><span class="dv">1</span>)<span class="sc">+</span>shift, sumf[[<span class="dv">10</span>]][<span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>,<span class="dv">1</span>]<span class="sc">+</span>sumf[[<span class="dv">10</span>]][<span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>,<span class="dv">2</span>]<span class="sc">*</span><span class="dv">2</span>,(<span class="dv">7</span><span class="sc">:</span><span class="dv">1</span>)<span class="sc">+</span>shift, </span>
+<span id="cb23-15"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-15" aria-hidden="true" tabindex="-1"></a>        sumf[[<span class="dv">10</span>]][<span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>,<span class="dv">1</span>]<span class="sc">-</span>sumf[[<span class="dv">10</span>]][<span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>,<span class="dv">2</span>]<span class="sc">*</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>,<span class="at">col=</span>coral,<span class="at">length=</span><span class="dv">0</span>)</span>
+<span id="cb23-16"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-17"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-17" aria-hidden="true" tabindex="-1"></a>shift <span class="ot">=</span> <span class="sc">+</span>.<span class="dv">0</span></span>
+<span id="cb23-18"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (<span class="at">xs =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>)<span class="sc">+</span>shift, fe_m[<span class="dv">8</span><span class="sc">:</span><span class="dv">2</span>,], <span class="at">horizontal=</span><span class="cn">TRUE</span>, <span class="at">add=</span><span class="cn">TRUE</span>, </span>
+<span id="cb23-19"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">col=</span>skyblue)</span>
+<span id="cb23-20"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty=</span><span class="dv">1</span>)</span>
+<span id="cb23-21"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-22"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-22" aria-hidden="true" tabindex="-1"></a>shift <span class="ot">=</span> <span class="sc">+</span>.<span class="dv">15</span></span>
+<span id="cb23-23"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-23" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span> ((<span class="dv">7</span><span class="sc">:</span><span class="dv">1</span>)<span class="sc">+</span>shift, summ[[<span class="dv">10</span>]][<span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>,<span class="dv">1</span>], <span class="at">pch=</span><span class="dv">0</span>, <span class="at">col=</span>teal,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">cex=</span><span class="fl">1.5</span>)</span>
+<span id="cb23-24"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-24" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span> ((<span class="dv">7</span><span class="sc">:</span><span class="dv">1</span>)<span class="sc">+</span>shift, summ[[<span class="dv">10</span>]][<span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>,<span class="dv">1</span>]<span class="sc">+</span>summ[[<span class="dv">10</span>]][<span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>,<span class="dv">2</span>]<span class="sc">*</span><span class="dv">2</span>, (<span class="dv">7</span><span class="sc">:</span><span class="dv">1</span>)<span class="sc">+</span>shift,<span class="at">pch=</span><span class="dv">0</span>, </span>
+<span id="cb23-25"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-25" aria-hidden="true" tabindex="-1"></a>        summ[[<span class="dv">10</span>]][<span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>,<span class="dv">1</span>]<span class="sc">-</span>summ[[<span class="dv">10</span>]][<span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>,<span class="dv">2</span>]<span class="sc">*</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>,<span class="at">col=</span>teal,<span class="at">length=</span><span class="dv">0</span>)</span>
+<span id="cb23-26"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-27"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-27" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span> (<span class="dv">1</span>, <span class="sc">-</span><span class="dv">150</span>, <span class="at">bty=</span><span class="st">&#39;n&#39;</span>, <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">16</span>,<span class="dv">0</span>,<span class="dv">16</span>,<span class="dv">0</span>), <span class="at">pt.cex=</span><span class="fl">1.5</span>,</span>
+<span id="cb23-28"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">col=</span><span class="fu">c</span>(deepgreen,coral,skyblue,teal),<span class="at">lwd=</span><span class="dv">2</span>, </span>
+<span id="cb23-29"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Maximal brm&quot;</span>,<span class="st">&quot;Maximal lmer&quot;</span>,<span class="st">&quot;Final brm&quot;</span>,<span class="st">&quot;Final lmer&quot;</span>))</span>
+<span id="cb23-30"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-31"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-31" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb23-32"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-32" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 8.2</span></span>
+<span id="cb23-33"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-33" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb23-34"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-35"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-35" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb23-36"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-37"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-37" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">=</span> <span class="fu">paste0</span> (<span class="fu">c</span>(<span class="st">&quot;&quot;</span>,<span class="fu">rep</span>(<span class="st">&quot;Item:&quot;</span>,<span class="dv">8</span>),<span class="fu">rep</span>(<span class="st">&quot;Subj:&quot;</span>,<span class="dv">8</span>)), <span class="fu">rownames</span>(vars_m))</span>
+<span id="cb23-38"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-39"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-39" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (<span class="at">xs =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">17</span>), vars_m, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> deepgreen, <span class="at">xlab =</span> <span class="st">&#39;&#39;</span>, </span>
+<span id="cb23-40"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-40" aria-hidden="true" tabindex="-1"></a>         <span class="at">yaxs=</span><span class="st">&#39;i&#39;</span>, <span class="at">ylab=</span><span class="st">&#39;RT (msec)&#39;</span>,<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">750</span>),<span class="at">las=</span><span class="dv">2</span>, <span class="at">labels =</span> labels)</span>
+<span id="cb23-41"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-41" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb23-42"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-42" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span> ((<span class="dv">1</span><span class="sc">:</span><span class="dv">17</span>), lmer_vars_m, <span class="at">pch=</span><span class="dv">0</span>, <span class="at">col=</span>coral,<span class="at">lwd=</span><span class="dv">3</span>,<span class="at">cex=</span><span class="dv">2</span>)</span>
+<span id="cb23-43"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-43" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span> (<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">17</span>)<span class="sc">+</span>.<span class="dv">3</span>, lmer_vars_f, <span class="at">pch=</span><span class="dv">0</span>, <span class="at">col=</span>teal,<span class="at">lwd=</span><span class="dv">3</span>,<span class="at">cex=</span><span class="dv">2</span>)</span>
+<span id="cb23-44"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-45"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-45" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (<span class="at">xs =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">17</span>)<span class="sc">+</span>.<span class="dv">3</span>, vars_final, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> skyblue, </span>
+<span id="cb23-46"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-46" aria-hidden="true" tabindex="-1"></a>         <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-47"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-47" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h=</span><span class="dv">0</span>)</span>
+<span id="cb23-48"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-48" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span> (<span class="dv">11</span>, <span class="dv">600</span>, <span class="at">bty=</span><span class="st">&#39;n&#39;</span>, <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">16</span>,<span class="dv">0</span>,<span class="dv">16</span>,<span class="dv">0</span>), <span class="at">pt.cex=</span><span class="fl">1.5</span>,</span>
+<span id="cb23-49"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-49" aria-hidden="true" tabindex="-1"></a>        <span class="at">col=</span><span class="fu">c</span>(deepgreen,coral,skyblue,teal),<span class="at">pt.lwd=</span><span class="dv">2</span>, </span>
+<span id="cb23-50"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-50" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Maximal brm&quot;</span>,<span class="st">&quot;Maximal lmer&quot;</span>,<span class="st">&quot;Final brm&quot;</span>,<span class="st">&quot;Final lmer&quot;</span>))</span>
+<span id="cb23-51"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-52"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-52" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb23-53"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-53" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 8.3</span></span>
+<span id="cb23-54"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-54" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb23-55"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-56"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-56" aria-hidden="true" tabindex="-1"></a>subjrhom <span class="ot">=</span> <span class="fu">attr</span>(<span class="fu">VarCorr</span>(maximal_lmer)[[<span class="dv">1</span>]],<span class="st">&#39;correlation&#39;</span>)</span>
+<span id="cb23-57"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-58"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-58" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="fl">5.5</span>,<span class="dv">3</span>,<span class="dv">1</span>))</span>
+<span id="cb23-59"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-60"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-60" aria-hidden="true" tabindex="-1"></a>corsuse <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>,(<span class="dv">3</span><span class="sc">:</span><span class="dv">8</span>)<span class="sc">+</span><span class="dv">8</span>,(<span class="dv">4</span><span class="sc">:</span><span class="dv">8</span>)<span class="sc">+</span><span class="dv">16</span>,(<span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>)<span class="sc">+</span><span class="dv">24</span>,(<span class="dv">6</span><span class="sc">:</span><span class="dv">8</span>)<span class="sc">+</span><span class="dv">32</span>,(<span class="dv">7</span><span class="sc">:</span><span class="dv">8</span>)<span class="sc">+</span><span class="dv">40</span>,(<span class="dv">8</span>)<span class="sc">+</span><span class="dv">48</span>)</span>
+<span id="cb23-61"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-61" aria-hidden="true" tabindex="-1"></a>blabels <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;SPC&quot;</span>,<span class="st">&quot;PC&quot;</span>,<span class="st">&quot;SC&quot;</span>,<span class="st">&quot;SP&quot;</span>,<span class="st">&quot;C&quot;</span>,<span class="st">&quot;P&quot;</span>,<span class="st">&quot;S&quot;</span>,<span class="st">&quot;Int&quot;</span>) </span>
+<span id="cb23-62"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-62" aria-hidden="true" tabindex="-1"></a>labs <span class="ot">=</span> <span class="fu">expand.grid</span>(blabels,blabels)[corsuse,]</span>
+<span id="cb23-63"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-63" aria-hidden="true" tabindex="-1"></a>labs <span class="ot">=</span> <span class="fu">paste</span>(labs[,<span class="dv">1</span>],labs[,<span class="dv">2</span>],<span class="at">sep=</span><span class="st">&quot; : &quot;</span>)</span>
+<span id="cb23-64"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-65"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-65" aria-hidden="true" tabindex="-1"></a>corrs_ms <span class="ot">=</span> <span class="fu">VarCorr</span>(maximal_brms)<span class="sc">$</span>subj<span class="sc">$</span>cor</span>
+<span id="cb23-66"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-66" aria-hidden="true" tabindex="-1"></a>corrs_ms <span class="ot">=</span> <span class="fu">rbind</span> (corrs_ms[<span class="dv">7</span><span class="sc">:</span><span class="dv">1</span>,,<span class="dv">8</span>], corrs_ms[<span class="dv">6</span><span class="sc">:</span><span class="dv">1</span>,,<span class="dv">7</span>], corrs_ms[<span class="dv">5</span><span class="sc">:</span><span class="dv">1</span>,,<span class="dv">6</span>],</span>
+<span id="cb23-67"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-67" aria-hidden="true" tabindex="-1"></a>               corrs_ms[<span class="dv">4</span><span class="sc">:</span><span class="dv">1</span>,,<span class="dv">5</span>], corrs_ms[<span class="dv">3</span><span class="sc">:</span><span class="dv">1</span>,,<span class="dv">4</span>], corrs_ms[<span class="dv">2</span><span class="sc">:</span><span class="dv">1</span>,,<span class="dv">3</span>], </span>
+<span id="cb23-68"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-68" aria-hidden="true" tabindex="-1"></a>               corrs_ms[<span class="dv">1</span>,,<span class="dv">2</span>])</span>
+<span id="cb23-69"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-70"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-70" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (corrs_ms, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>), <span class="at">main =</span> <span class="st">&quot;Subject Correlation Estimates&quot;</span>,</span>
+<span id="cb23-71"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-71" aria-hidden="true" tabindex="-1"></a>         <span class="at">yaxs=</span><span class="st">&quot;i&quot;</span>, <span class="at">cex.main=</span><span class="dv">1</span>, <span class="at">las=</span><span class="dv">2</span>, <span class="at">ylab =</span> <span class="st">&quot;Correlation&quot;</span>, <span class="at">labels =</span> labs,</span>
+<span id="cb23-72"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-72" aria-hidden="true" tabindex="-1"></a>         <span class="at">col=</span>deepgreen)</span>
+<span id="cb23-73"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-73" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb23-74"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-74" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span> (<span class="dv">28</span><span class="sc">:</span><span class="dv">1</span>, subjrhom[corsuse], <span class="at">pch=</span><span class="dv">0</span>, <span class="at">col=</span>coral,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">cex=</span><span class="fl">1.5</span>)</span>
+<span id="cb23-75"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-76"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-77"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-77" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb23-78"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-78" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 8.4</span></span>
+<span id="cb23-79"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-79" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb23-80"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-81"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-81" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (corrs_mi, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>), <span class="at">main =</span> <span class="st">&quot;Subject Correlation Estimates&quot;</span>,</span>
+<span id="cb23-82"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-82" aria-hidden="true" tabindex="-1"></a>         <span class="at">yaxs=</span><span class="st">&quot;i&quot;</span>, <span class="at">las=</span><span class="dv">2</span>, <span class="at">labels =</span> labs, <span class="at">col =</span> deepgreen)</span>
+<span id="cb23-83"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-83" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span> (<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb23-84"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-84" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span> (<span class="dv">28</span><span class="sc">:</span><span class="dv">1</span>, itemrhom[corsuse], <span class="at">pch=</span><span class="dv">0</span>, <span class="at">col=</span>coral,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">cex=</span><span class="fl">1.5</span>)</span>
+<span id="cb23-85"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-86"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-86" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span> (<span class="dv">27</span><span class="fl">+.4</span>,corrs_fi[<span class="dv">1</span>], <span class="at">cex =</span> <span class="fl">1.5</span>, <span class="at">col =</span> skyblue, <span class="at">pch=</span><span class="dv">16</span>)</span>
+<span id="cb23-87"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-87" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span> (<span class="dv">27</span><span class="fl">+.4</span>, corrs_fi[<span class="dv">3</span>], <span class="dv">27</span><span class="fl">+.4</span>, corrs_fi[<span class="dv">4</span>], <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span>skyblue)</span>
+<span id="cb23-88"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-88" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span> (<span class="dv">27</span><span class="fl">+.4</span>, itemrhof[<span class="dv">2</span>], <span class="at">col=</span>teal,<span class="at">lwd=</span><span class="dv">3</span>, <span class="at">pch =</span> <span class="dv">0</span>, <span class="at">cex =</span> <span class="fl">1.5</span>)</span>
+<span id="cb23-89"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-90"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-90" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb23-91"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-91" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 8.5</span></span>
+<span id="cb23-92"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-92" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb23-93"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-94"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-94" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sigma_super)<span class="ot">=</span><span class="st">&quot;sigma&quot;</span></span>
+<span id="cb23-95"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-96"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-96" aria-hidden="true" tabindex="-1"></a>superpopulation_effects <span class="ot">=</span> <span class="fu">rbind</span> (item_ranefs_super,</span>
+<span id="cb23-97"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-97" aria-hidden="true" tabindex="-1"></a>                                 subj_ranefs_super,</span>
+<span id="cb23-98"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-98" aria-hidden="true" tabindex="-1"></a>                                 sigma_super)</span>
+<span id="cb23-99"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-100"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-100" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">1</span>))</span>
+<span id="cb23-101"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-101" aria-hidden="true" tabindex="-1"></a><span class="fu">brmplot</span> (superpopulation_effects, <span class="at">yaxs=</span><span class="st">&#39;i&#39;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">750</span>),</span>
+<span id="cb23-102"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-102" aria-hidden="true" tabindex="-1"></a>         <span class="at">main=</span><span class="st">&quot;Fixed Effects&quot;</span>, <span class="at">cex.main=</span><span class="fl">1.2</span>,<span class="at">las=</span><span class="dv">2</span>, </span>
+<span id="cb23-103"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-103" aria-hidden="true" tabindex="-1"></a>         <span class="at">col =</span> <span class="fu">c</span>(<span class="fu">rep</span>(skyblue,<span class="dv">8</span>),<span class="fu">rep</span>(lavender,<span class="dv">8</span>),darkorange))</span>
+<span id="cb23-104"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-105"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-105" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span> (<span class="dv">5</span>,<span class="dv">500</span>, <span class="at">label =</span> <span class="st">&quot;Item Effects&quot;</span>,<span class="at">col=</span>skyblue, <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb23-106"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-106" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span> (<span class="dv">12</span>,<span class="dv">500</span>, <span class="at">label =</span> <span class="st">&quot;Subject Effects&quot;</span>,<span class="at">col=</span>lavender, <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb23-107"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-108"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-108" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb23-109"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-109" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 8.6</span></span>
+<span id="cb23-110"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-110" aria-hidden="true" tabindex="-1"></a><span class="do">################################################################################</span></span>
+<span id="cb23-111"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-112"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-112" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">7</span>,<span class="fl">4.2</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb23-113"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-113" aria-hidden="true" tabindex="-1"></a><span class="fu">banovaplot</span> (maximal_banova[<span class="sc">-</span><span class="dv">2</span>,], <span class="at">yaxs =</span> <span class="st">&#39;i&#39;</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">880</span>), </span>
+<span id="cb23-114"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-114" aria-hidden="true" tabindex="-1"></a>             <span class="at">main=</span><span class="st">&quot;Fixed Effects&quot;</span>, <span class="at">las=</span><span class="dv">2</span>, <span class="at">ylab =</span> <span class="st">&quot;Reaction Time (ms)&quot;</span>)</span>
+<span id="cb23-115"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-116"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-116" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span> (<span class="dv">5</span>,<span class="dv">500</span>, <span class="at">label =</span> <span class="st">&quot;Fixed Effects&quot;</span>,<span class="at">col=</span>coral, <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb23-117"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-117" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span> (<span class="dv">12</span>,<span class="dv">500</span>, <span class="at">label =</span> <span class="st">&quot;Item Effects&quot;</span>,<span class="at">col=</span>deepgreen, <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb23-118"><a href="bayesian-anova-and-interpreting-complicated-models.html#cb23-118" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span> (<span class="dv">20</span>,<span class="dv">500</span>, <span class="at">label =</span> <span class="st">&quot;Subject Effects&quot;</span>,<span class="at">col=</span>teal, <span class="at">font =</span> <span class="dv">2</span>)</span></code></pre></div>
+
+</div>
+</div>
+<!-- Default Statcounter code for statsbook
+https://santiagobarreda.github.io/stats-class/ -->
+<script type="text/javascript">
+var sc_project=12454226; 
+var sc_invisible=1; 
+var sc_security="a1959418"; 
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript><div class="statcounter"><a title="Web Analytics"
+href="https://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="https://c.statcounter.com/12454226/0/a1959418/1/"
+alt="Web Analytics"></a></div></noscript>
+<!-- End of Statcounter Code -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="logistic-regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendix.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
