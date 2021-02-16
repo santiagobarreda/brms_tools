@@ -299,8 +299,8 @@ banovaplot = function (baov, ylim=NULL, xlim = NULL, horizontal = TRUE,
               cex=1.5, las=NA, cex.axis=1,grid=TRUE, robust = FALSE, yaxs="r",
               xaxs="r",line=TRUE,...){
 
-  cols = c("#EE4E62BF","#F8A61BBF","#0C8275BF","#27C0D8BF","#3A65AFBF",
-           "#822B32BF","#602D45BF","#FF6400BF","#F7B5C5BF","#CA87B9BF")
+  cols = c("#EE4E62BF","#0C8275BF","#F8A61BBF","#27C0D8BF","#CA87B9BF",
+           "#3A65AFBF","#822B32BF","#602D45BF","#FF6400BF","#F7B5C5BF")
   
   cols = cols[as.numeric (factor (baov$cluster))]
   
