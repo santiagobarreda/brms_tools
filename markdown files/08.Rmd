@@ -1,0 +1,757 @@
+
+# Bayesian ANOVA and interpreting complicated models
+
+At this point we have enough model components to build very large and complicated models. Traditionally, models with many predictors have had three general problems:
+
+  1) A model may return spurious values for the 'extra' predictors, leading to incorrect conclusions.
+  2) The model may not fit/converge, meaning you can't get the model coefficients. 
+  3) It can be difficult to interpret a model with *hundreds* of parameters.
+
+In this chapter we're going to cover a Bayesian approach to working with large models. We're going to discuss how working with multilevel Bayesian models can naturally help us with problems (1) and (2) above, and we're going to discuss an easy way to approach the third problem also. 
+
+## Data and research questions
+
+We're going to change course slightly and focus on entirely new data, called `kb07`. The data is from this paper: 
+
+  * [Kronmüller, E., & Barr, D. J. (2007). Perspective-free pragmatics: Broken precedents and the recovery-from-preemption hypothesis. Journal of Memory and Language, 56, 436--455.](https://github.com/dalejbarr/kronmueller-barr-2007)
+
+This chapter will focus on the comparison of analyses for the `kb07` data presented in this paper:
+
+  * [Bates, D., Kliegl, R., Vasishth, S., & Baayen, H. (2015). Parsimonious mixed models. arXiv preprint arXiv:1506.04967](https://arxiv.org/abs/1506.04967)
+
+The above paper discusses what kinds of random effects structures to include in our models. The paper focuses on use of the `lmer` function. I haven't discussed `lmer` very much, although it is extremely popular and extremely useful. Think of it like this: `lmer` is basically a 'special case' of `brm`. There is an equivalent `brm` model for every `lmer` model but not vice versa. However, generally speaking, `brm` and `lmer` should provide the same answers when fitting the same models. 
+
+One major difference between `lmer` and `brms` is in the way the `lmer` estimates parameter values. Rather than provide a set of samples, `lmer` returns *point estimates* representing the *best* values of parameters. This can cause a problem when parameters are bounded, or grow without bound. For example, standard deviation parameters (e.g., $\sigma$) cannot be 0 or negative, but sometimes they are very, very small. So, when `lmer` tries to find the 'best' value, it can get closer, and closer, and closer to zero, leading to problems involving calculations with very small values (e.g., as $x$ approaches $0$, $1/x$ approaches $\infty$). 
+
+In contrast, Bayesian models don't try to find the single 'best' value but instead collect a series of samples. As a result, the models are less likely to encounter problems when they try to estimate values that are very close to boundaries (they just 'bounce' of the boundary as they randomly walk!).
+
+A second difference between the `lmer` estimation method and that of our Bayesian multilevel models is that `lmer` doesn't use prior probabilities for all of its parameters. This can cause some problems when estimating a large number of parameters without enough data. In contrast, `brms` applies 'shrinkage' to all its parameters (at least in principle), which can help avoid some of the problems encountered by `lmer`. 
+
+Just to be clear, I hope to compare in this chapter is just two different estimation/fitting methods, rather than two different *philosophies*. The models fit by `lmer` and `brms` are much more similar than they are different. This chapter will simply serve to highlight how using Bayesian multilevel models can help us resolve some of the difficult issues that can present when we fit complicated models using approaches more similar to `lmer`, in addition to discussion how we can interpret models with large numbers of parameters.
+
+### The experiment
+
+We first load the `lme4` and `brms` packages, and the data. 
+
+```{r, message = FALSE, warning = FALSE}
+library (lme4)
+library (brms)
+options (contrasts = c("contr.sum","cont.sum"))
+
+url1 = "https://raw.githubusercontent.com/santiagobarreda"
+# source colors
+devtools::source_url (paste0 (url1, "/stats-class/master/data/colors.R"))
+# source functions
+devtools::source_url (paste0 (url1, "/stats-class/master/data/functions.R"))
+```
+
+The data comes from an experiment by Kronmüller and Barr (2007). The version of the data I'm using [is hosted here](https://github.com/dmbates/RePsychLing/tree/master/data). You need to download it, place it in your working directory, and then load it:
+
+```{r, eval = FALSE}
+load ("kb07_data.RDA")
+```
+
+```{r, include = FALSE}
+load ("../../data/kb07_data.RDA")
+```
+
+Kronmüller and Barr ran an experiment where subjects had to select one of several visual objects on a monitor, with a cursor. 
+
+Here's information about the experimental structure:
+
+  * The dependent variable is reaction times measures in milliseconds (`RTtrunc`). 
+  
+  * 56 subjects responded to 32 items (n = 1790, 2 missing observations).
+  
+The experiment involved several manipulations. These are our *predictors*, because they are the things the authors did in order to affect reaction times. The manipulations were:
+
+  * Speaker ($S$): Instructions presented by a new or old speaker (a factor with two levels: new and old).
+  
+  * Precedent ($P$): Instructions maintained or broke a precedent of reference (a factor with two levels: maintained and broke).
+  
+  * Cognitive Load ($C$): the task had to be performed without or with a cognitive load (a factor with two levels: with and without).
+  
+The experimental conditions were *crossed*. This means that all possible combinations were presented. Since we have 3 factors with two levels each we can call this a 2 x 2 x 2, crossed design. A 2x2x2 crossed design results in 8 (2x2x2=8) unique conditions (combination of factor levels). 
+
+Since we're using sum coding, remember that we can only calculate 1 parameter for every 2-level factor. A model that included all main effects and interactions for our three factors would include the following terms:
+
+  * Main effects: $Intercept, S, P, C$.
+  
+  * 2-way interactions: $SP, SC, PC$. 
+  
+  * 3-way interactions: $SPC$.   
+
+Our model requires 8 parameters to represent the 8 combinations of the three factors. By using these predictors ($Intercept, S, P, C, SP, SC, PC, SPC$) rather than modeling group means directly, our model is able to estimate the independent effect of each predictor (main effects), in addition to any interaction effects. 
+
+The model also includes three ‘random’ sources of variation: 
+
+  * $Subject$: the individual subject/listener in the experiment.
+  
+  * $Item$: the item presented to the subject on the trial.
+  
+  * $Error$: the random trial to trial variation (i.e., $\sigma_{error}$).
+
+## Deciding on a model
+
+The authors manipulated listening conditions for a task and observed variation in reaction times as a result of the manipulations. The main goal of this experiment is to see what does (and does *not*) affect reaction times for this task. 
+
+The most complicated possible answer to this question is that **everything** matters. You have unpredictable variation across all groups, meaning you need all eight fixed parameters (i.e., Int., S, P, C, SP, SC, PC, SPC) to distinguish the groups. Furthermore, the way that these main effects and interactions affect reaction times also varies *unpredictably* from subject to subject. And on top of all that, these effects also vary substantially and unpredictably from item to item. 
+
+The statement above represents what's sometimes called the *maximal* model, the model containing all possible random slopes and intercepts. The *maximal* model for this experiment is:
+
+```
+RTtrunc ~  1 + S + P + C + SP + SC + PC + SPC + 
+         ( 1 + S + P + C + SP + SC + PC + SPC | subj) + 
+         ( 1 + S + P + C + SP + SC + PC + SPC | item)
+```
+
+This model estimates speaker and item-dependent effects for all predictors, basically a *lot* of `effect:subject` and `effect:item` interactions. We could compare this to a 'minimal' model so small it fits on one line:
+
+```
+RTtrunc ~  1 + S + P + C + SP + SC + PC + SPC + ( 1 | subj) + ( 1 | item)
+```
+
+This model does not contain *any* random effects other than intercepts. This means this model acts as if we do not have any systematic/substantial variation in our predictors by item or subject (random or otherwise). We could take this even further and make the model like this:
+
+```
+RTtrunc ~  1 + S + P + C + ( 1 | subj) + ( 1 | item)
+```
+
+Which basically says we expect only main effects and no interactions. We may know instinctively that it's a bad idea to start with the last model above. If you assume almost nothing matters how can you find out if it does? But is the opposite necessary, it is necessary to always use the maximal model?
+
+There are at least two reasons why people may not use the maximal model as their final model:
+
+  1) It may not be practical. These models can take a long time to fit since they are complicated. For example, since the random effects are treated as draws from a multivariate normal distribution (as discussed in chapter 6), we need to calculate correlations between all dimensions. This means calculating 8 standard deviations and 28 (!) correlations for the random slopes for subject, and then doing the same for the random slopes for item. When many of these standard deviations or correlations are near zero and/or there is not very much data, `lmer` can have problems converging on a solution. 
+  
+  2) It may not be necessary. If some predictors really have no effect on our outcomes, and especially when these interfere with our ability to fit or interpret our models, it may not be necessary to leave them in the model. 
+  
+In Bates et al., the authors outline a way to select a final model based on an initial 'maximal' model. The authors propose an:
+
+> “iterative method that reduces model complexity to arrive at an optimal [linear mixed model] for this experiment. […] We qualify this procedure at the outset: We do not claim that this is the only way to proceed, but the strategy has consistently yielded satisfactory results for all data sets we have examined so far” p. 8. 
+
+Notice that the authors are clear that this is not the best or only approach, but simply *an* approach, albeit one that is based on sound reasoning and with a proven track record. I'm not going to discuss the process outlined by the authors in detail. However, the general strategy can be summarized as:
+
+  1) Fit the maximal model.
+   
+  2) Investigate which random effects likely don't matter. This is done based on which ones have very small variances and/or a small amount of independent variation between the dimensions of the random effects. 
+  
+  3) Fit a smaller model without the unimportant random effects. 
+
+In this chapter, I'm going to present a slightly different, but largely analogous approach to dealing with large models, as described in this paper:
+
+[Gelman, A. (2005). Analysis of variance—why it is more important than ever. Annals of statistics, 33(1), 1-53.](https://projecteuclid.org/euclid.aos/1112967698)
+
+And in Chapter 22 of this book:
+
+[Gelman, A., & Hill, J. (2006). Data analysis using regression and multilevel/hierarchical models. Cambridge university press.](http://www.stat.columbia.edu/~gelman/arm/)
+
+Basically, Gelman and colleagues suggest that we inspect the variance components (the $\sigma$ terms) of our multilevel models in order to figure out what does and doesn't matter. This is analogous to step 2 in the process outlined above. Once you have established which parameters are not a source of variance in your data, you can re-fit a smaller model, or you can sometimes just keep your maximal model. 
+
+## Fitting the models
+
+### The 'maximal' models
+
+First we fit the maximal `brm` model
+
+```{r, eval = FALSE}
+# Fit the model yourself, or
+# download pre-fit model from: 
+# github.com/santiagobarreda/stats-class/tree/master/models
+# and load after placing in working directory
+# maximal_brms = readRDS ('8_maximal_brms.RDS')
+
+set.seed (1)
+maximal_brms =
+  brm (RTtrunc ~ 1+S+P+C+SP+SC+PC+SPC + (1+S+P+C+SP+SC+PC+SPC|subj) +
+                                        (1+S+P+C+SP+SC+PC+SPC|item), 
+       data = kb07,  chains=4, cores=4, warmup=1000, iter = 3500, thin = 2,
+       prior = c(set_prior("student_t(3, 2000, 500)", class = "Intercept"),
+                 set_prior("student_t(3, 0, 500)", class = "b"),
+                 set_prior("student_t(3, 0, 500)", class = "sd"),
+                 set_prior("lkj_corr_cholesky (2)", class = "cor")))
+
+# save model
+#  saveRDS (maximal_brms, '8_maximal_brms.RDS')
+```
+```{r, include = FALSE}
+maximal_brms = readRDS ('../../models/8_maximal_brms.RDS')
+```
+
+And then the analogous, maximal `lmer` model. I got the parameter settings used for the model from [this webpage](https://github.com/dmbates/RePsychLing/blob/master/vignettes/KB.Rmd). 
+
+```{r, eval = FALSE}
+# Fit the model yourself, or
+# download pre-fit model from: 
+# github.com/santiagobarreda/stats-class/tree/master/models
+# and load after placing in working directory
+# maximal_lmer = readRDS ('8_maximal_lmer.RDS')
+
+maximal_lmer <- lmer(RTtrunc ~ 1+S+P+C+SP+SC+PC+SPC + 
+                                    (1+S+P+C+SP+SC+PC+SPC|subj) +
+                                    (1+S+P+C+SP+SC+PC+SPC|item), 
+                           kb07, REML=FALSE, start=thcvg$kb07$m0,
+                           control=lmerControl(optimizer="Nelder_Mead",
+                                               optCtrl=list(maxfun=50000L),
+                                               check.conv.grad="ignore",
+                                               check.conv.hess="ignore"),
+                           verbose=TRUE)
+# save model
+#  saveRDS (maximal_lmer, '8_maximal_lmer.RDS')
+```
+```{r, include = FALSE}
+maximal_lmer = readRDS ('../../models/8_maximal_lmer.RDS')
+```
+
+### Fitting the 'final' models in lmer and brms
+
+We can also fit the 'final' model as determined by Bates et al. using the selection process proposed by the authors. This model includes only random by-subject intercepts, and random intercepts and $P$ effects for item. First, we fit the final model in `brms`:
+
+```{r, eval = FALSE}
+set.seed (1)
+final_brms =
+  brm (RTtrunc ~ 1+S+P+C+SP+SC+PC+SPC + (1|subj) + (1+P|item), 
+       data = kb07,  chains=4, cores=4, warmup=1000, iter = 3500, thin = 2,
+       prior = c(set_prior("student_t(3, 2000, 500)", class = "Intercept"),
+                 set_prior("student_t(3, 0, 500)", class = "b"),
+                 set_prior("student_t(3, 0, 500)", class = "sd"),
+                 set_prior("lkj_corr_cholesky (2)", class = "cor")))
+
+# save model
+#saveRDS (final_brms, 'final_brms.RDS')
+```
+```{r, include = FALSE}
+final_brms = readRDS ('../../models/8_final_brms.RDS')
+```
+
+And then fit the final model in `lmer`:
+
+```{r, eval = FALSE}
+final_lmer <- lmer(RTtrunc ~ 1+S+P+C+SP+SC+PC+SPC +
+                     (1|subj) + (1+P|item), kb07, REML=FALSE, 
+                   control=lmerControl(optimizer="Nelder_Mead",
+                                       optCtrl=list(maxfun=50000L),
+                                       check.conv.grad="ignore",
+                                       check.conv.hess="ignore"),
+                   verbose=TRUE)
+
+# save model
+# saveRDS (final_lmer, 'final_lmer.RDS')
+```
+```{r, include = FALSE}
+final_lmer = readRDS ('../../models/8_final_lmer.RDS')
+```
+
+## Comparing the maximal and final models
+
+```{r, cache = TRUE, include=FALSE}
+
+## In this block of code I get all the information required to make the
+## upcoming plots out of the brms and lmer models
+##############################################################################
+fe_f = fixef (final_brms)
+fe_m = fixef (maximal_brms)
+sumf = summary (final_lmer)
+summ = summary (maximal_lmer)
+
+subjsdm = attr(VarCorr(maximal_lmer)[[1]],'stddev')
+itemsdm = attr(VarCorr(maximal_lmer)[[2]],'stddev')
+subjsdf = attr(VarCorr(final_lmer)[[1]],'stddev')
+itemsdf = attr(VarCorr(final_lmer)[[2]],'stddev')
+
+vars_m = rbind (VarCorr(maximal_brms)$residual$sd, 
+              VarCorr(maximal_brms)$item$sd[8:1,],
+              VarCorr(maximal_brms)$subj$sd[8:1,])
+rownames(vars_m)[1] = "sigma"
+
+vars_final = rbind (VarCorr(final_brms)$residual$sd, 
+              VarCorr(final_brms)$item$sd[2:1,],
+              VarCorr(final_brms)$subj$sd[1,])
+
+lmer_vars_m = c(sigma(maximal_lmer), itemsdm[8:1], subjsdm[8:1])
+lmer_vars_f = c(sigma(final_lmer), itemsdf[2:1], subjsdf[1])
+
+corrs_mi = VarCorr(maximal_brms)$item$cor
+corrs_mi = rbind (corrs_mi[7:1,,8], corrs_mi[6:1,,7], corrs_mi[5:1,,6],
+               corrs_mi[4:1,,5], corrs_mi[3:1,,4], corrs_mi[2:1,,3], 
+               corrs_mi[1,,2])
+corrs_fi = VarCorr(final_brms)$item$cor[2,,1]
+
+itemrhom = attr(VarCorr(maximal_lmer)[[2]],'correlation')
+itemrhof = attr(VarCorr(final_lmer)[[2]],'correlation')
+
+```
+
+Bates et al. compare the maximal and final models fit in `lmer` with the same models fit using STAN (the language `brms` uses to fit its models). We're going to make the same comparisons that Bates et al. make, and recreate some of the figures in their paper (with some modifications). Instead of using STAN directly, we're going to fit models in `brms` and compare these to the equivalent models fit in `lmer`.
+
+In Figure \@ref(fig:F8-1) you can see a recreation of Figure 1 from Bates et al., which compares fixed-effect parameter estimates and intervals for the different models. Clearly, the four models provide essentially the same output for these predictors. That's reassuring! If results changed dramatically as a result of our model selection, we would need to think very carefully about the different models we're considering and what might have caused the changes.
+
+```{r F8-1, fig.width = 8, fig.height = 3.5, fig.cap="Comparison of means and confidence/credible intervals for 'fixed-effects' parameter estimates by the four models being considered.", echo = FALSE}
+
+################################################################################
+### Figure 8.1
+################################################################################
+
+par (mfrow = c(1,1), mar = c(4,4,1,1))
+
+shift = -.3
+brmplot (xs = (1:7)+shift, fe_f[8:2,], horizontal = TRUE, col = deepgreen,
+         xlim = c(.5,7.5), xlab = 'Predictors', ylab = 'RT (msec)',labels="")
+abline (h = 0, lty=3)
+
+shift = -.15
+points ((7:1)+shift, sumf[[10]][2:8,1], col=coral,lwd=2,cex=1.5,pch=0)
+arrows ((7:1)+shift, sumf[[10]][2:8,1]+sumf[[10]][2:8,2]*2,(7:1)+shift, 
+        sumf[[10]][2:8,1]-sumf[[10]][2:8,2]*2, lwd=2,col=coral,length=0)
+
+shift = +.0
+brmplot (xs = (1:7)+shift, fe_m[8:2,], horizontal=TRUE, add=TRUE, 
+         col=skyblue)
+abline (h = 0, lty=1)
+
+shift = +.15
+points ((7:1)+shift, summ[[10]][2:8,1], pch=0, col=teal,lwd=2,cex=1.5)
+arrows ((7:1)+shift, summ[[10]][2:8,1]+summ[[10]][2:8,2]*2, (7:1)+shift,pch=0, 
+        summ[[10]][2:8,1]-summ[[10]][2:8,2]*2, lwd=2,col=teal,length=0)
+
+legend (1, -150, bty='n', pch=c(16,0,16,0), pt.cex=1.5,
+        col=c(deepgreen,coral,skyblue,teal),lwd=2, 
+        legend = c("Maximal brm","Maximal lmer","Final brm","Final lmer"))
+```
+
+In Figure \@ref(fig:F8-2), I recreate Figure 2 from Bates et al., which compares the standard deviations estimates for the random effects included in the different models. It's worth stopping to think about what these standard deviations are. Recall that random effects like subject-specific random intercepts are modeled as coming from a normal distribution with a mean of 0 and a standard deviation based on the data, like this:
+
+$$
+\alpha_{[subj]} \sim \mathrm{Normal}(0, \sigma_{\alpha_{[subj]}})
+(\#eq:801)
+$$
+
+So, the $\sigma_{\alpha_{[subj]}}$ reflects the variation in the subject-specific intercepts in the data. Similarly, we draw the subject-specific effects for $P$ (define) from a normal distribution with a standard deviation of $\sigma_{\alpha_{[subj]}}$. 
+
+$$
+\alpha_{P[subj]} \sim \mathrm{Normal}(0, \sigma_{\alpha_{P[subj]}})
+(\#eq:802)
+$$
+
+These standard deviations directly reflect the amount of variation in these parameters in our model. Parameters that vary a lot reflect large effects on our data. These will be represented by large standard deviations. In contrast, parameters that do not vary much will be represented by small standard deviations do not have a large effect on our data (since they do not vary much).
+
+So, the individual values of $\sigma_{\alpha_{[subj]}}$ and $\sigma_{\alpha_{P[subj]}}$ in our model will tell us whether the subject intercepts and the subject-specific effect for $P$ are important sources of variation in our model. We can take one look at Figure \@ref(fig:F8-2) and tell that there are really four dominant sources of variance in our random effects: the item-specific intercepts and effects for $P$, the subject-specific intercepts, and the random error ('sigma'). 
+
+```{r F8-2, fig.width = 8, fig.height = 4, fig.cap="Comparison of random effects standard deviation estimates for the frou models being considered.", echo = FALSE, cache = TRUE}
+
+################################################################################
+### Figure 8.2
+################################################################################
+
+par (mfrow = c(1,1), mar = c(7,4,1,1))
+
+labels = paste0 (c("",rep("Item:",8),rep("Subj:",8)), rownames(vars_m))
+
+brmplot (xs = (1:17), vars_m, horizontal = TRUE, col = deepgreen, xlab = '', 
+         yaxs='i', ylab='RT (msec)',ylim = c(0,750),las=2, labels = labels)
+grid()
+points ((1:17), lmer_vars_m, pch=0, col=coral,lwd=3,cex=2)
+points (c(1,7,9,17)+.3, lmer_vars_f, pch=0, col=teal,lwd=3,cex=2)
+
+brmplot (xs = c(1,7,9,17)+.3, vars_final, horizontal = TRUE, col = skyblue, 
+         add = TRUE)
+abline (h=0)
+legend (11, 600, bty='n', pch=c(16,0,16,0), pt.cex=1.5,
+        col=c(deepgreen,coral,skyblue,teal),pt.lwd=2, 
+        legend = c("Maximal brm","Maximal lmer","Final brm","Final lmer"))
+```
+
+As you can see, the models all provide very similar standard deviation estimates. Note that the `brm` models provide credible intervals for all parameters, while the `lmer` models only provide point estimates for these parameters. 
+
+The lack of intervals on parameter estimates makes it difficult to 'rule out' parameters since they will *never* equal exactly zero. So, we will always have non-zero numbers for these parameters, and 'secretly' some of these are zero or nearly zero. 
+
+We can use our credible intervals to figure out which variance components are unlikely to matter: Variance components whose credible intervals are concentrated near zero. There are several such components in the Figure below. In the *best case*, many of these components reflect a tiny amount of systematic variation in our outcomes. 
+
+In Figure \@ref(fig:F8-3) we compare the correlations for the subject random effects, recreating Figure 3 from Bates et al. These are the correlations between the dimensions of the 8-dimensional variable representing the subject random effects in the maximal model. As I noted earlier, there are 28 of these correlations. Note that the plot below only contains information from the maximal model because the final models included only a single subject random effect (subject random intercepts), and so did not involve correlations. 
+
+As with the standard deviations, `brms` gives us intervals for these parameters while `lmer` returns point estimates. We see that the `lmer` estimates vary substantially around 0 while the `brms` estimates are all close to zero, and have intervals that include zero. Here we see two advantages of our Bayesian model: 
+
+  1) Credible intervals for all parameters let us accept values of zero as likely values for the correlations (this can't be done with point estimates).
+  
+  2) The prior on the covariance matrix pulls weakly-supported correlations to zero, thereby protecting against spurious results. 
+  
+Thus, we can actually use the results below to conclude that the most likely value for these correlations is zero or something close to zero. 
+  
+```{r F8-3, fig.width = 8, fig.height = 3.5, fig.cap="Compraison of subject random effect correlation estimates for brm (green) and lmer (red).", echo = FALSE}
+
+################################################################################
+### Figure 8.3
+################################################################################
+
+subjrhom = attr(VarCorr(maximal_lmer)[[1]],'correlation')
+
+par (mfrow = c(1,1), mar = c(5,5.5,3,1))
+
+corsuse = c(2:8,(3:8)+8,(4:8)+16,(5:8)+24,(6:8)+32,(7:8)+40,(8)+48)
+blabels = c("SPC","PC","SC","SP","C","P","S","Int") 
+labs = expand.grid(blabels,blabels)[corsuse,]
+labs = paste(labs[,1],labs[,2],sep=" : ")
+
+corrs_ms = VarCorr(maximal_brms)$subj$cor
+corrs_ms = rbind (corrs_ms[7:1,,8], corrs_ms[6:1,,7], corrs_ms[5:1,,6],
+               corrs_ms[4:1,,5], corrs_ms[3:1,,4], corrs_ms[2:1,,3], 
+               corrs_ms[1,,2])
+
+brmplot (corrs_ms, ylim = c(-1,1), main = "Subject Correlation Estimates",
+         yaxs="i", cex.main=1, las=2, ylab = "Correlation", labels = labs,
+         col=deepgreen)
+abline (h = 0, lty = 3)
+points (28:1, subjrhom[corsuse], pch=0, col=coral,lwd=2,cex=1.5)
+
+```
+
+Figure \@ref(fig:F8-4) shows the correlations between the dimensions of the item random effects (a recreation of the other half of Figure 3 in Bates et al.). Recall that that final model included by-item intercepts and by-item effects for $P$, and so involved a single correlation parameter (Int:P in the figure below). 
+
+Notice that the `lmer` estimates for the maximal model all vary around zero. There is nothing qualitatively different about the correlation that is found to actually be 'real' as opposed to the other ones. In fact, the value of the Int:P correlation is about the same magnitude across both `lmer` models.  
+
+The fact that the correlation mainted in the final model looks about the same as the ones that are omitted from the final model is a problem for us, when we rely on `lmer`. In the absence of intervals, it is difficult to judge parameters based on magnitudes alone. The method outlined in Bates et al. is a proposed solution to this problem. 
+
+However, note that our Bayesian models *do* let us distinguish the correlations that matter from the ones that don't. Even in the maximal model, the correlation that is included in the final model *is* qualitatively different from the others: its credible interval is substantially narrower and does not include 0. Furthermore, the correlations that do *not* represent reliable variation in the data are pulled toward zero, allowing us to establish that these are likely not important to our understanding of the data. 
+
+So, in effect, our maximal Bayesian model give us the same information as the final model, without having to ever refit the model. It allows us to rule out the same variance components, and provides the same parameter estimates and intervals for the fixed effects. 
+
+```{r F8-4, fig.width = 8, fig.height = 4, fig.cap="Compraison of item random effect correlation estimates for the maximal brm (green) and lmer (red) models, and the final brm (blue).", cache = TRUE, echo = FALSE}
+
+################################################################################
+### Figure 8.4
+################################################################################
+
+brmplot (corrs_mi, ylim = c(-1,1), main = "Subject Correlation Estimates",
+         yaxs="i", las=2, labels = labs, col = deepgreen)
+abline (h = 0, lty = 3)
+points (28:1, itemrhom[corsuse], pch=0, col=coral,lwd=2,cex=1.5)
+
+points (27+.4,corrs_fi[1], cex = 1.5, col = skyblue, pch=16)
+segments (27+.4, corrs_fi[3], 27+.4, corrs_fi[4], lwd=2, col=skyblue)
+points (27+.4, itemrhof[2], col=teal,lwd=3, pch = 0, cex = 1.5)
+```
+
+Bates et al. conclude that:
+
+> “The Bayesian analysis shows two important things. First, the estimates of the fixed effects in the lme4 model and the Bayesian model are nearly identical. This shows that the ‘maximal’ lmm fit using lme4 is essentially equivalent to fitting a Bayesian lmm with regularizing priors of the sort described above.” (p. 13) 
+
+and that:
+
+> “Second, the relevant variance component parameters that were identified above using principal components analysis (pca) and likelihood ratio tests (lrts) are exactly the parameters that clearly dominate in the Bayesian analysis.” (p. 13) 
+
+As a result of this general equivalence, fitting a maximal model using `brms` and focusing on the relative magnitudes of individual variance components can be a way to do model selection without necessarily 'selecting' your model. 
+
+
+## Bayesian Analysis of Variance
+
+Here's what Gelman and Hill have to say about the analysis of variance using multilevel models:
+
+> "When moving to multilevel modeling, the key idea we want to take from the analysis of variance is the estimation of the importance of different batches of predictors (“components of variation” in ANOVA terminology). As usual, we focus on estimation rather than testing: instead of testing the null hypothesis that a variance component is zero, we estimate the standard deviation of the corresponding batch of coefficients. If this standard deviation is estimated to be small, then the source of variation is minor—we do not worry about whether it is exactly zero. In the social science and public health examples that we focus on, it can be a useful research goal to identify important sources of variation, but it is rare that anything is truly zero." (p. 490)
+
+> "the standard deviation of a set of coefficients gives a sense of their predictive importance in the model. An analysis-of-variance plot, which shows the relative scale of different variance components, can be a useful tool in understanding a model." (p. 492)
+
+Gelman and Hill distinguish between two types of standard deviations for a random effect with $J$ levels (p. 459):
+
+> "• The superpopulation standard deviation [$\sigma_{\alpha_{[subj]}}$], which represents the variation among the modeled probability distribution from which the [$\alpha_{[subj]}$] were drawn, is relevant for determining the uncertainty about the value of a new group not in the original set of J." 
+
+> "• The finite-population standard deviation [$\mathrm{sd}(\alpha_{[subj]})$] of the particular J values of [$\alpha_{[subj]}$] describes variation within the existing data." 
+
+The superpopulation standard deviation estimates correspond to $\sigma$ terms actually estimated by our model. The finite-population standard deviation terms are estimated by us using our model parameter estimates. 
+
+The authors note that (p. 464):
+
+> "The superpopulation [σ] and finite-population [s] standard deviations are not two different statistical “estimators” of a common quantity; rather, they are two different quantities that can both be estimated from the multilevel model. We can get a point estimate and uncertainty intervals for both. In general, the point estimates of σ and s will be similar to each other, but s will have less uncertainty than σ. That is, the variation is more precisely estimated for the finite population than the superpopulation. This makes sense because we have more information about the units we observe than the full population from which they are sampled."
+
+Gelman and colleagues suggest the following general process:
+
+  1) Fit the model with the structure you think it required to capture the variation in the data. 
+  
+  2) Calculate the superpopulation and finite-population standard deviations for predictors or groups of predictors. 
+  
+  3) Make an ANOVA plot comparing the magnitudes of different predictors, and of the uncertainty in the estimates.
+  
+  4) Us the ANOVA plot to make inferences about the relative importance of your predictors, and to guide your analysis. 
+  
+### Getting the superpopulation standard deviations from our models
+
+The superpopulation standard deviation is our model's estimate of the standard deviation of the population from which our random effects are drawn. 
+
+We can extract the superpopulation standard deviations for `subj` and `item` using the `VarCorr` function and the code below. 
+
+```{r, cache = TRUE, collapse = TRUE}
+# subject random effect standard deviations
+subj_ranefs_super = VarCorr(maximal_brms)[["subj"]][["sd"]]
+
+# item random effect standard deviations
+item_ranefs_super = VarCorr(maximal_brms)[["item"]][["sd"]]
+```
+
+We can use the same `VarCorr` function to get the superpopulation estimate of `sigma`, the residual error in our model. 
+
+```{r, cache = TRUE, collapse = TRUE}
+# superpopulation residual estimate
+sigma_super = VarCorr(maximal_brms)$residual$sd
+
+# give it a name because its unnamed by default
+rownames(sigma_super)="sigma"
+```
+
+We can then take these three matrices representing our standard deviations estimates and stick them together:
+
+```{r, cache = TRUE, collapse = TRUE}
+# all superpopulation effects together
+superpopulation_effects = rbind (subj_ranefs_super,
+                                 item_ranefs_super,
+                                 sigma_super)
+superpopulation_effects
+```
+
+And plot this in what Gelman and colleagues call a Bayesian Anova plot. This allows us to quickly asses the large sources of variance in the data, and allows us to compare this to the residual error in our model.
+
+```{r F8-5, fig.width = 8, fig.height = 3.5, fig.cap="Estimates of superpopulation standard deviations for different random effects in our maximal KB07 model.", cache = TRUE, echo = FALSE}
+
+################################################################################
+### Figure 8.5
+################################################################################
+
+rownames(sigma_super)="sigma"
+
+superpopulation_effects = rbind (item_ranefs_super,
+                                 subj_ranefs_super,
+                                 sigma_super)
+
+par (mfrow = c(1,1), mar = c(5,4,3,1))
+brmplot (superpopulation_effects, yaxs='i', ylim = c(0,750),
+         main="Fixed Effects", cex.main=1.2,las=2, 
+         col = c(rep(skyblue,8),rep(lavender,8),darkorange))
+
+text (5,500, label = "Item Effects",col=skyblue, font = 2)
+text (12,500, label = "Subject Effects",col=lavender, font = 2)
+```
+
+### Getting the finite-population standard deviations from our models
+
+Gelman actually suggests using the finite-sample standard deviation estimates, and comparing the magnitude of these across our 'fixed' effects, 'random' effects, and residual error. When we focus on the finite-population standard deviation estimates we can compare the relative magnitudes of difference sources of variance on a more or less equal playing field. 
+
+To calculate the standard deviations of different groups of parameters you need to calculate the standard deviation for each bundle, *for each sample*. This means you end up with 5000 (or however many) samples of the standard deviation based on each set of posterior samples. The code below shows how to calculate the finite-population standard deviations for item based on the random effects parameter estimates. 
+
+```{r, cache = TRUE, collapse = TRUE}
+# extract matrix representing all random effects from our model
+item_ranefs_finite = ranef(maximal_brms, summary = FALSE)[["item"]]
+
+# the output is a 3d matrix. dimensions are:
+   # 1) sample number (1-5000)
+   # 2) item number (1-32)
+   # 3) random effect number (1-8)
+str (item_ranefs_finite)
+
+# we need to find the standard deviation for the item random effects for each 
+# random effect, for each set of samples. The function below calculates the
+# standard deviation along the 1st and 3rd dimensions of our 3d matrix, 
+# collapsing the second (item) dimension
+item_ranefs_finite = apply (item_ranefs_finite[,,],c(1,3),sd)
+
+# the output is a 2d matrix. dimensions are:
+   # 1) sample number (1-5000)
+   # 2) random effect number (1-8)
+str (item_ranefs_finite)
+
+# we summarize the output into a matrix where each row represents a single
+# finite-population random effect estimate
+item_ranefs_finite = posterior_summary (item_ranefs_finite)
+```
+
+For the fixed effects, we use the absolute value of the parameters because they are each a single 'degree of freedom' (i.e. a single parameter). The code below shows how to get the fixed effects standard deviation estimates. 
+
+```{r, cache = TRUE, collapse = TRUE}
+# get individual parameter samples
+fixefs_finite = fixef(maximal_brms, summary = FALSE)
+
+# summarize absolute value
+fixefs_finite = posterior_summary (abs (fixefs_finite))
+```
+
+Finally, we can find the prediction error (the residuals) with the `residuals` function, and then calculate the standard deviation of the residuals for each set of samples.
+
+```{r, cache = TRUE, collapse = TRUE}
+# get residuals
+sigma_finite = residuals (maximal_brms, summary = FALSE)
+
+# find standard deviation for each set of samples
+sigma_finite = apply (sigma_finite, 1, sd)
+
+# summarize
+sigma_finite = posterior_summary (sigma_finite)
+
+# name row, because it has no name by default
+row.names(sigma_finite) = 'sigma'
+```
+
+### Using the `banova` function
+
+I wrote a simple function that does the above steps for you. You can choose whether you want the finite-population or superpopulation standard deviations (though it can only ever use the finite-population for the fixed effects). The output is a single dataframe that contains a summary of all fixed and random effects, and sigma if the model contains normally-distributed error.  
+
+```{r, cache = TRUE, collapse = TRUE}
+maximal_banova = banova (maximal_brms)
+
+# inspect output
+maximal_banova
+```
+
+The output of the `banova` function can be used to make a Bayesian ANOVA plot of our model. If we were to do this right after fitting the model, we would have a pretty good idea of what matters and what doesn't in our data. 
+
+```{r F8-6, fig.width = 8, fig.height = 4, fig.cap="Standard deviation estimates for each component of our KB07 model. Lines indicate 95% credible intervals.", cache = TRUE, echo = FALSE}
+
+################################################################################
+### Figure 8.6
+################################################################################
+
+par (mfrow = c(1,1), mar = c(7,4.2,1,1))
+banovaplot (maximal_banova[-2,], yaxs = 'i', ylim=c(0,880), 
+             main="Fixed Effects", las=2, ylab = "Reaction Time (ms)")
+
+text (5,500, label = "Fixed Effects",col=coral, font = 2)
+text (12,500, label = "Item Effects",col=deepgreen, font = 2)
+text (20,500, label = "Subject Effects",col=teal, font = 2)
+```
+
+The process Gelman proposes is potentially more complicated that what I'm doing here. For example, consider the random effects for a factor like vowel category. Imagine there are four categories, so four levels, for each of 50 listeners. The process I've described treats each of the 50 random effects for each vowel separately (i.e., 4 groups of 50 vowel random effects). 
+
+The process described by Gelman would treat the 200 vowel random effects (across the four vowels) as one 'batch' of coefficients. This single batch would reflect all of the $Listener \colon Vowel$ interaction. The way we are approaching instead separates each $Listener \colon Vowel$ 'simple effect' and treats it separately. 
+
+The main reason to do it the way way I've shown above is because it can be done easily for all models, and you get roughly equivalent information from the analysis. If you do want to investigate the variation associated with entire clusters of multiple predictors at a time, please see the Gelman articles linked to above, as there are a few important details that are not discussed here (e.g., the need to 'recover' missing parameters, the need to calculate 'degrees of freedom', etc.).
+
+### Applying the `banova` function to our gender perception model
+  
+```{r, include = FALSE}
+logistic_g0 = readRDS ('../../models/7_logistic_g0.RDS')
+```
+
+We can load the model we fit in Chapter 7 (`logistic_g0`) and apply the `banova` function to it. 
+
+```{r, cache = TRUE, collapse = TRUE}
+logistic_banova = banova (logistic_g0)
+
+# inspect output
+logistic_banova
+```
+
+We can then take the output and plot it using another simple function I wrote called `banovaplot`, which will plot the output of the `banova` function. This plot shows us which fixed effects have the largest magnitudes, and also lets us compare the magnitude of fixed effects to their between-subject variation. For example, notice that although the effect for $pfemale$ is relatively large, there is almost no between-subject variation in this parameter. In contrast, between-subject variation in intercepts is larger than the overall model intercept.
+
+```{r g8-7, fig.width = 8, fig.height = 3.5, fig.cap="Banova plot of our logistic model from Chapter 7.", cache = TRUE}
+par (mfrow = c(1,1), mar = c(5.2,9.2,1,1))
+banovaplot (logistic_banova, xlim=c(0,5), xaxs='i', horizontal = FALSE,
+             xlab = "Logits")
+```
+
+## Applying a Bayesian ANOVA to a more-complicated model
+
+### Description of the model
+
+We're going to fit our most complicated model yet. The model includes the following variables:
+
+  * `padult`: a dichotomous variable, 1=adult response, 0=child response. 
+  
+  * `g0_s`: a continuous predictor, scaled log-f0.
+  
+  * `gbar_s`: a continuous predictor, scaled log-mean formant frequency (a measure of vocal-tract length).
+  
+  * `pfemale`: a factor indicating whether subjects indicated hearing a female speaker, `pfemale1=female`, `-pfemale1=female`.
+  
+  * `vowel`: a factor with two levels, `vowel1=a`, `-vowel1=i`.
+  
+  * `subj`: a factor indicating subject/listener (n=10).
+  
+  * `speaker`: a factor indicating speaker (n=139).
+  
+The model formula looks like this:
+
+```
+padult ~   ( g0_s + gbar_s) * pfemale + vowel + 
+          (( g0_s + gbar_s) * pfemale + vowel | subj ) + 
+                                          ( 1 | speaker )
+```       
+
+It's broken up into three lines only so that it will fit on the page. I've aligned the line to make the structure of the three components (main effects, subject effects, speaker effects) clearer. The model says: 
+
+> "Model the perception of adultness using the continuous predictors g0 and gbar. These predictors interact with pfemale. This tells us that in addition to intercept shifts for the perception of femaleness, there can also be differences in the slopes of our continuous predictors. We also include vowel category as a predictor. Since this does *not* interact with our continuous predictors, it represents only interecept shifts. Our entire model is replicated inside the `subj` cluster, meaning we are fitting a 'maximal' model with respect to subjects. We are only including random intercepts for speakers. 
+
+Notice that we are not using a really *maximal* model since we are not including random effects for all speakers. This is because I don't think our data supports the inclusion of random slopes for speaker! With only two different tokens per speaker we don't have much information about f0 variation *within* speaker. We also have no repetitions of the vowel for each person, so our speaker-specific measurements of vowel effects would be imprecise. Finally, many voices were likely not perceived as both male or female often enough to really test for the effect of perception of perceived femaleness, *within-speaker*. 
+
+### Fitting the model
+
+We load and set up the data below:
+
+```{r, message = FALSE, warning = FALSE}
+
+# source data
+url1 = "https://raw.githubusercontent.com/santiagobarreda"
+url2 = "/stats-class/master/data/h95_experiment_data.csv"
+h95 = read.csv (url(paste0 (url1, url2)))
+
+# padult = 1 for adult responses, 0 for child responses
+h95$padult = as.numeric (h95$pgroup %in% c('w','m'))
+
+# factor with f for female responses and m for male responses
+h95$pfemale = ""
+h95$pfemale[h95$pgroup %in% c('w','g')] = "f"
+h95$pfemale[h95$pgroup %in% c('m','b')] = "m"
+h95$pfemale = factor(h95$pfemale)
+
+# standardize log f0
+h95$gbar_s = (h95$g0-mean(h95$g0)) / sd(h95$g0)
+
+# standardize log geometric mean formant frequency
+h95$gbar_s = (h95$gbar-mean(h95$gbar)) / sd(h95$gbar)
+```
+
+And then fit the model:
+
+```{r, eval = FALSE}
+
+set.seed (1)
+logistic_g0_gbar =
+  brm (padult ~  (g0_s+gbar_s) * pfemale + vowel + 
+                ((g0_s+gbar_s) * pfemale + vowel | subj) + (1|speaker), 
+       data=h95, chains=4, cores=4, family="bernoulli", 
+       warmup=1000, iter = 3000, thin = 2, control = list(adapt_delta = 0.95),  
+       prior = c(set_prior("student_t(3, 0, 3)", class = "Intercept"),
+                 set_prior("student_t(3, 0, 3)", class = "b"),
+                 set_prior("student_t(3, 0, 3)", class = "sd"),
+                 set_prior("lkj_corr_cholesky (2)", class = "cor")))
+
+# save model
+# saveRDS (logistic_g0_gbar, '8_logistic_g0_gbar.RDS')
+```
+```{r, include = FALSE}
+logistic_g0_gbar = readRDS ('../../models/8_logistic_g0_gbar.RDS')
+```
+
+### Interpreting the model
+
+After inspecting the model to check for convergence and an adequate ESS, we can make a Bayesian ANOVA for the model, and plot the results. 
+
+```{r, cache = TRUE, collapse = TRUE}
+logistic_g0_gbar_banova = banova (logistic_g0_gbar)
+```
+
+```{r g8-8, fig.width = 8, fig.height = 4, fig.cap="Banova plot for a multivariate regression model predicting the perception of adultness from f0 and formant frequencies.", cache = TRUE, echo = FALSE}
+par (mfrow = c(1,1), mar = c(4.2,9.2,1,1))
+banovaplot (logistic_g0_gbar_banova, xlim=c(0,7), xaxs='i', horizontal = FALSE,
+             xlab = "Logits")
+```
+
+We're going to leave the interpretation of this model for the next chapter. However, the ANOVA plot lets us easily consider the important sources of variation in our data, and can guide our interpretation of the model. If predictors are only small sources of variance, and especially if these are accompanied by credible intervals that are wide relative to their small values, these may be very small and meaningless values (even if not equal to exactly zero). As a result, it makes sense to begin interpreting a model based on the largest sources of variance.
+
+## Plot Code
+
+```{r get-labels, echo = FALSE}
+labs = knitr::all_labels()
+labs = labs[grep ("F8", labs)]
+```
+
+```{r all-code, ref.label=labs, eval=FALSE}
+```
+
+
+
+

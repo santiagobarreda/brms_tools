@@ -5,7 +5,7 @@ output:
 ---
 # Random slopes 
 
-To this point we've been fitting realistic, but relatively simple models. In this chapter we're going to build models that are more similar to the sorts that appear in published articles (i.e. they're more complicated). Fortunately, we've already discussed all of the component parts that make up our models. We'll see that more complicated models are just made up of many smaller components, all working together. 
+To this point we've been fitting realistic, but relatively simple models. In this chapter we're going to build models that are more similar to the sorts that appear in published articles (i.e. more complicated). Fortunately, we've already discussed all of the component parts that make up our models. We'll see that more complicated models are just made up of many smaller components, all working together. 
 
 ## Data and research questions 
 
@@ -929,7 +929,7 @@ abline (h=0,lty=3)
 
 I'm also going to fit a model that was described but not fit above. Below we see a model predicting perceived height as a function of centered log F1 and f0. It also included an effect for adultness and an adultness by F1 interaction. The model includes random intercepts for subject and by subject slopes for all predictors. A random by-speaker intercept was also included. 
 
-```{r, cache = TRUE, warning = FALSE}
+```{r, cache = TRUE, warning = FALSE, message = FALSE}
 # make variable that indicates if the talker is an adult
 h95$adult = ""
 h95$adult[h95$group %in% c('w','m')] = "adult"
@@ -965,10 +965,18 @@ labs = labs[grep ("F6", labs)]
 
 
 
+brmplot (posterior_samples(priors, "r"))
 
 
 
-
+priors =
+  brm (pheight ~ g0_c + (g0_c|subj) + (1|speaker), data=h95, chains=1, cores=1,  
+       warmup=1000, iter = 2000, thin = 4, control = list(adapt_delta = 0.95), 
+       sample_prior ="only",
+       prior = c(set_prior("student_t(3, 60, 12)", class = "Intercept"),
+                 set_prior("student_t(3, 0, 50)", class = "b"),
+                 set_prior("student_t(3, 0, 12)", class = "sd"),
+                 set_prior("lkj_corr_cholesky (2)", class = "cor")))
 
 
 
