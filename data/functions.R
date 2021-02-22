@@ -40,7 +40,7 @@ brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE,
     
     if (is.null(ylim)) ylim = range (1:n)
     if (!add){
-      plot (0,type='n', ylim = ylim,xlim=xlim, ylab=ylab,yaxt='n',xlab = ylab,
+      plot (0,type='n', ylim = ylim,xlim=xlim, ylab=ylab,yaxt='n',xlab = xlab,
             cex.axis=cex.axis,yaxs=yaxs,xaxs=xaxs)
       if (grid) grid()
       if (line) abline(v=0)
