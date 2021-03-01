@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-02-16" />
+<meta name="date" content="2021-03-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,13 @@
 
 
 
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -347,6 +354,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.6.3" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#interpreting-the-model-7"><i class="fa fa-check"></i><b>8.6.3</b> Interpreting the model</a></li>
 </ul></li>
 <li class="chapter" data-level="8.7" data-path="bayesian-anova-and-interpreting-complicated-models.html"><a href="bayesian-anova-and-interpreting-complicated-models.html#plot-code-7"><i class="fa fa-check"></i><b>8.7</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="multivariate-models-predictive-accuracy-and-handling-outliers.html"><a href="multivariate-models-predictive-accuracy-and-handling-outliers.html"><i class="fa fa-check"></i><b>9</b> Multivariate models, predictive accuracy, and handling outliers</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="multivariate-models-predictive-accuracy-and-handling-outliers.html"><a href="multivariate-models-predictive-accuracy-and-handling-outliers.html#data-and-research-questions-8"><i class="fa fa-check"></i><b>9.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="9.2" data-path="multivariate-models-predictive-accuracy-and-handling-outliers.html"><a href="multivariate-models-predictive-accuracy-and-handling-outliers.html#using-multiple-continuous-predictors"><i class="fa fa-check"></i><b>9.2</b> Using multiple continuous predictors</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="multivariate-models-predictive-accuracy-and-handling-outliers.html"><a href="multivariate-models-predictive-accuracy-and-handling-outliers.html#describing-and-fitting-the-model"><i class="fa fa-check"></i><b>9.2.1</b> Describing and fitting the model</a></li>
+<li class="chapter" data-level="9.2.2" data-path="multivariate-models-predictive-accuracy-and-handling-outliers.html"><a href="multivariate-models-predictive-accuracy-and-handling-outliers.html#interpreting-the-model-8"><i class="fa fa-check"></i><b>9.2.2</b> Interpreting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="multivariate-models-predictive-accuracy-and-handling-outliers.html"><a href="multivariate-models-predictive-accuracy-and-handling-outliers.html#considering-predictive-accuracy"><i class="fa fa-check"></i><b>9.3</b> Considering predictive accuracy</a></li>
+<li class="chapter" data-level="9.4" data-path="multivariate-models-predictive-accuracy-and-handling-outliers.html"><a href="multivariate-models-predictive-accuracy-and-handling-outliers.html#handling-outliers-t-distributed-errors"><i class="fa fa-check"></i><b>9.4</b> Handling outliers: t-distributed errors</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="multivariate-models-predictive-accuracy-and-handling-outliers.html"><a href="multivariate-models-predictive-accuracy-and-handling-outliers.html#fitting-and-interpreting-the-model"><i class="fa fa-check"></i><b>9.4.1</b> Fitting and interpreting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="multivariate-models-predictive-accuracy-and-handling-outliers.html"><a href="multivariate-models-predictive-accuracy-and-handling-outliers.html#plot-code-8"><i class="fa fa-check"></i><b>9.5</b> Plot Code</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a></li>
 <li class="divider"></li>
@@ -741,12 +763,12 @@ gender_{\mathrm{gender}} \sim t(3, 0, 100) \\
 <span id="cb144-2"><a href="comparing-many-groups.html#cb144-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb144-3"><a href="comparing-many-groups.html#cb144-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (y_pred)</span>
 <span id="cb144-4"><a href="comparing-many-groups.html#cb144-4" aria-hidden="true" tabindex="-1"></a><span class="do">##      Estimate Est.Error     Q2.5    Q97.5</span></span>
-<span id="cb144-5"><a href="comparing-many-groups.html#cb144-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 244.0003  12.14335 221.1888 268.1542</span></span>
-<span id="cb144-6"><a href="comparing-many-groups.html#cb144-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,] 278.1605  12.69775 253.2210 303.1045</span></span>
-<span id="cb144-7"><a href="comparing-many-groups.html#cb144-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3,] 207.8119  12.23657 184.6127 231.8870</span></span>
-<span id="cb144-8"><a href="comparing-many-groups.html#cb144-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4,] 246.6383  12.12471 222.9183 270.8609</span></span>
-<span id="cb144-9"><a href="comparing-many-groups.html#cb144-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5,] 218.6597  12.25145 194.0271 242.2451</span></span>
-<span id="cb144-10"><a href="comparing-many-groups.html#cb144-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6,] 300.9329  12.41310 275.8533 325.7638</span></span></code></pre></div>
+<span id="cb144-5"><a href="comparing-many-groups.html#cb144-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 243.6173  12.23771 219.5711 267.7943</span></span>
+<span id="cb144-6"><a href="comparing-many-groups.html#cb144-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,] 278.1597  12.54563 253.6089 302.2969</span></span>
+<span id="cb144-7"><a href="comparing-many-groups.html#cb144-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3,] 207.3728  12.37974 182.5716 231.3642</span></span>
+<span id="cb144-8"><a href="comparing-many-groups.html#cb144-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4,] 246.6533  12.46645 221.8424 270.7160</span></span>
+<span id="cb144-9"><a href="comparing-many-groups.html#cb144-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5,] 218.2515  12.47401 193.7621 242.6402</span></span>
+<span id="cb144-10"><a href="comparing-many-groups.html#cb144-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6,] 300.9275  12.22957 276.3753 324.5752</span></span></code></pre></div>
 <p>The output of prediction, <code>y_pred</code>, has four columns. These contain a predicted value, but also information about variation in predictions. That is because, our model produces a different prediction for each set of samples. This means that if we have 4000 samples we actually have 4000 slightly different models and 4000 slightly different predictions! So, in addition to information about the most probable estimates, we get information about expected variation around these estimates.</p>
 <p>Below, I make predictions without random effects (<code>re_formula = NA</code>).</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="comparing-many-groups.html#cb145-1" aria-hidden="true" tabindex="-1"></a>y_pred_no_re <span class="ot">=</span> <span class="fu">predict</span> (model_both, <span class="at">re_formula =</span> <span class="cn">NA</span>)</span></code></pre></div>
