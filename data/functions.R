@@ -7,7 +7,7 @@ brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE,
                     robust = FALSE, yaxs="r",xaxs="r",line=TRUE,...){
     
   n = nrow (mat)
-  if (n > 500) mat = posterior_summary (mat, robust=robust)
+  if (n > 500 & ncol(mat)[1] !="Estimate") mat = posterior_summary (mat, robust=robust)
   n = nrow (mat)
   
   if (horizontal){
