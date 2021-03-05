@@ -314,3 +314,15 @@ considering-predictive-accuracy
 handling-outliers-t-distributed-errors
 fitting-and-interpreting-the-model
 plot-code-8
+eq:1001
+eq:1002
+fig:unnamed-chunk-8
+fig:unnamed-chunk-9
+modeling-variances
+data
+modeling-variation-in-the-error-variance
+fitting-and-interpreting-our-model
+modeling-group-variation-in-our-random-effects
+describing-and-fitting-the-model-1
+interpreting-the-model-9
+plot-code-9
