@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-03-03" />
+<meta name="date" content="2021-03-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -763,12 +763,12 @@ gender_{\mathrm{gender}} \sim t(3, 0, 100) \\
 <span id="cb144-2"><a href="comparing-many-groups.html#cb144-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb144-3"><a href="comparing-many-groups.html#cb144-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (y_pred)</span>
 <span id="cb144-4"><a href="comparing-many-groups.html#cb144-4" aria-hidden="true" tabindex="-1"></a><span class="do">##      Estimate Est.Error     Q2.5    Q97.5</span></span>
-<span id="cb144-5"><a href="comparing-many-groups.html#cb144-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 243.7076  12.41475 219.9420 268.5261</span></span>
-<span id="cb144-6"><a href="comparing-many-groups.html#cb144-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,] 278.3626  12.18567 254.7951 302.1472</span></span>
-<span id="cb144-7"><a href="comparing-many-groups.html#cb144-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3,] 207.6484  12.05855 184.2238 231.4763</span></span>
-<span id="cb144-8"><a href="comparing-many-groups.html#cb144-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4,] 247.0549  12.27398 223.1242 271.1576</span></span>
-<span id="cb144-9"><a href="comparing-many-groups.html#cb144-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5,] 218.8328  12.36217 194.6473 242.4896</span></span>
-<span id="cb144-10"><a href="comparing-many-groups.html#cb144-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6,] 300.8388  12.16942 276.7812 323.9165</span></span></code></pre></div>
+<span id="cb144-5"><a href="comparing-many-groups.html#cb144-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 243.3467  12.21714 218.7131 266.8576</span></span>
+<span id="cb144-6"><a href="comparing-many-groups.html#cb144-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,] 278.5290  12.43962 253.6802 302.7168</span></span>
+<span id="cb144-7"><a href="comparing-many-groups.html#cb144-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3,] 207.8841  12.26401 183.8359 231.9411</span></span>
+<span id="cb144-8"><a href="comparing-many-groups.html#cb144-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4,] 247.1859  12.52012 222.9912 270.7118</span></span>
+<span id="cb144-9"><a href="comparing-many-groups.html#cb144-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5,] 219.1118  12.35569 194.5957 242.8668</span></span>
+<span id="cb144-10"><a href="comparing-many-groups.html#cb144-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6,] 300.7686  12.60733 275.8272 324.8360</span></span></code></pre></div>
 <p>The output of prediction, <code>y_pred</code>, has four columns. These contain a predicted value, but also information about variation in predictions. That is because, our model produces a different prediction for each set of samples. This means that if we have 4000 samples we actually have 4000 slightly different models and 4000 slightly different predictions! So, in addition to information about the most probable estimates, we get information about expected variation around these estimates.</p>
 <p>Below, I make predictions without random effects (<code>re_formula = NA</code>).</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="comparing-many-groups.html#cb145-1" aria-hidden="true" tabindex="-1"></a>y_pred_no_re <span class="ot">=</span> <span class="fu">predict</span> (model_both, <span class="at">re_formula =</span> <span class="cn">NA</span>)</span></code></pre></div>
