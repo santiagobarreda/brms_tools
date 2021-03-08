@@ -3,7 +3,7 @@
 
 brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE, 
                     xs = NULL, col = 1, labels = "default",xlab='',ylab='', 
-                    pch=16, lwd=2,cex=1.5, las=NA,cex.axis=1,grid=TRUE,
+                    pch=16, lwd=2,cex=1.5, las=NA,cex.axis=1,grid=TRUE,cex.lab=1,
                     robust = FALSE, yaxs="r",xaxs="r",line=TRUE,...){
     
   n = nrow (mat)
@@ -19,7 +19,7 @@ brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE,
     
     if (!add){
       plot (0, type='n', ylim = ylim,xlim=xlim, xlab=xlab,xaxt='n',ylab = ylab,
-            cex.axis=cex.axis,yaxs=yaxs,xaxs=xaxs)
+            cex.axis=cex.axis,yaxs=yaxs,xaxs=xaxs,cex.lab=cex.lab)
       if (grid) grid()
       if (line) abline(h=0)
       if (line) abline(v=0)
@@ -41,7 +41,7 @@ brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE,
     if (is.null(ylim)) ylim = range (1:n)
     if (!add){
       plot (0,type='n', ylim = ylim,xlim=xlim, ylab=ylab,yaxt='n',xlab = xlab,
-            cex.axis=cex.axis,yaxs=yaxs,xaxs=xaxs)
+            cex.axis=cex.axis,yaxs=yaxs,xaxs=xaxs,cex.lab=cex.lab)
       if (grid) grid()
       if (line) abline(v=0)
       points (mat[,1],xs, pch=pch, col=col,cex=cex)
