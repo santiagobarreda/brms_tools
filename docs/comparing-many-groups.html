@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-03-05" />
+<meta name="date" content="2021-03-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -369,6 +369,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.4.1" data-path="multivariate-models-predictive-accuracy-and-handling-outliers.html"><a href="multivariate-models-predictive-accuracy-and-handling-outliers.html#fitting-and-interpreting-the-model"><i class="fa fa-check"></i><b>9.4.1</b> Fitting and interpreting the model</a></li>
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="multivariate-models-predictive-accuracy-and-handling-outliers.html"><a href="multivariate-models-predictive-accuracy-and-handling-outliers.html#plot-code-8"><i class="fa fa-check"></i><b>9.5</b> Plot Code</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="modeling-standard-deviations.html"><a href="modeling-standard-deviations.html"><i class="fa fa-check"></i><b>10</b> Modeling Standard Deviations</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="modeling-standard-deviations.html"><a href="modeling-standard-deviations.html#data"><i class="fa fa-check"></i><b>10.1</b> Data</a></li>
+<li class="chapter" data-level="10.2" data-path="modeling-standard-deviations.html"><a href="modeling-standard-deviations.html#modeling-variation-in-the-error"><i class="fa fa-check"></i><b>10.2</b> Modeling variation in the error</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="modeling-standard-deviations.html"><a href="modeling-standard-deviations.html#fitting-and-interpreting-our-model"><i class="fa fa-check"></i><b>10.2.1</b> Fitting and interpreting our model</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="modeling-standard-deviations.html"><a href="modeling-standard-deviations.html#modeling-group-variation-in-our-random-effects"><i class="fa fa-check"></i><b>10.3</b> Modeling group variation in our random effects</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="modeling-standard-deviations.html"><a href="modeling-standard-deviations.html#fitting-and-interpreting-our-model-1"><i class="fa fa-check"></i><b>10.3.1</b> Fitting and interpreting our model</a></li>
+<li class="chapter" data-level="10.3.2" data-path="modeling-standard-deviations.html"><a href="modeling-standard-deviations.html#two-dimensional-response-surfaces"><i class="fa fa-check"></i><b>10.3.2</b> Two-dimensional response surfaces</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="modeling-standard-deviations.html"><a href="modeling-standard-deviations.html#plot-code-9"><i class="fa fa-check"></i><b>10.4</b> Plot Code</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a></li>
 <li class="divider"></li>
@@ -763,12 +777,12 @@ gender_{\mathrm{gender}} \sim t(3, 0, 100) \\
 <span id="cb144-2"><a href="comparing-many-groups.html#cb144-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb144-3"><a href="comparing-many-groups.html#cb144-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (y_pred)</span>
 <span id="cb144-4"><a href="comparing-many-groups.html#cb144-4" aria-hidden="true" tabindex="-1"></a><span class="do">##      Estimate Est.Error     Q2.5    Q97.5</span></span>
-<span id="cb144-5"><a href="comparing-many-groups.html#cb144-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 243.3467  12.21714 218.7131 266.8576</span></span>
-<span id="cb144-6"><a href="comparing-many-groups.html#cb144-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,] 278.5290  12.43962 253.6802 302.7168</span></span>
-<span id="cb144-7"><a href="comparing-many-groups.html#cb144-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3,] 207.8841  12.26401 183.8359 231.9411</span></span>
-<span id="cb144-8"><a href="comparing-many-groups.html#cb144-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4,] 247.1859  12.52012 222.9912 270.7118</span></span>
-<span id="cb144-9"><a href="comparing-many-groups.html#cb144-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5,] 219.1118  12.35569 194.5957 242.8668</span></span>
-<span id="cb144-10"><a href="comparing-many-groups.html#cb144-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6,] 300.7686  12.60733 275.8272 324.8360</span></span></code></pre></div>
+<span id="cb144-5"><a href="comparing-many-groups.html#cb144-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 243.6633  12.32047 219.4964 267.7783</span></span>
+<span id="cb144-6"><a href="comparing-many-groups.html#cb144-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,] 278.3198  12.50098 254.0979 303.0475</span></span>
+<span id="cb144-7"><a href="comparing-many-groups.html#cb144-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3,] 207.6341  12.48097 183.4279 233.2161</span></span>
+<span id="cb144-8"><a href="comparing-many-groups.html#cb144-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4,] 246.9118  12.34051 222.7781 270.9316</span></span>
+<span id="cb144-9"><a href="comparing-many-groups.html#cb144-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5,] 218.6558  12.28331 194.5596 242.5208</span></span>
+<span id="cb144-10"><a href="comparing-many-groups.html#cb144-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6,] 300.9219  12.41020 276.7685 325.3758</span></span></code></pre></div>
 <p>The output of prediction, <code>y_pred</code>, has four columns. These contain a predicted value, but also information about variation in predictions. That is because, our model produces a different prediction for each set of samples. This means that if we have 4000 samples we actually have 4000 slightly different models and 4000 slightly different predictions! So, in addition to information about the most probable estimates, we get information about expected variation around these estimates.</p>
 <p>Below, I make predictions without random effects (<code>re_formula = NA</code>).</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="comparing-many-groups.html#cb145-1" aria-hidden="true" tabindex="-1"></a>y_pred_no_re <span class="ot">=</span> <span class="fu">predict</span> (model_both, <span class="at">re_formula =</span> <span class="cn">NA</span>)</span></code></pre></div>
