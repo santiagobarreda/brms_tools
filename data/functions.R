@@ -4,19 +4,20 @@
 brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE, 
                     xs = NULL, col = 1, labels = "default",xlab='',ylab='', 
                     pch=16, lwd=2,cex=1.5, las=NA,cex.axis=1,grid=TRUE,cex.lab=1,
-                    robust = FALSE, yaxs="r",xaxs="r",line=TRUE,...){
+                    robust = FALSE, yaxs="r",xaxs="r",line=TRUE, nudge =0,...){
     
   n = nrow (mat)
   if (n > 500 & colnames(mat)[1] !="Estimate") mat = posterior_summary (mat, robust=robust)
   n = nrow (mat)
   
   if (horizontal){
-  if (is.null(xs)) xs = 1:n
+    if (is.null(xs)) xs = (1:n)
+    xs = xs + nudge
     if (is.null(xlim)) xlim = range (1:n)
     if (is.null(ylim)) ylim = range (mat[,3:4])
     if (labels[1]=="default") labels = rownames(mat)  
     if (is.null(labels)) labels = 1:nrow(mat)  
-    
+      
     if (!add){
       plot (0, type='n', ylim = ylim,xlim=xlim, xlab=xlab,xaxt='n',ylab = ylab,
             cex.axis=cex.axis,yaxs=yaxs,xaxs=xaxs,cex.lab=cex.lab)
@@ -33,7 +34,8 @@ brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE,
     for (i in 1:n) segments (xs[i],mat[i,3],xs[i],mat[i,4],lwd=lwd, col=col[i])
   }
   if (!horizontal){
-    if (is.null(xs)) xs = n:1
+    if (is.null(xs)) xs = (n:1)
+    xs = xs + nudge
     if (is.null(xlim)) xlim = range (mat[,3:4])
     if (labels[1]=="default") labels = rownames(mat)  
     if (is.null(labels)) labels = 1:nrow(mat)  
