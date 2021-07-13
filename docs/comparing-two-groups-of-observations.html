@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Comparing two groups of observations | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</title>
+  <title>Chapter 3 Comparing two groups of observations | Bayesian multilevel models in R: A conceptual and practical introduction for linguists</title>
   <meta name="description" content="Bayesian Models for Linguists" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Comparing two groups of observations | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers" />
+  <meta property="og:title" content="Chapter 3 Comparing two groups of observations | Bayesian multilevel models in R: A conceptual and practical introduction for linguists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="http://santiagobarreda.com" />
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Comparing two groups of observations | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers" />
+  <meta name="twitter:title" content="Chapter 3 Comparing two groups of observations | Bayesian multilevel models in R: A conceptual and practical introduction for linguists" />
   
   <meta name="twitter:description" content="Bayesian Models for Linguists" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-03-08" />
+<meta name="date" content="2021-07-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,8 @@
   
 <link rel="prev" href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"/>
 <link rel="next" href="comparing-many-groups.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -51,11 +51,13 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
 
@@ -124,6 +126,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -384,7 +387,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10.4" data-path="modeling-standard-deviations.html"><a href="modeling-standard-deviations.html#plot-code-9"><i class="fa fa-check"></i><b>10.4</b> Plot Code</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a></li>
 <li class="divider"></li>
 <li><a href="http://www.santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
 <li><a href="A-Quick-Introduction-to-Multilevel-Bayesian-Models-for-Linguistic-Researchers.pdf" target="blank">Download possibly outdated and badly-formatted PDF</a></li>
@@ -398,7 +400,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian multilevel models in R: A conceptual and practical introduction for linguists</a>
           </h1>
         </div>
 
@@ -695,7 +697,7 @@ adult1 \sim t(3, 0, 48) \\
 \sigma_{speaker} \sim t(3, 0, 48) \\ 
 \end{split}
 \end{equation}\]</span></p>
-<p>The top chunk is labeled ‘likelihood’ because this chunk specifies the relationships between our parameters and our data. As a result, the relationships specified in this section determine the likelihood of the model parameters. For example, in the first line we say that our data is normally distributed around some mean parameter. In turn, this specifies the shape of the likelihood function for that parameter given the data (as discussed in Figure <a href="inspecting-a-single-group-of-observations.html#fig:F1-likelihood1">1.8</a>). What I mean by this is that the shape of the likelihood functions for different model coefficients will be based on the relationships laid out in the section of the model description labeled ‘likelihood’.</p>
+<p>The top chunk is labeled ‘likelihood’ because this chunk specifies the relationships between our parameters and our data. As a result, the relationships specified in this section determine the likelihood of the model parameters. For example, in the first line we say that our data is normally distributed around some mean parameter. In turn, this specifies the shape of the likelihood function for that parameter given the data (as discussed in chapter 1). What I mean by this is that the shape of the likelihood functions for different model coefficients will be based on the relationships laid out in the section of the model description labeled ‘likelihood’.</p>
 </div>
 <div id="interpreting-the-model-1" class="section level3" number="3.4.3">
 <h3><span class="header-section-number">3.4.3</span> Interpreting the model</h3>
@@ -1259,6 +1261,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

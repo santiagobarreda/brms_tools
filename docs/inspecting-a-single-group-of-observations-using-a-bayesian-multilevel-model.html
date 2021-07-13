@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Inspecting a ‘single group’ of observations using a Bayesian multilevel model | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</title>
+  <title>Chapter 2 Inspecting a ‘single group’ of observations using a Bayesian multilevel model | Bayesian multilevel models in R: A conceptual and practical introduction for linguists</title>
   <meta name="description" content="Bayesian Models for Linguists" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Inspecting a ‘single group’ of observations using a Bayesian multilevel model | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers" />
+  <meta property="og:title" content="Chapter 2 Inspecting a ‘single group’ of observations using a Bayesian multilevel model | Bayesian multilevel models in R: A conceptual and practical introduction for linguists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="http://santiagobarreda.com" />
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Inspecting a ‘single group’ of observations using a Bayesian multilevel model | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers" />
+  <meta name="twitter:title" content="Chapter 2 Inspecting a ‘single group’ of observations using a Bayesian multilevel model | Bayesian multilevel models in R: A conceptual and practical introduction for linguists" />
   
   <meta name="twitter:description" content="Bayesian Models for Linguists" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-03-08" />
+<meta name="date" content="2021-07-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,8 @@
   
 <link rel="prev" href="inspecting-a-single-group-of-observations.html"/>
 <link rel="next" href="comparing-two-groups-of-observations.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -51,11 +51,13 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
 
@@ -124,6 +126,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -384,7 +387,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10.4" data-path="modeling-standard-deviations.html"><a href="modeling-standard-deviations.html#plot-code-9"><i class="fa fa-check"></i><b>10.4</b> Plot Code</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a></li>
 <li class="divider"></li>
 <li><a href="http://www.santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
 <li><a href="A-Quick-Introduction-to-Multilevel-Bayesian-Models-for-Linguistic-Researchers.pdf" target="blank">Download possibly outdated and badly-formatted PDF</a></li>
@@ -398,7 +400,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian multilevel models in R: A conceptual and practical introduction for linguists</a>
           </h1>
         </div>
 
@@ -505,34 +507,7 @@ f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\
 <span id="cb53-2"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="co"># seed throughout, and resetting it before running any &#39;random&#39; process.  </span></span>
 <span id="cb53-3"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span> (<span class="dv">1</span>)</span>
 <span id="cb53-4"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-5"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-5" aria-hidden="true" tabindex="-1"></a>model <span class="ot">=</span> brms<span class="sc">::</span><span class="fu">brm</span> (f0 <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> w, <span class="at">chains =</span> <span class="dv">1</span>, <span class="at">cores =</span> <span class="dv">1</span>)</span>
-<span id="cb53-6"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Compiling Stan program...</span></span>
-<span id="cb53-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Start sampling</span></span>
-<span id="cb53-8"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb53-9"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="do">## SAMPLING FOR MODEL &#39;98dae0f1caaef07c210aac2156c73749&#39; NOW (CHAIN 1).</span></span>
-<span id="cb53-10"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: </span></span>
-<span id="cb53-11"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Gradient evaluation took 0 seconds</span></span>
-<span id="cb53-12"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.</span></span>
-<span id="cb53-13"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Adjust your expectations accordingly!</span></span>
-<span id="cb53-14"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: </span></span>
-<span id="cb53-15"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: </span></span>
-<span id="cb53-16"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)</span></span>
-<span id="cb53-17"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)</span></span>
-<span id="cb53-18"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)</span></span>
-<span id="cb53-19"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)</span></span>
-<span id="cb53-20"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)</span></span>
-<span id="cb53-21"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)</span></span>
-<span id="cb53-22"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)</span></span>
-<span id="cb53-23"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)</span></span>
-<span id="cb53-24"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)</span></span>
-<span id="cb53-25"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-25" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)</span></span>
-<span id="cb53-26"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-26" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span></span>
-<span id="cb53-27"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-27" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span></span>
-<span id="cb53-28"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-28" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: </span></span>
-<span id="cb53-29"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-29" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1:  Elapsed Time: 0.06 seconds (Warm-up)</span></span>
-<span id="cb53-30"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-30" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1:                0.04 seconds (Sampling)</span></span>
-<span id="cb53-31"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-31" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1:                0.1 seconds (Total)</span></span>
-<span id="cb53-32"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-32" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1:</span></span></code></pre></div>
+<span id="cb53-5"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb53-5" aria-hidden="true" tabindex="-1"></a>model <span class="ot">=</span> brms<span class="sc">::</span><span class="fu">brm</span> (f0 <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> w, <span class="at">chains =</span> <span class="dv">1</span>, <span class="at">cores =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p>By default, <code>brms</code> takes 2000 samples, throwing out the first 1000 and returning the last 1000. The output above shows you that the sampler is working, and tells you about the progress as it works.</p>
 <p>This is the last time I will be actually fitting a model in the code chunks. I am going to be relying on pre-fit models that you can load after downloading from the book GitHub. Models can be found in the folder corresponding to each chapter.</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download pre-fit model from: </span></span>
@@ -1342,6 +1317,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

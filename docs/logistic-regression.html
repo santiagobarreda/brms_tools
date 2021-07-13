@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 7 Logistic regression | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</title>
+  <title>Chapter 7 Logistic regression | Bayesian multilevel models in R: A conceptual and practical introduction for linguists</title>
   <meta name="description" content="Bayesian Models for Linguists" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 7 Logistic regression | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers" />
+  <meta property="og:title" content="Chapter 7 Logistic regression | Bayesian multilevel models in R: A conceptual and practical introduction for linguists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="http://santiagobarreda.com" />
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 7 Logistic regression | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers" />
+  <meta name="twitter:title" content="Chapter 7 Logistic regression | Bayesian multilevel models in R: A conceptual and practical introduction for linguists" />
   
   <meta name="twitter:description" content="Bayesian Models for Linguists" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-03-08" />
+<meta name="date" content="2021-07-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,8 @@
   
 <link rel="prev" href="random-slopes.html"/>
 <link rel="next" href="bayesian-anova-and-interpreting-complicated-models.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -51,11 +51,13 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
 
@@ -124,6 +126,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -384,7 +387,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10.4" data-path="modeling-standard-deviations.html"><a href="modeling-standard-deviations.html#plot-code-9"><i class="fa fa-check"></i><b>10.4</b> Plot Code</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a></li>
 <li class="divider"></li>
 <li><a href="http://www.santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
 <li><a href="A-Quick-Introduction-to-Multilevel-Bayesian-Models-for-Linguistic-Researchers.pdf" target="blank">Download possibly outdated and badly-formatted PDF</a></li>
@@ -398,7 +400,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian multilevel models in R: A conceptual and practical introduction for linguists</a>
           </h1>
         </div>
 
@@ -460,7 +462,7 @@ Figure 7.2: (left) Average adultness classifications for each speaker as a funct
 <span id="cb211-4"><a href="logistic-regression.html#cb211-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb211-5"><a href="logistic-regression.html#cb211-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ten single trials, probability of 0.5</span></span>
 <span id="cb211-6"><a href="logistic-regression.html#cb211-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rbinom</span> (<span class="dv">10</span>,<span class="dv">1</span>,.<span class="dv">5</span>)</span>
-<span id="cb211-7"><a href="logistic-regression.html#cb211-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] 0 1 1 1 1 1 1 0 0 0</span></span></code></pre></div>
+<span id="cb211-7"><a href="logistic-regression.html#cb211-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] 0 0 1 0 1 0 0 1 1 0</span></span></code></pre></div>
 <p>Below we compare the data generated by the Bernoulli and the binomial distributions. In the top row we get a single number, the total number of successes in the trials. We don’t get any information about what happened on any individual trial. In the bottom row we do get information about what happened on each individual trial.</p>
 <div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="logistic-regression.html#cb212-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a single batch of 10 trials, probability of 0.5</span></span>
 <span id="cb212-2"><a href="logistic-regression.html#cb212-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rbinom</span> (<span class="dv">1</span>,<span class="dv">10</span>,.<span class="dv">5</span>)</span>
@@ -468,7 +470,7 @@ Figure 7.2: (left) Average adultness classifications for each speaker as a funct
 <span id="cb212-4"><a href="logistic-regression.html#cb212-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb212-5"><a href="logistic-regression.html#cb212-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ten individual trials, probability of 0.5</span></span>
 <span id="cb212-6"><a href="logistic-regression.html#cb212-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rbinom</span> (<span class="dv">10</span>,<span class="dv">1</span>,.<span class="dv">5</span>)</span>
-<span id="cb212-7"><a href="logistic-regression.html#cb212-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] 0 1 0 0 1 1 1 1 1 1</span></span></code></pre></div>
+<span id="cb212-7"><a href="logistic-regression.html#cb212-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] 0 1 0 1 1 1 0 1 1 0</span></span></code></pre></div>
 <p>Unlike the normal distribution, these distributions do not directly generate data with values near their mean. Instead, they generate sequences of 1s and 0s, the average of which (as the number of observations approach infinity) is expected to <a href="https://en.wikipedia.org/wiki/Consistent_estimator">converge</a> on the <span class="math inline">\(p\)</span> parameter of the distribution that generated the data. For example, below I generate sequences of a dichotomous variable with a <span class="math inline">\(p\)</span> parameter of 0.5. In each case, the estimate of the probability of the distribution gets closer as the length of the sample gets longer.</p>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="logistic-regression.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span> (<span class="dv">1</span>)</span>
 <span id="cb213-2"><a href="logistic-regression.html#cb213-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span> (<span class="fu">rbinom</span> (<span class="dv">10</span>,<span class="dv">1</span>,.<span class="dv">5</span>)) <span class="co"># the mean of 10 observations</span></span>
@@ -666,18 +668,14 @@ p_{[i]} = \mathrm{logistic} (z_{[i]}) \\
 z_{[i]} = a_{[i]} + b_{[i]} * \mathrm{x}_{[i]}  \\ 
 a_{[i]} = Intercept + pfemale_{[i]} + \alpha_{[\mathrm{subj}_{[i]}]}  +  \alpha_{pfemale[\mathrm{subj}_{[i]}]}+ \alpha_{[\mathrm{speaker}_{[i]}]}  \\
 b_{[i]} =  g0\_c + g0\_s \colon pfemale_{[i]} + \beta_{[\mathrm{subj}_{[i]}]} + \beta_{g0\_s \colon pfemale[\mathrm{subj}_{[i]}]} \\ \\
-
 \textrm{Priors:} \\
 \alpha_{speaker} \sim \mathrm{Normal}(0,\sigma_{speaker}) \\ \\  
-
 \begin{bmatrix} \alpha_{subj} \\ \alpha_{pfemale,subj} \\ \beta_{subj} \\ \beta_{g0\_s \colon pfemale,subj} \\ \end{bmatrix}    
 \sim \mathrm{MVNormal} ( \begin{bmatrix} 0\\ 0 \\ 0 \\ 0 \\ \end{bmatrix}, \Sigma) \\ \\
-
 Intercept \sim t(3, 0, 5) \\
 g0\_c \sim t(3, 0, 3) \\
 pfemale \sim t(3, 0, 3) \\
 g0\_c \colon female \sim t(3, 0, 3) \\ \\
-
 \sigma_{\alpha_{speaker}} \sim t(3, 0, 4) \\ 
 \sigma_{\alpha_{subj}} \sim t(3, 0, 4) \\ 
 \sigma_{\alpha_{pfemale,subj}} \sim t(3, 0, 4) \\ 
@@ -861,8 +859,7 @@ Figure 7.7: (left) Line indicating linear relationship between f0 and the logit 
 </p>
 </div>
 <p>The location of the x intercept is presented using a bold vertical line in the <a href="logistic-regression.html#fig:F7-7">7.7</a>. This is the location where our prediction line intersects with the x axis. We can find the x intercept by setting y=0 in our prediction equation and solving for (i.e. isolating) x, as seen below. For complicated prediction equations (and even for simple ones), I often rely on <a href="https://www.mathpapa.com/algebra-calculator.html">websites like this one</a>.</p>
-<p><span class="math display" id="eq:711">\[
-\begin{equation}
+<p><span class="math display" id="eq:711">\[\begin{equation}
 \begin{split}
 y = a + b*x \\
 0 = a + b*x \\
@@ -870,8 +867,7 @@ y = a + b*x \\
 -a/b = x
 \end{split}
 \tag{7.13}
-\end{equation}
-\]</span></p>
+\end{equation}\]</span></p>
 <p>We the above equation to calculate our category boundary between adult and child classifications. Remember that to do arithmetic operations on our parameters, we have to use the original samples and not the summaries. For example, based on the numbers in our printout above, we expect that the category boundary is at <code>-(a/b) = -(-0.67 / -3.31) = -0.20</code>. Instead, when I do the same calculation using our original samples below, we see that the boundary is actually nearer to <code>-0.22</code>.</p>
 <div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="logistic-regression.html#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get original samples</span></span>
 <span id="cb227-2"><a href="logistic-regression.html#cb227-2" aria-hidden="true" tabindex="-1"></a>fixef_samples <span class="ot">=</span> <span class="fu">fixef</span> (logistic_g0, <span class="at">summary =</span> <span class="cn">FALSE</span>)</span>
@@ -1340,6 +1336,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

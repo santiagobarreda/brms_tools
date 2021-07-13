@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Comparing many groups | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</title>
+  <title>Chapter 4 Comparing many groups | Bayesian multilevel models in R: A conceptual and practical introduction for linguists</title>
   <meta name="description" content="Bayesian Models for Linguists" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Comparing many groups | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers" />
+  <meta property="og:title" content="Chapter 4 Comparing many groups | Bayesian multilevel models in R: A conceptual and practical introduction for linguists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="http://santiagobarreda.com" />
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Comparing many groups | A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers" />
+  <meta name="twitter:title" content="Chapter 4 Comparing many groups | Bayesian multilevel models in R: A conceptual and practical introduction for linguists" />
   
   <meta name="twitter:description" content="Bayesian Models for Linguists" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-03-08" />
+<meta name="date" content="2021-07-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,8 @@
   
 <link rel="prev" href="comparing-two-groups-of-observations.html"/>
 <link rel="next" href="including-continuous-predictors-in-our-model.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -51,11 +51,13 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
 
@@ -124,6 +126,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -384,7 +387,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10.4" data-path="modeling-standard-deviations.html"><a href="modeling-standard-deviations.html#plot-code-9"><i class="fa fa-check"></i><b>10.4</b> Plot Code</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a></li>
 <li class="divider"></li>
 <li><a href="http://www.santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
 <li><a href="A-Quick-Introduction-to-Multilevel-Bayesian-Models-for-Linguistic-Researchers.pdf" target="blank">Download possibly outdated and badly-formatted PDF</a></li>
@@ -398,7 +400,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian multilevel models in R: A conceptual and practical introduction for linguists</a>
           </h1>
         </div>
 
@@ -777,12 +779,12 @@ gender_{\mathrm{gender}} \sim t(3, 0, 100) \\
 <span id="cb144-2"><a href="comparing-many-groups.html#cb144-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb144-3"><a href="comparing-many-groups.html#cb144-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (y_pred)</span>
 <span id="cb144-4"><a href="comparing-many-groups.html#cb144-4" aria-hidden="true" tabindex="-1"></a><span class="do">##      Estimate Est.Error     Q2.5    Q97.5</span></span>
-<span id="cb144-5"><a href="comparing-many-groups.html#cb144-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 243.6633  12.32047 219.4964 267.7783</span></span>
-<span id="cb144-6"><a href="comparing-many-groups.html#cb144-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,] 278.3198  12.50098 254.0979 303.0475</span></span>
-<span id="cb144-7"><a href="comparing-many-groups.html#cb144-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3,] 207.6341  12.48097 183.4279 233.2161</span></span>
-<span id="cb144-8"><a href="comparing-many-groups.html#cb144-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4,] 246.9118  12.34051 222.7781 270.9316</span></span>
-<span id="cb144-9"><a href="comparing-many-groups.html#cb144-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5,] 218.6558  12.28331 194.5596 242.5208</span></span>
-<span id="cb144-10"><a href="comparing-many-groups.html#cb144-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6,] 300.9219  12.41020 276.7685 325.3758</span></span></code></pre></div>
+<span id="cb144-5"><a href="comparing-many-groups.html#cb144-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 243.7989  12.55577 219.4143 268.7087</span></span>
+<span id="cb144-6"><a href="comparing-many-groups.html#cb144-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2,] 278.3190  12.55514 253.8997 303.1478</span></span>
+<span id="cb144-7"><a href="comparing-many-groups.html#cb144-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3,] 207.7220  12.36896 183.2782 231.7484</span></span>
+<span id="cb144-8"><a href="comparing-many-groups.html#cb144-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4,] 247.0643  12.28252 223.5102 270.6152</span></span>
+<span id="cb144-9"><a href="comparing-many-groups.html#cb144-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5,] 218.6251  12.50744 193.1472 243.4518</span></span>
+<span id="cb144-10"><a href="comparing-many-groups.html#cb144-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6,] 300.9915  12.43985 276.3581 325.2514</span></span></code></pre></div>
 <p>The output of prediction, <code>y_pred</code>, has four columns. These contain a predicted value, but also information about variation in predictions. That is because, our model produces a different prediction for each set of samples. This means that if we have 4000 samples we actually have 4000 slightly different models and 4000 slightly different predictions! So, in addition to information about the most probable estimates, we get information about expected variation around these estimates.</p>
 <p>Below, I make predictions without random effects (<code>re_formula = NA</code>).</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="comparing-many-groups.html#cb145-1" aria-hidden="true" tabindex="-1"></a>y_pred_no_re <span class="ot">=</span> <span class="fu">predict</span> (model_both, <span class="at">re_formula =</span> <span class="cn">NA</span>)</span></code></pre></div>
@@ -1290,6 +1292,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

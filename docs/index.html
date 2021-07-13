@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</title>
+  <title>Bayesian multilevel models in R: A conceptual and practical introduction for linguists</title>
   <meta name="description" content="Bayesian Models for Linguists" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers" />
+  <meta property="og:title" content="Bayesian multilevel models in R: A conceptual and practical introduction for linguists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="http://santiagobarreda.com" />
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers" />
+  <meta name="twitter:title" content="Bayesian multilevel models in R: A conceptual and practical introduction for linguists" />
   
   <meta name="twitter:description" content="Bayesian Models for Linguists" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-03-08" />
+<meta name="date" content="2021-07-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,8 @@
   
 
 <link rel="next" href="inspecting-a-single-group-of-observations.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -51,11 +51,13 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
 
@@ -124,6 +126,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -384,7 +387,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10.4" data-path="modeling-standard-deviations.html"><a href="modeling-standard-deviations.html#plot-code-9"><i class="fa fa-check"></i><b>10.4</b> Plot Code</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a></li>
 <li class="divider"></li>
 <li><a href="http://www.santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
 <li><a href="A-Quick-Introduction-to-Multilevel-Bayesian-Models-for-Linguistic-Researchers.pdf" target="blank">Download possibly outdated and badly-formatted PDF</a></li>
@@ -398,7 +400,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian multilevel models in R: A conceptual and practical introduction for linguists</a>
           </h1>
         </div>
 
@@ -407,16 +409,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">A Quick Introduction to Multilevel Bayesian Models for Linguistic Researchers</h1>
+<h1 class="title">Bayesian multilevel models in R: A conceptual and practical introduction for linguists</h1>
 <p class="author"><em>Santiago Bareda</em></p>
-<p class="date"><em>2021-03-08</em></p>
+<p class="date" style="margin-top: 1.5em;"><em>2021-07-12</em></p>
 </div>
 <div id="introduction" class="section level1 unnumbered">
 <h1>Introduction</h1>
-<p>I’m working on this <a href="https://youtu.be/RS49gJ2eKrY?t=107">book</a> for a stats class in the Linguistics department at UC Davis. If you are reading this then I am currently working on it, and it may contain errors, inconsistencies, etc.</p>
-<p>This book will focus on a conceptual introduction to multilevel Bayesian models. I am going to talk about ‘math’ as little as possible, so I am going to avoid going into details unless necessary. My goal is to convey some of the more important and useful concepts necessary to understand these models and to use them in your own work. I hope to set you up in a position to ‘fill in the blanks’ as necessary later.</p>
-<p>I’m going to try to provide intuitive explanations for statistical models that rely on understanding the figures we use represent and interpret our data and models. The book assumes some understanding of R (only to understand the code), but none of statistics. I don’t really ‘explain’ many basic things, for example, how to calculate a standard deviation? Why is it calculated like it is? There are two reasons for this. First, there are many better resources for that (many written by <em>real</em> statisticians!). And second, I am trying to make this quick, to go from 0 to understanding and interpreting Bayesian multilevel models in 10 weeks.</p>
-<p>The book is specifically designed for linguists only because it focuses on the sorts of research designs frequently used by linguists. However, the models and principles outlined in this book are used, and are useful, in many domains.</p>
+<p>This book is currently under development and it may contain small errors, inconsistencies, etc. It was used for a 10-week statistics class, but is being expanded and reorganized somewhat.</p>
+<p>Repeated measures data is extremely common in linguistics, and the norm in many linguistic subfields (phonetics, variationist sociolinguistics, psycholinguistics, etc.). Bayesian multilevel models are perfectly suited for the analysis of repeated-measures data, and offer linguists flexibility and many exciting opportunities. Because of this, there is tremendous interest in using Bayesian multilevel models in linguistics despite the lack of available resources. This book is an introduction to the analysis of repeated-measures data using Bayesian multilevel regression models, specifically aimed at linguists with no background in statistics.</p>
+<p>This book is intended for an introductory statistics class for senior undergraduate or graduate students, and for faculty members and other researchers to use as a self-study guide. This book is aimed at 1) students who are looking for a conceptual framework to help understand multilevel Bayesian models, but not necessarily looking for ‘too-much’ mathematical detail, and 2) researchers who are already experienced with frequentist modelling and are looking to ‘translate’ their skillset over to a Bayesian framework.</p>
+<p>To learn multilevel models, a student is usually first expected to learn ‘traditional’ statistical approaches and designs, such as t-tests ANOVAS and ordinary least-squares regression. After this foundation is laid, the student can then move to the sorts of models they can actually use for their work, mainly multilevel models that can handle repeated-measures data. This approach has several drawbacks: it takes a long time (which graduate students don’t have), spends substantial energy on statistical approaches that most linguists will rarely if ever use in their work (e.g., OLS regression), and front-loads difficult and abstract concepts (e.g., degrees of freedom, p-values) before students can start working with data they really understand. As a result, students may become discouraged, may become convinced that they’re ‘not good at math’, and may not realize how much they already intuitively understand about statistics.</p>
+<p>This book presents an introduction to modelling repeated-measures data using Bayesian multilevel regression models, and building bespoke Bayesian models that are equivalent to, and better than, their ‘off the shelf’ frequentist equivalents using the ‘brms’ package in R. This book will provide a conceptual introduction by adopting an accessible narrative style that introduces mathematical and modelling concepts in plain English. A focus will be placed on understanding concepts and the visual/geometric consequences of different regression model structures and changes in coefficients, leaving much of the statistical foundation and mathematical rigor to other books. Chapters are organized in terms of regression model components, and how these relate to experimental designs, statistical concepts, and the geometry of figures based on the data and model coefficients. We will then cover how to use these components to ‘build’ models that suit your needs. In addition, each chapter feature the fully worked analysis of repeated-measures linguistic data resulting from either perceptual experiments or speech production experiments involving human subjects.</p>
 <p>If you have any comments or suggestions please let me know, and if you find any errors definitely let me know!</p>
 
 </div>
@@ -465,6 +468,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

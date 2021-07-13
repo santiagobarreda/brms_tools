@@ -1,0 +1,1454 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Bayesian multilevel models in R: A conceptual and practical introduction for linguists},
+  pdfauthor={Santiago Bareda},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=2cm]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Bayesian multilevel models in R: A conceptual and practical introduction for linguists}
+\author{Santiago Bareda}
+\date{2021-07-12}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{introduction}{%
+\chapter*{Introduction}\label{introduction}}
+\addcontentsline{toc}{chapter}{Introduction}
+
+This book is currently under development and it may contain small errors, inconsistencies, etc. It was used for a 10-week statistics class, but will be expanded and reorganized somewhat.
+
+Repeated measures data is extremely common in linguistics, and the norm in many linguistic subfields (phonetics, variationist sociolinguistics, psycholinguistics, etc.). Bayesian multilevel models are perfectly suited for the analysis of repeated-measures data, and offer linguists flexibility and many exciting opportunities. Because of this, there is tremendous interest in using Bayesian multilevel models in linguistics despite the lack of available resources. This book is an introduction to the analysis of repeated-measures data using Bayesian multilevel regression models, specifically aimed at linguists with no background in statistics.
+
+This book is intended for an introductory statistics class for senior undergraduate or graduate students, and for faculty members and other researchers to use as a self-study guide. This book is aimed at 1) students who are looking for a conceptual framework to help understand multilevel Bayesian models, but not necessarily looking for `too-much' mathematical detail, and 2) researchers who are already experienced with frequentist modelling and are looking to `translate' their skillset over to a Bayesian framework.
+
+To learn multilevel models, a student is usually first expected to learn `traditional' statistical approaches and designs, such as t-tests ANOVAS and ordinary least-squares regression. After this foundation is laid, the student can then move to the sorts of models they can actually use for their work, mainly multilevel models that can handle repeated-measures data. This approach has several drawbacks: it takes a long time (which graduate students don't have), spends substantial energy on statistical approaches that most linguists will rarely if ever use in their work (e.g., OLS regression), and front-loads difficult and abstract concepts (e.g., degrees of freedom, p-values) before students can start working with data they really understand. As a result, students may become discouraged, may become convinced that they're `not good at math', and may not realize how much they already intuitively understand about statistics.
+
+This book presents an introduction to modelling repeated-measures data using Bayesian multilevel regression models, and building bespoke Bayesian models that are equivalent to, and better than, their `off the shelf' frequentist equivalents using the `brms' package in R. This book will provide a conceptual introduction by adopting an accessible narrative style that introduces mathematical and modelling concepts in plain English. A focus will be placed on understanding concepts and the visual/geometric consequences of different regression model structures and changes in coefficients, leaving much of the statistical foundation and mathematical rigor to other books. Chapters are organized in terms of regression model components, and how these relate to experimental designs, statistical concepts, and the geometry of figures based on the data and model coefficients. We will then cover how to use these components to `build' models that suit your needs. In addition, each chapter feature the fully worked analysis of repeated-measures linguistic data resulting from either perceptual experiments or speech production experiments involving human subjects. T
+
+If you have any comments or suggestions please let me know, and if you find any errors definitely let me know!
+
+\hypertarget{inspecting-a-single-group-of-observations}{%
+\chapter{Inspecting a single group of observations}\label{inspecting-a-single-group-of-observations}}
+
+We'll begin with what is perhaps the simplest question a researcher can ask: What's the average value of (some value) \(x\)? We're going to use this basic question to discuss some fundamental statistical concepts, and how to use these concepts to make inferences about the observations we collect.
+
+Although statistical knowledge might seem like declarative knowledge, in many ways it is more similar to procedural knowledge. You would never read a chapter from a French textbook once and expect to have memorized all the vocabulary and irregular forms. Similarly, you would never practice a piano piece a single time and assume that you are just `bad at the piano' because you can't play it flawlessly.
+
+Think of acquiring statistical knowledge like learning a language. It is normal, and in fact should be expected, that the reader will need to read some parts of the text multiple times, and \emph{practice}, before being able to really \emph{understand} all of the concepts presented here. That being said, the things we talk about in this chapter will be come up in every chapter, so if things don't all make sense right now that's fine. Things will make more sense bit by bit as we learn how to use more and more complicated models. After reading a few chapters you should come back and read this chapter again. You may notice that I say a lot of things in this chapter that you did not notice the first time you read it.
+
+\hypertarget{data-and-research-questions}{%
+\section{Data and research questions}\label{data-and-research-questions}}
+
+Variables are placeholders for some value, whether we know it or not. For example I can say ``my weight is X pounds''. Random variables are variables whose value varies from observation to observation based on some unknown process. The classic example is the result of a coin flip or the roll of a die. Neither of the values of these variables can be known \emph{a priori} (i.e., before `experimentation') and can only be known after an observation has been carried out.
+
+Anything that is expected to vary slightly from observation to observation can be though of a random variable. For example, your exact weight varies from day to day around your `average' weight. In principle, you could probably explain exactly why your weight varies from day if you were so inclined. However, in practice you are probably not exactly sure \emph{why} your weight is a bit higher one day and a bit lower the next. So, your weight is a random variable not necessarily because it is \emph{impossible} to know why it varies, but simply because \emph{you don't know} why it does so.
+
+We're going to begin by focusing on what are known as \emph{continuous} variables. These variables take on an infinite, or at least reasonably large, set of possible values between the highest and lowest possible values of the variable. Some examples of continuous variables that arise often in linguistics are reaction times, frequencies of words in lexicons, and just about any acoustic measurement in phonetics.
+
+For example, imagine listeners in an experiment hear a word they are asked to determine whether this is a `real' word or not (i.e., a lexical decision task). You measure reaction times and are interested in how long people take to answer, on average. The variable of interest here is ``reaction time in a lexical decision task''. It is a random variable because you don't know what any given reaction time will be on any given trial. Keep in mind, this doesn't mean we don't know anything about it. The human body is physically incapable or reacting faster than about 150 ms, and decision should not be taking more than (let's say) 3 seconds. So, although you don't know what the \emph{exact} value of any observation will be, it is possible to make statements about \emph{where} you expect this variable to be along the number line.
+
+In this chapter, we're going to investigate the average voice fundamental frequency (f0) for a group of speakers. The f0 of a voice is the primary determinant of perceived pitch, and is a very important cue in speech communication. It it extremely important in speech prosody, in the relation of emotion in speech, it helps determine vowel quality and is crucial in the communication of social and indexical information (speaker gender, age, \ldots etc.). In other words, when you hear a person speak, your impression of their gender, age and size are strongly influenced by pitch. As a result, this is a very important variable in linguistics and speech communication more generally.
+
+We're going use a well-known data set, the \href{https://homepages.wmich.edu/~hillenbr/Papers/HillenbrandGettyClarkWheeler.pdf}{Hillenbrand et al.~(1995)} data representing vowels produced by 139 speakers of Michigan English. The data contains information about the productions of 12 vowel phonemes by 48 adult females, 45 adult males, 19 girls and 27 boys, both groups featuring children 10-12 years of age.
+
+In this chapter we're going to focus only on the f0 values produced by the 48 adult female speakers in the sample, across the 12 vowel phonemes they each produced (n=576=48*12). Below, I get the data from the course GitHub page and pass the relevant information to a vector called \texttt{f0} that we will be referring to throughout the chapter.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{url1 }\OtherTok{=} \StringTok{"https://raw.githubusercontent.com/santiagobarreda"}
+\NormalTok{url2 }\OtherTok{=} \StringTok{"/stats{-}class/master/data/h95\_vowel\_data.csv"}
+\CommentTok{\# read data from the book Github page}
+\NormalTok{h95 }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{ (}\FunctionTok{url}\NormalTok{(}\FunctionTok{paste0}\NormalTok{ (url1, url2)))}
+\CommentTok{\# select only \textquotesingle{}f0\textquotesingle{} values produced by adult females (speaker type = \textquotesingle{}w\textquotesingle{})}
+\NormalTok{f0 }\OtherTok{=}\NormalTok{ h95[[}\StringTok{\textquotesingle{}f0\textquotesingle{}}\NormalTok{]][h95}\SpecialCharTok{$}\NormalTok{group }\SpecialCharTok{==} \StringTok{\textquotesingle{}w\textquotesingle{}}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+The individual f0 values produced by any given woman from Michigan for any given utterance cannot be known a priori. In other words, you don't know what pitch a random woman from Michigan will produce until you actually observe and record the production. For this reason, ``the f0 produced by adult women from Michigan'' is a random variable.
+
+We're going use the information in our sample to try to answer two questions about the f0 produced by female speakers from Michigan:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  What is the average f0 of the whole \emph{population} likely to be?
+\item
+  Can we set bounds on likely mean f0 values based on the data we collected?
+\end{enumerate}
+
+In order to answer questions about reasonable values for random variables, scientists often collect measurements of that variable. For example, although you may not know your exact weight in any given day, you may have enough observations to have a pretty god idea of what it might be tomorrow. In fact, your expectation may be so strong that a large deviation from it would be more likely to result in your buying a new scale than believing the measurement.
+
+The measurements you make of a random variable are called \emph{samples}. The sample is a finite set of observations that you actually have. The population is the (hypothetical) larger group of all possible observations that you are \emph{actually} interested in. It is the entire set of possible values of the random variable. For example, the population of ``f0 produced by adult women from Michigan'' contains all possible values of f0 produced by the entire set of women from Michigan.
+
+Usually, a linguist will collect a sample to make inferences about the population. In other words, we are interested in the general behavior of the variable itself, not just of the small number of instances that we observed. For example, Hillenbrand et al.~collected their data to make inferences about Michigan speakers overall, and not because they were particularly interested in the specific speakers in their sample. They are using their small sample of speakers to make inferences about the whole population of speakers in Michigan.
+
+Scientific research is often focused on questions such as (1) above. For example someone might ask ``what's the average f0 produced by adult female speakers?'' and you can say, for example, ``I have some data that suggests 220 Hz is a reasonable estimate''. However, reliable inference requires having good answers to the second sort of questions as well.
+
+There is no chance that the average of the sample you collected will \textbf{exactly} match the population average. After all, the sample is just a (relatively) small collection of random observations! So, if the sample mean is 220 Hz, it seems reasonable that the \emph{population} mean could actually equal 219 Hz. Could it equal 215 Hz? 200 Hz? Where does it stop? Clearly, we need some principled way to `guess' reasonable ranges based on our sample of observations. In this chapter we will discuss how statistics provides us with a framework to answer both questions above using only our sample of values.
+
+\hypertarget{inspecting-the-central-location-and-spread-of-values}{%
+\subsection{Inspecting the central location and spread of values}\label{inspecting-the-central-location-and-spread-of-values}}
+
+Using R, we can easily find important information about our sample of f0 values. Below, we calculate the sample mean (\(\bar{x}\)), the number of observations, the sample standard deviation (\(s_x\)), and important quantiles. The quantiles below correspond to the values of ordered observations, as in the right plot in Figure \ref{fig:initialplot}. The 0\% quantile is the smallest (leftmost) observation, while 100\% is the highest (rightmost) observation. Any other quantile is found by ordering the observations and selecting the observation that is higher than \(x\%\) of the sample values. For example, the 50\% quantile (the median) is higher than 50\% of values, and the 25\% quantile is higher than 1/4 of the values in the sample.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# calculate basic descriptive statistics}
+\FunctionTok{mean}\NormalTok{ (f0)}
+\DocumentationTok{\#\# [1] 220.401}
+\FunctionTok{length}\NormalTok{ (f0)}
+\DocumentationTok{\#\# [1] 576}
+\FunctionTok{sd}\NormalTok{ (f0)}
+\DocumentationTok{\#\# [1] 23.22069}
+\FunctionTok{quantile}\NormalTok{ (f0)}
+\DocumentationTok{\#\#     0\%    25\%    50\%    75\%   100\% }
+\DocumentationTok{\#\# 149.00 207.00 220.00 236.25 307.00}
+\end{Highlighting}
+\end{Shaded}
+
+We can use this information to make some basic, and potentially useful statements about our data. The mean and median are 220 Hz, and f0 values range from 149 to 307 Hz. However, there are not many observations at the extremes, and 50\% of values are between 207 and 236 Hz. The standard deviation is 23 Hz, indicating that the bulk of observations were within one standard deviation of the mean (220±23 Hz).
+
+\begin{figure}
+\centering
+\includegraphics{01_files/figure-latex/initialplot-1.pdf}
+\caption{\label{fig:initialplot}(left) Plot of values in the order they appear in the original data. (right) Observations ordered by increasing value.}
+\end{figure}
+
+We can look at the distribution of our sample of f0 values in several ways, as seen in Figure \ref{fig:F1-distributioncomparison}. In the top row each point indicates an individual production. Points are jittered along the y axis to make them easier to distinguish so that dense and sparse locations can be compared.
+
+In the middle row we see a box plot of the same data. The edges of the box correspond to the 25\% and 75\% quantiles of the distribution, and the line in the middle of it corresponds to the median. So, the box spans the \emph{interquartile range} of your observations and 50\% of observations are contained in the box. From the edges of the box extend the boxplot `whiskers'. By default, these extend out 1.5 times the interquartile range. These whiskers are simply intended to give you an estimate of the amount of `typical' variation in your sample. Beyond the whiskers we see individual \emph{outliers}, points considered to be substantially different from the rest of the sample. We can see that the boxplot does a good job of summarizing the information in the top row, and provides information related to both average f0 values and to the expected variability in these values.
+
+The bottom row presents what is knows as a \emph{histogram} of the same data. The histogram divides the x axis into a set of discrete sections (`bins'), and gives you the count (or frequency) of observations in each bin. Bins with lots of observations are relatively taller (more \emph{dense}) than bins without many observations in them. As a result, histograms can be used to summarize where observations tend to be. For example, we can see that the bins under the interquartile range have the most observations, and that values further from the mean value become increasingly less frequent.
+
+\begin{figure}
+
+{\centering \includegraphics{01_files/figure-latex/F1-distributioncomparison-1} 
+
+}
+
+\caption{Different ways to consider our distribution of f0 values.}\label{fig:F1-distributioncomparison}
+\end{figure}
+
+\hypertarget{probability-distributions}{%
+\section{Probability Distributions}\label{probability-distributions}}
+
+Histograms are particularly useful to understand because of how they relate to probability distributions. The probability is the number of times an event is expected to occur, out of all the other observed events and outcomes that can occur. This can also be thought of as the \emph{percent} of times an event is expected to occur. For example, the probability that any given day is Monday is 1/7 (14\% of days), while the probability that any given day is a weekday is 2/7 (29\% of days).
+
+By definition, the total probability of all of the possible values in a population is always equal to 1. This is like using 100 to communicate percentages by convention. This is not \emph{correct} or \emph{true}, it is arbitrary just like our base 10 number system. We could make all probabilities add up to 1.37 instead, but why would we want to? Making all probabilities add up to one has many practical advantages and so this convention is actually beneficial for us. As a result of this convention, you know that a probability of 0.5 means something is expected to occur half the time (i.e., on 50\% of trials). For example, suppose we want to know the probability of being an adult female in our sample who produces an f0 under 175 Hz. Finding the probability of observing this event is easy:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# the evaluation in the parenthesis will return 1 if true, 0 if false}
+\CommentTok{\# number of observations the fall below threshold}
+\FunctionTok{sum}\NormalTok{ (f0 }\SpecialCharTok{\textless{}} \DecValTok{175}\NormalTok{)  }
+\DocumentationTok{\#\# [1] 22}
+
+\CommentTok{\# divided by total number of events}
+\FunctionTok{sum}\NormalTok{ (f0 }\SpecialCharTok{\textless{}} \DecValTok{175}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{ (f0)  }
+\DocumentationTok{\#\# [1] 0.03819444}
+
+\CommentTok{\# a shortcut to calculate probability, mean = total/length}
+\FunctionTok{mean}\NormalTok{ (f0 }\SpecialCharTok{\textless{}} \DecValTok{175}\NormalTok{)}
+\DocumentationTok{\#\# [1] 0.03819444}
+\end{Highlighting}
+\end{Shaded}
+
+The top value is the frequency of the occurrence. This is not so useful because this number can mean very different things given different sample sizes (e.g., 22/23, 22/10000). The middle and bottom values have been divided by the total number of observations. As a result, these now represent a proportion, or probability.
+
+The histogram on the left below shows frequency on the y axis, indicating the total number of observations in each bin. The histogram on the right shows \emph{density} along the y axis. When you see \emph{density} on the y axis, that means that y axis values have been scaled so that the total area of all the rectangles making up the histogram are equal to 1. This has two benefits:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  It lets you compare the distribution of values across different sample sizes.
+\item
+  It makes the histogram more comparable to a probability distribution.
+\end{enumerate}
+
+\begin{figure}
+\centering
+\includegraphics{01_files/figure-latex/F1-twohists1-1.pdf}
+\caption{\label{fig:F1-twohists1}(left) A histogram of our f0 data showing counts in each bin. (right) A histogram of our f0 data showing densities.}
+\end{figure}
+
+Imagine a circle like in a Venn diagram that contains all possible productions of female f0. This circle has an area of 1 since it contains all possible values in the population. Imagine we spread out this circle along the x axis so that its shape reflected the relative frequencies of different values presents in the population. For example, if some outcomes were 5 times more probable than others, the shape should be 5 times taller there, and so on. If we managed to do this, the height (or `density') of this shape would exactly correspond to a probability distribution like that seen in the right plot above.
+
+The \emph{density} of a histogram (of probability distribution) is just the thickness of the distribution at a certain location along the number line. A higher density in a certain location tells us values in that vicinity are relatively more probable, and differences in density reflect differences in the relative probability of different values.
+
+Below I've repeated the data vector, doubling the counts by including each observation twice. Notice that the y axis in the right panel does not change. This is because increasing the number of observations changes your counts but not the relative frequencies of observations with different values. For instance, increasing the number of coin flips should not change the fact that 50\% will be heads, but it will change the number of heads you observe.
+
+\begin{figure}
+\centering
+\includegraphics{01_files/figure-latex/F1-twohists2-1.pdf}
+\caption{\label{fig:F1-twohists2}The counts have been doubled relative to above.}
+\end{figure}
+
+\hypertarget{the-normal-distribution}{%
+\subsection{The normal distribution}\label{the-normal-distribution}}
+
+The distribution of many \href{https://www.youtube.com/watch?v=4HpvBZnHOVI}{random variables} (including f0) follows what's called a \href{https://en.wikipedia.org/wiki/Normal_distribution}{normal distribution}, also called a Gaussian distribution. So, if you take a sample of a random variable and arrange observations into bins, they resulting histogram will tend to have the familiar, bell-shaped curve common to normally-distributed data.
+
+The normal distribution has the following important characteristics.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  The distribution is symmetrical - i.e., producing a higher or lower than average f0 is about equally likely.
+\item
+  The probability of observing a given value decreases as you get further from the mean (i.e., \emph{average}) value.
+\item
+  It's easy to work with, very well understood, and naturally arises in basically all domains.
+\end{enumerate}
+
+Normal distributions have two parameters. This means they vary from each other in only two ways. Think of parameters like ways that things can be `set' differently from each other. For example, a radio has three parameters: tuner frequency, band (AM/FM), and volume. A toaster may have only one, a single knob determining the degree of toasting required. The more parameters something has, the more complicated it is (an airplane has thousands!).
+
+Luckily, the normal distribution only has two parameters:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  A mean parameter, \(\mu\), which determines the location of the distribution along the x axis. When the mean changes, the whole shape of the distribution slides along the number line. The mean is the 50\% halfway point of the `mass' of the distribution. If the distribution were an physical object, its mean would be its center of gravity. You would balance the distribution on your fingertip along this point.
+\item
+  A standard deviation, \(\sigma\), that determines its \emph{spread} along the x axis. When the standard deviation changes the distribution is stretched wide or made very narrow, but stays in place. Since every distribution has an area under the curve equal to one (i.e., they all have the same `volume'), distributions with a small variance must necessarily be very dense.
+\end{enumerate}
+
+The parameters of a probability distribution are used to draw its shape, which can be used to make inferences about likely values. Think back to high school math and the function defining the shape of a parabola \(y = ax^2+bx+c\). This function draws a shape based on the settings of its parameters \(a, b\) and \(c\). In the exact same way, the formula defining the density of the normal distribution draws the shape given the settings of its \(\mu\) and \(\sigma\) parameters.
+
+Below, I compare the histogram of f0 values to the density of a normal distribution with a mean equal to our sample mean (\(\mu = 220 Hz\)) and a standard deviation equal to our sample standard deviation (\(\sigma = 23 Hz\)), calculated above. The density was drawn using the \texttt{dnorm} function, which draws a curve representing the shape of a theoretical normal distribution with a given mean and standard deviation.
+
+\begin{figure}
+\centering
+\includegraphics{01_files/figure-latex/theoretical-1.pdf}
+\caption{\label{fig:theoretical}A comparison of the data distribution with a theoretical normal distribution.}
+\end{figure}
+
+Clearly, there is a very good alignment between our random sample of real-world data and the normal density, which is a theoretical mathematical function. This suggests that we could potentially use the \emph{theoretical} shape of the normal distribution to talk about the characteristics of our observed random sample of data. This would be a bit like using the properties of a parabola to predict the path of a projectile in real life: although the actual path will differ form that of a perfect parabola, there are enough similarities to make the comparison worthwhile.
+
+\hypertarget{referring-to-the-normal-distribution-to-make-inferences}{%
+\subsection{Referring to the normal distribution to make inferences}\label{referring-to-the-normal-distribution-to-make-inferences}}
+
+In general, it's impossible to know what the `true' data distribution is, so that \emph{perfect} inference is not possible. As a result, scientists often use theoretical probability distributions to make inferences about real-life populations and observations. Since our f0 measurements follow the `shape' predicted by the theoretical normal distribution, we may be able to use the characteristics of an appropriate normal distribution to make inferences about female f0 (and other variables).
+
+Using a normal distribution to make inferences about your data is like using a mathematical model for spheres to understand the behavior of billiard balls. In reality the balls are not perfect spheres. However, their shapes will be \emph{spherical enough} to allow us to make useful predictions based on the simplified model. In general, it is useful to keep in mind that reality will never exactly conform to our model. This can result in unpredictable errors in our conclusions. In general, the things you don't know you don't know are the things that will cause the most problems. If you know that your model was wrong, you would have fixed it!
+
+Since we expect the distribution of f0 values to have the shape of the normal distribution, we can use the shape of the normal distribution to make inferences about the distribution of f0 values, even the ones we did not observe. For example, we can use the theoretical normal density to estimate the probability of observing a female production with an f0 of under 175 Hz, from among \emph{all} possible values of this random variable (i.e., all observable productions of f0 in this \emph{population}).
+
+We do this by referring to the proportion of values expected to be less 175 Hz in the normal distribution that has the same `shape' as our sample. This can be found by finding the area under the curve of the probability density to the left of that point (the red area below). Since the \emph{total} area is always equal to 1, the area of the red portion below corresponds to a percentage/probability.
+
+Below, I use the function \texttt{pnorm} to find the proportion of values that are expected to be greater/less than 175 Hz. We can do this for the normal density because it is very well understood. Think of how easy it is to calculate the area of a circle of the perimeter of a square. The shape of the normal distribution is only a little more complicated to understand, and the \texttt{pnorm} function helps you make predictions about it.
+
+I use the parameters estimated form our sample to run the \texttt{pnorm}function, as these are our best guesses of the population parameters. As we can see, this value is reasonably close to our empirical probability of 0.038 (3.8\%).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Observed probability observing a token with an f0 \textless{} 175 Hz}
+\FunctionTok{mean}\NormalTok{ (f0 }\SpecialCharTok{\textless{}} \DecValTok{175}\NormalTok{)}
+\DocumentationTok{\#\# [1] 0.03819444}
+
+\CommentTok{\# Theoretical probability of observing a production below 175 Hz}
+\FunctionTok{pnorm}\NormalTok{ (}\DecValTok{175}\NormalTok{, }\FunctionTok{mean}\NormalTok{ (f0), }\FunctionTok{sd}\NormalTok{(f0))}
+\DocumentationTok{\#\# [1] 0.02527988}
+
+\CommentTok{\# Theoretical probability of observing a production greater than 175 Hz}
+\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pnorm}\NormalTok{ (}\DecValTok{175}\NormalTok{, }\FunctionTok{mean}\NormalTok{ (f0), }\FunctionTok{sd}\NormalTok{(f0))}
+\DocumentationTok{\#\# [1] 0.9747201}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{01_files/figure-latex/F1-prediction-1.pdf}
+\caption{\label{fig:F1-prediction}The read area relects the distribution of outcomes that satisfy f0 \textless{} 175 Hz.}
+\end{figure}
+
+Imagine you had 1 pound of clay and I asked you to make a shape \textbf{exactly} like the normal density (red curve) above. This shape should be perfectly flat, i.e., it should have a constant depth (like a coin). If you had this shape made of clay used a knife to remove the part left of 175 Hz (the red subsection) and weighed it, it should weigh 2.5\% of a pound. The `area under the curve' of this clay sculpture would just correspond to the amount of clay in a certain area, and in this case we know that only 2.5\% of the clay should be in that section of the shape. So, the area under the curve, the probability, is just the amount of the \emph{stuff} in the density that falls below/above a certain point, or between two points.
+
+We can use the probabilities to compare our predicted and expected observations. Since we had 576 observations and there was a probability of 0.025 of observing tokens with an f0 below 175 Hz, we expect about 14 tokens (\(576 \times 0.025\)) to have an f0 lower than 175 Hz. Instead, we have 22 such observations indicating that our actual data has more extreme values than our theoretical distribution.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# probability of observing a production with an f0 under 175 Hz}
+\NormalTok{probability }\OtherTok{=} \FunctionTok{pnorm}\NormalTok{ (}\DecValTok{175}\NormalTok{, }\FunctionTok{mean}\NormalTok{ (f0), }\FunctionTok{sd}\NormalTok{(f0)) }
+
+\CommentTok{\# expected count}
+\FunctionTok{length}\NormalTok{ (f0) }\SpecialCharTok{*}\NormalTok{ probability}
+\DocumentationTok{\#\# [1] 14.56121}
+
+\CommentTok{\# actual count}
+\FunctionTok{sum}\NormalTok{ (f0 }\SpecialCharTok{\textless{}} \DecValTok{175}\NormalTok{)}
+\DocumentationTok{\#\# [1] 22}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{probabilities-of-events-and-likelihoods-of-parameters}{%
+\section{Probabilities of events and likelihoods of parameters}\label{probabilities-of-events-and-likelihoods-of-parameters}}
+
+We're going to switch from talking about \emph{probabilities} to talking about \emph{likelihoods}. A probability is the odds of observing some data/event/outcome, given some parameter(s). A likelihood places odds on different \emph{parameter} values given some observed data. These concepts are basically the inverse of each other. For example, you could say ``how probable is it that a random person from San Francisco will be over 6 feet tall?''. In contrast, you could ask ``how likely is it that the average height of people from San Francisco is 6 feet?''.
+
+The \emph{likelihood function} is a curve showing the relative likelihoods of different parameter values, given a fixed set of data. The likelihood function tells you what values are \emph{believable} given your data. If a value is very unlikely, that means that it is not supported by your data. In other words, unlikely parameter estimates represent conclusions that your data is rejecting as not viable. Every parameter for every probability distribution has a likelihood function, given some data. Here, we're only going to discuss the likelihood of the normal mean parameter, \(\mu\), in detail.
+
+Here are three useful properties of the likelihood functions of \(\mu\), the mean parameter of the normal distribution:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  The likelihood function of \(\mu\) will tend to be a normal distribution.
+\item
+  The mean (and peak) of the likelihood function of \(\mu\) given some sample \(x\) is equal to the arithmetic mean of the sample (\texttt{mean(x)}).
+\item
+  The standard deviation of the likelihood of \(\mu\) is equal to the standard deviation of the data (\texttt{sd(x)}), divided by the square root of N (the sample size).
+\end{enumerate}
+
+The first point tells us that we can use the normal distribution to make inferences about likely, and unlikely values for means, given some data.
+
+The second point says that if you are wondering what the best (most likely) estimate of \(\mu\) is given your sample, the answer is the arithmetic mean of your sample (\(\bar{x}\)).
+
+The third point means that the likelihood function for \(\mu\) will tend to be \emph{much} narrower than the distribution of our original data. This is because a mean based on, for example, 50 samples will contain many positive and negative deviations from the average that will tend to cancel out. As a result, the more data you have the more \emph{precise} your estimates are, and the less \emph{uncertainty} is associated with any estimate.
+
+The left panel in Figure \ref{fig:F1-likelihood1} (code at end of chapter) shows the likelihood function for \(\mu\) based on the first 10 observations of our f0 vector, shown by the blue points at the bottom of the plot. I chose this small sample just to make this example clearer. Notice that the most likely mean values of \(\mu\) for these points like over the bulk of the sampled values. The vertical dotted lines show three possible mean values that will be highlighted.
+
+The likelihood of any parameter estimate (e.g., \(\mu\) = 175 Hz in the right panel of Figure \ref{fig:F1-likelihood1}) is equal to the product of the density of each observation in the sample, if we assume that the estimate were true. For example, to calculate the likelihood that \(\mu=175\), we:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  Assume that the data is generated by a normal distribution with a \(\mu\) equal to 175 Hz, and \(\sigma\) equal to the sample standard deviation (\(s_{f0}\)).
+\item
+  Find the the height of the curve of the probability distribution (the density) over each point (indicated by lines in the right panel below).
+\item
+  The likelihood is the product of all of these densities (heights). In practice, the logarithms of the individual probabilities are added together, yielding the \emph{log-likelihood}. This is because multiplying together too many fractions can lead to numbers so small computers have a hard time representing them, and adding logarithms is equivalent to multiplying the original values.
+\end{enumerate}
+
+Imagine I follow the steps above for each position along the x axis, recording the likelihood values I calculate. I then plot the product of the densities for each corresponding x value. If I do this I have just plotted a likelihood function for \(\mu\) given our data.
+
+~
+\includegraphics{01_files/figure-latex/F1-likelihood1-1.pdf}
+~
+
+In the right panel in Figure \ref{fig:F1-likelihood1} we see that a normal distribution with a \(\mu\) of 175 Hz is very unlikely to generate this data. Many points are extremely improbable and have densities close to zero. As a result, the product of these values (the heights of the lines) will be a very small number. This is reflected in the extremely small values in the likelihood function at 175 Hz in the left panel above.
+
+In the left panel in Figure \ref{fig:F1-likelihood2} (code at end of chapter), we see that a normal distribution with a \(\mu\) of 200 Hz is more likely to generate this data, and the probability distribution is clearly a much better fit. However a distribution with a mean of 200 Hz is still not very likely to have generated this data.
+
+Finally, in the right panel below we see the the maximum likelihood estimate of 225 Hz, the value representing the peak of the likelihood function (in the left panel above). When we say that 225 Hz is the most likely mean for this data, we are saying that this data is most probably the outcome of a normal distribution centered at 225 Hz, relative to the alternatives.
+
+~
+\includegraphics{01_files/figure-latex/F1-likelihood2-1.pdf}
+~
+
+\hypertarget{making-inferences-using-likelihoods}{%
+\subsection{Making inferences using likelihoods}\label{making-inferences-using-likelihoods}}
+
+Previously, I mentioned using the normal distribution to make inferences. When variables are normally distributed we can use the theoretical normal distribution and functions such as \texttt{pnorm} to answer questions about values we expect, and don't expect, to see.
+
+We can take this same approach to make inferences about \emph{parameters} when their likelihood functions follow a normal distribution. For example, we can use the results of the calculations below:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# sample mean}
+\FunctionTok{mean}\NormalTok{ (f0)   }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 220.401
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# sample standard deviation}
+\FunctionTok{sd}\NormalTok{ (f0)     }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 23.22069
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# sample size}
+\FunctionTok{length}\NormalTok{ (f0)  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 576
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# the standard deviation of the likelihood function}
+\FunctionTok{sd}\NormalTok{ (f0) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{ ( }\FunctionTok{length}\NormalTok{ (f0) ) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9675289
+\end{verbatim}
+
+To draw the expected likelihood function for \(\mu\) given our data and our model. You may be thinking, what model? It may seem too simple to be a model, but by assuming that our data can be understood as coming from a normal distribution with some given \(\mu\) and \(\sigma\), we have already created a simple model for our data. I'll return to this below.
+
+We can take our model and our parameter estimates and draw the likelihood function for \(\mu\). We can then use the \texttt{qnorm} function to calculate quantiles for our likelihood, presented below. I added vertical lines at the 2.5\% and 97.5\% quantiles of our distribution. These vertical lines enclose 95\% of the likelihood density, and so represent the range of values representing the 95\% most likely values of \(\mu\). I chose an interval enclosing 95\% of the likelihood because this is used by convention. This is a commonly-used interval but otherwise has no special significance.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quantiles }\OtherTok{=} \FunctionTok{qnorm}\NormalTok{ (}\FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.975}\NormalTok{), }\FunctionTok{mean}\NormalTok{ (f0), }\FunctionTok{sd}\NormalTok{ (f0) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{ (}\FunctionTok{length}\NormalTok{ (f0) ) )}
+\NormalTok{quantiles}
+\DocumentationTok{\#\# [1] 218.5047 222.2974}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{01_files/figure-latex/F1-likelihood-1.pdf}
+~
+
+The likelihood tells you about the most believable/credible parameter values, given your model and data. Given the information presented in the figure above, we may conclude that the most likely parameter values fall between 218 and 222 Hz. This means that it is reasonable that the true value might be 221 Hz, as this value is very likely given our sample. Basically, maybe our sample mean is wrong and arose by accident, and 221 Hz is the true \(\mu\). This outcome is compatible with our data.
+
+However, a value of 216 Hz is extremely \emph{unlikely} to fit our data. It is just too far from our sample mean relative to the amount of variation in our sample. This is like if you measured the heights of 100 women in a small town (pop. 1500) and found the average was 5'4``. You might accept that the actual population average is 5'5'', but may find it difficult to accept that it was actually 6'0". It would mean you happened to measure all of the shortest women in the town, an extremely unlikely event.
+
+So, since we think that 216 Hz is not a plausible mean f0 given our sample, this also means that it is very unlikely that the real \(\mu\) is 216 Hz. This is because a distribution centered at 216 would be extremely unlikely to generate a sample mean of 220 Hz. Using this aproach, we can rule out implausible values of \(\mu\) based on the characteristics of our data.
+
+At this point we can offer conventional responses to the research questions posed at the start of the Chapter:
+
+Q1) What is the average f0 of the whole \emph{population} likely to be?
+
+A1) The most likely value for the population mean is our sample mean, 220.4 Hz.
+
+Q2) Can we set bounds on likely mean f0 values based on the data we collected?
+
+A2) Yes, there is a 95\% probability that the population mean is between 218.5 222.3 Hz, given our data and model structure.
+
+Traditional approaches to statistics (sometimes generally referred to as `frequentist') estimate parameters by trying to find the most likely values for parameters (i.e., `maximum likelihood estimation'). They do this by referring to the theoretical likelihood functions such as what we plotted above. Although this works very well for simple data, it is difficult if not impossible for some of the more complicated datasets that often arise for even the simplest research questions in linguistics.
+
+\hypertarget{bayesian-models}{%
+\section{Bayesian models}\label{bayesian-models}}
+
+In this class we are going to learn about \emph{multilevel Bayesian models}. These models have many advantages over `traditional' approaches. They provide researchers with more information, are more robust, and at \textbf{worst}, they are as good as traditional models. I may sound biased, but the main reason for all of these advantages is that traditional models were developed over 100 years ago. On the other hand, mathematical and technological advances have only made Bayesian multilevel models possible in the last 10+ years. It is only reasonable that the newer approaches should offer some advantages over methods developed before calculators existed.
+
+Here, I am going to address what is meant by two aspects of the term `Bayesian multilevel models': `Bayesian' and `models'.
+
+\hypertarget{what-are-regression-models}{%
+\subsection{What are regression models?}\label{what-are-regression-models}}
+
+Before beginning this section I just want to say that its ok if a lot of this section doesn't makes sense right now. It will make more sense once you start to actually build models and it becomes less hypothetical and more practical. I will use the terms and concepts described here in later chapters, but I will re-explain it each time. If you think that a model in a later section is not explained in as much detail as you would like, look at this section again!
+
+I have been referring somewhat obliquely to `models' without really explaining what I mean by this. It's difficult to offer a precise definition because the term is so broad, but `regression' modeling can be thought of as trying to understand variation the mean parameter (\(\mu\)) of a normal distributions. Actually, you can use many other probability distributions, but for now we will focus on models based on the normal distribution.
+
+Basically it goes like this:
+
+\begin{itemize}
+\item
+  you have a variable you are interested in, \(y\), which is is a vector containing N observations. We can refer to any one of these observations like this \(y_{[i]}\) for the \(i^{th}\) observation. In our case this is a vector of 576 f0 values (\texttt{f0{[}1:576{]}}). Although its not necessary, I am going to put the index variables associated with trial number (\(i\)) in brackets like this \(y_{[i]}\). This is just to make it easier to identify, and to highlight the similarity to vectors (e.g., \texttt{f0{[}i{]}}).
+\item
+  you assume that your data is well described by a normal probability distribution. This is a mathematical function (\(\mathcal{N}(\mu,\sigma)\)) that described what is and is not probable based on two parameters.
+\item
+  the mean of this distribution is either fixed, or varies in a logical manner.
+\item
+  the variation in the mean of this distribution can be understood using some other variables.
+\end{itemize}
+
+We can write this model more formally like this:
+
+\[
+y_{[i]} \sim \mathcal{N}(\mu,\sigma)
+\label{eq:1}
+\]
+
+This says that we expect that the tokens of the variable we are interested in is distributed according to (\(\sim\)) a normal distribution with those parameters.
+
+Notice hat \(y\) gets a subscript while \(\mu\) and \(\sigma\) do not. This is because for right now, those parameters are fixed for all observations, while the value of \(y\) changes for each observation based on the \(i\) subscript. For example, below I set \(i=2\) and use this index variable to show the second element of the data vector, i.e.~\(f0_{[i=2]}=214\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{ (f0)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 225 214 192 233 223 223
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{i }\OtherTok{=} \DecValTok{2}
+\NormalTok{f0[}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 214
+\end{verbatim}
+
+Equation \eqref{eq:1} just formalizes the fact that we think the \emph{shape} of our data will be like that of a normal distribution with a mean equal to \(\mu\) and a standard deviation equal to \(\sigma\).
+
+When you see this, \(\mathcal{N}(\mu,\sigma)\), just picture in your mind the shape of a normal distribution, like if you see this \(y=x^2\) you may imagine a parabola. \(\mathcal{N}(\mu,\sigma)\) Really just represents that shape of the normal distribution, and the associated expectation about more and less probable outcomes.
+
+The above relationship can also be presented like this:
+
+\[
+y_{[i]} = \mu + \mathcal{N}(0,\sigma)
+\label{eq:2}
+\]
+
+Notice that we got rid of the \(\sim\) symbol, moved \(\mu\) out of the distribution function (\(\mathcal{N}()\)), and that the mean of the distribution function is now 0. This breaks up our variable into two components:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  A systematic component, \(\mu\), that contributes the same value to all instances of a variable.
+\item
+  A random component, \(\mathcal{N}(0,\sigma)\), that causes unpredictable variation around \(\mu\).
+\end{enumerate}
+
+In terms of our data, I might express the distribution in either of the following ways:
+
+\[
+f0_{[i]} = \mathcal{N}(220.4,23.2)
+\label{eq:3}
+\]
+
+\[
+f0_{[i]} = 220.4 + \mathcal{N}(0,23.2)
+\label{eq:4}
+\]
+
+The distribution on the left below is the original data, centered at 220.4 Hz and with a standard deviation of 23.2 Hz. On the right, the mean has been subtracted from each value. The sample now represents random variation around the sample mean, variation that our model can't explain. From the perspective of our model, this is \emph{noise}, or \emph{error}. This doesn't mean that it's unexplainable, it only means that we've structured our model in a way that doesn't let us explain it.
+
+\begin{figure}
+\centering
+\includegraphics{01_files/figure-latex/F1-errorhist-1.pdf}
+\caption{\label{fig:F1-errorhist}(left) Histogram of data. (right) Histogram of centered data, basically the error distribution.}
+\end{figure}
+
+In regression models, we can decompose systematic variation in \(\mu\) into component parts, based on some predictor variables, \(\mathrm{x}\). These predictor variables co-vary (vary with) our \(y\) variable, and we think help explain the variation in \(y\).
+
+Below, I am saying that I think \(\mu\) is actually equal to some combination of \(\mathrm{x}_{1}\) \(\mathrm{x}_{2}\) and \(\mathrm{x}_{3}\). For example, I could think that f0 is affected by the speaker age (\(\mathrm{x}_{1}\)) and gender of the speaker (\(\mathrm{x}_{2}\)), and vowel category (\(\mathrm{x}_{3}\)) of the production.
+
+\[
+\mu = \mathrm{x}_{1} + \mathrm{x}_{2} + \mathrm{x}_{3}
+\label{eq:5}
+\]
+
+The values of the predictor variables will vary from trial to trial, and are not fixed. Often the whole point of running an experiment is to predict differences in observations based on differing predictor values! So obviously, \(\mu\) will need to vary from trial to trial. That means that the equation above should actually include \(i\) subscripts indicating that the equation refers to the value of the predictors and expected mean, \emph{for that trial} rather than overall.
+
+\[
+\mu_{[i]} = \mathrm{x}_{1[i]} + \mathrm{x}_{2[i]} + \mathrm{x}_{3[i]} \label{eq:5}
+\]
+
+Actually, the mean is very unlikely to just be an equal combination of the predictors, so that a \emph{weighting} of the predictors will be necessary. We can use the symbol \(\alpha\) for these weights. For example, maybe \(\mathrm{x}_{1}\) is twice as important as the other two predictors and so \(\alpha_1\) is 2, while \(\alpha_2\) and \(\alpha_1\) are 1.
+
+\[
+\mu_{[i]} = \alpha_1*\mathrm{x}_{1[i]} + \alpha_2*\mathrm{x}_{2[i]} + \alpha_3*\mathrm{x}_{3[i]}  
+\label{eq:6}
+\]
+
+Note that the weight terms (\(\alpha\)) do not get an \(i\) subscript. This is because they do not change from trial to trial. The \emph{values} of the predictors change from trial to trial, but the way that these are combined does not, they are a stable property of the model.
+
+Decomposition of \(\mu\) into sub-components makes our model something more like:
+
+\[
+y_{[i]} = \mu_{[i]} + \mathcal{N}(0,\sigma)  
+\label{eq:7}
+\]
+
+\[
+y_{[i]} =  (\alpha_1*\mathrm{x}_{1[i]} + \alpha_2*\mathrm{x}_{2[i]} + \alpha_3*\mathrm{x}_{3[i]} ) + \mathcal{N}(0,\sigma)  
+\label{eq:8}
+\]
+
+Often, \(\varepsilon\) is used to represent the random component, as in:
+
+\[
+y_{[i]} = \alpha_1*\mathrm{x}_{1[i]} + \alpha_2*\mathrm{x}_{2[i]} + \alpha_3*\mathrm{x}_{3[i]}+ \varepsilon_{[i]}
+\label{eq:9}
+\]
+
+Notice that the error term \emph{does} get a, \(i\) subscript, as in \(\varepsilon_{[i]}\). That is because the exact value of the error changes from trial to trial, even of the general characteristics of the error (i.e., \(\mathcal{N}(0,\sigma)\)) do not.
+
+When expressed in this manner, this is now a `regression equation' or a `regression model'. `Fitting' a regression model basically consists of trying to guess the most likely values of \(\alpha_1\), \(\alpha_2\), and \(\alpha_3\) given our data.
+
+Notice that the above formulation means that regression models do not require that our \emph{data} be normally distributed, but only that the \emph{random variation} in our data (\(\varepsilon\)) be normally distributed. For example, in the left panel below I plot the distribution of f0 from among the entire Hillenbrand et al.~data, including boys, girls, men and women. The data is not normally distributed, however, we can still use a regression based on normally-distributed data to model this as long as we expect that:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  There is systematic variation in the \(\mu_{[i]}\) of f0 across different groups, speakers, conditions, etc.
+\item
+  The \emph{random variation} around these predicted values of \(\mu_{[i]}\) more or less follows a normal distribution.
+\end{enumerate}
+
+In the right panel I plot the individual densities for different speaker classes. We see that although the data is not normally distributed, the within-group variation is. This suggests a regression model is appropriate for this data.
+
+\begin{figure}
+\centering
+\includegraphics{01_files/figure-latex/F1-allf0s-1.pdf}
+\caption{\label{fig:F1-allf0s}(left) Distribution of f0 across all speakers. (right) Densities of distributions of f0 for different speaker classes: boys (red), girls (green), men (blue) and women (cyan).}
+\end{figure}
+
+\hypertarget{whats-bayesian-about-these-models}{%
+\subsection{What's `Bayesian' about these models?}\label{whats-bayesian-about-these-models}}
+
+The major difference between Bayesian and traditional models is that Bayesian models rely on \emph{posterior distributions} rather than likelihood functions. I am going to define some terms:
+
+\begin{itemize}
+\item
+  prior probability distribution: the distribution of possible/believable parameter values \textbf{prior} to the \emph{current} experiment. This \emph{a priori} expectation can come from world knowledge, previous experiments, or some combination of the two.
+\item
+  the likelihood: this is the distribution of possible/credible parameter values given the \textbf{current} data and probability model, and nothing else.
+\item
+  posterior probability distribution: the distribution of possible/believable parameter values you have \textbf{after} your current experiment. You get this by combining the prior distribution and the likelihood.
+\end{itemize}
+
+Traditional models make inferences based on the likelihood functions of parameters. Bayesian models make inferences based on the posterior distributions of parameters. To do this, they have to have to actually combine information about likelihood with information about the prior probabilities of parameters.
+
+\hypertarget{posterior-distributions}{%
+\section{Posterior distributions}\label{posterior-distributions}}
+
+The combination of probability distributions is straightforward conceptually: you just multiply the values of the distributions at each x-axis location, and the result is the new curve. In the figure below (code at end of chapter), I combine several sets of probability distributions, showing the effects of variations in priors and likelihoods. In each plot, I scale the posterior density so that it is the same height as the likelihood. This is only to make the figures interpretable but does not affect any of the points I make below.
+
+In the top-left panel, I plot the likelihood function for \(\mu\) given a sample of size 5 with a mean of 220 Hz. I show what happens when I combine this with a relatively weak but very different prior: the standard deviation is the same as our f0 data, however the mean is much higher (250 Hz). With only 5 data points the likelihood already dominates the posterior, though the prior distribution is exerting a pull.
+
+In the top-right panel, the posterior is almost identical to the likelihood. The likelihood represents a sample of size 100, which is actually a tiny sample in experimental linguistics work where you may have 200+ samples from each of 50+ subjects. As you might imagine, when the sample size is that large the prior exerts almost no influence on results.
+
+In the bottom-left panel we see a situation where the prior dominates the estimate. Consider a situation where we actually have really good reasons to think that the mean is 250 Hz. If we really \emph{know} this, why would we accept and estimate of 220 Hz based on only 5 samples? In this case, the posterior distribution is basically saying: your estimate is great, but come back when you have more evidence and I might believe you.
+
+In the bottom-right panel we see a situation where the likelihood and the prior are equal. In this case the posterior represents compromise between new and prior knowledge.
+
+\begin{figure}
+\centering
+\includegraphics{01_files/figure-latex/F1-posterior-1.pdf}
+\caption{\label{fig:F1-posterior}Demonstration of the effect of different types of priors and likelihoods on posterior distributions.}
+\end{figure}
+
+The use of prior probabilities is often said to make Bayesian models `subjective' but its not really a big deal. First, every model involves arbitrary decisions which can substantially affect our results. Second, a researcher will always use common sense to interpret a model. For example, before collecting my sample I can say that I expect my female average f0 to be 200 Hz or so, but think its reasonable to expect anything from 100 to 300 Hz. Based on everything we know about human speech, even these bounds are too wide, and anything outside would suggest something is very wrong. So, even if I did not use a prior, I would use my expectations to `screen' my results, and be very wary of anything that did not meet my expectations.
+
+A Bayesian model simply requires that you build your expectation into your model. It formalizes it, makes it definable and replicable. Also, being `objective' does not quite make sense in many cases. Is it really being objective to ignore common sense and act as if a mean f0 of 250 is exactly as likely a priori as one of 20,000 Hz? Because not using a prior is equivalent to using a `flat' prior and acting like almost any value is equally likely a priori, when this is hardly the case.
+
+\hypertarget{sampling-from-the-posterior}{%
+\subsection{Sampling from the posterior}\label{sampling-from-the-posterior}}
+
+We want to understand the posterior distribution of parameters. How do we get this information? It is difficult to get this `analytically', that is, using exact methods and solving a bunch of equations. Many traditional methods can actually be solved in this way, and that is a big part of their popularity.
+
+Understanding the characteristics of posterior probabilities is not possible analytically for many Bayesian models. As a result, these questions are answered `numerically', basically by using a bunch of `guesses'. To understand the properties of posterior distributions, we use `sampling' software that knows how to investigate these distributions.
+
+The way these samplers work is you specify a set of data and some relationships you think are represented in your data (i.e., a model). The sampler then `walks around' the parameter space, which is the range of possible values a parameter (or set of parameters) can take. For example, for a single parameter the parameter space is a line (like the x axis in the plots above) along which the parameter varies.
+
+The sampler then does some variant of the following algorithm:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  Pick a random value for the parameter (i.e., \(\mu_{tmp}\) = 221 Hz).
+\item
+  Calculate the posterior probability for the current estimate of \(\mu_{tmp}\).
+\item
+  If the posterior estimate meets some criteria (e.g., it is better than the last one, it is not too low, etc.), then the value of \(\mu_{tmp}\) is recorded, and becomes \(\mu_{estimate}\). If not it is just discarded.
+\item
+  Go back to step 1.
+\end{enumerate}
+
+As incredible as it may seem, under a very reasonable set of conditions if you do the above enough times, the distribution of \(\mu_{estimate}\) that results from the above process will converge on the posterior distribution of \(\mu\) given your data and model structure (including prior probabilities).
+
+Below I have made a small example of this process. I use the Metropolis-Hastings algorithm, which is an algorithm to sample from probability distributions. The small example below assumes the standard deviation of the population is known, and just tries to investigate the posterior distribution of \(\mu\). It uses a very broad prior distribution (\(\mu = 0\), \(\sigma = 5000\)) so that it will have a very weak effect on the outcomes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# the function below takes a random sample, an initial mean estimate and a fixed}
+\CommentTok{\# standard deviation. It then takes a certain amount of samples from the }
+\CommentTok{\# posterior distribution of the parameter, assuming a broad prior centered at 0}
+\NormalTok{sampler\_example }\OtherTok{=} \ControlFlowTok{function}\NormalTok{ (sample, }\AttributeTok{mu\_estimate =} \DecValTok{0}\NormalTok{, }\AttributeTok{stdev =} \DecValTok{1}\NormalTok{, }\AttributeTok{nsamples =} \DecValTok{1000}\NormalTok{)\{}
+  \CommentTok{\# initial posterior calculation. This is the sum of the log likelihood and}
+  \CommentTok{\# the logarithm of the prior probability.}
+\NormalTok{  prior }\OtherTok{=} \FunctionTok{log}\NormalTok{ (}\FunctionTok{dnorm}\NormalTok{ (mu\_estimate[}\DecValTok{1}\NormalTok{],}\DecValTok{0}\NormalTok{, }\DecValTok{500}\NormalTok{))}
+\NormalTok{  loglik }\OtherTok{=} \FunctionTok{sum}\NormalTok{ (}\FunctionTok{dnorm}\NormalTok{ (sample, mu\_estimate[}\DecValTok{1}\NormalTok{],stdev,}\AttributeTok{log=}\ConstantTok{TRUE}\NormalTok{))}
+\NormalTok{  old\_posterior }\OtherTok{=}\NormalTok{ loglik }\SpecialCharTok{+}\NormalTok{ prior}
+  
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{nsamples)\{}
+\NormalTok{    accept }\OtherTok{=} \ConstantTok{FALSE}
+    \DocumentationTok{\#\# this loop will keep proposing new steps until one gets accepted. }
+    \ControlFlowTok{while}\NormalTok{ (}\SpecialCharTok{!}\NormalTok{accept)\{}
+      \DocumentationTok{\#\# (step 1 above)}
+      \DocumentationTok{\#\# draw new proposal by randomly changing the previous mu\_estimate}
+\NormalTok{      mu\_tmp }\OtherTok{=}\NormalTok{ mu\_estimate[i}\DecValTok{{-}1}\NormalTok{] }\SpecialCharTok{+} \FunctionTok{rnorm}\NormalTok{ (}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, .}\DecValTok{3}\NormalTok{)}
+      \DocumentationTok{\#\# (step 2 above)}
+      \DocumentationTok{\#\# find prior probability for new mu\_tmp proposal}
+\NormalTok{      prior }\OtherTok{=} \FunctionTok{log}\NormalTok{ (}\FunctionTok{dnorm}\NormalTok{ (mu\_tmp,}\DecValTok{0}\NormalTok{, }\DecValTok{500}\NormalTok{))}
+      \DocumentationTok{\#\# find log likelihood for new mu\_tmp proposal}
+\NormalTok{      loglik }\OtherTok{=} \FunctionTok{sum}\NormalTok{ (}\FunctionTok{dnorm}\NormalTok{ (sample, mu\_tmp,stdev,}\AttributeTok{log=}\ConstantTok{TRUE}\NormalTok{))}
+      \DocumentationTok{\#\# calculate the new posterior probability}
+\NormalTok{      new\_posterior }\OtherTok{=}\NormalTok{ prior }\SpecialCharTok{+}\NormalTok{ loglik}
+      \DocumentationTok{\#\# (step 3 above)}
+      \DocumentationTok{\#\# if better accept always. If worse, accept sometimes}
+      \ControlFlowTok{if}\NormalTok{ ( ( new\_posterior }\SpecialCharTok{{-}}\NormalTok{ old\_posterior ) }\SpecialCharTok{\textgreater{}=} \FunctionTok{log}\NormalTok{ ( }\FunctionTok{runif}\NormalTok{ (}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{) ) )\{}
+\NormalTok{        mu\_estimate[i] }\OtherTok{=}\NormalTok{ mu\_tmp}
+        \DocumentationTok{\#\# if you accept, the new estimate becomes the current estimate}
+\NormalTok{        old\_posterior }\OtherTok{=}\NormalTok{ new\_posterior}
+\NormalTok{        accept }\OtherTok{=} \ConstantTok{TRUE}
+\NormalTok{      \}}
+\NormalTok{    \}}
+\NormalTok{  \} }
+  \FunctionTok{return}\NormalTok{ (mu\_estimate)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+In the plots below (code at end of chapter), I show this algorithm at work. In the top row, a random sample with a mean of -50 is used. You can see that the sampler starts at 0 but quickly finds the sample mean (left column). In the middle, I show the distribution of the samples on the left, minus the burn-in phase (arbitrarily chosen by me). On the right, I compare our samples (blue) to the theoretical posterior distribution for the mean given the data and prior (red). I toss out the samples during the `burn in' phase, as there are used up in trying to `find' the correct location in the parameter space.
+
+In the bottom row, I use this algorithm on our f0 data! This is a `Bayesian' analysis since it combines information about parameter likelihood and prior probabilities. We can also see that even this simple approach yields a good correspondence to the theoretical posterior distribution of the parameter, and results in broadly the same conclusions we have arrived at by other means.
+
+\begin{figure}
+\centering
+\includegraphics{01_files/figure-latex/F1-mcmc-1.pdf}
+\caption{\label{fig:F1-mcmc}Demonstration of parameter estimation using a random walk, yielding a good approximation of analytically-derived values.}
+\end{figure}
+
+The results clearly coincide, but aren't perfect. But this sampler isn't very sophisticated! The samplers we will be using in this class \emph{do} provide an excellent match to the posterior distribution. As a result, we can inspect the distribution of collected \(\mu_{estimate}\) to understand the posterior of our parameter. We can use these distributions in the same way that we used the theoretical likelihood functions above, by using them to make statements about likely parameter values and ranges of values.
+
+\hypertarget{plot-code}{%
+\section{Plot Code}\label{plot-code}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+\DocumentationTok{\#\#\# Figure 1.2}
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+
+\FunctionTok{par}\NormalTok{ (}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{oma =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{ (f0, }\FunctionTok{jitter}\NormalTok{ (}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,}\FunctionTok{length}\NormalTok{(f0))), }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{140}\NormalTok{, }\DecValTok{320}\NormalTok{), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(.}\DecValTok{95}\NormalTok{,}\FloatTok{1.05}\NormalTok{),}
+      \AttributeTok{yaxt=}\StringTok{\textquotesingle{}n\textquotesingle{}}\NormalTok{,}\AttributeTok{ylab=}\StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{, }\AttributeTok{pch =} \DecValTok{16}\NormalTok{, }\AttributeTok{col =}\NormalTok{ yellow)}
+\FunctionTok{boxplot}\NormalTok{ (f0, }\AttributeTok{horizontal =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{140}\NormalTok{, }\DecValTok{320}\NormalTok{), }\AttributeTok{col =}\NormalTok{ coral)}
+\FunctionTok{hist}\NormalTok{ (f0,}\AttributeTok{main=}\StringTok{""}\NormalTok{, }\AttributeTok{col =}\NormalTok{ teal)}
+\FunctionTok{mtext}\NormalTok{ (}\AttributeTok{side =}\DecValTok{1}\NormalTok{, }\AttributeTok{outer =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{text =} \StringTok{"f0"}\NormalTok{, }\AttributeTok{line =} \FloatTok{2.5}\NormalTok{)}
+\FunctionTok{par}\NormalTok{ (}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+
+\FunctionTok{hist}\NormalTok{ (f0, }\AttributeTok{main=}\StringTok{""}\NormalTok{, }\AttributeTok{col =}\NormalTok{ lavender)}
+\FunctionTok{hist}\NormalTok{ (f0, }\AttributeTok{freq =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{, }\AttributeTok{col =}\NormalTok{ deepgreen)}
+\FunctionTok{par}\NormalTok{ (}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\FunctionTok{hist}\NormalTok{ (}\FunctionTok{c}\NormalTok{(f0,f0), }\AttributeTok{breaks =} \DecValTok{10}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{, }\AttributeTok{col =}\NormalTok{ lavender)}
+\FunctionTok{hist}\NormalTok{ (}\FunctionTok{c}\NormalTok{(f0,f0), }\AttributeTok{freq =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{breaks =} \DecValTok{10}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{, }\AttributeTok{col =}\NormalTok{ deepgreen)}
+
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+\DocumentationTok{\#\#\# Figure 1.7}
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+
+\FunctionTok{par}\NormalTok{ (}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\FunctionTok{hist}\NormalTok{ (f0, }\AttributeTok{freq =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{, }\AttributeTok{breaks =} \DecValTok{20}\NormalTok{, }\AttributeTok{col =}\NormalTok{ deepgreen)}
+\FunctionTok{abline}\NormalTok{ (}\AttributeTok{v =} \DecValTok{175}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{, }\AttributeTok{col =} \DecValTok{2}\NormalTok{, }\AttributeTok{lty=}\DecValTok{3}\NormalTok{)}
+\CommentTok{\# plots the normal density (red line) using stats calculated form our sample. }
+\FunctionTok{curve}\NormalTok{ (}\FunctionTok{dnorm}\NormalTok{ (x, }\FunctionTok{mean}\NormalTok{(f0), }\FunctionTok{sd}\NormalTok{(f0)),}\AttributeTok{from=}\DecValTok{100}\NormalTok{, }\AttributeTok{to=}\DecValTok{300}\NormalTok{, }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{, }\AttributeTok{col =} \DecValTok{2}\NormalTok{, }\AttributeTok{add=}\ConstantTok{TRUE}\NormalTok{)}
+
+\NormalTok{x }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{140}\NormalTok{,}\FunctionTok{seq}\NormalTok{(}\DecValTok{140}\NormalTok{,}\DecValTok{175}\NormalTok{,}\AttributeTok{length.out =} \DecValTok{100}\NormalTok{),}\DecValTok{175}\NormalTok{)}
+\NormalTok{y }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FunctionTok{dnorm}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\DecValTok{140}\NormalTok{,}\DecValTok{175}\NormalTok{,}\AttributeTok{length.out =} \DecValTok{100}\NormalTok{), }\FunctionTok{mean}\NormalTok{ (f0), }\FunctionTok{sd}\NormalTok{ (f0)),}\DecValTok{0}\NormalTok{)}
+\FunctionTok{polygon}\NormalTok{(x, y, }\AttributeTok{col=}\StringTok{\textquotesingle{}2\textquotesingle{}}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{ (}\AttributeTok{v =} \FloatTok{63.8}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{, }\AttributeTok{col =} \DecValTok{2}\NormalTok{, }\AttributeTok{lty=}\DecValTok{3}\NormalTok{); }\FunctionTok{abline}\NormalTok{ (}\AttributeTok{v =} \DecValTok{70}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{,}\AttributeTok{col=}\DecValTok{1}\NormalTok{,}\AttributeTok{lty=}\DecValTok{3}\NormalTok{)}
+
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+\DocumentationTok{\#\#\# Figure 1.8}
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+
+\NormalTok{x }\OtherTok{=}\NormalTok{ f0[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]   }\DocumentationTok{\#\# tiny sub sample for example}
+\FunctionTok{par}\NormalTok{ (}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{ (x,}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,.}\DecValTok{08}\NormalTok{), }\AttributeTok{pch=}\DecValTok{16}\NormalTok{,}\AttributeTok{col=}\DecValTok{4}\NormalTok{, }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{150}\NormalTok{,}\DecValTok{300}\NormalTok{), }
+      \AttributeTok{ylab=}\StringTok{\textquotesingle{}Density\textquotesingle{}}\NormalTok{, }\AttributeTok{main =} \StringTok{\textquotesingle{}Likelihood of mean\textquotesingle{}}\NormalTok{,}\AttributeTok{xlab=}\StringTok{\textquotesingle{}f0\textquotesingle{}}\NormalTok{,}\AttributeTok{cex.main=}\NormalTok{.}\DecValTok{8}\NormalTok{)}
+\DocumentationTok{\#\# here the likelihood sd is divided by the sample size}
+\FunctionTok{curve}\NormalTok{ (}\FunctionTok{dnorm}\NormalTok{ (x, }\FunctionTok{mean}\NormalTok{(x), }\FloatTok{21.9} \SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{ (}\DecValTok{10}\NormalTok{)), }\AttributeTok{from =} \FunctionTok{c}\NormalTok{(}\DecValTok{150}\NormalTok{,}\DecValTok{300}\NormalTok{), }
+       \AttributeTok{add=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{col =} \DecValTok{2}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{ (}\AttributeTok{v =} \FunctionTok{c}\NormalTok{(}\DecValTok{175}\NormalTok{, }\DecValTok{200}\NormalTok{, }\DecValTok{225}\NormalTok{), }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{,}\AttributeTok{lty=}\DecValTok{3}\NormalTok{)}
+
+\FunctionTok{plot}\NormalTok{ (x,}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,.}\DecValTok{022}\NormalTok{), }\AttributeTok{pch=}\DecValTok{16}\NormalTok{,}\AttributeTok{col=}\DecValTok{4}\NormalTok{,}\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{150}\NormalTok{,}\DecValTok{300}\NormalTok{),}\AttributeTok{cex.main=}\NormalTok{.}\DecValTok{8}\NormalTok{, }
+      \AttributeTok{ylab=}\StringTok{\textquotesingle{}Density\textquotesingle{}}\NormalTok{, }\AttributeTok{main =} \StringTok{"mean = 175"}\NormalTok{,}\AttributeTok{xlab=}\StringTok{\textquotesingle{}f0\textquotesingle{}}\NormalTok{)}
+\DocumentationTok{\#\# now it is centered at mean = 175 Hz}
+\FunctionTok{curve}\NormalTok{ (}\FunctionTok{dnorm}\NormalTok{ (x, }\DecValTok{175}\NormalTok{, }\FloatTok{21.9}\NormalTok{), }\AttributeTok{from =} \FunctionTok{c}\NormalTok{(}\DecValTok{150}\NormalTok{,}\DecValTok{300}\NormalTok{), }
+       \AttributeTok{add=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{col =} \DecValTok{2}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{segments}\NormalTok{ (x,}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{),x,}\FunctionTok{dnorm}\NormalTok{ (x, }\DecValTok{175}\NormalTok{, }\FunctionTok{sd}\NormalTok{ (x)))}
+
+
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+\DocumentationTok{\#\#\# Figure 1.9}
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+
+\NormalTok{x }\OtherTok{=}\NormalTok{ f0[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]   }\DocumentationTok{\#\# tiny sub sample for exampls}
+\FunctionTok{par}\NormalTok{ (}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{ (x,}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,.}\DecValTok{022}\NormalTok{), }\AttributeTok{pch=}\DecValTok{16}\NormalTok{,}\AttributeTok{col=}\DecValTok{4}\NormalTok{,}\AttributeTok{xlim=} \FunctionTok{c}\NormalTok{(}\DecValTok{150}\NormalTok{,}\DecValTok{300}\NormalTok{),}\AttributeTok{cex.main=}\NormalTok{.}\DecValTok{8}\NormalTok{, }
+      \AttributeTok{ylab=}\StringTok{\textquotesingle{}Density\textquotesingle{}}\NormalTok{, }\AttributeTok{main =} \StringTok{"mean = 200"}\NormalTok{,}\AttributeTok{xlab=}\StringTok{\textquotesingle{}f0\textquotesingle{}}\NormalTok{)}
+\DocumentationTok{\#\# distribution centered ar 200}
+\FunctionTok{curve}\NormalTok{ (}\FunctionTok{dnorm}\NormalTok{ (x, }\DecValTok{200}\NormalTok{, }\FloatTok{21.9}\NormalTok{), }\AttributeTok{from =} \FunctionTok{c}\NormalTok{(}\DecValTok{150}\NormalTok{,}\DecValTok{300}\NormalTok{), }
+       \AttributeTok{add=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{col =} \DecValTok{2}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{segments}\NormalTok{ (x,}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{),x,}\FunctionTok{dnorm}\NormalTok{ (x, }\DecValTok{200}\NormalTok{, }\FunctionTok{sd}\NormalTok{ (x)))}
+
+\FunctionTok{plot}\NormalTok{ (x,}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,.}\DecValTok{022}\NormalTok{), }\AttributeTok{pch=}\DecValTok{16}\NormalTok{,}\AttributeTok{col=}\DecValTok{4}\NormalTok{,}\AttributeTok{xlim =}\FunctionTok{c}\NormalTok{(}\DecValTok{150}\NormalTok{,}\DecValTok{300}\NormalTok{),}\AttributeTok{cex.main=}\NormalTok{.}\DecValTok{8}\NormalTok{, }
+      \AttributeTok{ylab=}\StringTok{\textquotesingle{}Density\textquotesingle{}}\NormalTok{, }\AttributeTok{main =} \StringTok{"mean = 225"}\NormalTok{,}\AttributeTok{xlab=}\StringTok{\textquotesingle{}f0\textquotesingle{}}\NormalTok{)}
+\DocumentationTok{\#\# and now at 220}
+\FunctionTok{curve}\NormalTok{ (}\FunctionTok{dnorm}\NormalTok{ (x, }\DecValTok{225}\NormalTok{, }\FloatTok{21.9}\NormalTok{), }\AttributeTok{from =} \FunctionTok{c}\NormalTok{(}\DecValTok{150}\NormalTok{,}\DecValTok{300}\NormalTok{), }
+       \AttributeTok{add=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{col =} \DecValTok{2}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{segments}\NormalTok{ (x,}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{),x,}\FunctionTok{dnorm}\NormalTok{ (x, }\DecValTok{225}\NormalTok{, }\FunctionTok{sd}\NormalTok{ (x)))}
+
+
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+\DocumentationTok{\#\#\# Figure 1.10}
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+
+\FunctionTok{par}\NormalTok{ (}\AttributeTok{mfrow =}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\FunctionTok{curve}\NormalTok{ (}\FunctionTok{dnorm}\NormalTok{ (x, }\FunctionTok{mean}\NormalTok{(f0), }\FunctionTok{sd}\NormalTok{(f0)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{length}\NormalTok{(f0))), }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{216}\NormalTok{,}\DecValTok{225}\NormalTok{),}
+       \AttributeTok{ylab =} \StringTok{\textquotesingle{}Density\textquotesingle{}}\NormalTok{, }\AttributeTok{xlab =} \StringTok{\textquotesingle{}f0\textquotesingle{}}\NormalTok{, }\AttributeTok{col =}\NormalTok{ lavender, }\AttributeTok{lwd =} \DecValTok{4}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{ (}\AttributeTok{v =}\NormalTok{ quantiles, }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{,}\AttributeTok{col=}\NormalTok{deepgreen)}
+
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+\DocumentationTok{\#\#\# Figure 1.11}
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+
+\FunctionTok{par}\NormalTok{ (}\AttributeTok{mfrow =}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\FunctionTok{hist}\NormalTok{ (f0, }\AttributeTok{main=}\StringTok{""}\NormalTok{, }\AttributeTok{freq=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{col =}\NormalTok{ yellow)}
+\FunctionTok{hist}\NormalTok{ (f0 }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{ (f0), }\AttributeTok{main=}\StringTok{""}\NormalTok{, }\AttributeTok{freq=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{col =}\NormalTok{ coral)}
+
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+\DocumentationTok{\#\#\# Figure 1.12}
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+
+\FunctionTok{par}\NormalTok{ (}\AttributeTok{mfrow =}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\FunctionTok{hist}\NormalTok{ (h95}\SpecialCharTok{$}\NormalTok{f0, }\AttributeTok{main=}\StringTok{""}\NormalTok{, }\AttributeTok{freq=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{80}\NormalTok{,}\DecValTok{320}\NormalTok{), }\AttributeTok{col =}\NormalTok{ yellow)}
+\FunctionTok{plot}\NormalTok{ (}\FunctionTok{density}\NormalTok{ (h95}\SpecialCharTok{$}\NormalTok{f0[h95}\SpecialCharTok{$}\NormalTok{group}\SpecialCharTok{==}\StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{]),}\AttributeTok{col=}\DecValTok{2}\NormalTok{,}\AttributeTok{lwd=}\DecValTok{4}\NormalTok{, }\AttributeTok{main=}\StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{80}\NormalTok{,}\DecValTok{320}\NormalTok{),}\AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.025}\NormalTok{), }\AttributeTok{xlab =} \StringTok{\textquotesingle{}f0\textquotesingle{}}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{ (}\FunctionTok{density}\NormalTok{ (h95}\SpecialCharTok{$}\NormalTok{f0[h95}\SpecialCharTok{$}\NormalTok{group}\SpecialCharTok{==}\StringTok{\textquotesingle{}g\textquotesingle{}}\NormalTok{]),}\AttributeTok{col=}\DecValTok{3}\NormalTok{,}\AttributeTok{lwd=}\DecValTok{3}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{ (}\FunctionTok{density}\NormalTok{ (h95}\SpecialCharTok{$}\NormalTok{f0[h95}\SpecialCharTok{$}\NormalTok{group}\SpecialCharTok{==}\StringTok{\textquotesingle{}m\textquotesingle{}}\NormalTok{]),}\AttributeTok{col=}\DecValTok{4}\NormalTok{,}\AttributeTok{lwd=}\DecValTok{3}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{ (}\FunctionTok{density}\NormalTok{ (h95}\SpecialCharTok{$}\NormalTok{f0[h95}\SpecialCharTok{$}\NormalTok{group}\SpecialCharTok{==}\StringTok{\textquotesingle{}w\textquotesingle{}}\NormalTok{]),}\AttributeTok{col=}\DecValTok{5}\NormalTok{,}\AttributeTok{lwd=}\DecValTok{3}\NormalTok{)}
+
+
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+\DocumentationTok{\#\#\# Figure 1.13}
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+
+\NormalTok{x }\OtherTok{=} \FunctionTok{seq}\NormalTok{ (}\DecValTok{150}\NormalTok{, }\DecValTok{301}\NormalTok{, .}\DecValTok{1}\NormalTok{)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{mar =}\FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,.}\DecValTok{1}\NormalTok{,.}\DecValTok{1}\NormalTok{), }\AttributeTok{oma =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{))  }
+\DocumentationTok{\#\# likelihood is a bit stronger than the prior}
+\NormalTok{likelihood }\OtherTok{=} \FunctionTok{dnorm}\NormalTok{ (x, }\FunctionTok{mean}\NormalTok{ (f0), }\FunctionTok{sd}\NormalTok{ (f0) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{ ( }\DecValTok{5}\NormalTok{ ) )}
+\NormalTok{prior }\OtherTok{=} \FunctionTok{dnorm}\NormalTok{ (x, }\DecValTok{250}\NormalTok{, }\FunctionTok{sd}\NormalTok{ (f0)) ; posterior }\OtherTok{=}\NormalTok{ likelihood }\SpecialCharTok{*}\NormalTok{ prior}
+\FunctionTok{plot}\NormalTok{ (x, likelihood }\SpecialCharTok{/} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{\textquotesingle{}l\textquotesingle{}}\NormalTok{, }\AttributeTok{ylab=}\StringTok{\textquotesingle{}Density\textquotesingle{}}\NormalTok{,}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{, }\AttributeTok{xlab=}\StringTok{\textquotesingle{}f0\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{185}\NormalTok{, }\DecValTok{300}\NormalTok{))}
+\FunctionTok{lines}\NormalTok{ (x, prior }\SpecialCharTok{/}\DecValTok{1}\NormalTok{,}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{,}\AttributeTok{col=}\DecValTok{2}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{ (x, posterior }\SpecialCharTok{/} \FunctionTok{max}\NormalTok{ (posterior) }\SpecialCharTok{*} \FunctionTok{max}\NormalTok{(likelihood),}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{,}\AttributeTok{col=}\DecValTok{4}\NormalTok{)}
+\DocumentationTok{\#\# likelihood is much stronger than the prior}
+\NormalTok{likelihood }\OtherTok{=} \FunctionTok{dnorm}\NormalTok{ (x, }\FunctionTok{mean}\NormalTok{ (f0), }\FunctionTok{sd}\NormalTok{ (f0) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{ ( }\DecValTok{100}\NormalTok{ ) )}
+\NormalTok{prior }\OtherTok{=} \FunctionTok{dnorm}\NormalTok{ (x, }\DecValTok{250}\NormalTok{, }\FunctionTok{sd}\NormalTok{ (f0)) ; posterior }\OtherTok{=}\NormalTok{ likelihood }\SpecialCharTok{*}\NormalTok{ prior}
+\FunctionTok{plot}\NormalTok{ (x, likelihood }\SpecialCharTok{/} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{\textquotesingle{}l\textquotesingle{}}\NormalTok{, }\AttributeTok{ylab=}\StringTok{\textquotesingle{}Density\textquotesingle{}}\NormalTok{,}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{, }\AttributeTok{xlab=}\StringTok{\textquotesingle{}f0\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{185}\NormalTok{, }\DecValTok{300}\NormalTok{))}
+\FunctionTok{lines}\NormalTok{ (x, prior }\SpecialCharTok{/} \DecValTok{1}\NormalTok{,}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{,}\AttributeTok{col=}\DecValTok{2}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{ (x, posterior }\SpecialCharTok{/} \FunctionTok{max}\NormalTok{ (posterior) }\SpecialCharTok{*} \FunctionTok{max}\NormalTok{(likelihood),}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{,}\AttributeTok{col=}\DecValTok{4}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{ (}\DecValTok{240}\NormalTok{, .}\DecValTok{15}\NormalTok{, }\AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Prior\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Likelihood\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Posterior\textquotesingle{}}\NormalTok{), }\AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{),}
+        \AttributeTok{lwd =} \DecValTok{2}\NormalTok{, }\AttributeTok{bty =} \StringTok{\textquotesingle{}n\textquotesingle{}}\NormalTok{)}
+\DocumentationTok{\#\# prior overwhelms the likelihood}
+\NormalTok{likelihood }\OtherTok{=} \FunctionTok{dnorm}\NormalTok{ (x, }\FunctionTok{mean}\NormalTok{ (f0), }\FunctionTok{sd}\NormalTok{ (f0) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{ ( }\DecValTok{5}\NormalTok{ ) )}
+\NormalTok{prior }\OtherTok{=} \FunctionTok{dnorm}\NormalTok{ (x, }\DecValTok{250}\NormalTok{, }\FunctionTok{sd}\NormalTok{ (f0)}\SpecialCharTok{/}\DecValTok{10}\NormalTok{) ; posterior }\OtherTok{=}\NormalTok{ likelihood }\SpecialCharTok{*}\NormalTok{ prior}
+\FunctionTok{plot}\NormalTok{ (x, likelihood }\SpecialCharTok{/} \FunctionTok{max}\NormalTok{ (}\DecValTok{1}\NormalTok{), }\AttributeTok{type =} \StringTok{\textquotesingle{}l\textquotesingle{}}\NormalTok{, }\AttributeTok{ylab=}\StringTok{\textquotesingle{}Density\textquotesingle{}}\NormalTok{,}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{, }\AttributeTok{ylim =}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,.}\DecValTok{18}\NormalTok{),}
+      \AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{185}\NormalTok{, }\DecValTok{300}\NormalTok{),}\AttributeTok{xlab=}\StringTok{\textquotesingle{}f0\textquotesingle{}}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{ (x, prior }\SpecialCharTok{/} \FunctionTok{max}\NormalTok{ (}\DecValTok{1}\NormalTok{),}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{,}\AttributeTok{col=}\DecValTok{2}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{ (x, posterior }\SpecialCharTok{/} \FunctionTok{max}\NormalTok{ (posterior) }\SpecialCharTok{*} \FunctionTok{max}\NormalTok{(likelihood),}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{,}\AttributeTok{col=}\DecValTok{4}\NormalTok{)}
+\DocumentationTok{\#\# prior and likelihood have about equal influence}
+\NormalTok{likelihood }\OtherTok{=} \FunctionTok{dnorm}\NormalTok{ (x, }\FunctionTok{mean}\NormalTok{ (f0), }\FunctionTok{sd}\NormalTok{ (f0) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{ ( }\DecValTok{100}\NormalTok{ ) )}
+\NormalTok{prior }\OtherTok{=} \FunctionTok{dnorm}\NormalTok{ (x, }\DecValTok{250}\NormalTok{, }\FunctionTok{sd}\NormalTok{ (f0)}\SpecialCharTok{/}\DecValTok{10}\NormalTok{) ; posterior }\OtherTok{=}\NormalTok{ likelihood }\SpecialCharTok{*}\NormalTok{ prior}
+\FunctionTok{plot}\NormalTok{ (x, likelihood }\SpecialCharTok{/} \FunctionTok{max}\NormalTok{ (}\DecValTok{1}\NormalTok{), }\AttributeTok{type =} \StringTok{\textquotesingle{}l\textquotesingle{}}\NormalTok{, }\AttributeTok{ylab=}\StringTok{\textquotesingle{}Density\textquotesingle{}}\NormalTok{,}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{, }\AttributeTok{xlab=}\StringTok{\textquotesingle{}f0\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{185}\NormalTok{, }\DecValTok{300}\NormalTok{))}
+\FunctionTok{lines}\NormalTok{ (x, prior }\SpecialCharTok{/} \FunctionTok{max}\NormalTok{ (}\DecValTok{1}\NormalTok{),}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{,}\AttributeTok{col=}\DecValTok{2}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{ (x, posterior }\SpecialCharTok{/} \FunctionTok{max}\NormalTok{ (posterior) }\SpecialCharTok{*} \FunctionTok{max}\NormalTok{(likelihood),}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{,}\AttributeTok{col=}\DecValTok{4}\NormalTok{)}
+
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+\DocumentationTok{\#\#\# Figure 1.14}
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\DocumentationTok{\#\# collect samples from the likelihood of the mean for our f0 sample}
+\NormalTok{samples\_1 }\OtherTok{=} \FunctionTok{sampler\_example}\NormalTok{ (f0,}\DecValTok{200}\NormalTok{,}\FunctionTok{sd}\NormalTok{(f0), }\DecValTok{5000}\NormalTok{)}
+
+\DocumentationTok{\#\# do a second one to show its not a fluke}
+\NormalTok{data\_2 }\OtherTok{=} \FunctionTok{rnorm}\NormalTok{ (}\DecValTok{100}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{50}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\DocumentationTok{\#\# collect samples from the likelihood of the mean}
+\NormalTok{samples\_2 }\OtherTok{=} \FunctionTok{sampler\_example}\NormalTok{ (data\_2,}\DecValTok{0}\NormalTok{,}\FunctionTok{sd}\NormalTok{(data\_2), }\DecValTok{5000}\NormalTok{)}
+
+\CommentTok{\# the left column shows the path the sampler took. the middle column shows the}
+\CommentTok{\# distribution of these samples, minus the burn in phase. the right column shows}
+\CommentTok{\# a comparison of theoretical and observed posterior distributions}
+\FunctionTok{par}\NormalTok{ (}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{ (samples\_2)}
+\FunctionTok{hist}\NormalTok{ (samples\_2[}\SpecialCharTok{{-}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{250}\NormalTok{)], }\AttributeTok{freq =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{4.5}\NormalTok{), }\AttributeTok{main=}\StringTok{""}\NormalTok{,}\AttributeTok{col=}\NormalTok{skyblue)}
+\NormalTok{x }\OtherTok{=} \FunctionTok{seq}\NormalTok{ (}\SpecialCharTok{{-}}\FloatTok{50.6}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{49.75}\NormalTok{,.}\DecValTok{001}\NormalTok{)}
+\NormalTok{likelihood }\OtherTok{=} \FunctionTok{dnorm}\NormalTok{ (x, }\FunctionTok{mean}\NormalTok{ (data\_2), }\FunctionTok{sd}\NormalTok{(data\_2) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{ (}\DecValTok{100}\NormalTok{) )}
+\NormalTok{prior }\OtherTok{=} \FunctionTok{dnorm}\NormalTok{ (x, }\DecValTok{0}\NormalTok{, }\DecValTok{500}\NormalTok{ ) }
+\NormalTok{posterior }\OtherTok{=}\NormalTok{ likelihood }\SpecialCharTok{*}\NormalTok{ prior}
+\NormalTok{posterior }\OtherTok{=}\NormalTok{ posterior }\SpecialCharTok{/} \FunctionTok{max}\NormalTok{ (posterior)}
+\FunctionTok{plot}\NormalTok{ (x, posterior, }\AttributeTok{lwd =} \DecValTok{4}\NormalTok{, }\AttributeTok{col =}\NormalTok{ coral, }\AttributeTok{type =} \StringTok{\textquotesingle{}l\textquotesingle{}}\NormalTok{)}
+\NormalTok{density\_2 }\OtherTok{=} \FunctionTok{density}\NormalTok{ (samples\_2[}\SpecialCharTok{{-}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{250}\NormalTok{)])}
+\NormalTok{density\_2}\SpecialCharTok{$}\NormalTok{y }\OtherTok{=}\NormalTok{ density\_2}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{/} \FunctionTok{max}\NormalTok{ (density\_2}\SpecialCharTok{$}\NormalTok{y)}
+\FunctionTok{lines}\NormalTok{ (density\_2, }\AttributeTok{lwd =} \DecValTok{3}\NormalTok{, }\AttributeTok{col =}\NormalTok{ skyblue)}
+
+\FunctionTok{plot}\NormalTok{ (samples\_1)}
+\FunctionTok{hist}\NormalTok{ (samples\_1[}\SpecialCharTok{{-}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{250}\NormalTok{)], }\AttributeTok{freq =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{), }\AttributeTok{main=}\StringTok{""}\NormalTok{,}\AttributeTok{col=}\NormalTok{skyblue)}
+\NormalTok{x }\OtherTok{=} \FunctionTok{seq}\NormalTok{ (}\DecValTok{215}\NormalTok{,}\DecValTok{225}\NormalTok{,.}\DecValTok{001}\NormalTok{)}
+\NormalTok{likelihood }\OtherTok{=} \FunctionTok{dnorm}\NormalTok{ (x, }\FunctionTok{mean}\NormalTok{ (f0), }\FunctionTok{sd}\NormalTok{(f0) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{ ( }\FunctionTok{length}\NormalTok{(f0) ) )}
+\NormalTok{prior }\OtherTok{=} \FunctionTok{dnorm}\NormalTok{ (x, }\DecValTok{0}\NormalTok{, }\DecValTok{500}\NormalTok{ ) }
+\NormalTok{posterior }\OtherTok{=}\NormalTok{ likelihood }\SpecialCharTok{*}\NormalTok{ prior}
+\NormalTok{posterior }\OtherTok{=}\NormalTok{ posterior }\SpecialCharTok{/} \FunctionTok{max}\NormalTok{ (posterior)}
+\FunctionTok{plot}\NormalTok{ (x, posterior, }\AttributeTok{lwd =} \DecValTok{4}\NormalTok{, }\AttributeTok{col =}\NormalTok{ coral, }\AttributeTok{type =} \StringTok{\textquotesingle{}l\textquotesingle{}}\NormalTok{)}
+\NormalTok{density\_1 }\OtherTok{=} \FunctionTok{density}\NormalTok{ (samples\_1[}\SpecialCharTok{{-}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{250}\NormalTok{)])}
+\NormalTok{density\_1}\SpecialCharTok{$}\NormalTok{y }\OtherTok{=}\NormalTok{ density\_1}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{/} \FunctionTok{max}\NormalTok{ (density\_1}\SpecialCharTok{$}\NormalTok{y)}
+\FunctionTok{lines}\NormalTok{ (density\_1, }\AttributeTok{lwd =} \DecValTok{3}\NormalTok{, }\AttributeTok{col =}\NormalTok{ skyblue)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model}{%
+\chapter{Inspecting a `single group' of observations using a Bayesian multilevel model}\label{inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model}}
+
+Placeholder
+
+\hypertarget{data-and-research-questions-1}{%
+\section{Data and research questions}\label{data-and-research-questions-1}}
+
+\hypertarget{estimating-a-single-mean-with-the-brms-package}{%
+\section{\texorpdfstring{Estimating a single mean with the \texttt{brms} package}{Estimating a single mean with the brms package}}\label{estimating-a-single-mean-with-the-brms-package}}
+
+\hypertarget{description-of-the-model}{%
+\subsection{Description of the model}\label{description-of-the-model}}
+
+\hypertarget{the-model-formula}{%
+\subsection{The model formula}\label{the-model-formula}}
+
+\hypertarget{fitting-the-model-calling-the-brm-function}{%
+\subsection{\texorpdfstring{Fitting the model: Calling the \texttt{brm} function}{Fitting the model: Calling the brm function}}\label{fitting-the-model-calling-the-brm-function}}
+
+\hypertarget{interpreting-the-model-the-print-statement}{%
+\subsection{Interpreting the model: the print statement}\label{interpreting-the-model-the-print-statement}}
+
+\hypertarget{seeing-the-samples}{%
+\subsection{Seeing the samples}\label{seeing-the-samples}}
+
+\hypertarget{repeated-measures-data}{%
+\section{Repeated measures data}\label{repeated-measures-data}}
+
+\hypertarget{multilevel-models}{%
+\subsection{Multilevel models}\label{multilevel-models}}
+
+\hypertarget{estimating-a-multilevel-model-with-brms}{%
+\section{\texorpdfstring{Estimating a multilevel model with \texttt{brms}}{Estimating a multilevel model with brms}}\label{estimating-a-multilevel-model-with-brms}}
+
+\hypertarget{description-of-the-model-1}{%
+\subsection{Description of the model}\label{description-of-the-model-1}}
+
+\hypertarget{fitting-the-model}{%
+\subsection{Fitting the model}\label{fitting-the-model}}
+
+\hypertarget{checking-model-convergence}{%
+\section{Checking model convergence}\label{checking-model-convergence}}
+
+\hypertarget{specifying-prior-probabilities}{%
+\section{Specifying prior probabilities}\label{specifying-prior-probabilities}}
+
+\hypertarget{answering-our-research-questions}{%
+\section{Answering our research questions}\label{answering-our-research-questions}}
+
+\hypertarget{simulating-data-using-our-model-parameters}{%
+\section{Simulating data using our model parameters}\label{simulating-data-using-our-model-parameters}}
+
+\hypertarget{lmer-corner}{%
+\section{Lmer corner}\label{lmer-corner}}
+
+\hypertarget{plot-code-1}{%
+\section{Plot Code}\label{plot-code-1}}
+
+\hypertarget{comparing-two-groups-of-observations}{%
+\chapter{Comparing two groups of observations}\label{comparing-two-groups-of-observations}}
+
+Placeholder
+
+\hypertarget{data-and-research-questions-2}{%
+\section{Data and research questions}\label{data-and-research-questions-2}}
+
+\hypertarget{estimating-the-difference-between-two-means-with-brms}{%
+\section{Estimating the difference between two means with `brms'}\label{estimating-the-difference-between-two-means-with-brms}}
+
+\hypertarget{fitting-the-model-1}{%
+\subsection{Fitting the model}\label{fitting-the-model-1}}
+
+\hypertarget{interpreting-the-model}{%
+\subsection{Interpreting the model}\label{interpreting-the-model}}
+
+\hypertarget{contrasts}{%
+\section{Contrasts}\label{contrasts}}
+
+\hypertarget{treatment-coding}{%
+\subsection{Treatment coding}\label{treatment-coding}}
+
+\hypertarget{sum-coding}{%
+\subsection{Sum coding}\label{sum-coding}}
+
+\hypertarget{comparison-of-sum-and-treatment-coding}{%
+\subsection{Comparison of sum and treatment coding}\label{comparison-of-sum-and-treatment-coding}}
+
+\hypertarget{refitting-the-model-with-sum-coding}{%
+\section{Refitting the model with sum coding}\label{refitting-the-model-with-sum-coding}}
+
+\hypertarget{fitting-the-model-2}{%
+\subsection{Fitting the model}\label{fitting-the-model-2}}
+
+\hypertarget{description-of-the-model-2}{%
+\subsection{Description of the model}\label{description-of-the-model-2}}
+
+\hypertarget{interpreting-the-model-1}{%
+\subsection{Interpreting the model}\label{interpreting-the-model-1}}
+
+\hypertarget{random-effects}{%
+\section{`Random' Effects}\label{random-effects}}
+
+\hypertarget{random-effects-priors-and-pooling}{%
+\subsection{Random effects, priors and pooling}\label{random-effects-priors-and-pooling}}
+
+\hypertarget{inspecting-the-random-effects}{%
+\subsection{Inspecting the random effects}\label{inspecting-the-random-effects}}
+
+\hypertarget{but-what-does-it-all-mean}{%
+\section{But what does it all mean?}\label{but-what-does-it-all-mean}}
+
+\hypertarget{simulating-the-two-group-model}{%
+\section{Simulating the two-group model}\label{simulating-the-two-group-model}}
+
+\hypertarget{lmer-corner-1}{%
+\section{Lmer corner}\label{lmer-corner-1}}
+
+\hypertarget{plot-code-2}{%
+\section{Plot Code}\label{plot-code-2}}
+
+\hypertarget{comparing-many-groups}{%
+\chapter{Comparing many groups}\label{comparing-many-groups}}
+
+Placeholder
+
+\hypertarget{data-and-research-questions-3}{%
+\section{Data and research questions}\label{data-and-research-questions-3}}
+
+\hypertarget{comparing-four-or-any-number-of-groups}{%
+\section{Comparing four (or any number of) groups}\label{comparing-four-or-any-number-of-groups}}
+
+\hypertarget{the-model}{%
+\subsection{The model}\label{the-model}}
+
+\hypertarget{investigating-many-groups-using-predictors-analysis-of-variance}{%
+\section{Investigating many groups using predictors: Analysis of Variance}\label{investigating-many-groups-using-predictors-analysis-of-variance}}
+
+\hypertarget{description-of-the-model-3}{%
+\subsection{Description of the model}\label{description-of-the-model-3}}
+
+\hypertarget{fitting-the-model-and-interpreting-the-results}{%
+\subsection{Fitting the model and interpreting the results}\label{fitting-the-model-and-interpreting-the-results}}
+
+\hypertarget{investigating-model-fit}{%
+\subsection{Investigating model fit}\label{investigating-model-fit}}
+
+\hypertarget{interactions-and-interaction-plots}{%
+\section{Interactions and interaction plots}\label{interactions-and-interaction-plots}}
+
+\hypertarget{interactions-in-our-f0-data}{%
+\subsection{Interactions in our f0 data}\label{interactions-in-our-f0-data}}
+
+\hypertarget{investigating-interactions-with-a-model}{%
+\section{Investigating interactions with a model}\label{investigating-interactions-with-a-model}}
+
+\hypertarget{fitting-the-model-and-interpreting-the-results-1}{%
+\subsection{Fitting the model and interpreting the results}\label{fitting-the-model-and-interpreting-the-results-1}}
+
+\hypertarget{assessing-model-fit}{%
+\subsection{Assessing model fit}\label{assessing-model-fit}}
+
+\hypertarget{investigating-the-interactions-the-easy-way}{%
+\subsection{Investigating the interactions the easy way}\label{investigating-the-interactions-the-easy-way}}
+
+\hypertarget{making-plots}{%
+\subsection{Making plots}\label{making-plots}}
+
+\hypertarget{lmer-corner-2}{%
+\section{Lmer corner}\label{lmer-corner-2}}
+
+\hypertarget{plot-code-3}{%
+\section{Plot Code}\label{plot-code-3}}
+
+\hypertarget{including-continuous-predictors-in-our-model}{%
+\chapter{Including continuous predictors in our model}\label{including-continuous-predictors-in-our-model}}
+
+Placeholder
+
+\hypertarget{data-and-research-questions-4}{%
+\section{Data and research questions}\label{data-and-research-questions-4}}
+
+\hypertarget{continuous-predictors-modeling-variation-along-lines}{%
+\section{Continuous predictors: modeling variation along lines}\label{continuous-predictors-modeling-variation-along-lines}}
+
+\hypertarget{models-with-a-single-slope-and-intercept}{%
+\section{Models with a single slope and intercept}\label{models-with-a-single-slope-and-intercept}}
+
+\hypertarget{description-of-the-model-4}{%
+\subsection{Description of the model}\label{description-of-the-model-4}}
+
+\hypertarget{fitting-the-model-3}{%
+\subsection{Fitting the model}\label{fitting-the-model-3}}
+
+\hypertarget{interpreting-the-model-2}{%
+\subsection{Interpreting the model}\label{interpreting-the-model-2}}
+
+\hypertarget{centering-predictors}{%
+\subsection{Centering predictors}\label{centering-predictors}}
+
+\hypertarget{interactions-in-our-line-parameters}{%
+\section{Interactions in our line parameters}\label{interactions-in-our-line-parameters}}
+
+\hypertarget{models-with-group-dependent-intercepts-but-shared-slopes}{%
+\section{Models with group-dependent intercepts, but shared slopes}\label{models-with-group-dependent-intercepts-but-shared-slopes}}
+
+\hypertarget{description-of-the-model-5}{%
+\subsection{Description of the model}\label{description-of-the-model-5}}
+
+\hypertarget{fitting-the-model-4}{%
+\subsection{Fitting the model}\label{fitting-the-model-4}}
+
+\hypertarget{the-effect-of-including-a-slope}{%
+\subsection{The effect of including a slope}\label{the-effect-of-including-a-slope}}
+
+\hypertarget{interpreting-group-effects-in-the-presence-of-a-continuous-predictor}{%
+\subsection{Interpreting group effects in the presence of a continuous predictor}\label{interpreting-group-effects-in-the-presence-of-a-continuous-predictor}}
+
+\hypertarget{models-with-group-dependent-slopes-and-intercepts}{%
+\section{Models with group-dependent slopes and intercepts}\label{models-with-group-dependent-slopes-and-intercepts}}
+
+\hypertarget{description-of-the-model-6}{%
+\subsection{Description of the model}\label{description-of-the-model-6}}
+
+\hypertarget{fitting-the-model-5}{%
+\subsection{Fitting the model}\label{fitting-the-model-5}}
+
+\hypertarget{interpreting-the-model-3}{%
+\subsection{Interpreting the model}\label{interpreting-the-model-3}}
+
+\hypertarget{plot-code-4}{%
+\section{Plot Code}\label{plot-code-4}}
+
+\hypertarget{random-slopes}{%
+\chapter{Random slopes}\label{random-slopes}}
+
+Placeholder
+
+\hypertarget{data-and-research-questions-5}{%
+\section{Data and research questions}\label{data-and-research-questions-5}}
+
+\hypertarget{repeated-measures-and-speaker-dependent-parameter-values}{%
+\section{Repeated measures and speaker-dependent parameter values}\label{repeated-measures-and-speaker-dependent-parameter-values}}
+
+\hypertarget{description-of-the-model-7}{%
+\subsection{Description of the model}\label{description-of-the-model-7}}
+
+\hypertarget{fitting-the-model-6}{%
+\subsection{Fitting the model}\label{fitting-the-model-6}}
+
+\hypertarget{interpreting-the-model-4}{%
+\subsection{Interpreting the model}\label{interpreting-the-model-4}}
+
+\hypertarget{random-effects-and-the-multivariate-normal-distribution}{%
+\section{Random effects and the multivariate normal distribution}\label{random-effects-and-the-multivariate-normal-distribution}}
+
+\hypertarget{random-slopes-1}{%
+\section{Random slopes}\label{random-slopes-1}}
+
+\hypertarget{description-of-the-model-8}{%
+\subsection{Description of the model}\label{description-of-the-model-8}}
+
+\hypertarget{fitting-the-model-7}{%
+\subsection{Fitting the model}\label{fitting-the-model-7}}
+
+\hypertarget{interpreting-the-model-5}{%
+\subsection{Interpreting the model}\label{interpreting-the-model-5}}
+
+\hypertarget{more-predictors-and-more-random-slopes}{%
+\section{More predictors and more random slopes}\label{more-predictors-and-more-random-slopes}}
+
+\hypertarget{adding-another-random-slope}{%
+\subsection{Adding another random slope}\label{adding-another-random-slope}}
+
+\hypertarget{adding-random-factors}{%
+\subsection{Adding random factors}\label{adding-random-factors}}
+
+\hypertarget{the-independence-of-continuous-predictors}{%
+\subsection{The independence of continuous predictors}\label{the-independence-of-continuous-predictors}}
+
+\hypertarget{answering-our-research-questions-1}{%
+\section{Answering our research questions}\label{answering-our-research-questions-1}}
+
+\hypertarget{lmer-corner-3}{%
+\section{Lmer corner}\label{lmer-corner-3}}
+
+\hypertarget{plot-code-5}{%
+\section{Plot Code}\label{plot-code-5}}
+
+\hypertarget{logistic-regression}{%
+\chapter{Logistic regression}\label{logistic-regression}}
+
+Placeholder
+
+\hypertarget{data-and-research-questions-6}{%
+\section{Data and research questions}\label{data-and-research-questions-6}}
+
+\hypertarget{dichotomous-variables-and-data}{%
+\subsection{Dichotomous variables and data}\label{dichotomous-variables-and-data}}
+
+\hypertarget{generalizing-our-linear-models}{%
+\section{Generalizing our linear models}\label{generalizing-our-linear-models}}
+
+\hypertarget{link-functions}{%
+\subsection{Link functions}\label{link-functions}}
+
+\hypertarget{logits}{%
+\subsection{Logits}\label{logits}}
+
+\hypertarget{the-logistic-link-function}{%
+\subsection{The logistic link function}\label{the-logistic-link-function}}
+
+\hypertarget{building-intuitions-about-logits}{%
+\subsection{Building intuitions about logits}\label{building-intuitions-about-logits}}
+
+\hypertarget{logistic-regression-with-one-predictor}{%
+\section{Logistic regression with one predictor}\label{logistic-regression-with-one-predictor}}
+
+\hypertarget{description-of-the-model-9}{%
+\subsection{Description of the model}\label{description-of-the-model-9}}
+
+\hypertarget{fitting-the-model-8}{%
+\subsection{Fitting the model}\label{fitting-the-model-8}}
+
+\hypertarget{interpreting-the-model-6}{%
+\subsection{Interpreting the model}\label{interpreting-the-model-6}}
+
+\hypertarget{answering-our-research-question}{%
+\section{Answering our research question}\label{answering-our-research-question}}
+
+\hypertarget{plot-code-6}{%
+\section{Plot Code}\label{plot-code-6}}
+
+\hypertarget{bayesian-anova-and-interpreting-complicated-models}{%
+\chapter{Bayesian ANOVA and interpreting complicated models}\label{bayesian-anova-and-interpreting-complicated-models}}
+
+Placeholder
+
+\hypertarget{data-and-research-questions-7}{%
+\section{Data and research questions}\label{data-and-research-questions-7}}
+
+\hypertarget{the-experiment}{%
+\subsection{The experiment}\label{the-experiment}}
+
+\hypertarget{deciding-on-a-model}{%
+\section{Deciding on a model}\label{deciding-on-a-model}}
+
+\hypertarget{fitting-the-models}{%
+\section{Fitting the models}\label{fitting-the-models}}
+
+\hypertarget{the-maximal-models}{%
+\subsection{The `maximal' models}\label{the-maximal-models}}
+
+\hypertarget{fitting-the-final-models-in-lmer-and-brms}{%
+\subsection{Fitting the `final' models in lmer and brms}\label{fitting-the-final-models-in-lmer-and-brms}}
+
+\hypertarget{comparing-the-maximal-and-final-models}{%
+\section{Comparing the maximal and final models}\label{comparing-the-maximal-and-final-models}}
+
+\hypertarget{bayesian-analysis-of-variance}{%
+\section{Bayesian Analysis of Variance}\label{bayesian-analysis-of-variance}}
+
+\hypertarget{getting-the-superpopulation-standard-deviations-from-our-models}{%
+\subsection{Getting the superpopulation standard deviations from our models}\label{getting-the-superpopulation-standard-deviations-from-our-models}}
+
+\hypertarget{getting-the-finite-population-standard-deviations-from-our-models}{%
+\subsection{Getting the finite-population standard deviations from our models}\label{getting-the-finite-population-standard-deviations-from-our-models}}
+
+\hypertarget{using-the-banova-function}{%
+\subsection{\texorpdfstring{Using the \texttt{banova} function}{Using the banova function}}\label{using-the-banova-function}}
+
+\hypertarget{applying-the-banova-function-to-our-gender-perception-model}{%
+\subsection{\texorpdfstring{Applying the \texttt{banova} function to our gender perception model}{Applying the banova function to our gender perception model}}\label{applying-the-banova-function-to-our-gender-perception-model}}
+
+\hypertarget{applying-a-bayesian-anova-to-a-more-complicated-model}{%
+\section{Applying a Bayesian ANOVA to a more-complicated model}\label{applying-a-bayesian-anova-to-a-more-complicated-model}}
+
+\hypertarget{description-of-the-model-10}{%
+\subsection{Description of the model}\label{description-of-the-model-10}}
+
+\hypertarget{fitting-the-model-9}{%
+\subsection{Fitting the model}\label{fitting-the-model-9}}
+
+\hypertarget{interpreting-the-model-7}{%
+\subsection{Interpreting the model}\label{interpreting-the-model-7}}
+
+\hypertarget{plot-code-7}{%
+\section{Plot Code}\label{plot-code-7}}
+
+\hypertarget{multivariate-models-predictive-accuracy-and-handling-outliers}{%
+\chapter{Multivariate models, predictive accuracy, and handling outliers}\label{multivariate-models-predictive-accuracy-and-handling-outliers}}
+
+Placeholder
+
+\hypertarget{data-and-research-questions-8}{%
+\section{Data and research questions}\label{data-and-research-questions-8}}
+
+\hypertarget{using-multiple-continuous-predictors}{%
+\section{Using multiple continuous predictors}\label{using-multiple-continuous-predictors}}
+
+\hypertarget{describing-and-fitting-the-model}{%
+\subsection{Describing and fitting the model}\label{describing-and-fitting-the-model}}
+
+\hypertarget{interpreting-the-model-8}{%
+\subsection{Interpreting the model}\label{interpreting-the-model-8}}
+
+\hypertarget{considering-predictive-accuracy}{%
+\section{Considering predictive accuracy}\label{considering-predictive-accuracy}}
+
+\hypertarget{handling-outliers-t-distributed-errors}{%
+\section{Handling outliers: t-distributed errors}\label{handling-outliers-t-distributed-errors}}
+
+\hypertarget{fitting-and-interpreting-the-model}{%
+\subsection{Fitting and interpreting the model}\label{fitting-and-interpreting-the-model}}
+
+\hypertarget{plot-code-8}{%
+\section{Plot Code}\label{plot-code-8}}
+
+\hypertarget{modeling-standard-deviations}{%
+\chapter{Modeling Standard Deviations}\label{modeling-standard-deviations}}
+
+Placeholder
+
+\hypertarget{data}{%
+\section{Data}\label{data}}
+
+\hypertarget{modeling-variation-in-the-error}{%
+\section{Modeling variation in the error}\label{modeling-variation-in-the-error}}
+
+\hypertarget{fitting-and-interpreting-our-model}{%
+\subsection{Fitting and interpreting our model}\label{fitting-and-interpreting-our-model}}
+
+\hypertarget{modeling-group-variation-in-our-random-effects}{%
+\section{Modeling group variation in our random effects}\label{modeling-group-variation-in-our-random-effects}}
+
+\hypertarget{fitting-and-interpreting-our-model-1}{%
+\subsection{Fitting and interpreting our model}\label{fitting-and-interpreting-our-model-1}}
+
+\hypertarget{two-dimensional-response-surfaces}{%
+\subsection{Two-dimensional response surfaces}\label{two-dimensional-response-surfaces}}
+
+\hypertarget{plot-code-9}{%
+\section{Plot Code}\label{plot-code-9}}
+
+\end{document}
