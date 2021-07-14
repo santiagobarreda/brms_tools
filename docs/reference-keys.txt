@@ -214,6 +214,7 @@ answering-our-research-questions
 simulating-data-using-our-model-parameters
 frequentist-corner
 bayesian-multilevel-modesl-vs.-lmer
+bayesian-multilevel-modesl-vs.-the-one-sample-t-test
 exercises-1
 plot-code-1
 comparing-two-groups-of-observations
