@@ -50,9 +50,9 @@ fig:F3-final-analysis
 fig:F3-simulated
 fig:F3-sim-incomplete-1
 fig:F3-sim-incomplete-2
-fig:unnamed-chunk-27
-fig:unnamed-chunk-29
+fig:unnamed-chunk-28
 fig:unnamed-chunk-30
+fig:unnamed-chunk-31
 fig:F4-datacomparison
 fig:F4-speakerboxplots
 eq:40
@@ -235,7 +235,9 @@ random-effects-priors-and-pooling
 inspecting-the-random-effects
 but-what-does-it-all-mean
 simulating-the-two-group-model
+frequentist-corner-1
 lmer-corner
+exercises-2
 plot-code-2
 comparing-many-groups
 data-and-research-questions-3
@@ -253,6 +255,7 @@ assessing-model-fit
 investigating-the-interactions-the-easy-way
 making-plots
 lmer-corner-1
+exercises-3
 plot-code-3
 including-continuous-predictors-in-our-model
 data-and-research-questions-4
@@ -272,6 +275,7 @@ models-with-group-dependent-slopes-and-intercepts
 description-of-the-model-6
 fitting-the-model-5
 interpreting-the-model-3
+exercises-4
 plot-code-4
 random-slopes
 data-and-research-questions-5
@@ -290,6 +294,7 @@ adding-random-factors
 the-independence-of-continuous-predictors
 answering-our-research-questions-1
 lmer-corner-2
+exercises-5
 plot-code-5
 logistic-regression
 data-and-research-questions-6
