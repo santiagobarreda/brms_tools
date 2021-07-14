@@ -1,5 +1,4 @@
 
-## function to make summary plots for coefficients
 
 hypothesis2 = function (x, ...){
   output = brms::hypothesis (x, ...)
@@ -7,8 +6,7 @@ hypothesis2 = function (x, ...){
 }
 
   
-  
-
+## function to make summary plots for coefficients
 
 brmplot = function (mat, ylim=NULL, xlim = NULL, horizontal = TRUE, add = FALSE, 
                     xs = NULL, col = 1, labels = "default",xlab='',ylab='', 
