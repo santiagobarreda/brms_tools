@@ -238,7 +238,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#the-model"><i class="fa fa-check"></i><b>4.2.1</b> The model</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-many-groups-using-predictors-analysis-of-variance"><i class="fa fa-check"></i><b>4.3</b> Investigating many groups using predictors: Analysis of Variance</a>
+<li class="chapter" data-level="4.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-many-factors-simultaneously-analysis-of-variance"><i class="fa fa-check"></i><b>4.3</b> Investigating many factors simultaneously: Analysis of Variance</a>
 <ul>
 <li class="chapter" data-level="4.3.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#description-of-the-model-3"><i class="fa fa-check"></i><b>4.3.1</b> Description of the model</a></li>
 <li class="chapter" data-level="4.3.2" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#fitting-the-model-and-interpreting-the-results"><i class="fa fa-check"></i><b>4.3.2</b> Fitting the model and interpreting the results</a></li>
@@ -337,7 +337,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="comparing-many-groups" class="section level1" number="4">
 <h1><span class="header-section-number">Chapter 4</span> Comparing many groups</h1>
-<p>Last chapter we talked about comparing two groups. Although the comparison of two groups is very simple, it also comes up very often: more complicated problems are often broken down into several two-group questions. However, most real-world research designs don’t usually <em>begin</em> as two-group questions. In this chapter, we’re going to talk about the comparison of multiple groups of observations/speakers.</p>
+<p>Last chapter we talked about comparing two groups. Although the comparison of two groups is very simple, it also comes up very often: more complicated problems are often broken down into several two-group questions. However, most real-world research designs don’t usually <em>begin</em> as two-group questions. In this chapter, we’re going to talk about the comparison of multiple groups of observations/speakers. The models we will discuss are similar to one-way ANOVAs in the types of research questions they can help investigate.</p>
 <div id="data-and-research-questions-3" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Data and research questions</h2>
 <p>First, we are going to discuss models that compare observations across any number of groups. Again, we’re using the term ‘groups’ loosely here. These designs are appropriate for data from:</p>
@@ -346,7 +346,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>the same speakers/listeners are tested in multiple different experimental condition, with stimuli that vary in multiple groups, or something of the sort.</p></li>
 <li><p>each speaker/subject can contribute multiple data points, and the number does not need to be balanced across subjects. Also speakers can be missing from one of the conditions (i.e., unbalanced data is ok).</p></li>
 </ul>
-<p>The models we will discuss are similar to one-way ANOVAs in the types of research questions they can help investigate.</p>
+<p>To analyze data like this, you should have it in a datafram with one row for each observation. Then, one column should contain the dependent variable, the variable whose variation you’re trying to predict. Another column should contain information about which group each observation belongs to.</p>
 <p>We’re going to keep working with the Hillenbrand et al. data, that we have been discussing in every chapter to this point. This time we’re going to work with all four groups of speakers: <code>b</code> (boys), <code>g</code> (girls), <code>m</code> (men), and <code>w</code> (women).</p>
 <div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="comparing-many-groups.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load brms</span></span>
 <span id="cb85-2"><a href="comparing-many-groups.html#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (brms)</span>
@@ -549,8 +549,8 @@ group_{[\mathrm{group}]} \sim t(3, 0, 100) \\
 <p>The result above suggests that the difference is very small (-2 Hz) and the 95% credible intervals spans a huge range (from -15 to +10)). As a result, the measured difference between these groups is not reliable, and may be very small or close to zero. Notice that in this summary I am focused on minimizing <a href="https://statmodeling.stat.columbia.edu/2004/12/29/type_1_type_2_t/">type S and type M errors</a>. This means I am worried about whether the effect is likely to be small or large, and negative or positive, rather than whether it is ‘true’ or ‘false’.</p>
 </div>
 </div>
-<div id="investigating-many-groups-using-predictors-analysis-of-variance" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Investigating many groups using predictors: Analysis of Variance</h2>
+<div id="investigating-many-factors-simultaneously-analysis-of-variance" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Investigating many factors simultaneously: Analysis of Variance</h2>
 <p>Above, our model had a single ‘batch’ of grops. Another way to look at it is that the model predicted variation along a single <em>dimension</em>. We can categorize people along multiple dimensions simultaneously, and place them in more than one group at a time. So, a speaker may be an adult <em>and</em> a woman, and not just and adult <em>or</em> a women. This is because adultness and gender are independent dimensions and the value of one does not affect the value of the other.</p>
 <p>Our models can include any number of factors, and subjects can be <em>crossed</em> with these factors, or nested between them. When two factors are crossed, this means that all levels of a factor appear at all levels of another factor. This is easiest to conceive of for participants (remember ‘participant’ is just factor). Participants are ‘crossed’ with a factor when these are tested at all levels of a factor. For example, we might test listeners on a lexical decision task for verbs and nouns. If we use word category as a predictor, then word category is crossed with subjects in our design.</p>
 <p>Sometimes, factors cannot be crossed and must be <em>nested</em>. For example, participants in an experiment cannot be tested as both adults and children because one person cannot be both at the same time. When one or more levels of a factor cannot be observed at all levels of another factor, then these are no longer crossed. Instead, since participants are only present in their one level (either child <strong>or</strong> adult), participant is said to be <em>nested</em> within child. These distinctions are useful to understand conceptually but they do not much affect the structures of our model (from our perspective anyways!).</p>
@@ -560,7 +560,7 @@ group_{[\mathrm{group}]} \sim t(3, 0, 100) \\
 <li><p>the same speakers/listeners are tested in multiple different experimental conditions that can be categorized in one or more ways, with stimuli that vary in multiple groups, or something of the sort.</p></li>
 <li><p>each speaker/subject can contribute multiple data points, and the number does not need to be balanced across subjects. Also speakers can be missing from one of the conditions (i.e., unbalanced data is ok).</p></li>
 </ul>
-<p>These models we will discuss are similar to two-way repeated-measures ANOVAs in the types of research questions they can help investigate.</p>
+<p>To analyze data like this, you should have it in a dataframe with one row for each observation and one column for the dependent variable. However, your data should also now include another column for every other factor you wish to include in your model.</p>
 <div id="description-of-the-model-3" class="section level3" number="4.3.1">
 <h3><span class="header-section-number">4.3.1</span> Description of the model</h3>
 <p>In the previous section, we acted like we just had four different groups with no internal structure. Of course, we know that our groups differ systematically from each other in meaningful ways. For example, we might have chosen to fit two separate models that looked like this:</p>

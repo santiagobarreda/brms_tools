@@ -238,7 +238,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#the-model"><i class="fa fa-check"></i><b>4.2.1</b> The model</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-many-groups-using-predictors-analysis-of-variance"><i class="fa fa-check"></i><b>4.3</b> Investigating many groups using predictors: Analysis of Variance</a>
+<li class="chapter" data-level="4.3" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#investigating-many-factors-simultaneously-analysis-of-variance"><i class="fa fa-check"></i><b>4.3</b> Investigating many factors simultaneously: Analysis of Variance</a>
 <ul>
 <li class="chapter" data-level="4.3.1" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#description-of-the-model-3"><i class="fa fa-check"></i><b>4.3.1</b> Description of the model</a></li>
 <li class="chapter" data-level="4.3.2" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#fitting-the-model-and-interpreting-the-results"><i class="fa fa-check"></i><b>4.3.2</b> Fitting the model and interpreting the results</a></li>
@@ -337,16 +337,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="comparing-two-groups-of-observations" class="section level1" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Comparing two groups of observations</h1>
-<p>In the previous chapter we focused on investigating values from a single group, which is basically the simplest kind data you can deal with. In this chapter we’re going to compare data from two groups to see how similar/different they really are.</p>
+<p>In the previous chapter we focused on investigating values from a single group, which is basically the simplest kind data you can deal with. In this chapter we’re going to compare data from two groups to see how similar/different they really are. The models we will discuss are similar to two-sample t-tests in the types of research questions they can help investigate (as will be discussed at the end of the chapter).</p>
+<div id="data-and-research-questions-2" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Data and research questions</h2>
 <p>The models discussed in this chapter can be used for data that compares observations across two groups. We are using the term ‘groups’ loosely here. The designs in this chapter are appropriate for data from:</p>
 <ul>
 <li><p>two groups of speakers/listeners that are grouped in different ways because they differ in some characteristic (e.g., gender), or in some experimental condition. Different speakers are in each group.</p></li>
 <li><p>the same speakers/listeners are tested in two different experimental condition, with stimuli that vary in two groups, or something of the sort.</p></li>
 <li><p>each speaker/subject can contribute multiple data points, and the number does not need to be balanced across subjects. Also speakers can be missing from one of the conditions (i.e., unbalanced data is ok).</p></li>
 </ul>
-<p>The models we will discuss are similar to two-sample t-tests in the types of research questions they can help investigate (as will be discussed at the end of the chapter).</p>
-<div id="data-and-research-questions-2" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Data and research questions</h2>
+<p>To analyze data like this, you should have it in a datafram with one row for each observation. Then, one column should contain the dependent variable, the variable whose variation you’re trying to predict. Another column should contain information about which group each observation belongs to. For the models later in the chapter, you will also need a column that indicates which speaker/listener/participant provided the datapoint.</p>
 <p>We’re going to use the Hillenbrand et al. f0 data we used in the other chapters. Previously we only considered the productions of adult females from Michigan, this time we’re going to compare the f0 measurements for adult females to those of girls between 10-12 years of age.</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="comparing-two-groups-of-observations.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load brms</span></span>
 <span id="cb48-2"><a href="comparing-two-groups-of-observations.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (brms)</span></code></pre></div>

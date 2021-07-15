@@ -134,7 +134,7 @@ Repeated measures data is extremely common in linguistics, and the norm in many 
 
 This book is intended for an introductory statistics class for senior undergraduate or graduate students, and for faculty members and other researchers to use as a self-study guide. This book is aimed at 1) students who are looking for a conceptual framework to help understand multilevel Bayesian models, but not necessarily looking for `too-much' mathematical detail, and 2) researchers who are already experienced with frequentist modelling and are looking to `translate' their skillset over to a Bayesian framework.
 
-To learn multilevel models, a student is usually first expected to learn `traditional' statistical approaches and designs, such as t-tests ANOVAS and ordinary least-squares regression. After this foundation is laid, the student can then move to the sorts of models they can actually use for their work, mainly multilevel models that can handle repeated-measures data. This approach has several drawbacks: it takes a long time (which graduate students don't have), spends substantial energy on statistical approaches that most linguists will rarely if ever use in their work (e.g., OLS regression), and front-loads difficult and abstract concepts (e.g., degrees of freedom, p-values) before students can start working with data they really understand. As a result, students may become discouraged, may become convinced that they're `not good at math', and may not realize how much they already intuitively understand about statistics.
+To learn multilevel models, a student is usually first expected to learn `traditional' statistical approaches and designs, such as t-tests, ANOVAS, and ordinary least-squares (OLS) regression. After this foundation is laid, the student can then move to the sorts of models they can actually use for their work, mainly multilevel models that can handle repeated-measures data. This approach has several drawbacks: it takes a long time (which graduate students don't have), spends substantial energy on statistical approaches that most linguists will rarely if ever use in their work (e.g., OLS regression), and front-loads difficult and abstract concepts (e.g., degrees of freedom, p-values) before students can start working with data they really understand. As a result, students may become discouraged, may become convinced that they're `not good at math', and may not realize how much they already intuitively understand about statistics.
 
 This book presents an introduction to modelling repeated-measures data using Bayesian multilevel regression models, and building bespoke Bayesian models that are equivalent to, and better than, their `off the shelf' frequentist equivalents using the `brms' package in R. This book will provide a conceptual introduction by adopting an accessible narrative style that introduces mathematical and modelling concepts in plain English. A focus will be placed on understanding concepts and the visual/geometric consequences of different regression model structures and changes in coefficients, leaving much of the statistical foundation and mathematical rigor to other books. Chapters are organized in terms of regression model components, and how these relate to experimental designs, statistical concepts, and the geometry of figures based on the data and model coefficients. We will then cover how to use these components to `build' models that suit your needs. In addition, each chapter feature the fully worked analysis of repeated-measures linguistic data resulting from either perceptual experiments or speech production experiments involving human subjects.
 
@@ -2808,8 +2808,8 @@ Below we can make a few more datasets that mix more components, and compare thes
 \hypertarget{frequentist-corner-1}{%
 \section{Frequentist corner}\label{frequentist-corner-1}}
 
-\hypertarget{lmer-corner}{%
-\section{Lmer corner}\label{lmer-corner}}
+\hypertarget{bayesian-multilevel-modesl-vs.-lmer-1}{%
+\subsection{Bayesian multilevel modesl vs.~lmer}\label{bayesian-multilevel-modesl-vs.-lmer-1}}
 
 Here I compare the output of \texttt{brms} to the output of the \texttt{lmer} (``linear mixed-effects regression'') function, a very popular function for fitting multilevel models in the lme4 R package. As before, I am not going to talk about the traditional models in any detail. The focus of this section is simply to highlight the potential similarities between different approaches, and to point out where to find this information.
 
@@ -2955,7 +2955,10 @@ Importantly however, the values we get from both approaches are nearly identical
 
 Last chapter we talked about comparing two groups. Although the comparison of two groups is very simple, it also comes up very often: more complicated problems are often broken down into several two-group questions. However, most real-world research designs don't usually \emph{begin} as two-group questions. In this chapter, we're going to talk about the comparison of multiple groups of observations/speakers.
 
-The models discussed in this chapter can be used for data that compares observations across any number of groups. Again, we're using the term `groups' loosely here. The designs in this chapter are appropriate for data from:
+\hypertarget{data-and-research-questions-3}{%
+\section{Data and research questions}\label{data-and-research-questions-3}}
+
+First, we are going to discuss models that compare observations across any number of groups. Again, we're using the term `groups' loosely here. These designs are appropriate for data from:
 
 \begin{itemize}
 \item
@@ -2967,9 +2970,6 @@ The models discussed in this chapter can be used for data that compares observat
 \end{itemize}
 
 The models we will discuss are similar to one-way ANOVAs in the types of research questions they can help investigate.
-
-\hypertarget{data-and-research-questions-3}{%
-\section{Data and research questions}\label{data-and-research-questions-3}}
 
 We're going to keep working with the Hillenbrand et al.~data, that we have been discussing in every chapter to this point. This time we're going to work with all four groups of speakers: \texttt{b} (boys), \texttt{g} (girls), \texttt{m} (men), and \texttt{w} (women).
 
@@ -3265,6 +3265,25 @@ The result above suggests that the difference is very small (-2 Hz) and the 95\%
 \hypertarget{investigating-many-groups-using-predictors-analysis-of-variance}{%
 \section{Investigating many groups using predictors: Analysis of Variance}\label{investigating-many-groups-using-predictors-analysis-of-variance}}
 
+Above, our model had a single `batch' of grops. Another way to look at it is that the model predicted variation along a single \emph{dimension}. We can categorize people along multiple dimensions simultaneously, and place them in more than one group at a time. So, a speaker may be an adult \emph{and} a woman, and not just and adult \emph{or} a women. This is because adultness and gender are independent dimensions and the value of one does not affect the value of the other.
+
+Our models can include any number of factors, and subjects can be \emph{crossed} with these factors, or nested between them. When two factors are crossed, this means that all levels of a factor appear at all levels of another factor. This is easiest to conceive of for participants (remember `participant' is just factor). Participants are `crossed' with a factor when these are tested at all levels of a factor. For example, we might test listeners on a lexical decision task for verbs and nouns. If we use word category as a predictor, then word category is crossed with subjects in our design.
+
+Sometimes, factors cannot be crossed and must be \emph{nested}. For example, participants in an experiment cannot be tested as both adults and children because one person cannot be both at the same time. When one or more levels of a factor cannot be observed at all levels of another factor, then these are no longer crossed. Instead, since participants are only present in their one level (either child \textbf{or} adult), participant is said to be \emph{nested} within child. These distinctions are useful to understand conceptually but they do not much affect the structures of our model (from our perspective anyways!).
+
+The models discussed below can be used for data that compares observations across any number of factors, each with any number of levels. These designs are appropriate for data from:
+
+\begin{itemize}
+\item
+  groups of speakers/listeners that are grouped in different ways because they differ in in one or more characteristics, or in one or more experimental conditions. Different speakers are in each group.
+\item
+  the same speakers/listeners are tested in multiple different experimental conditions that can be categorized in one or more ways, with stimuli that vary in multiple groups, or something of the sort.
+\item
+  each speaker/subject can contribute multiple data points, and the number does not need to be balanced across subjects. Also speakers can be missing from one of the conditions (i.e., unbalanced data is ok).
+\end{itemize}
+
+These models we will discuss are similar to two-way repeated-measures ANOVAs in the types of research questions they can help investigate.
+
 \hypertarget{description-of-the-model-3}{%
 \subsection{Description of the model}\label{description-of-the-model-3}}
 
@@ -3511,6 +3530,8 @@ Furthermore, we all intuitively understand interactions whenever we correctly in
 
 In summary, if the answer to ``what is the effect of X on Y'' is ``well, it depends on the values of Z'', you have an interaction in your data. When you have substantial interactions present in your data and you do not include these in your model, this can cause a problem for your model fit.
 
+Before moving on from interactions, we need to discuss the relationshpi between interactions and the crossing of factors. The only thing you definitely need to be aware of is that you cannot estimate interactions of factors are not crossed. This is kind of obvious if you think about it. Interactions are conditional effects, and crossing means you observed all combinations. If you did not observe all combinations, you are not in a position to tell me about how effects vary for specific combinations.
+
 \hypertarget{interactions-in-our-f0-data}{%
 \subsection{Interactions in our f0 data}\label{interactions-in-our-f0-data}}
 
@@ -3553,7 +3574,7 @@ The model presented above (\texttt{model\_both}) requires only a slight tweak to
 
 \texttt{f0\ \textasciitilde{}\ adult\ *\ gender\ +\ (1\textbar{}speaker)}
 
-The first way includes an explicit interaction term, \texttt{adult:gender}. The syntax for these is \texttt{X:Z} for an interaction between effects \texttt{X} and \texttt{Z}, \texttt{W:X:Z} for a three-way interaction, and so on. The second way uses \texttt{*} between our two predictors. This tells R to include those predictors, and the interactions between them This can be much faster then specifying all interactions, but you lose control over which ones you include. For example the first formula implies the second, but cannot represent the third (since it omits one interaction):
+The first way includes an explicit interaction term, \texttt{adult:gender}. The syntax for these is \texttt{X:Z} for an interaction between effects \texttt{X} and \texttt{Z}, \texttt{W:X:Z} for a three-way interaction, and so on. The second way uses \texttt{*} between our two predictors. This tells R to include those predictors, and the interactions between them. This can be much faster then specifying all interactions, but you lose control over which ones you include. For example the first formula implies the second, but cannot represent the third (since it omits the \texttt{X:W} interaction):
 
 \texttt{y\ \textasciitilde{}\ Z\ *\ X\ *\ W}
 ~
@@ -3582,10 +3603,16 @@ adult:gender \sim t(3, 0, 100) \\
 \label{eq:43}
 \end{equation}
 
+In plain English this says:
+
+\begin{quote}
+``We expect the mean f0 produced by speakers from Michigan to vary according to a normal distribution with a trial-specific mean parameter. That mean varies based on whether the speaker is an adult/child and female/male, including the interaction of these two predictors. Random speaker-dependent variation in means was modelled as coming from a normal distribution with a mean of zero and a standard deviation estimated from the data''.
+\end{quote}
+
 \hypertarget{fitting-the-model-and-interpreting-the-results-1}{%
 \subsection{Fitting the model and interpreting the results}\label{fitting-the-model-and-interpreting-the-results-1}}
 
-Below I fit the model which now includes an interaction term representing the changing effect of gender and adultness on average f0.
+Below we fit the model which now includes an interaction term representing the changing effect of gender and adultness on average f0.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3606,53 +3633,40 @@ Below I fit the model which now includes an interaction term representing the ch
 \end{Highlighting}
 \end{Shaded}
 
+Remember that this line \texttt{set\_prior("student\_t(3,\ 0,\ 100)",\ class\ =\ "b")} sets the prior for all non-intercept `Population-Level' predictors. This allows you to efficiently set priors for the adult, gender, and adult:gender predictors in your model in a single line, and becomes more and more useful as our models grow more complex.
+
+A look at the model output above indicates that we have a large interaction term. In fact, our interaction is as large as the `main' effect for gender! In cases with large interactions we have to be very careful about interpreting the main effects. In other words, when the answer to a question is ``it really depends'', you should be wary of making blanket statements. For example: how good can a speaker get at a second language in one year? The interaction between age and language learning is so large that it doesn't even really make sense to answer this in a single way for all learners.
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# inspect model}
-\NormalTok{model\_interaction}
+\CommentTok{\# inspect fixed effects}
+\NormalTok{brms}\SpecialCharTok{::}\FunctionTok{fixef}\NormalTok{ (model\_interaction)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##  Family: gaussian 
-##   Links: mu = identity; sigma = identity 
-## Formula: f0 ~ adult + gender + adult:gender + (1 | speaker) 
-##    Data: h95 (Number of observations: 1668) 
-## Samples: 4 chains, each with iter = 11000; warmup = 1000; thin = 10;
-##          total post-warmup samples = 4000
-## 
-## Group-Level Effects: 
-## ~speaker (Number of levels: 139) 
-##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sd(Intercept)    20.92      1.33    18.52    23.77 1.00     3027     3703
-## 
-## Population-Level Effects: 
-##                Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## Intercept        206.56      1.91   202.78   210.27 1.00     2418     3405
-## adult1           -30.67      1.94   -34.47   -26.88 1.00     1911     2938
-## gender1           22.89      1.97    18.94    26.76 1.00     1851     3038
-## adult1:gender1    21.72      1.92    17.87    25.46 1.00     2242     3328
-## 
-## Family Specific Parameters: 
-##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sigma    11.86      0.21    11.46    12.29 1.00     4012     4098
-## 
-## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
-## and Tail_ESS are effective sample size measures, and Rhat is the potential
-## scale reduction factor on split chains (at convergence, Rhat = 1).
+##                 Estimate Est.Error      Q2.5     Q97.5
+## Intercept      206.56112  1.913081 202.78344 210.27475
+## adult1         -30.66934  1.936608 -34.46529 -26.87641
+## gender1         22.89211  1.974245  18.93775  26.76101
+## adult1:gender1  21.71878  1.918765  17.86664  25.46130
 \end{verbatim}
 
-Remember that this line \texttt{set\_prior("student\_t(3,\ 0,\ 100)",\ class\ =\ "b")} sets the prior for all non-intercept `Population-Level' predictors. This allows you to efficiently set priors for the adult, gender, and adult:gender predictors in your model in a single line, and becomes more and more useful as our models grow more complex.
+We need to talk about why there is only a single interaction term. The reason for this is related to the same reason we can't get estimates for all our group effects (i.e., linear dependence). The number of terms you can estimate is generally one fewer than the number of levels. For interaction terms, the number of parameters is equal to (number of levels of factor A - 1)x(number of levels of factor B - 1). Since each of our factors have two levels, we can only estimate one parameter, (2-1)x(2-1)=1.
 
-A look at the model output above indicates that we have a large interaction term. In fact, our interaction is as large as the `main' effect for gender! In cases with large interactions we have to be very careful about interpreting the main effects. In other words, when the answer to a question is ``it really depends'', you should be wary of making blanket statements.
+Our interaction basically says that sometimes being a male \emph{and} being an adult results in a different f0 than can be predicted by maleness and adultness independently. So, you only need one coefficient to represent the extra combined effects of maleness \emph{and} adultness. This same coefficient can also represent the opposite case: not male and not adult. You don't need an interaction term to model the effect of maleness \emph{or} adultness since that is effectively what the main effects do (i.e., model the effect regardless of the difference of the other value).
 
-We need to talk about why there is only a single interaction term. The reason for this is related to the same reason we can't get estimates for all our group effects (i.e., linear dependence). The number of terms you can estimate is generally one fewer than the number of levels. For interaction terms, the number of parameters is equal to (number of levels of factor (A - 1)x(number of levels of factor B - 1). Since each of our factors have two levels, we can only estimate one parameter, (2-1)x(2-1).
+The interaction term is just another element of your prediction equation (i.e., \(\mu + x_1+x_2...\)) intended to help explain variation that can't be predicted by the independent effects of the other predictors in the model. If there is no interaction in your data, then the value of the interaction terms will be zero and your model will look just as if you had not even included the interaction at all.
 
-Our interaction basically says that sometimes being a male \emph{and} being an adult results in a lower f0 than can be predicted independently by maleness and adultness. So, you only need one coefficient to represent the extra combined effects of maleness \emph{and} adultness. This same coefficient can also represent the opposite case: not male and not adult. You don't need an interaction term to model the effect of maleness \emph{or} adultness since that is effectively what the main effects do (i.e., model the effect regardless of the difference of the other value).
+Recovering the predicted group means based on the coefficient values is straightforward, but a bit tedious: we must now either add or subtract the value of the interaction term (\texttt{adult1:gender1}) from each group. We can easily determine which to do for this model because the sign on the interaction term is the product of the signs on the relevant `main effects' terms.
 
-The interaction term is just another element of your prediction equation (i.e., \(\mu + x_1+x_2...\)) intended to help explain variation that can't be predicted by the independent effects of the other predictors in the model. Recovering the predicted group means based on the coefficient values is straightforward, but a bit tedious: we must now either add or subtract the value of the interaction term (\texttt{adult1:gender1}) from each group. We can easily determine which to do for this model because the sign on the interaction term is the product of the signs on the relevant `main effects' terms.
+Before doing this hoewever, we need to talk about what \texttt{adult1:gender1} means. This can be read aloud as ``the effect of adult1 given (conditional on) gender 1''. If we wanted to find the simple effect for adult1 given gender 1 we could add the main effect for \texttt{adult1} to the conditional effect for \texttt{adult1} given \texttt{gender1} as in \texttt{adult1\ +\ adult1:gender1}.
 
-For example, the second hypothesis we are testing below says \texttt{Intercept\ +\ -adult1\ +\ -gender1\ +\ adult1:gender1\ =\ 0}. This could be read like ``take the overall mean, add the effect for `child' (or \texttt{adult2}, since \texttt{-adult1=adult2}), and add the effect for `male' (or \texttt{gender2} since \texttt{-gender1=gender2}), and add the effect for when the speaker is male \emph{and} a child (\texttt{-adult1*-gender1\ =\ +adult1:gender1})''. If you look at the hypotheses below, you will see that the sign on the interaction terms solely depends on the signs of the corresponding main effects terms. We can see that the inclusion of an interaction term allows our model to capture group averages more accurately than the model without intercepts.
+The fifth hypothesis we are testing below is the simplest to understand, so we will start there. This hypothesis asks whether the sum of the \texttt{Intercept}, \texttt{adult1} (the effect for adults), \texttt{gender1} (the effect for femaleness), and \texttt{adult1:gender1} (the effect for adults given femaleness). Because of the specific combination of parameters values we combined, this results in the comparison of the `girl' mean f0 to zero.
+
+The second hypothesis we are testing below says \texttt{Intercept\ +\ -adult1\ +\ -gender1\ +\ adult1:gender1\ =\ 0}. Since we have flipped the sign on \texttt{adult1} and \texttt{gender1}, these now correspond to the effects of the groups the were \emph{not} estimated, `child' and `male'. These coefficients \emph{would} be called \texttt{adult2} and \texttt{gender2}. However, since we cannot estimate these and these do not exist in our model, we flip the sign on the coefficients that \emph{are}present in our model. Since we combined the effects for male children, the second hypothesis below compares the mean f0 for `boys' to 0.
+
+If you look at the hypotheses below, you will see that these generate the predicted group means for our four speaker groups, and that the sign on the interaction terms always depends on the signs of the corresponding main effects terms. Furthermore, we can see that the inclusion of an interaction term allows our model to capture group averages more accurately than the model without intercepts.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3706,7 +3720,7 @@ Below I print the estimates of the `fixed' effects in the model so we can focus 
 \end{Highlighting}
 \end{Shaded}
 
-For example, the average f0 is 206. The gender difference is 44 Hz (22 * 2) between groups, and there is a gender-based 23 Hz deviation from the mean between groups. This means that, overall, the male and female averages are about 183 and 229 Hz (206 ± 22).
+For example, the average f0 is 206. The gender difference is 46 Hz (23 * 2) between groups, and there is a gender-based 23 Hz deviation from the mean between groups. This means that, overall, the male and female averages are about 183 and 229 Hz (206 ± 23).
 
 However, the \texttt{adult1:gender1} interaction is 22 Hz. This means that when the speaker was an adult (\texttt{adult1}), the gender difference was nearly doubled. We know this because the effect for \texttt{gender1} is 22.8, and the effect for \texttt{gender1} \textbf{given} \texttt{adult1} (\texttt{adult1:gender1}, which is the same thing as \texttt{gender1:adult1}) is 21.7 Hz higher than that. So, the total effect for f0 across adults is about 22.8 + 21.7 = 44.5, suggesting a difference in f0 between the groups of 89 Hz (44.5 * 2).
 
@@ -3730,7 +3744,7 @@ We can asses model fit for the model including interaction terms by making more 
 \end{Highlighting}
 \end{Shaded}
 
-We can make more interaction plots using our data and our posterior predictions. Below I compare our data, the predictions of our original model, and the predictions of our model that includes interactions. Whereas the model with no interactions enforced parallelism on the effects, our new model is able to capture the conditional nature of gender given adultness in our data.
+We can make more interaction plots using our data and our posterior predictions. Below I compare our data, the predictions of our original model, and the predictions of our model that includes interactions (both models with no random effects). Whereas the model with no interactions enforced parallelism on the effects, our new model is able to capture the conditional nature of gender given adultness in our data.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3757,70 +3771,10 @@ We can make more interaction plots using our data and our posterior predictions.
 
 For the first time, we have a model that really does a reasonably-good job of representing the information in our data. The model can capture the gender-dependent nature of age-based f0 differences, and separately estimates between group variation and between group variation.
 
-\hypertarget{investigating-the-interactions-the-easy-way}{%
-\subsection{Investigating the interactions the easy way}\label{investigating-the-interactions-the-easy-way}}
-
-There are built-in functions in \texttt{brms} that help you investigate your effects in the presence of interactions. The \texttt{conditional\_effects} function calculates the values of effects conditional on the Intercept (for continuous variables). This means it adds the value of the Intercept to all its effects estimates. This function is extremely handy but also limited. You can't get the posterior samples from this function, meaning you can't use this output to compare the values of rows. Also, conditioning on the mean introduces noise to our effects estimates and makes their credible intervals larger.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# group means}
-\FunctionTok{tapply}\NormalTok{ (h95}\SpecialCharTok{$}\NormalTok{f0, h95}\SpecialCharTok{$}\NormalTok{group, mean)}
-\DocumentationTok{\#\#        b        g        m        w }
-\DocumentationTok{\#\# 236.0741 238.3509 131.2185 220.4010}
-
-\CommentTok{\# get conditional effects}
-\NormalTok{model\_effects }\OtherTok{=} \FunctionTok{conditional\_effects}\NormalTok{ (model\_interaction)}
-
-\CommentTok{\# adultness effect (average for adult vs children)}
-\NormalTok{model\_effects[[}\DecValTok{1}\NormalTok{]][,}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)]}
-\DocumentationTok{\#\#   effect1\_\_ estimate\_\_     se\_\_  lower\_\_  upper\_\_}
-\DocumentationTok{\#\# 1     adult   220.5119 2.950740 214.4826 226.4404}
-\DocumentationTok{\#\# 2     child   238.4238 4.839866 229.0110 247.6442}
-
-\CommentTok{\# gender effect (average for females vs males)}
-\NormalTok{model\_effects[[}\DecValTok{2}\NormalTok{]][,}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)]}
-\DocumentationTok{\#\#   effect1\_\_ estimate\_\_     se\_\_  lower\_\_  upper\_\_}
-\DocumentationTok{\#\# 1    female   220.5119 2.950740 214.4826 226.4404}
-\DocumentationTok{\#\# 2      male   131.3351 3.191314 124.9046 137.3878}
-
-\CommentTok{\# recreated group means for w, m, g, b}
-\NormalTok{model\_effects[[}\DecValTok{3}\NormalTok{]][,}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)]}
-\DocumentationTok{\#\#   effect1\_\_ effect2\_\_ estimate\_\_     se\_\_  lower\_\_  upper\_\_}
-\DocumentationTok{\#\# 1     adult    female   220.5119 2.950740 214.4826 226.4404}
-\DocumentationTok{\#\# 2     adult      male   131.3351 3.191314 124.9046 137.3878}
-\DocumentationTok{\#\# 3     child    female   238.4238 4.839866 229.0110 247.6442}
-\DocumentationTok{\#\# 4     child      male   236.0509 4.175498 227.9085 244.4526}
-\end{Highlighting}
-\end{Shaded}
-
-The \texttt{marginal\_effects} function returns a list of matrices. Each one contains a different main effect or interaction term. Above I print each one in turn. We can see that these values match those we recreated above using the\texttt{hypothesis} function and the individual coefficients:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{tapply}\NormalTok{ (h95}\SpecialCharTok{$}\NormalTok{f0, h95}\SpecialCharTok{$}\NormalTok{group, mean)}
-\DocumentationTok{\#\#        b        g        m        w }
-\DocumentationTok{\#\# 236.0741 238.3509 131.2185 220.4010}
-\NormalTok{brms}\SpecialCharTok{::}\FunctionTok{hypothesis}\NormalTok{ (model\_interaction, }\FunctionTok{c}\NormalTok{(}
-                \StringTok{"Intercept = 0"}\NormalTok{,}
-                \StringTok{"Intercept + {-}adult1 + {-}gender1 +  adult1:gender1 = 0"}\NormalTok{,}
-                \StringTok{"Intercept + {-}adult1 +  gender1 + {-}adult1:gender1 = 0"}\NormalTok{,}
-                \StringTok{"Intercept +  adult1 + {-}gender1 + {-}adult1:gender1 = 0"}\NormalTok{,}
-                \StringTok{"Intercept +  adult1 +  gender1 +  adult1:gender1 = 0"}\NormalTok{))[[}\DecValTok{1}\NormalTok{]][,}\DecValTok{2}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}
-\DocumentationTok{\#\#   Estimate Est.Error CI.Lower CI.Upper}
-\DocumentationTok{\#\# 1 206.5611  1.913081 202.7834 210.2747}
-\DocumentationTok{\#\# 2 236.0571  4.190763 227.9085 244.4526}
-\DocumentationTok{\#\# 3 238.4038  4.809069 229.0110 247.6442}
-\DocumentationTok{\#\# 4 131.2809  3.184129 124.9046 137.3878}
-\DocumentationTok{\#\# 5 220.5027  3.021626 214.4826 226.4404}
-\end{Highlighting}
-\end{Shaded}
-
 \hypertarget{making-plots}{%
 \subsection{Making plots}\label{making-plots}}
 
-There are many ways to make `nice' graphics using brms models. Many use packages like \texttt{ggplot2} and \texttt{bayesplot}. In general these figures are nice but sometimes too `fancy' for many purposes where simple black and white graphics are needed. I also don't really know how to use \texttt{ggplot2} ( :\textbar{} ). As a result, I'm going to focus on making simple line plots (like those common in journal articles) using base R graphics.
-
+There are many ways to make `nice' graphics using brms models. There are many excellent resources for how to make slick graphics using packages like \texttt{ggplot2} and \texttt{bayesplot}. In general these packages make figures that are nice but sometimes too `fancy' for many purposes where simple black and white graphics are needed. As a result, I'm going to focus on making simple line plots (like those common in journal articles) using base R graphics.\\
 The standard information provided in the output of \texttt{brm} model summaries can be used to make plots. These summaries always contain (among other things) these four columns in the same order: the mean estimate, the standard deviation, and the lower and upper credible intervals. I wrote a small function called \texttt{brmplot} that will help draw effects plots easily using these summaries. The \texttt{brmplot} function takes in a matrix containing these columns and makes plots showing the means and credible intervals of different effects, assuming that each row is an effect.
 
 Below I get a summary of the fixed effects. I make plots of these effects in two orientations. In each one I omit the Intercept estimate as the magnitude of this is so different that it cannot easily be included on the plot. There is nothing special about these plots, but they are extremely effective at quickly communicating model information.
@@ -3853,60 +3807,13 @@ Below I get a summary of the fixed effects. I make plots of these effects in two
 \caption{\label{fig:brmsplot}Horizontal and vertical plots of our fixed effects. Points indicate posterior means and lines indicate span of 95\% credible intervals of the posterior distribution of the parameter.}
 \end{figure}
 
-In the left panel below, I use the effects calculated using the \texttt{marginal\_effects} function to draw figures using the \texttt{brmplot} function. First I isolate the columns that represent the information I need. Then I plot the effects using repeated calls to \texttt{brmplot}. I can add a second plot over the first by setting \texttt{add\ =\ TRUE}.
+Although these plots help to effectively communicate information about your model parameters, representations of the data such as the interaction plots above are also crucial to help the reader understand the patterns in your data.
 
-In the right plot, I do the same thing using the output of the hypothesis function. This will be a plot of the group effects centered at 0, since I have not added the overall Intercept to the means. Note that to get the table of interest out of the hypothesis object we have to first select the element named ``hypothesis'' from the \texttt{group\_effects} object. In general, you may have to dig around in the structure of the objects created by \texttt{brms} to get the information you want. I usually run a \texttt{str} on the resulting object to see what's inside it, and what seems likely to contain the information I'm after.
+\hypertarget{frequentist-corner-2}{%
+\section{Frequentist corner}\label{frequentist-corner-2}}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# estimates of group means based on model coefficients provided}
-\CommentTok{\# by the conditional\_effects function.}
-\NormalTok{model\_effects[[}\DecValTok{3}\NormalTok{]][,}\DecValTok{8}\SpecialCharTok{:}\DecValTok{11}\NormalTok{]}
-\DocumentationTok{\#\#   estimate\_\_     se\_\_  lower\_\_  upper\_\_}
-\DocumentationTok{\#\# 1   220.5119 2.950740 214.4826 226.4404}
-\DocumentationTok{\#\# 2   131.3351 3.191314 124.9046 137.3878}
-\DocumentationTok{\#\# 3   238.4238 4.839866 229.0110 247.6442}
-\DocumentationTok{\#\# 4   236.0509 4.175498 227.9085 244.4526}
-
-\CommentTok{\# the same thing is calculated \textquotesingle{}manually\textquotesingle{} using the hypothesis function}
-\NormalTok{group\_effects }\OtherTok{=} 
-\NormalTok{  brms}\SpecialCharTok{::}\FunctionTok{hypothesis}\NormalTok{ (model\_interaction, }\AttributeTok{hypothesis =} 
-                \FunctionTok{c}\NormalTok{(}\StringTok{"{-}adult1 + {-}gender1 +  adult1:gender1 = 0"}\NormalTok{,}
-                  \StringTok{"{-}adult1 +  gender1 + {-}adult1:gender1 = 0"}\NormalTok{,}
-                  \StringTok{" adult1 + {-}gender1 + {-}adult1:gender1 = 0"}\NormalTok{,}
-                  \StringTok{" adult1 +  gender1 +  adult1:gender1 = 0"}\NormalTok{))}
-\NormalTok{group\_effects[[}\StringTok{"hypothesis"}\NormalTok{]][,}\DecValTok{2}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}
-\DocumentationTok{\#\#    Estimate Est.Error   CI.Lower  CI.Upper}
-\DocumentationTok{\#\# 1  29.49602  3.572487  22.395865  36.55756}
-\DocumentationTok{\#\# 2  31.84266  3.942479  24.140857  39.59088}
-\DocumentationTok{\#\# 3 {-}75.28023  2.941089 {-}81.039480 {-}69.48480}
-\DocumentationTok{\#\# 4  13.94155  2.891922   8.309273  19.62493}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{par}\NormalTok{ (}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
-\FunctionTok{brmplot}\NormalTok{ (model\_effects[[}\DecValTok{3}\NormalTok{]][}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{,}\DecValTok{8}\SpecialCharTok{:}\DecValTok{11}\NormalTok{], }\AttributeTok{type =} \StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{120}\NormalTok{,}\DecValTok{250}\NormalTok{), }
-         \AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"Female"}\NormalTok{,}\StringTok{"Male"}\NormalTok{), }\AttributeTok{col =} \DecValTok{3}\NormalTok{, }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(.}\DecValTok{8}\NormalTok{,}\FloatTok{2.2}\NormalTok{))}
-\FunctionTok{brmplot}\NormalTok{ (model\_effects[[}\DecValTok{3}\NormalTok{]][}\DecValTok{3}\SpecialCharTok{:}\DecValTok{4}\NormalTok{,}\DecValTok{8}\SpecialCharTok{:}\DecValTok{11}\NormalTok{], }\AttributeTok{type =} \StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{, }\AttributeTok{add =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{col =} \DecValTok{4}\NormalTok{,}
-         \AttributeTok{labels=}\StringTok{""}\NormalTok{, }\AttributeTok{pch=}\DecValTok{17}\NormalTok{)}
-
-\FunctionTok{brmplot}\NormalTok{ (group\_effects[[}\StringTok{"hypothesis"}\NormalTok{]][}\DecValTok{4}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,}\DecValTok{2}\SpecialCharTok{:}\DecValTok{5}\NormalTok{], }\AttributeTok{type =} \StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{85}\NormalTok{,}\DecValTok{40}\NormalTok{),  }
-         \AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"Female"}\NormalTok{,}\StringTok{"Male"}\NormalTok{), }\AttributeTok{col =} \DecValTok{3}\NormalTok{, }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(.}\DecValTok{8}\NormalTok{,}\FloatTok{2.2}\NormalTok{))}
-\FunctionTok{brmplot}\NormalTok{ (group\_effects[[}\StringTok{"hypothesis"}\NormalTok{]][}\DecValTok{2}\SpecialCharTok{:}\DecValTok{1}\NormalTok{,}\DecValTok{2}\SpecialCharTok{:}\DecValTok{5}\NormalTok{], }\AttributeTok{type =} \StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{, }\AttributeTok{add =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{col =} \DecValTok{4}\NormalTok{,}
-         \AttributeTok{labels=}\StringTok{""}\NormalTok{, }\AttributeTok{pch=}\DecValTok{17}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}
-\centering
-\includegraphics{04_files/figure-latex/brmsplot2-1.pdf}
-\caption{\label{fig:brmsplot2}The examples of using parameter summaries to draw plots using the brmplot function.}
-\end{figure}
-
-\hypertarget{lmer-corner-1}{%
-\section{Lmer corner}\label{lmer-corner-1}}
+\hypertarget{bayesian-multilevel-modesl-vs.-lmer-2}{%
+\subsection{Bayesian multilevel modesl vs.~lmer}\label{bayesian-multilevel-modesl-vs.-lmer-2}}
 
 This is going to be a short one! The main shortcoming when it comes to \texttt{lmer} and fitting ANOVA-type models, is that there is no easy way to compare group effects within the model. For example, we can fit the model below which encodes the difference between each group mean and the overall mean.
 
@@ -3968,7 +3875,7 @@ Group 1 (boys) and group 2 (girls) have very similar effects to each other. Are 
 \end{Highlighting}
 \end{Shaded}
 
-Unfortunately, there is no way to answer this question given the information presented in the \texttt{lmer} model above. This is because the effects are only being estimates as differences to the mean, and not to group 1 or group 2). If we \emph{did} want to investigate this difference specifically, we would need to refit the model using a different coding scheme. For example, if we used treatment coding group 1 (boys) would be the intercept, and the group effects would represent differences to this. We fit a model like this below:
+Unfortunately, there is no way to answer this question given the information presented in the \texttt{lmer} model above. This is because the effects are only being estimates as differences to the mean, and not to group 1 or group 2. If we \emph{did} want to investigate this difference specifically, we would need to refit the model using a different coding scheme. For example, if we used treatment coding group 1 (boys) would be the intercept, and the group effects would represent differences to this. We fit a model like this below:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4006,7 +3913,7 @@ Unfortunately, there is no way to answer this question given the information pre
 \end{Highlighting}
 \end{Shaded}
 
-Notice that our group 2 predictor (\texttt{group}) is now equal to 2.3, the Hz difference between boys and girls. The value of the standard error (\texttt{Std.\ Error}) is 6.3, representing the uncertainty in the estimate. These values correspond closely to the estimates provided by our Bayesian model above of 2.3 and 6.4 respectively.
+Notice that our group 2 predictor (\texttt{group}) is now equal to 2.3, the Hz difference between boys and girls. The value of the standard error (\texttt{Std.\ Error}) is 6.3, representing the uncertainty in the estimate. These values correspond closely to the estimates of 2.3 and 6.4 respectively provided by our Bayesian model using the hypothesis function above.
 
 Obviously this situation is not ideal if you plan to compare many groups. In contrast, with our \texttt{brm} model we can easily compare any of the four groups using the method outlined above, without ever having to re-fit the model.
 
@@ -5594,8 +5501,8 @@ Remember, these `random' effects are being modeled as being normally distributed
 
 The speaker intercepts above show a remarkable amount of consistency within group. Keep in mind that listeners were not told the group the speaker belonged to, so either 1) listener guessed speaker group and used this to guess size, or 2) there are other acoustic cues that vary systematically between groups, and listeners used this to estimate size. In either case, this suggests that our model need to change in order to really capture how listeners are arriving at size judgments for these speakers.
 
-\hypertarget{lmer-corner-2}{%
-\section{Lmer corner}\label{lmer-corner-2}}
+\hypertarget{lmer-corner}{%
+\section{Lmer corner}\label{lmer-corner}}
 
 We can fit a `random slopes' model with \texttt{lmer} using the code below:
 
