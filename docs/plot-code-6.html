@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Bayesian multilevel models in R: A conceptual and practical introduction for linguists</title>
+  <title>Chapter 7 Plot Code | Bayesian multilevel models in R: A conceptual and practical introduction for linguists</title>
   <meta name="description" content="Bayesian Models for Linguists" />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Bayesian multilevel models in R: A conceptual and practical introduction for linguists" />
+  <meta property="og:title" content="Chapter 7 Plot Code | Bayesian multilevel models in R: A conceptual and practical introduction for linguists" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="http://santiagobarreda.com" />
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Bayesian multilevel models in R: A conceptual and practical introduction for linguists" />
+  <meta name="twitter:title" content="Chapter 7 Plot Code | Bayesian multilevel models in R: A conceptual and practical introduction for linguists" />
   
   <meta name="twitter:description" content="Bayesian Models for Linguists" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="random-slopes.html"/>
 
-<link rel="next" href="inspecting-a-single-group-of-observations.html"/>
 <script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -55,70 +55,6 @@
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
 
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -163,6 +99,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.5.1" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#sampling-from-the-posterior"><i class="fa fa-check"></i><b>1.5.1</b> Sampling from the posterior</a></li>
 </ul></li>
 <li class="chapter" data-level="1.6" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#exercises"><i class="fa fa-check"></i><b>1.6</b> Exercises</a></li>
+<li class="chapter" data-level="1.7" data-path="inspecting-a-single-group-of-observations.html"><a href="inspecting-a-single-group-of-observations.html#plot-code"><i class="fa fa-check"></i><b>1.7</b> Plot Code</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><i class="fa fa-check"></i><b>2</b> Inspecting a ‘single group’ of observations using a Bayesian multilevel model</a>
 <ul>
@@ -194,6 +131,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.9.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#bayesian-multilevel-modesl-vs.-the-one-sample-t-test"><i class="fa fa-check"></i><b>2.9.2</b> Bayesian multilevel modesl vs. the one-sample t-test</a></li>
 </ul></li>
 <li class="chapter" data-level="2.10" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#exercises-1"><i class="fa fa-check"></i><b>2.10</b> Exercises</a></li>
+<li class="chapter" data-level="2.11" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#plot-code-1"><i class="fa fa-check"></i><b>2.11</b> Plot Code</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html"><i class="fa fa-check"></i><b>3</b> Comparing two groups of observations</a>
 <ul>
@@ -225,6 +163,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.8" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#frequentist-corner-1"><i class="fa fa-check"></i><b>3.8</b> Frequentist corner</a></li>
 <li class="chapter" data-level="3.9" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#lmer-corner"><i class="fa fa-check"></i><b>3.9</b> Lmer corner</a></li>
 <li class="chapter" data-level="3.10" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#exercises-2"><i class="fa fa-check"></i><b>3.10</b> Exercises</a></li>
+<li class="chapter" data-level="3.11" data-path="comparing-two-groups-of-observations.html"><a href="comparing-two-groups-of-observations.html#plot-code-2"><i class="fa fa-check"></i><b>3.11</b> Plot Code</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html"><i class="fa fa-check"></i><b>4</b> Comparing many groups</a>
 <ul>
@@ -255,6 +194,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4.7" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#lmer-corner-1"><i class="fa fa-check"></i><b>4.7</b> Lmer corner</a></li>
 <li class="chapter" data-level="4.8" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#exercises-3"><i class="fa fa-check"></i><b>4.8</b> Exercises</a></li>
+<li class="chapter" data-level="4.9" data-path="comparing-many-groups.html"><a href="comparing-many-groups.html#plot-code-3"><i class="fa fa-check"></i><b>4.9</b> Plot Code</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html"><i class="fa fa-check"></i><b>5</b> Including continuous predictors in our model</a>
 <ul>
@@ -282,6 +222,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.6.3" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#interpreting-the-model-3"><i class="fa fa-check"></i><b>5.6.3</b> Interpreting the model</a></li>
 </ul></li>
 <li class="chapter" data-level="5.7" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#exercises-4"><i class="fa fa-check"></i><b>5.7</b> Exercises</a></li>
+<li class="chapter" data-level="5.8" data-path="including-continuous-predictors-in-our-model.html"><a href="including-continuous-predictors-in-our-model.html#plot-code-4"><i class="fa fa-check"></i><b>5.8</b> Plot Code</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="random-slopes.html"><a href="random-slopes.html"><i class="fa fa-check"></i><b>6</b> Random slopes</a>
 <ul>
@@ -308,8 +249,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="random-slopes.html"><a href="random-slopes.html#answering-our-research-questions-1"><i class="fa fa-check"></i><b>6.6</b> Answering our research questions</a></li>
 <li class="chapter" data-level="6.7" data-path="random-slopes.html"><a href="random-slopes.html#lmer-corner-2"><i class="fa fa-check"></i><b>6.7</b> Lmer corner</a></li>
 <li class="chapter" data-level="6.8" data-path="random-slopes.html"><a href="random-slopes.html#exercises-5"><i class="fa fa-check"></i><b>6.8</b> Exercises</a></li>
+<li class="chapter" data-level="6.9" data-path="random-slopes.html"><a href="random-slopes.html#plot-code-5"><i class="fa fa-check"></i><b>6.9</b> Plot Code</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="plot-code.html"><a href="plot-code.html"><i class="fa fa-check"></i><b>7</b> Plot Code</a></li>
+<li class="chapter" data-level="7" data-path="plot-code-6.html"><a href="plot-code-6.html"><i class="fa fa-check"></i><b>7</b> Plot Code</a></li>
 <li class="divider"></li>
 <li><a href="http://www.santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
 <li><a href="A-Quick-Introduction-to-Multilevel-Bayesian-Models-for-Linguistic-Researchers.pdf" target="blank">Download possibly outdated and badly-formatted PDF</a></li>
@@ -331,19 +273,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Bayesian multilevel models in R: A conceptual and practical introduction for linguists</h1>
-<p class="author"><em>Santiago Bareda</em></p>
-<p class="date" style="margin-top: 1.5em;"><em>2021-07-15</em></p>
-</div>
-<div id="introduction" class="section level1 unnumbered">
-<h1>Introduction</h1>
-<p>This book is currently under development and it may contain small errors, inconsistencies, etc. It was used for a 10-week statistics class, but is being expanded and reorganized somewhat.</p>
-<p>Repeated measures data is extremely common in linguistics, and the norm in many linguistic subfields (phonetics, variationist sociolinguistics, psycholinguistics, etc.). Bayesian multilevel models are perfectly suited for the analysis of repeated-measures data, and offer linguists flexibility and many exciting opportunities. Because of this, there is tremendous interest in using Bayesian multilevel models in linguistics despite the lack of available resources. This book is an introduction to the analysis of repeated-measures data using Bayesian multilevel regression models, specifically aimed at linguists with no background in statistics.</p>
-<p>This book is intended for an introductory statistics class for senior undergraduate or graduate students, and for faculty members and other researchers to use as a self-study guide. This book is aimed at 1) students who are looking for a conceptual framework to help understand multilevel Bayesian models, but not necessarily looking for ‘too-much’ mathematical detail, and 2) researchers who are already experienced with frequentist modelling and are looking to ‘translate’ their skillset over to a Bayesian framework.</p>
-<p>To learn multilevel models, a student is usually first expected to learn ‘traditional’ statistical approaches and designs, such as t-tests ANOVAS and ordinary least-squares regression. After this foundation is laid, the student can then move to the sorts of models they can actually use for their work, mainly multilevel models that can handle repeated-measures data. This approach has several drawbacks: it takes a long time (which graduate students don’t have), spends substantial energy on statistical approaches that most linguists will rarely if ever use in their work (e.g., OLS regression), and front-loads difficult and abstract concepts (e.g., degrees of freedom, p-values) before students can start working with data they really understand. As a result, students may become discouraged, may become convinced that they’re ‘not good at math’, and may not realize how much they already intuitively understand about statistics.</p>
-<p>This book presents an introduction to modelling repeated-measures data using Bayesian multilevel regression models, and building bespoke Bayesian models that are equivalent to, and better than, their ‘off the shelf’ frequentist equivalents using the ‘brms’ package in R. This book will provide a conceptual introduction by adopting an accessible narrative style that introduces mathematical and modelling concepts in plain English. A focus will be placed on understanding concepts and the visual/geometric consequences of different regression model structures and changes in coefficients, leaving much of the statistical foundation and mathematical rigor to other books. Chapters are organized in terms of regression model components, and how these relate to experimental designs, statistical concepts, and the geometry of figures based on the data and model coefficients. We will then cover how to use these components to ‘build’ models that suit your needs. In addition, each chapter feature the fully worked analysis of repeated-measures linguistic data resulting from either perceptual experiments or speech production experiments involving human subjects.</p>
-<p>If you have any comments or suggestions please let me know, and if you find any errors definitely let me know!</p>
+<div id="plot-code-6" class="section level1" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Plot Code</h1>
 
 </div>
 <!-- Default Statcounter code for statsbook
@@ -367,8 +298,8 @@ alt="Web Analytics"></a></div></noscript>
           </div>
         </div>
       </div>
+<a href="random-slopes.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="inspecting-a-single-group-of-observations.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -419,20 +350,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
