@@ -798,6 +798,9 @@ In place of statistical exercises, the time devoted to this chapter can be used 
 
 The previous chapter was mostly introductory, it introduced some basic terminology and concepts that are required to begin talking about models. In this chapter we are going to return to questions like 'what is the average value of \(x\), however, in this chapter we are going to learn to answer these questions using Bayesian multilevel regression models in R using the \texttt{brms} package.
 
+\hypertarget{data-and-research-questions-1}{%
+\section{Data and research questions}\label{data-and-research-questions-1}}
+
 The models discussed in this chapter can be used for data that comes from a single group of subjects. By a `single' group I just mean that you are not trying to compare things here, you are just trying to understand the average values of some variable for a single group of observations. The data:
 
 \begin{itemize}
@@ -809,9 +812,6 @@ The models discussed in this chapter can be used for data that comes from a sing
 \end{itemize}
 
 The `traditional' design equivalent to these models is a one-sample t-test, although the Bayesian approach has many advantages (as discussed at the end of the chapter).
-
-\hypertarget{data-and-research-questions-1}{%
-\section{Data and research questions}\label{data-and-research-questions-1}}
 
 We're going to keep analyzing the female f0 data from the Hillenbrand et al.~(1995) dataset, discussed in chapter 1. These are 576 observations, 12 production collected from each of 48 women in the sample. So, our data comes from multiple speakers and we has multiple observations from each speaker, and the women are in the single group ``adult women form Michigan''. Of course, we could divide these women into any number of smaller groups based on hair color, handedness, and so on. These women are considered to be in a single group because our model, our \emph{conceptualization} of these speakers, places them in a single group.
 
@@ -1985,7 +1985,10 @@ Now the interval provided closely resembles that of our final, \texttt{multileve
 \hypertarget{comparing-two-groups-of-observations}{%
 \chapter{Comparing two groups of observations}\label{comparing-two-groups-of-observations}}
 
-In the previous chapter we focused on investigating values from a single group, which is basically the simplest kind data you can deal with. In this chapter we're going to compare data from two groups to see how similar/different they really are.
+In the previous chapter we focused on investigating values from a single group, which is basically the simplest kind data you can deal with. In this chapter we're going to compare data from two groups to see how similar/different they really are. The models we will discuss are similar to two-sample t-tests in the types of research questions they can help investigate (as will be discussed at the end of the chapter).
+
+\hypertarget{data-and-research-questions-2}{%
+\section{Data and research questions}\label{data-and-research-questions-2}}
 
 The models discussed in this chapter can be used for data that compares observations across two groups. We are using the term `groups' loosely here. The designs in this chapter are appropriate for data from:
 
@@ -1998,10 +2001,7 @@ The models discussed in this chapter can be used for data that compares observat
   each speaker/subject can contribute multiple data points, and the number does not need to be balanced across subjects. Also speakers can be missing from one of the conditions (i.e., unbalanced data is ok).
 \end{itemize}
 
-The models we will discuss are similar to two-sample t-tests in the types of research questions they can help investigate (as will be discussed at the end of the chapter).
-
-\hypertarget{data-and-research-questions-2}{%
-\section{Data and research questions}\label{data-and-research-questions-2}}
+To analyze data like this, you should have it in a datafram with one row for each observation. Then, one column should contain the dependent variable, the variable whose variation you're trying to predict. Another column should contain information about which group each observation belongs to. For the models later in the chapter, you will also need a column that indicates which speaker/listener/participant provided the datapoint.
 
 We're going to use the Hillenbrand et al.~f0 data we used in the other chapters. Previously we only considered the productions of adult females from Michigan, this time we're going to compare the f0 measurements for adult females to those of girls between 10-12 years of age.
 
@@ -2936,24 +2936,10 @@ Importantly however, the values we get from both approaches are nearly identical
 \end{Highlighting}
 \end{Shaded}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{url1 }\OtherTok{=} \StringTok{"https://raw.githubusercontent.com/santiagobarreda"}
-\NormalTok{url2 }\OtherTok{=} \StringTok{"/stats{-}class/master/data/h95\_vowel\_data.csv"}
-\CommentTok{\# set up colors for plotting}
-\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{source\_url}\NormalTok{ (}\FunctionTok{paste0}\NormalTok{ (url1, }\StringTok{"/stats{-}class/master/data/colors.R"}\NormalTok{))}
-\CommentTok{\# source functions}
-\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{source\_url}\NormalTok{ (}\FunctionTok{paste0}\NormalTok{ (url1, }\StringTok{"/stats{-}class/master/data/functions.R"}\NormalTok{))}
-
-\NormalTok{url1 }\OtherTok{=} \StringTok{"https://raw.githubusercontent.com/santiagobarreda/stats{-}class/master/data/"}
-\NormalTok{h95 }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{ (}\FunctionTok{url}\NormalTok{(}\FunctionTok{paste0}\NormalTok{ (url1, }\StringTok{"03\_h95\_vowel\_data.csv"}\NormalTok{)))}
-\end{Highlighting}
-\end{Shaded}
-
 \hypertarget{comparing-many-groups}{%
 \chapter{Comparing many groups}\label{comparing-many-groups}}
 
-Last chapter we talked about comparing two groups. Although the comparison of two groups is very simple, it also comes up very often: more complicated problems are often broken down into several two-group questions. However, most real-world research designs don't usually \emph{begin} as two-group questions. In this chapter, we're going to talk about the comparison of multiple groups of observations/speakers.
+Last chapter we talked about comparing two groups. Although the comparison of two groups is very simple, it also comes up very often: more complicated problems are often broken down into several two-group questions. However, most real-world research designs don't usually \emph{begin} as two-group questions. In this chapter, we're going to talk about the comparison of multiple groups of observations/speakers. The models we will discuss are similar to one-way ANOVAs in the types of research questions they can help investigate.
 
 \hypertarget{data-and-research-questions-3}{%
 \section{Data and research questions}\label{data-and-research-questions-3}}
@@ -2969,7 +2955,7 @@ First, we are going to discuss models that compare observations across any numbe
   each speaker/subject can contribute multiple data points, and the number does not need to be balanced across subjects. Also speakers can be missing from one of the conditions (i.e., unbalanced data is ok).
 \end{itemize}
 
-The models we will discuss are similar to one-way ANOVAs in the types of research questions they can help investigate.
+To analyze data like this, you should have it in a datafram with one row for each observation. Then, one column should contain the dependent variable, the variable whose variation you're trying to predict. Another column should contain information about which group each observation belongs to.
 
 We're going to keep working with the Hillenbrand et al.~data, that we have been discussing in every chapter to this point. This time we're going to work with all four groups of speakers: \texttt{b} (boys), \texttt{g} (girls), \texttt{m} (men), and \texttt{w} (women).
 
@@ -3262,8 +3248,8 @@ Whn you fit a more traditional model, you can't just compare any groups you want
 
 The result above suggests that the difference is very small (-2 Hz) and the 95\% credible intervals spans a huge range (from -15 to +10)). As a result, the measured difference between these groups is not reliable, and may be very small or close to zero. Notice that in this summary I am focused on minimizing \href{https://statmodeling.stat.columbia.edu/2004/12/29/type_1_type_2_t/}{type S and type M errors}. This means I am worried about whether the effect is likely to be small or large, and negative or positive, rather than whether it is `true' or `false'.
 
-\hypertarget{investigating-many-groups-using-predictors-analysis-of-variance}{%
-\section{Investigating many groups using predictors: Analysis of Variance}\label{investigating-many-groups-using-predictors-analysis-of-variance}}
+\hypertarget{investigating-many-factors-simultaneously-analysis-of-variance}{%
+\section{Investigating many factors simultaneously: Analysis of Variance}\label{investigating-many-factors-simultaneously-analysis-of-variance}}
 
 Above, our model had a single `batch' of grops. Another way to look at it is that the model predicted variation along a single \emph{dimension}. We can categorize people along multiple dimensions simultaneously, and place them in more than one group at a time. So, a speaker may be an adult \emph{and} a woman, and not just and adult \emph{or} a women. This is because adultness and gender are independent dimensions and the value of one does not affect the value of the other.
 
@@ -3282,7 +3268,7 @@ The models discussed below can be used for data that compares observations acros
   each speaker/subject can contribute multiple data points, and the number does not need to be balanced across subjects. Also speakers can be missing from one of the conditions (i.e., unbalanced data is ok).
 \end{itemize}
 
-These models we will discuss are similar to two-way repeated-measures ANOVAs in the types of research questions they can help investigate.
+To analyze data like this, you should have it in a dataframe with one row for each observation and one column for the dependent variable. However, your data should also now include another column for every other factor you wish to include in your model.
 
 \hypertarget{description-of-the-model-3}{%
 \subsection{Description of the model}\label{description-of-the-model-3}}
@@ -3920,50 +3906,83 @@ Obviously this situation is not ideal if you plan to compare many groups. In con
 \hypertarget{exercises-3}{%
 \section{Exercises}\label{exercises-3}}
 
-\hypertarget{including-continuous-predictors-in-our-model}{%
-\chapter{Including continuous predictors in our model}\label{including-continuous-predictors-in-our-model}}
-
-Last chapter we talked about comparing many groups, and including interactions in our models. So far we have only discussed models that include nominal predictors. In this chapter we're going to talk about including continuous, numerical predictors in our models.
-
-Just as in chapter 1, we're going to begin by talking about `single' level (\emph{not} multi-level) models. These models have no random effects, and so are not really appropriate for our data. We're going to focus on the interpretation of model coefficients and what these mean for the geometry of the lines we make. Next chapter we'll extend these concepts to understand `random slopes and intercepts' for variables such as speaker and listener.
-
-\hypertarget{data-and-research-questions-4}{%
-\section{Data and research questions}\label{data-and-research-questions-4}}
-
-We're still going to work with the Hillenbrand et al.~data, again focusing on variation in f0. We are going to be focusing on a subset of these (productions of ``heed'' and ``hod'' only), produced by all 136 speakers in the data.
-
-Our data has a new continuous variable (\texttt{pheight}) representing the average perceived height for each talker, for each token. In this chapter, we are going to use perceived height as a predictor to see if it can be used to predict the f0 of a token.
-
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{ (brms)}
 \FunctionTok{options}\NormalTok{ (}\AttributeTok{contrasts =} \FunctionTok{c}\NormalTok{(}\StringTok{"contr.sum"}\NormalTok{,}\StringTok{"cont.sum"}\NormalTok{))}
 
-\NormalTok{url1 }\OtherTok{=} \StringTok{"https://raw.githubusercontent.com/santiagobarreda"}
-\NormalTok{url2 }\OtherTok{=} \StringTok{"/stats{-}class/master/data/h95\_experiment\_summary.csv"}
+\NormalTok{url1 }\OtherTok{=} \StringTok{"https://raw.githubusercontent.com/santiagobarreda/stats{-}class/master/data/"}
+\NormalTok{url2 }\OtherTok{=} \StringTok{"h95\_experiment\_summary.csv"}
 \NormalTok{h95 }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{ (}\FunctionTok{url}\NormalTok{(}\FunctionTok{paste0}\NormalTok{ (url1, url2)))}
 \CommentTok{\# set up colors for plotting}
-\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{source\_url}\NormalTok{ (}\FunctionTok{paste0}\NormalTok{ (url1, }\StringTok{"/stats{-}class/master/data/colors.R"}\NormalTok{))}
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{source\_url}\NormalTok{ (}\FunctionTok{paste0}\NormalTok{ (url1, }\StringTok{"colors.R"}\NormalTok{))}
 \CommentTok{\# source functions}
-\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{source\_url}\NormalTok{ (}\FunctionTok{paste0}\NormalTok{ (url1, }\StringTok{"/stats{-}class/master/data/functions.R"}\NormalTok{))}
-
-\CommentTok{\# make group a factor}
-\NormalTok{h95}\SpecialCharTok{$}\NormalTok{group }\OtherTok{=} \FunctionTok{factor}\NormalTok{ (h95}\SpecialCharTok{$}\NormalTok{group)  }
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{source\_url}\NormalTok{ (}\FunctionTok{paste0}\NormalTok{ (url1, }\StringTok{"functions.R"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
+
+\hypertarget{including-continuous-predictors-in-our-model}{%
+\chapter{Including continuous predictors in our model}\label{including-continuous-predictors-in-our-model}}
+
+Last chapter we talked about comparing many groups, and including interactions in our models. So far we have only discussed models that include nominal predictors, meaning predictors that split up our observations into discrete groups/categories. In this chapter we're going to talk about including continuous, numerical predictors in our models.
+
+Just as in chapter 1, we're going to begin by talking about `single' level (\emph{not} multi-level) models. These models have no random effects, and so are not really appropriate for our data. We're going to focus on the interpretation of model coefficients and what these mean for the geometry of the lines we make, so we are not going to worry about the fact that the credible intervals in these models are not appropriate for inference.
+
+Next chapter, armed with an understanding of the geometry of continuous predictors, we'll extend these concepts to understand `random slopes and intercepts' for variables such as speaker and listener.
+
+Before beginning this chapter, it's important to note that the modeling concepts presented below related to the geometric interpretation of different regression models are not specifically ``Bayesian''. In fact, the concepts presented below are shared by any approach to linear regression. This is to say, if the interpretation of coefficients discussed below seems abstract or complicated, this is unfortunately inherent to the subject matter (please don't blame \texttt{brms}!).
+
+Before continuing I just want to note that the researcher has a role to play in the complexity of the eventual analysis that they are faced with. Once when I was buying a backpack for traveling, I was looking for the biggest backpack possible. One of the reviews said ``1/5 stars, it was way too heavy when I filled it all the way up with my stuff''. However, if we fill a backpack up with heavy things, it doesn't seem fair to blame the poor backpack when it becomes difficult to manage.
+
+In the same way, if you are faced with an overly complex model that you then need to interpret, you shouldn't blame the model for your predicament! If you design an experiment with a complicated structure (i.e., lot of predictors or interactions), you may then be faced with a complicated interpretation.
+
+In order to avoid a situation where you end up with data you can't analyze or a model you don't know how to interpret it's worth considering the following questions before advancing to data collection: how will I analyze the data? Will I be able to? What will the model structure be? What would different results `mean'? What kind of results am I expecting, and how will this manifest in my regression model?
+
+\hypertarget{data-and-research-questions-4}{%
+\section{Data and research questions}\label{data-and-research-questions-4}}
+
+As noted above we are going to start by just focusing on the geometry of different model structures, so we are not going to worry about what kind of data works for these models yet. For now all we need to worry about is that the data contains at least two columns, each of which contains a continuous variable, that is, variables that can take on an unlimited (or at least large) number of different numerical values.
+
+We're still going to work with the Hillenbrand et al.~data, again focusing on variation in f0. However, we're now going to focus on the results of a listening experiment based on this data. Here are the details of the experiment:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  Listeners were 10 native speakers of American English.
+\item
+  Listeners were presented with the words ``heed'' and ``hod'' produced by all 139 of the speakers in the Hillenbrand et al.~data. Stimuli were presented at random and one at a time.
+\item
+  For each trial, listeners were asked to:
+  a) estimate the height of the speaker in feet and inches.
+  b) indicate whether they though the speaker was a ``boy'', a ``girl'', a ``man'', or a ``woman''.
+\item
+  Each participant listened to all 238 stimuli once, for a total of 2380 observtions across all subjects.
+\end{enumerate}
+
+This dataset has two response variables that we are interested in: the perceived height (\texttt{pheight}) reported for each trial, and the perceived group (\texttt{pgroup}) reported for each trial. We're going to start by talking about a summary of the data, available below:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{url1 }\OtherTok{=} \StringTok{"https://raw.githubusercontent.com/santiagobarreda/stats{-}class/master/data/"}
+\NormalTok{url2 }\OtherTok{=} \StringTok{"h95\_experiment\_summary.csv"}
+\NormalTok{h95 }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{ (}\FunctionTok{url}\NormalTok{(}\FunctionTok{paste0}\NormalTok{ (url1, url2)))}
+\end{Highlighting}
+\end{Shaded}
+
+Rather than every individual response, this dataset contains only the average perceived height (and modal perceived group) for each unique stimulus in the experiment. We're going to begin by using perceived height as a predictor to see if we can use it to predict the f0 of tokens. Of course, this is causally backwards as the f0 `causes' the size perception and not vice versa. However, that doesn't really matter since we can still ask: given knowledge of the speaker size a person reported, can we predict the f0 they heard?
 
 \hypertarget{continuous-predictors-modeling-variation-along-lines}{%
 \section{Continuous predictors: modeling variation along lines}\label{continuous-predictors-modeling-variation-along-lines}}
 
 Below I plot the average f0 for each token against its average perceived height in inches. I use a scatter plot with the dependent variable (\texttt{f0}, the thing we are interested in) varying along the y axis (this is done by convention).
 
-The scatter plot clearly shows what is called a \emph{linear relationship} between the two variables. As far as we're concerned, this just means when you make a scatter plot, you will see points you think are suggestive of a line, or a couple of lines.
+The scatter plot clearly shows what is called a \emph{linear relationship} between the two variables. As far as we're concerned, when you make a scatter plot of two variables that are linearly related you will see points you think are suggestive of a line, or a couple of lines.
 
-Our models have so far featured only nominal predictors, things like group membership. Although it might be strange to think of it this way, our regression models \emph{have} been making lines, however, they are lines with slopes of 0 along all x axis variables. What this means is, that for any x-axis variable, variation along the x axis variable \textbf{has no effect} on variation along the y axis variable.
+Our models have so far featured only nominal predictors, things like group membership. Although it might be strange to think of it this way, our regression models have \emph{already} been making lines, however, they are lines with slopes of 0 along all x axis variables. What this means is, that for any x-axis variable, variation along the x axis variable \textbf{has no effect} on variation along the y axis variable.
 
-Below I show an example of what I mean by this. Figure \ref{fig:F5-fig1} shows several an `intercept only model' that features a fixed f0 for all tokens. In the right panel I show four lines, one for each group. These lines have different intercept but have the same slope (0). This means that these lines try to predict f0 based on group, but do not allow this to vary as a function of perceived height.
+Below I show an example of what I mean by this. Figure \ref{fig:F5-fig1} shows several an `intercept only model' that features a fixed f0 for all tokens. In the right panel I show four lines, one for each group. These lines have different intercepts but have the same slope (0). This means that these lines try to predict f0 based on group, but do not allow this to vary as a function of perceived height.
 
-When we look at lines such as those below, they tell us that our model thinks mean f0 is \emph{independent} of perceived height. This is because perceived height can vary from positive to negative infinity and we don't expect f0 to change (the line is flat!). The same statement could be made for any x variable we chose because our model does not include slopes for \emph{any} variable.
+When we look at lines such as those below, they tell us that our model thinks mean f0 is \emph{independent} of perceived height. This is because perceived height can vary from positive to negative infinity and we don't expect f0 to change (the line is flat!). The same statement could be made for any other x variable we chose because our model does not include slopes for those variables. So, in models like these you can make a bunch of lines, but you only ever change their intercepts.
 
 \begin{figure}
 \centering
@@ -3971,35 +3990,35 @@ When we look at lines such as those below, they tell us that our model thinks me
 \caption{\label{fig:F5-fig1}(left) f0 plotted against perceived height for each token. Horizontal line is the mean of the group means. (right) Same as right panel except each group gets its own horizontal line. Groups are boys (yellow), girls (green), women (blue), and men (red).}
 \end{figure}
 
-Recall that the equation for a line is the following:
+Recall (from high school) that the equation for a line is the following:
 
 \[
-y = m*x + b \\ 
+y = m \times x + b \\ 
 \label{eq:51}
 \]
 
-Where \(y\) is the `output' variable you are `predicting' using a line with a slope of \(m\) and and intercept of \(b\). The slope \(m\) represents how much of a change you expect in your \(y\) variable for a \emph{1 unit change} in your x variable. Obviously, this means that the slope depends on the units of measurement of your \(x\) variable. In general, dividing your \(x\) predictor by \(z\) will increase your slopes by a factor of \(z\). For example, imagine measuring the slope of a long hill with a constant rise. The amount of rise over 1 meter will necessarily be 1/1000 as much as the amount of rise over one kilometer.
+Where \(y\) is the `dependent' variable you are `predicting' using a line with a slope of \(m\) and and intercept of \(b\). The slope \(m\) represents how much of a change you expect in your \(y\) variable for a \emph{1 unit change} in your x variable. Obviously, this means that the slope depends on the units of measurement of your \(x\) variable. In general, dividing your \(x\) predictor by \(z\) will increase your slopes by a factor of \(z\). For example, imagine measuring the slope of a long hill with a constant rise. The amount of rise measured in meters will necessarily be 1/1000 as large as the rise measured in kilometers.
 
 We can use the following line equation, which just uses symbols that are more similar to the ones we have been using (and presents them in a different order):
 
 \[
-\mu = a + b*x \\
+\mu = a + b \times x \\
 \label{eq:52}
 \]
 
-We can predict f0 in the left panel of Figure \ref{fig:F5-fig1} using a horizontal line by setting the intercept to the overall grand mean, and setting the slope coefficient to 0. In this case we would have an `intercept only' regression model just like the one we saw in chapters 1 and 2.
+We can predict f0 in the left panel of Figure \ref{fig:F5-fig1} using a horizontal line by setting the intercept to the overall grand mean, and setting the slope coefficient to 0. In this case the slope coefficient erases the influence of the continuous predictor \(x\) and we would have an `intercept only' regression model just like the one we saw in chapters 1 and 2.
 
 \[
 a = Intercept, b = 0 \\ \\
-f0 = Intercept = Intercept + 0*pheight \\
+f0 = Intercept = Intercept + 0 \times pheight \\
 \label{eq:53}
 \]
 
-In the right panel of Figure \ref{fig:F5-fig1} we see four horizontal lines, one for each group of speakers. These lines all differ in terms of intercept but have the same slope (0). This means that these lines try to predict f0 based on group, but don't allow this to vary as a function of perceived height. So, our four-group model with only nominal predictors in chapter 4 could really be thought of as predicting f0 along a set of lines that are horizontal along the perceived height dimension.
+In the right panel of Figure \ref{fig:F5-fig1} we see four horizontal lines, one for each group of speakers. These lines all differ in terms of intercepts but have the same slope (0). This means that these lines try to predict f0 based on group, but don't allow this to vary as a function of perceived height. So, our four-group model with only nominal predictors in chapter 4 could really be thought of as predicting f0 along a set of lines that are horizontal along the perceived height dimension.
 
 \[
 a = Intercept + group_{[\mathrm{group}]}, b = 0 \\ \\
-f0 = Intercept + group_{[\mathrm{group}]} + (0*pheight) \\
+f0 = Intercept + group_{[\mathrm{group}]} + (0 \times pheight) \\
 \label{eq:56}
 \]
 
@@ -4022,12 +4041,12 @@ We can use the \texttt{brm} function to find the intercept and slope of the `bes
 
 \texttt{f0\ \textasciitilde{}\ pheight}
 
-Which tells \texttt{brms} to predict \texttt{f0} based on the values of \texttt{pheight}. If the variable on the right hand side of the \texttt{\textasciitilde{}} is numeric, \texttt{brm} will treat it as a continuous predictor and predict f0 using a line.
+Which tells \texttt{brms} to predict \texttt{f0} based on the values of \texttt{pheight} and an intercept which does not need to be explicitly included in the model formula. If the variable on the right hand side of the \texttt{\textasciitilde{}} is numeric, \texttt{brm} will treat it as a continuous predictor and predict f0 using a line.
 
 \hypertarget{description-of-the-model-4}{%
 \subsection{Description of the model}\label{description-of-the-model-4}}
 
-Our model for a regression model with a single continuous predictor (a `bivariate' regression) is shown below. The first line says that we have a normally-distributed variable with an unknown mean that varies from trial to trial (\(\mu_{[i]}\)). The variation in the mean parameter varies along a line with an intercept equal to \(Intercept\) and a slope of \(pheight\) along the x axis.
+The structure of a regression model with a single continuous predictor (a `bivariate' regression) is shown below. The first line says that we have a normally-distributed variable with an unknown mean that varies from trial to trial (\(\mu_{[i]}\)). The variation in the mean parameter is along a line with an intercept equal to \(Intercept\) and a slope of \(pheight\) along the x axis.
 
 Note that the predicted value (\(\mu_{[i]}\)) and the predictor variable (\(x_{[i]}\)) receive subscripts, as these change from trial to trial. The coefficients \textbf{do not} receive subscripts because these do not vary in this model. This model contains a single intercept and a single slope (i.e.~it draws a single line) for \emph{every} trial. Also note that we're simply treating the slope and intercept as `fixed' effects and specifying prior distributions.
 
@@ -4036,7 +4055,7 @@ Note that the predicted value (\(\mu_{[i]}\)) and the predictor variable (\(x_{[
 \\
 \textrm{Likelihood:} \\
 y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
-\mu_{[i]} = Intercept + pheight * x_{[i]}  \\ \\
+\mu_{[i]} = Intercept + pheight \times x_{[i]}  \\ \\
 \textrm{Priors:} \\
 Intercept \sim t(3, 175, 100) \\
 pheight \sim t(3, 0, 100) \\
@@ -4045,14 +4064,14 @@ pheight \sim t(3, 0, 100) \\
 \label{eq:57}
 \end{equation}
 
-Here's another two ways to think about this model: we're making a line and add noise to it. Each of our observed values is just a line (representing systematic variation) and a random draw from an error distribution (\(\mathcal{N}(0,\sigma_{error})\)).
+Here's another two ways to think about this model: we're making a line and then we add noise to it. Each of our observed values is just a line (representing systematic variation) and a random draw from an error distribution (\(\mathcal{N}(0,\sigma_{error})\)) as below:
 
 \[
 y_{[i]} = a + b * \mathrm{x_{[i]}} + \mathcal{N}(0,\sigma_{error})
 \label{eq:58}
 \]
 
-Alternatively, we could place the formula for the line \emph{inside} the formula for the normal distribution. There is no particular reason to do this, but it is helpful to see it and realize that it's the same thing as the representation above. In the equation below, we're saying: the data is generated according to a normal distribution whose mean varies along a line (\(a + b * \mathrm{x_{[i]}}\)), and we expect the variation around this line to have a standard deviation equal to \(\sigma_{error}\).
+Alternatively, we could place the formula for the line \emph{inside} the normal distribution function. There is no particular reason to do this, but it is helpful to see it and realize that it's the same thing as the representation above. In the equation below, we're saying: the data is generated according to a normal distribution whose mean varies along a line (\(a + b * \mathrm{x_{[i]}}\)), and we expect the variation around this line to have a standard deviation equal to \(\sigma_{error}\).
 
 \[
 \mathcal{N}(a + b * \mathrm{x_{[i]}}, \sigma_{error})  \\
@@ -4061,7 +4080,7 @@ Alternatively, we could place the formula for the line \emph{inside} the formula
 
 Regression models pick the intercept and slope for a line that results in the smallest value of \(\sigma_{error}\). This is why `regular' regression is called \href{https://en.wikipedia.org/wiki/Ordinary_least_squares}{``ordinary least-squares''} regression, because it finds the solution that results in the `least squares' (i.e., the smallest \((\sigma_{error})^2\)) in the prediction errors.
 
-In a multilevel model, the estimation of the `best' slopes and intercepts for our lines can be substantially more complicated than in least-squares regression. For example, in the case of experiments these estimates would take within and between-participant variation into account. However, in general the lines estimated by our regression models will tend to minimize the value of \(\sigma_{error}\), given our data and model structure.
+In a multilevel model, the estimation of the `best' slopes and intercepts for our lines can be substantially more complicated than in least-squares regression. However, in general the lines estimated by our regression models will tend to minimize the value of \(\sigma_{error}\), given our data and model structure.
 
 \hypertarget{fitting-the-model-3}{%
 \subsection{Fitting the model}\label{fitting-the-model-3}}
@@ -4118,7 +4137,7 @@ The model print statement is mostly the same as for our previous models. Our mod
 \end{Highlighting}
 \end{Shaded}
 
-We can see that the line predicting perceived height as a function of f0 has an intercept of 589 and a slope for the \texttt{pheight} (perceived height) predictor of -6.4. The fact that the slope of the \texttt{pheight} predictor is -6.4 means that for every 1 inch increase in perceived height, we expect a \emph{decrease} of 6.4 Hz in f0. I draw this line on our set of points in Figure \ref{fig:F5-53}.
+We can see that the line predicting perceived height as a function of f0 has an intercept of 589 and a slope for the \texttt{pheight} (perceived height) predictor of -6.4. The fact that the slope of the \texttt{pheight} predictor is -6.4 means that for every 1 inch increase in perceived height, we expect a \emph{decrease} of 6.4 Hz in the f0 of the vowel that le to that perception. I draw this line on our set of points in Figure \ref{fig:F5-53}.
 
 The slope is a \emph{weight} that allows the line to accurately fit the points. In the absence of a slope, regression models would only work if there was a 1 to 1 relationship between the x and y variables. This would mean that for every 1 inch change in perceived height, we would see a 1 Hz change in f0. What are the odds of that? What are the odds that the things we measure will be in a 1 to 1 relationship like that in general? The odds are basically zero.
 
@@ -4130,14 +4149,14 @@ Instead, the slope (\(b\) coefficient) on regression models allows a single unit
 \caption{\label{fig:F5-53}(left) Points and best-fit line. (right) A zoomed-out view of the left panel shows the line intercept at y = 588.7 Hz.}
 \end{figure}
 
-The intercept is the value of your dependent variable (\(y\), the variable you are interested in) when your predictor is equal to 0. In our model, this means that the expected value of f0 is 588 Hz when the predicted height is 0 inches. These are not particularly meaningful values for either variable as the f0 is too high and people are never 0 inches tall. However, in the right panel of Figure \ref{fig:F5-53} we can see why we get this value: it is simply the y-axis ``intercept'' (zero crossing) of the line we drew through the points in the left panel.
+The intercept is the value of your dependent variable (\(y\)) when your predictor (\(x\)) is equal to 0. In our model, the expected value of f0 is 588 Hz when the predicted height is 0 inches. These are not particularly meaningful values for either variable as the f0 is too high and people are never 0 inches tall. In the right panel of Figure \ref{fig:F5-53} we can see why we get this value: it is simply the y-axis ``intercept'' (zero crossing) of the line we drew through the points in the left panel.
 
 \hypertarget{centering-predictors}{%
-\subsection{Centering predictors}\label{centering-predictors}}
+\section{Centering predictors}\label{centering-predictors}}
 
-We can get more useful intercept values by simply centering our predictor variable(s). Centering a variable means subtracting the mean value from all observations. When this is done, each observation will now represent a deviation from 0, and the sum (and mean) of all the observations will equal zero. Since the intercept of the line is the value of the \(y\) variable when the \(x\) variable is equal to zero, centering our predictor makes the intercept equal to the value of \(y\) when \(x\) is equal to its zero, its mean.
+We can get more useful intercept values by simply centering our predictor variable(s). Centering a variable means subtracting the mean value from all observations. When this is done, each observation will now represent a deviation from 0, and the sum (and mean) of all the observations will equal zero. Since the intercept of the line is the value of the \(y\) variable when the \(x\) variable is equal to zero, centering our predictor makes the intercept equal to the value of \(y\) when \(x\) is equal to its mean (now zero).
 
-Centering predictor variables affects that intercept of the model but does does not affect the model slope or error estimates. Thus, centering is basically like choosing the `coding' (e.g., sum coding vs.~dummy coding) for lines, it affects how the information is represented in the model, but not the information itself. As a result, it can be tremendously useful in yielding more interpretable intercept estimates. Below, I center perceived height and again predict f0 based on this value.
+Centering predictor variables affects the intercept of the model but does does not affect the slope or error estimates. Thus, centering is basically like choosing the `coding' (e.g., sum coding vs.~dummy coding) for lines, it affects how the information is represented in the model but not the information itself. As a result, centering can be tremendously useful in yielding more interpretable intercept estimates. Below, we center perceived height:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4150,6 +4169,8 @@ Centering predictor variables affects that intercept of the model but does does 
 \NormalTok{h95}\SpecialCharTok{$}\NormalTok{pheight\_c }\OtherTok{=}\NormalTok{ h95}\SpecialCharTok{$}\NormalTok{pheight }\SpecialCharTok{{-}}\NormalTok{ mean\_perceived\_height}
 \end{Highlighting}
 \end{Shaded}
+
+And fit the same model using this centered predictor:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4169,33 +4190,19 @@ Centering predictor variables affects that intercept of the model but does does 
 \end{Highlighting}
 \end{Shaded}
 
+We then inspect the fixed effects for this new model:
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# inspect model}
-\NormalTok{single\_line\_centered\_model}
-\DocumentationTok{\#\#  Family: gaussian }
-\DocumentationTok{\#\#   Links: mu = identity; sigma = identity }
-\DocumentationTok{\#\# Formula: f0 \textasciitilde{} pheight\_centered }
-\DocumentationTok{\#\#    Data: h95 (Number of observations: 278) }
-\DocumentationTok{\#\# Samples: 1 chains, each with iter = 6000; warmup = 1000; thin = 1;}
-\DocumentationTok{\#\#          total post{-}warmup samples = 5000}
-\DocumentationTok{\#\# }
-\DocumentationTok{\#\# Population{-}Level Effects: }
-\DocumentationTok{\#\#                  Estimate Est.Error l{-}95\% CI u{-}95\% CI Rhat Bulk\_ESS Tail\_ESS}
-\DocumentationTok{\#\# Intercept          197.99      1.77   194.53   201.53 1.00     6644     4267}
-\DocumentationTok{\#\# pheight\_centered    {-}6.37      0.27    {-}6.89    {-}5.84 1.00     4595     3507}
-\DocumentationTok{\#\# }
-\DocumentationTok{\#\# Family Specific Parameters: }
-\DocumentationTok{\#\#       Estimate Est.Error l{-}95\% CI u{-}95\% CI Rhat Bulk\_ESS Tail\_ESS}
-\DocumentationTok{\#\# sigma    30.19      1.28    27.86    32.86 1.00     5753     4025}
-\DocumentationTok{\#\# }
-\DocumentationTok{\#\# Samples were drawn using sampling(NUTS). For each parameter, Bulk\_ESS}
-\DocumentationTok{\#\# and Tail\_ESS are effective sample size measures, and Rhat is the potential}
-\DocumentationTok{\#\# scale reduction factor on split chains (at convergence, Rhat = 1).}
+\CommentTok{\# inspect fixed effects}
+\NormalTok{brms}\SpecialCharTok{::}\FunctionTok{fixef}\NormalTok{ (single\_line\_centered\_model)}
+\DocumentationTok{\#\#                   Estimate Est.Error       Q2.5      Q97.5}
+\DocumentationTok{\#\# Intercept        197.98743 1.7748526 194.531738 201.533945}
+\DocumentationTok{\#\# pheight\_centered  {-}6.36766 0.2676307  {-}6.890297  {-}5.842301}
 \end{Highlighting}
 \end{Shaded}
 
-We can see that the slope coefficient provided by this model is the same as the last model: the slope of the line has not changed. However, our intercept value is now 198. This means that when out predictor is at its mean (61.4 inches), we expect f0 to have a value of 198 Hz.
+We can see that the slope coefficient provided by this model is the same as the last model: the slope of the line has not changed. However, our intercept value is now 198. This means that when out predictor is at its mean, we expect f0 to have a value of 198 Hz. The model \emph{thinks} the mean is 0, but we \emph{know} it is 61.4 inches, and the centering of the predictor does not affect our ability to interpret it such.
 
 \begin{figure}
 \centering
@@ -4208,7 +4215,7 @@ I'm going to center predictors often, simply out of convenience. However, the de
 \hypertarget{interactions-in-our-line-parameters}{%
 \section{Interactions in our line parameters}\label{interactions-in-our-line-parameters}}
 
-Here's something that I haven't really mentioned so far: group effects such as `boy' and `girl' are effectively `interaction' terms. Remember that interactions are \emph{conditional} effects. So, when we say ``hey what's the intercept on the horizontal line you use to model f0?'', the answer is actually ``it depends on the group'' (as seen in Figure @ref:(fig:F5-fig1)). In other words, the intercept in our model is conditional on group. so, when we fit a model like:
+Here's something that we've sort of been tip-toeing around up to this point: group effects such as `boy' and `girl' are effectively `interaction' terms. Remember that interactions are \emph{conditional} effects. So, when we say ``hey what's the intercept on the horizontal line you use to model f0?'', the answer is actually ``it depends on the group'' (as seen in Figure @ref:(fig:F5-fig1)). In other words, the intercept in our model is \emph{conditional} on group, which means the intercept of our model interacts with group. So, when we fit a model like:
 
 \texttt{f0\ \textasciitilde{}\ group}
 
@@ -4216,27 +4223,42 @@ The model could be thought of as something like:
 
 \texttt{f0\ \textasciitilde{}\ Intercept\ +\ Intercept:group}
 
-This is because our model will estimate a `main effects' (average) intercept term, and also estimate group-dependent deviations from the main effect (i.e., the \texttt{Intercept:group} interactions). By convention, we don't actually specify our models like this, however, it's useful to keep this perspective in mind when thinking about the lines defined by our models.
+This is because our model will estimate a `main effects' (average) intercept term, and also estimate group-dependent deviations from the main effect (i.e., the \texttt{Intercept:group} interactions). By convention, we don't actually specify our models like this, however, it's useful to keep this perspective in mind to really understand the structure of your models.
 
-A nominal predictor like \texttt{group} has the effect of allowing for group-specific intercepts in our lines. Consider what happens when a continuous predictor like \texttt{pheight} is added to our model formula:
+Including a nominal predictor like \texttt{group} in our regression models has the effect of allowing for group-specific intercepts in our lines. Consider what happens when a continuous predictor like \texttt{pheight} is added to our model formula:
 
 \texttt{f0\ \textasciitilde{}\ group\ +\ pheight} (or in our expanded format \texttt{f0\ \textasciitilde{}\ Intercept\ +\ Intercept:group\ +\ pheight})
 
-This model only includes a slope `main effect', or an \emph{average} slope effects across all groups. We can see this because the formula does not contain any interactions with our continuous predictor \texttt{pheight}. As a result, the model does not include any way for the \texttt{pheight} slope to vary (e.g., between groups).
+This model only includes a slope `main effect', or an \emph{average} slope effects across all groups. We can see this because the formula does not contain any interactions with our continuous predictor \texttt{pheight}. As a result, the model does not include any way for the \texttt{pheight} slope to vary (e.g., between groups), an you cannot use this model to discuss variation in the slope term.
 
-In the last chapter we discussed the fact that without interactions, shared slopes lead to parallel lines in interaction plots. The same applies here! If we draw a bunch of lines with different intercepts but a fixed slope, clearly these lines will all be parallel.
+In the last chapter we discussed the fact that without interactions, shared slopes lead to parallel lines in interaction plots. The same principle applies here. If we draw a bunch of lines with different intercepts but a fixed slope, all the lines will be parallel.
 
 If you want to know about the slope \emph{conditional} on group, then you need to include a group by slope interaction in your model. We add this to out model formula:
 
 \texttt{f0\ \textasciitilde{}\ group\ *\ pheight} or \texttt{f0\ \textasciitilde{}\ group\ +\ pheight\ +\ pheight:group}
 
-Which could be expanded like this:
+Which could be expanded like this (in our inaccurate but pedagogically useful expansion of the Intercept term):
 
 \texttt{f0\ \textasciitilde{}\ Intercept\ +\ Intercept:group\ +\ pheight\ +\ pheight:group}
 
 In plain English, this says: "predict f0 as a function of an intercept, group-dependent variation in Intercepts (modeled by the \texttt{Intercept:group} interactions), a mean overall slope (\texttt{pheight}), and group-dependent variation in slopes (modeled by the \texttt{pheight:group} interactions).
 
-A model like the one above allows us to represent group-dependent variation in lines \emph{and} intercepts. Effectively, this allows us to have entirely different lines representing the relationships between perceived height and f0 in our data. We're going to see examples of these kinds of models in this chapter, first considering group-specific variation in intercepts.
+A model like the one above allows us to represent group-dependent variation in lines \emph{and} intercepts. Effectively, this allows us to have entirely different lines representing the relationships between perceived height and f0 in our data.
+
+In summary, if you have a continuous dependent variable (\(y\)), a continuous predictor (\(x\)), and a categorical predictor (\(A\)), you can define models that:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  \texttt{y\ \textasciitilde{}\ x}: Include only one single line for all groups.
+\item
+  \texttt{y\ \textasciitilde{}\ B}: Include different lines for each group but all slopes are 0.
+\item
+  \texttt{y\ \textasciitilde{}\ x+B}: Include different lines for each group. Each group has its own unique intercept but they all share the same slope.
+\item
+  \texttt{y\ \textasciitilde{}\ x*B}: Include different lines for each group. Each group has its own unique intercept and slope.
+\end{enumerate}
 
 \hypertarget{models-with-group-dependent-intercepts-but-shared-slopes}{%
 \section{Models with group-dependent intercepts, but shared slopes}\label{models-with-group-dependent-intercepts-but-shared-slopes}}
@@ -4245,19 +4267,19 @@ In the previous sections we focused on models that imposed a single line for all
 
 \texttt{f0\ \textasciitilde{}\ group\ +\ pheight}
 
-The model above says: ``model f0 as a function of perceived height, allowing for group-specific variation the effect for group''. Note that our model does \emph{not} include the interaction between \texttt{pheight} and \texttt{group}. this is because this model includes only a single slope across all groups. As a result, these models represent our data with a set of parallel lines, one for each group.
+The model above says: ``model f0 as a function of perceived height, allowing for group-specific variation in the intercept''. Note that our model does \emph{not} include the interaction between \texttt{pheight} and \texttt{group}. this is because this model includes only a single slope across all groups. As a result, these models represent our data with a set of parallel lines, one for each group.
 
 \hypertarget{description-of-the-model-5}{%
 \subsection{Description of the model}\label{description-of-the-model-5}}
 
-The model including group-specific intercepts is presented below. The only difference compared to the previous model is that this now includes a \(group\) predictor similar to the one we used initially in chapter 4. This predictor will allow our groups to be represented by different parallel lines with varying intercepts.
+The model including group-specific intercepts is presented below. The only difference compared to the previous model is that this now includes a \(group\) predictor similar to the one we used initially in Chapter 4. This predictor will allow our groups to be represented by different parallel lines with varying intercepts.
 
 \begin{equation}
 \begin{split}
 \\
 \textrm{Likelihood:} \\
 y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
-\mu_{[i]} = Intercept + group_{[\mathrm{group}_{[i]}]} + pheight * x_{[i]}  \\ \\
+\mu_{[i]} = Intercept + group_{[\mathrm{group}_{[i]}]} + pheight \times x_{[i]}  \\ \\
 \textrm{Priors:} \\
 Intercept \sim t(3, 175, 100) \\
 pheight \sim t(3, 0, 100) \\ 
@@ -4269,7 +4291,7 @@ group \sim t(3, 0, 100) \\
 
 Here's another way to think about this model. In the model below we have \(a\) and \(b\) parameters that vary from trial to trial. The trial-specific intercept is equal to the overall intercept, and the group predictor for that trial. The slope terms does not actually vary from trial to trial in practice, since it simply equals our \(pheight\) slope parameter.
 
-Recall that I suggested that we could perform `ANOVA-like' decompositions on our intercept predictors. In fact, we can do the same thing with our slopes. In the model below our \(pheight\) parameter is basically an `intercept' for the slope of our predictor. When we incorporate group-specific slopes in our model in the next section, these will be represented as group-specific deviations in slope relative the the slope `main effect' (i.e., \(pheight\)) seen below.
+Recall that I suggested that we could perform `ANOVA-like' decompositions on our intercept predictors. Below, model coefficients which affect the intercept of our prediction lines are separated from those that affect our slopes. The formulation below makes it clear that our \(pheight\) parameter basically functions as an `intercept' for the slope of our predictor. When we incorporate group-specific slopes in our model in the next section, these will be represented as group-specific deviations in the equation predicting \(b_{[i]}\) below.
 
 \begin{equation}
 \begin{split}
@@ -4291,7 +4313,7 @@ group \sim t(3, 0, 100) \\
 \hypertarget{fitting-the-model-4}{%
 \subsection{Fitting the model}\label{fitting-the-model-4}}
 
-We fit a model that contains the four group predictors and also includes our continuous predictor:
+We fit a model that contains the group predictor and also includes our continuous predictor, but not the interaction between the two:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4312,7 +4334,7 @@ We fit a model that contains the four group predictors and also includes our con
 \end{Highlighting}
 \end{Shaded}
 
-For the same of comparison, I am also going to fit a model with only group predictors and no continuous predictor (\texttt{pheight}). As noted above, this is effectively a model with a bunch of horizontal lines (slope = 0), one for each group.
+For the sake of comparison, we will also fit a model with only group predictors and no continuous predictor (\texttt{pheight}). As noted above, this is effectively a model with a bunch of horizontal lines (slope = 0), one for each group.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4398,11 +4420,11 @@ In Figure \ref{fig:F5-55} I draw the the lines specified by our two models. On t
 \hypertarget{interpreting-group-effects-in-the-presence-of-a-continuous-predictor}{%
 \subsection{Interpreting group effects in the presence of a continuous predictor}\label{interpreting-group-effects-in-the-presence-of-a-continuous-predictor}}
 
-The inclusion of a continuous predictor affects the interpretation of our group predictors. When we only had a group predictor the group effects had a simple interpretation: they represented the difference between our group mean and the intercept. In terms of our lines however, the group effects actually corresponded to the difference between the line intercept and the overall model intercept. It just so happened that in the previous model our group intercepts corresponded to our group means (because the slopes were 0).
+The inclusion of a continuous predictor affects the interpretation of the group predictors in a model. When we only had a group predictor in the model, the group effects reflected differences between group means. This meant that if we added our group effect to our intercept, we expected that the result would be the group mean. This is seen in the left plot above. The black line represents the intercept, and the `effect' for each group is the distance between the line for the group and the intercept. Obviously, if you take the intercept and add the distance to the male group (red line), the resulting line will be located at the mean for males.
 
-When you include a continuous predictor, the group effects \emph{still} just represent the line intercepts for each group. However, since each line may have a non-zero slope, the group effects will not solely reflect the difference between the group means and the intercept.
+However, the inclusion of continuous predictors means that the group effects can no longer be interpreted in this way. When you include a continuous predictor, the group effects \emph{still} represent differences in the line intercepts for each group. However, since lines may have non-zero slopes, the intercepts of these lines may no longer correspond to their respective group means.
 
-Here's a more direct way to think about it: when lines share a slope, group effects affect the spacing between parallel lines. If you look at the right panel of Figure \ref{fig:F5-55} and tilt your head 45 degrees to the right, its clear that the group effects are simply responsible for spacing out the parallel lines. This is the same thing the group effects are doing in the panel on the right.
+Here's a more direct way to think about it: when lines share a slope, group effects change the spacing between parallel lines. If you look at the right panel of Figure \ref{fig:F5-55} and tilt your head 45 degrees to the right, its clear that the group effects are responsible for spacing out the parallel lines. This is the same thing the group effects are doing in the panel on the left. However, the \emph{spacing} between the lines is different between the panels due to the inclusion of a slope in one model.
 
 We're going to compare the estimated group effects provided by the two models presented above (\texttt{group\_intercepts\_model}, and \texttt{group\_single\_slope\_model}). Below, I use the \texttt{hypothesis} function to calculate the group effects according to each model.
 
@@ -4442,7 +4464,7 @@ We're going to compare the estimated group effects provided by the two models pr
 \end{Highlighting}
 \end{Shaded}
 
-We can use the \texttt{brmplot} function to visually inspect the differences between the group effects across the models. We see that the groups effects are much smaller when the continuous predictor is included. This is visually apparent in the tighter clustering of the lines in the right panel of Figure \ref{fig:F5-int-comparison}. In the absence of group effects we would just see four overlapping lines, one for each group.
+We can use the \texttt{brmplot} function to visually inspect the differences between the group effects across the models. We see that the groups effects are much smaller when the continuous predictor is included. This is visually apparent in the tighter clustering of the lines in the right panel of Figure \ref{fig:F5-int-comparison}. By the way, since the group effects change the spacing of the lines for each group, in the absence of group effects we would just see four overlapping lines.
 
 \begin{figure}
 \centering
@@ -4454,11 +4476,11 @@ So how can we \emph{interpret} the group effects when there is a continuous pred
 
 To imagine this, pick any arbitrary location along the x-axis in the right panel of Figure \ref{fig:F5-int-comparison}. Then, find the predicted value for f0 for that location by sliding up the y axis until arriving at the black dotted line. The distance along the y axis between the black dotted line (the average line) and the group-specific lines (in different colors) is reflected in the red coefficients in the left panel of Figure \ref{fig:F5-int-comparison}.
 
-Ok, but what do the effects \emph{mean}? The groups effects tell us that \emph{given a certain perceived height}, f0 is lower than expected when the speaker is an adult male, and higher than expected when the speaker is an adult male. In other words, if you think you are listening to a person who is \(x\) inches tall, the most likely f0 associated with that is about 40 Hz lower if the person is a man and about 20 Hz higher if the person is a woman. Importantly, this effect exists \emph{independently} of the relationship between f0 and perceived height.
+Ok, but what do the effects \emph{mean}? The groups effects tell us that \emph{given a certain perceived height}, f0 is lower than expected when the speaker is an adult male, and higher than expected when the speaker is an adult female. In other words, if you think you are listening to a person who is \(x\) inches tall, we predict that you heard an \(f0\) of \(y\). However, if the speaker was a man then we predict \(y-40\) and if the speaker was a woman we predict \(y+20\) (based on the effects for the male and female groups for the slope model in the figure above). Importantly, this effect exists \emph{independently} of the relationship between f0 and perceived height. This means that the spacing between lines is stable across values of the predictor (which is necessary for parallelism).
 
-This is evident in Figure \ref{fig:F5-int-comparison}. The blue line (women) runs parallel to but above the red line (men). Necessarily, for any given x axis location the y axis value will be higher for the blue line than the red line. This is what the group effects are telling us!
+Consider the effects for girls and boys, which are near zero. When something has an effect near zero this means the `effect' is similar to the intercept (or some other relevant parameter). In this case, the fact that the group effects for girls and boys are near zero tells us that the intercepts for the lines representing these groups of speakers are about the same as that of the overall intercept.
 
-Compare this to the effects for girls and boys, which are near zero. When something has an effect near zero this means the `effect' has no effect on outcomes! In this case, we say that for girls and boys, f0 is just about what you would expect given their perceived size. In other words, the perceived-size to f0 relationship for boys and girls is similar to the average relationship. Again, this is evident in Figure \ref{fig:F5-int-comparison} where the green (girls) and yellow (boys) lines overlap with the black dotted line indicating the overall average line.
+Keep in mind that the fact that the group effects are zero does not mean that the intercept for that group is zero. Instead it just means that the \emph{difference} between the overall intercept and the group-specific intercept is zero.
 
 \hypertarget{models-with-group-dependent-slopes-and-intercepts}{%
 \section{Models with group-dependent slopes and intercepts}\label{models-with-group-dependent-slopes-and-intercepts}}
@@ -4467,7 +4489,7 @@ The model above is limited because it is constrained to have the same slope acro
 
 \texttt{f0\ \textasciitilde{}\ group\ *\ pheight}, or \texttt{f0\ \textasciitilde{}\ group\ +\ pheight\ +\ pheight:group}
 
-The model above says: ``model f0 as a function of perceived height, allowing for group-specific variation in the effect for group, and in the effect for perceived height between groups''.
+The model above says: ``model f0 as a function of perceived height, allowing for variation in intercepts and the effect for perceived height between groups''.
 
 \hypertarget{description-of-the-model-6}{%
 \subsection{Description of the model}\label{description-of-the-model-6}}
@@ -4475,15 +4497,17 @@ The model above says: ``model f0 as a function of perceived height, allowing for
 The `ANOVA-style' decomposition re-introduced with the previous model becomes more useful now. Below we present the `expanded' version of our prediction equation, in a format similar to that presented above. Note that each term that relates to the slope (\(pheight, pheight \colon group\)) is independently multiplied with our predictor (\(x_{[i]}\)).
 
 \[
-\mu_{[i]} = Intercept + group_{[\mathrm{group}_{[i]}]} + pheight * x_{[i]} + pheight \colon group_{[\mathrm{group}_{[i]}]} * x_{[i]}
+\mu_{[i]} = Intercept + group_{[\mathrm{group}_{[i]}]} + pheight \times x_{[i]} + pheight \colon group_{[\mathrm{group}_{[i]}]} \times x_{[i]}
 \label{eq:512}
 \]
+
+The above says that our expected value is equal to the intercept (\(Intercept\)), the group predictor (\(group_{[\mathrm{group}_{[i]}]}\)), the product of perceived height and the slope coefficient (\(pheight \times x_{[i]}\)), and the product of perceived height and the interaction of the slope coefficient with group ((\(pheight \colon group_{[\mathrm{group}_{[i]}]} \times x_{[i]}\))).
 
 Below, we can group intercept and slope terms in parenthesis. This formulation makes it clear that we expect intercepts and slopes to actually vary trial to trial (whenever the \texttt{group} predictor does).
 
 \begin{equation}
 \begin{split}
-\mu_{[i]} = (Intercept + group_{[\mathrm{group}_{[i]}]}) + (pheight + pheight \colon group_{[\mathrm{group}_{[i]}]}) * x_{[i]}
+\mu_{[i]} = (Intercept + group_{[\mathrm{group}_{[i]}]}) + (pheight + pheight \colon group_{[\mathrm{group}_{[i]}]}) \times x_{[i]}
 \end{split}
 \label{eq:513}
 \end{equation}
@@ -4501,7 +4525,7 @@ We can take this one step further and break up our prediction equation into two 
 
 \begin{equation}
 \begin{split}
-\mu_{[i]} = a_{[i]} + b_{[i]} * x_{[i]}  \\\\
+\mu_{[i]} = a_{[i]} + b_{[i]} \times x_{[i]}  \\\\
 a_{[i]} = Intercept + group_{[\mathrm{group}_{[i]}]} \\\\
 b_{[i]} = pheight + height \colon group_{[\mathrm{group}_{[i]}]}) 
 \end{split}
@@ -4516,7 +4540,7 @@ We can represent our models in either of the following manners. This representat
 \begin{split}
 \textrm{Likelihood:} \\
 y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
-\mu_{[i]} = Intercept + group_{[\mathrm{group}_{[i]}]} + pheight * x_{[i]} + pheight \colon group * x_{[i]}  \\ \\
+\mu_{[i]} = Intercept + group_{[\mathrm{group}_{[i]}]} + pheight \times x_{[i]} + pheight \colon group \times x_{[i]}  \\ \\
 \textrm{Priors:} \\
 Intercept \sim t(3, 175, 100) \\
 pheight \sim t(3, 0, 100) \\ 
@@ -4532,7 +4556,7 @@ While this representation reflects the decomposition of line intercepts and slop
 \begin{split}
 \textrm{Likelihood:} \\
 y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\
-\mu_{[i]} = a_{[i]} + b_{[i]} * x_{[i]}  \\ 
+\mu_{[i]} = a_{[i]} + b_{[i]} \times x_{[i]}  \\ 
 a_{[i]} = Intercept + group_{[\mathrm{group}_{[i]}]} \\
 b_{[i]} = pheight + height \colon group_{[\mathrm{group}_{[i]}]} \\ \\
 \textrm{Priors:} \\
@@ -4572,39 +4596,21 @@ We fit the model with group-dependent intercepts and slopes below:
 \hypertarget{interpreting-the-model-3}{%
 \subsection{Interpreting the model}\label{interpreting-the-model-3}}
 
-We can inspect this model below and see that it contains a relatively large number of parameters. This is a necessary outcome of the complexity of our research question. The model we fit looks for an effect for perceived height on f0, and allows the line relating these variables to vary between groups. Necessarily, this will require the model to present you with 4 intercepts and 4 slopes (or equivalent information), one for each group line.
-
-In fact, if we look below we see that our model has in fact estimated 8 fixed-effect coefficients: 4 slopes and 4 intercepts.
+We can inspect this model below and see that it contains a relatively large number of parameters. This is a necessary outcome of the complexity of our research question. The model we fit looks for an effect for perceived height on f0, and allows the line relating these variables to vary between groups. Necessarily, this will require the model to present you with 4 intercepts and 4 slopes (or equivalent information), one for each of four group lines. In fact, if we look below we see that our model has in fact estimated 8 fixed-effect coefficients: 4 slopes and 4 intercepts.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# inspect model}
-\NormalTok{group\_multi\_slope\_model}
-\DocumentationTok{\#\#  Family: gaussian }
-\DocumentationTok{\#\#   Links: mu = identity; sigma = identity }
-\DocumentationTok{\#\# Formula: f0 \textasciitilde{} group + pheight\_c + pheight\_c:group }
-\DocumentationTok{\#\#    Data: h95 (Number of observations: 278) }
-\DocumentationTok{\#\# Samples: 1 chains, each with iter = 6000; warmup = 1000; thin = 1;}
-\DocumentationTok{\#\#          total post{-}warmup samples = 5000}
-\DocumentationTok{\#\# }
-\DocumentationTok{\#\# Population{-}Level Effects: }
-\DocumentationTok{\#\#                  Estimate Est.Error l{-}95\% CI u{-}95\% CI Rhat Bulk\_ESS Tail\_ESS}
-\DocumentationTok{\#\# Intercept          204.37      4.39   195.70   213.02 1.00     4426     3198}
-\DocumentationTok{\#\# group1             {-}20.32      7.92   {-}35.54    {-}4.94 1.00     2823     3138}
-\DocumentationTok{\#\# group2              17.31      8.70     0.15    33.97 1.00     2645     2656}
-\DocumentationTok{\#\# group3             {-}14.99      7.44   {-}29.37    {-}0.20 1.00     3081     3243}
-\DocumentationTok{\#\# pheight\_c           {-}5.00      0.54    {-}6.07    {-}3.96 1.00     3257     3434}
-\DocumentationTok{\#\# group1:pheight\_c    {-}2.33      1.06    {-}4.35    {-}0.25 1.00     2883     3140}
-\DocumentationTok{\#\# group2:pheight\_c     2.84      0.98     0.95     4.75 1.00     3112     3394}
-\DocumentationTok{\#\# group3:pheight\_c    {-}2.73      1.00    {-}4.71    {-}0.74 1.00     3746     2918}
-\DocumentationTok{\#\# }
-\DocumentationTok{\#\# Family Specific Parameters: }
-\DocumentationTok{\#\#       Estimate Est.Error l{-}95\% CI u{-}95\% CI Rhat Bulk\_ESS Tail\_ESS}
-\DocumentationTok{\#\# sigma    21.40      0.92    19.68    23.27 1.00     5004     3185}
-\DocumentationTok{\#\# }
-\DocumentationTok{\#\# Samples were drawn using sampling(NUTS). For each parameter, Bulk\_ESS}
-\DocumentationTok{\#\# and Tail\_ESS are effective sample size measures, and Rhat is the potential}
-\DocumentationTok{\#\# scale reduction factor on split chains (at convergence, Rhat = 1).}
+\CommentTok{\# inspect fixed effects}
+\NormalTok{brms}\SpecialCharTok{::}\FunctionTok{fixef}\NormalTok{ (group\_multi\_slope\_model)}
+\DocumentationTok{\#\#                    Estimate Est.Error        Q2.5       Q97.5}
+\DocumentationTok{\#\# Intercept        204.371640 4.3888322 195.7008343 213.0166893}
+\DocumentationTok{\#\# group1           {-}20.316517 7.9174154 {-}35.5379249  {-}4.9370418}
+\DocumentationTok{\#\# group2            17.311087 8.6955692   0.1498904  33.9660860}
+\DocumentationTok{\#\# group3           {-}14.990302 7.4367971 {-}29.3698773  {-}0.1998599}
+\DocumentationTok{\#\# pheight\_c         {-}5.000915 0.5385537  {-}6.0671119  {-}3.9634977}
+\DocumentationTok{\#\# group1:pheight\_c  {-}2.325756 1.0560357  {-}4.3494531  {-}0.2545608}
+\DocumentationTok{\#\# group2:pheight\_c   2.840999 0.9771257   0.9543872   4.7543455}
+\DocumentationTok{\#\# group3:pheight\_c  {-}2.728649 0.9960918  {-}4.7067134  {-}0.7419729}
 \end{Highlighting}
 \end{Shaded}
 
