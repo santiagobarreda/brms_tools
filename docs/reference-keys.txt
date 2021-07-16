@@ -20,6 +20,7 @@ eq:9
 fig:F1-allf0s
 fig:F1-posterior
 fig:F1-mcmc
+fig:F2-interactionfig
 eq:21
 eq:22
 eq:23
@@ -39,6 +40,7 @@ fig:F2-6
 fig:F2-7
 fig:F2-8
 fig:F2-9
+fig:F3-interactionfig
 fig:F3-boxplots
 fig:F3-boxplots-density
 fig:contrast-figure
@@ -50,10 +52,12 @@ fig:F3-simulated
 fig:F3-sim-incomplete-1
 fig:F3-sim-incomplete-2
 fig:unnamed-chunk-30
+fig:F4-designfig
 fig:F4-datacomparison
 fig:F4-speakerboxplots
 eq:40
 eq:41
+fig:F4-designfig2
 eq:42
 fig:F4-postpred1
 fig:F4-interactionplot
@@ -229,6 +233,3 @@ frequentist-corner-3
 bayesian-multilevel-modesl-vs.-lmer-3
 exercises-5
 plot-code
-fig:F3-interactionfig
-fig:F4-designfig
-fig:F4-designfig2
