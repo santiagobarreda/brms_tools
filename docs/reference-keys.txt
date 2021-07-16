@@ -230,3 +230,5 @@ bayesian-multilevel-modesl-vs.-lmer-3
 exercises-5
 plot-code
 fig:F3-interactionfig
+fig:F4-designfig
+fig:F4-designfig2

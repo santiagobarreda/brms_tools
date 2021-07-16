@@ -339,16 +339,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="comparing-many-groups" class="section level1" number="4">
 <h1><span class="header-section-number">Chapter 4</span> Comparing many groups</h1>
-<p>Last chapter we talked about comparing two groups. Although the comparison of two groups is very simple, it also comes up very often: more complicated problems are often broken down into several two-group questions. However, most real-world research designs don’t usually <em>begin</em> as two-group questions. In this chapter, we’re going to talk about the comparison of multiple groups of observations/speakers. The models we will discuss are similar to one-way ANOVAs in the types of research questions they can help investigate.</p>
+<p>Last chapter we talked about comparing two groups. Although the comparison of two groups is very simple, it also comes up often. In addition, more complicated problems are often broken down into several two-group questions. However, most real-world research designs don’t usually <em>begin</em> as two-group questions. In this chapter, we’re going to talk about the comparison of multiple groups of observations/speakers. The models we will discuss are similar to one-way ANOVAs in the types of research questions they can help investigate.</p>
 <div id="data-and-research-questions-3" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Data and research questions</h2>
-<p>First, we are going to discuss models that compare observations across any number of groups. Again, we’re using the term ‘groups’ loosely here. These designs are appropriate for data from:</p>
-<ul>
-<li><p>groups of speakers/listeners that are grouped in different ways because they differ in some characteristic (e.g., first language), or in some experimental condition. Different speakers are in each group.</p></li>
-<li><p>the same speakers/listeners are tested in multiple different experimental condition, with stimuli that vary in multiple groups, or something of the sort.</p></li>
-<li><p>each speaker/subject can contribute multiple data points, and the number does not need to be balanced across subjects. Also speakers can be missing from one of the conditions (i.e., unbalanced data is ok).</p></li>
-</ul>
-<p>To analyze data like this, you should have it in a datafram with one row for each observation. Then, one column should contain the dependent variable, the variable whose variation you’re trying to predict. Another column should contain information about which group each observation belongs to.</p>
+<p>First, we’re going to discuss models that compare observations across any number of groups (levels) for a single factor. These designs have just one predictor factor but it can have any number of levels. Although it is not very common to have a design that <em>only</em> consists of a multi-group comparison, the inclusion of multi-group comparisons is ubiquitous in linguistics. Examples of predictors with multiple levels are vowel phonemes, language, word classes, and ages. In addition, the manipulations linguists carry out in their experiments can vary across more than two groups. For example, consider the example of the experiment investigating coffee in reading speed. We might have 3 coffee groups rather than one, and vary the ‘dosage’ of coffee between groups. Although the dose of coffee can be measured numerically, we could still treat this as a factor called “drink” with levels “water”, “coffee100ml”, “coffee200ml”, and “coffee300ml”.</p>
+<p>We can continue discussing the hypothetical example of the reading experiment presented in Chapter 3. Subjects are asked to drink either a cup of water or a cup of coffee. After a 15-minute wait they are asked to read a passage aloud and the duration of the reading is measured. However, now let’s imagine that subjects were also divided into groups of male and female speakers. This design results in four different groups (2x2).</p>
+<p>These groups have an internal structure that our model does not recognize. What I mean by this is that half your groups are caffeine groups, but your model does not know this, and as a result it does not directly estimate any effects related to this. However, we will ignore this issue for now.</p>
+<p>In the first example we see the <em>within-subjects</em> version of this design where each subject is tested at each level of <span class="math inline">\(A\)</span>. Next, we see the <em>between-subjects</em> version of the design. Clearly, this is just a simple extrapolation of the sorts of designs presented in Chapter 2.</p>
+<div class="figure" style="text-align: center"><span id="fig:F4-designfig"></span>
+<img src="images/design_ch4_1.png" alt="Data from a single group of subjects (S) divided according to a single grouping factor A." width="80%" />
+<p class="caption">
+Figure 4.1: Data from a single group of subjects (S) divided according to a single grouping factor A.
+</p>
+</div>
+<p>To analyze data like this, you should have it in a dataframe with one row for each observation. Then, one column should contain the dependent variable, the variable whose variation you’re trying to predict. Another column should contain information about which group each observation belongs to (the factor).</p>
 <p>We’re going to keep working with the Hillenbrand et al. data, that we have been discussing in every chapter to this point. This time we’re going to work with all four groups of speakers: <code>b</code> (boys), <code>g</code> (girls), <code>m</code> (men), and <code>w</code> (women).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="comparing-many-groups.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load brms</span></span>
 <span id="cb1-2"><a href="comparing-many-groups.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (brms)</span>
@@ -359,14 +363,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="figure"><span id="fig:F4-datacomparison"></span>
 <img src="04_files/figure-html/F4-datacomparison-1.png" alt="(left) Comparison of the four groups (middle) Comparison of productions based on whether the speaker is an adult (right) Comparison of all productions based on whether the speaker is male." width="768" />
 <p class="caption">
-Figure 4.1: (left) Comparison of the four groups (middle) Comparison of productions based on whether the speaker is an adult (right) Comparison of all productions based on whether the speaker is male.
+Figure 4.2: (left) Comparison of the four groups (middle) Comparison of productions based on whether the speaker is an adult (right) Comparison of all productions based on whether the speaker is male.
 </p>
 </div>
 <p>We can consider our data in several ways: as four independent groups, or as two 2-groups comparisons (adult vs child, female vs male). We’re going to focus on the 4-way comparison first, and later talk about models that make multiple comparisons simultaneously.</p>
 <div class="figure"><span id="fig:F4-speakerboxplots"></span>
 <img src="04_files/figure-html/F4-speakerboxplots-1.png" alt="(left) Boxplots presenting each speaker's production of f0 for boys (red), girls (yellow), men (green), and women (teal). (right) Densities of the overall distributions for each group." width="768" />
 <p class="caption">
-Figure 4.2: (left) Boxplots presenting each speaker’s production of f0 for boys (red), girls (yellow), men (green), and women (teal). (right) Densities of the overall distributions for each group.
+Figure 4.3: (left) Boxplots presenting each speaker’s production of f0 for boys (red), girls (yellow), men (green), and women (teal). (right) Densities of the overall distributions for each group.
 </p>
 </div>
 <div id="factors-as-batches-effects" class="section level3" number="4.1.1">
@@ -553,16 +557,22 @@ group_{[\mathrm{group}]} \sim t(3, 0, 100) \\
 </div>
 <div id="investigating-many-factors-simultaneously-analysis-of-variance" class="section level2" number="4.3">
 <h2><span class="header-section-number">4.3</span> Investigating many factors simultaneously: Analysis of Variance</h2>
-<p>Above, our model had a single ‘batch’ of grops. Another way to look at it is that the model predicted variation along a single <em>dimension</em>. We can categorize people along multiple dimensions simultaneously, and place them in more than one group at a time. So, a speaker may be an adult <em>and</em> a woman, and not just and adult <em>or</em> a women. This is because adultness and gender are independent dimensions and the value of one does not affect the value of the other.</p>
-<p>Our models can include any number of factors, and subjects can be <em>crossed</em> with these factors, or nested between them. When two factors are crossed, this means that all levels of a factor appear at all levels of another factor. This is easiest to conceive of for participants (remember ‘participant’ is just factor). Participants are ‘crossed’ with a factor when these are tested at all levels of a factor. For example, we might test listeners on a lexical decision task for verbs and nouns. If we use word category as a predictor, then word category is crossed with subjects in our design.</p>
-<p>Sometimes, factors cannot be crossed and must be <em>nested</em>. For example, participants in an experiment cannot be tested as both adults and children because one person cannot be both at the same time. When one or more levels of a factor cannot be observed at all levels of another factor, then these are no longer crossed. Instead, since participants are only present in their one level (either child <strong>or</strong> adult), participant is said to be <em>nested</em> within child. These distinctions are useful to understand conceptually but they do not much affect the structures of our model (from our perspective anyways!).</p>
-<p>The models discussed below can be used for data that compares observations across any number of factors, each with any number of levels. These designs are appropriate for data from:</p>
-<ul>
-<li><p>groups of speakers/listeners that are grouped in different ways because they differ in in one or more characteristics, or in one or more experimental conditions. Different speakers are in each group.</p></li>
-<li><p>the same speakers/listeners are tested in multiple different experimental conditions that can be categorized in one or more ways, with stimuli that vary in multiple groups, or something of the sort.</p></li>
-<li><p>each speaker/subject can contribute multiple data points, and the number does not need to be balanced across subjects. Also speakers can be missing from one of the conditions (i.e., unbalanced data is ok).</p></li>
-</ul>
-<p>To analyze data like this, you should have it in a dataframe with one row for each observation and one column for the dependent variable. However, your data should also now include another column for every other factor you wish to include in your model.</p>
+<p>Above, our model had a single ‘batch’ of groups. Another way to look at it is that the model predicted variation along a single <em>dimension</em>. However, we can categorize people (or observations) along multiple dimensions simultaneously. So, a speaker may be an adult <em>and</em> a woman, and not just and adult <em>or</em> a women. This is because adultness and gender are independent dimensions and the value of one does not affect the value of the other.</p>
+<p>We can return to the example of the reading experiment presented above. Recall that we had four groups varying along two ‘dimensions’: whether they drank coffee or water, and whether they were male or female. The figure below represents designs of this structure and shows three ways that these can be organized.</p>
+<p>The characteristics of <em>within-subjects</em> and <em>between-subjects</em> designs should be familiar by now. What is new is the ‘mixed’ design. In a mixed design, one or more factors are between-subjects, and the others are within-subjects. In the example below, <span class="math inline">\(A\)</span> is between-subjects but <span class="math inline">\(B\)</span> is within-subjects. Actually, the caffeine experiment we have been discussing would have to be a mixed design: subjects can be tested at both levels of “drink” (water and coffee) but not at both levels of gender.</p>
+<div class="figure" style="text-align: center"><span id="fig:F4-designfig2"></span>
+<img src="images/design_ch4_2.png" alt="Data from a single group of subjects (S) divided according to a single grouping factor A." width="100%" />
+<p class="caption">
+Figure 4.4: Data from a single group of subjects (S) divided according to a single grouping factor A.
+</p>
+</div>
+<p>Our models can include any number of factors, and these can be <em>crossed</em> or <em>nested</em>. When two factors are crossed, this means that all levels of a factor appear at all levels of another factor. This is easiest to conceive of for participants (remember ‘participant’ is just factor!). Participants are ‘crossed’ with a factor when these are tested at all levels of a factor. So, a factor that varies within-subject is crossed with subjects.</p>
+<p>When one or more levels of a factor cannot be observed at all levels of another factor, then these are no longer crossed. When levels of one factor appear exclusively at specific levels of the other factor they are said to be <em>nested</em>. So, when different subsets of participants appear at different levels of a factor, the factor is crossed with subjects.</p>
+<p>In the images above, all of the examples cross <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. What would it look like for these factors to not be crossed? Well, one of the ’cells (boxes) would be completely missing observations. If this were to happen, we would lose the ability to make comparisons across groups involving the values in that cell.</p>
+<p>Designs where all the factors are crossed are sometimes called ‘factorial’ or ‘orthogonal’ designs. The name ‘orthogonal’ is particularly telling. It means ‘at right angles, perpendicular’ (from the greek stems “ortho-”, meaning straight, right, and “-gon-”, meaning side or angle). When you have orthogonal designs, that means that your ‘dimensions’ (i.e., factors) can be estimated independently.</p>
+<p>Consider what would have happened if you ran the coffee and reading time experiment and gave coffee only to women and water only to men. How would you know if the coffee is responsible for the difference or if it should be attributed to gender. What if you gave water and coffee to women but only water to men. This would allow you to test the “drink” effect with accuracy for women but not for men. Is it <em>necessary</em> that the results for women equal those of men? If so, why did we include gender as a predictor?</p>
+<p>The above example shows that if you want to be able to untangle the independent effects of gender and drink on reading time, you need to test all levels of gender at all levels of drink. In other words, estimating the independent effects of each factor, and the relationships between the factors, requires that factors be crossed so that the design is orthogonal.</p>
+<p>In addition, orthogonal designs allow us to ‘decompose’ the variation in our data into individual components. If orthogonality lets us estimate the individual effects of different factors, we can divide the variation in our observations into that which can be attributed to the different factors in our design. This simple but extremely powerful idea is called the analysis of variance, discussed in more detail in the following section.</p>
 <div id="description-of-the-model-3" class="section level3" number="4.3.1">
 <h3><span class="header-section-number">4.3.1</span> Description of the model</h3>
 <p>In the previous section, we acted like we just had four different groups with no internal structure. Of course, we know that our groups differ systematically from each other in meaningful ways. For example, we might have chosen to fit two separate models that looked like this:</p>
@@ -703,7 +713,7 @@ gender_{\mathrm{gender}} \sim t(3, 0, 100) \\
 <div class="figure"><span id="fig:F4-postpred1"></span>
 <img src="04_files/figure-html/F4-postpred1-1.png" alt="(left) Posterior predicted f0 for the model with speaker random effects. (right) Posterior predicted f0 for the model without speaker random effects" width="768" />
 <p class="caption">
-Figure 4.3: (left) Posterior predicted f0 for the model with speaker random effects. (right) Posterior predicted f0 for the model without speaker random effects
+Figure 4.5: (left) Posterior predicted f0 for the model with speaker random effects. (right) Posterior predicted f0 for the model without speaker random effects
 </p>
 </div>
 <p>The above plots are good for basic analysis, but it’s hard to get a good idea of the source of our problems using these plots. We can get a much better idea of how our model is performing by using an ‘interaction plot’.</p>
@@ -717,7 +727,7 @@ Figure 4.3: (left) Posterior predicted f0 for the model with speaker random effe
 <div class="figure"><span id="fig:F4-interactionplot"></span>
 <img src="04_files/figure-html/F4-interactionplot-1.png" alt="Plots showing different ways to consider our f0 data." width="768" />
 <p class="caption">
-Figure 4.4: Plots showing different ways to consider our f0 data.
+Figure 4.6: Plots showing different ways to consider our f0 data.
 </p>
 </div>
 <p>In the right panel above we see a two-way interaction plot. Interaction plots show you what are called the <a href="http://glimo.vub.ac.be/downloads/simpleeffect.htm">simple effects</a> of your predictors (sometimes also called the <em>simple main effects</em>). The simple effects are the ‘conditional probabilities’: the effects of your factor, conditional on the level of another factor. For example, the left plot shows the overall (marginal) effect for gender. The right plot also shows the effect for gender. However, it uses a blue line to show the effect for gender in adults (gender given adultness) and a green line to show the effect for children for children (gender given childness). As a result, we can consider the effects of gender <em>conditioned</em> on adultness, and see how these might differ.</p>
@@ -748,7 +758,7 @@ Figure 4.4: Plots showing different ways to consider our f0 data.
 <div class="figure"><span id="fig:interactionplot3"></span>
 <img src="04_files/figure-html/interactionplot3-1.png" alt="Interaction plots showing comparing our f0 data to different posterior predictions, with and without RE (random effects)." width="768" />
 <p class="caption">
-Figure 4.5: Interaction plots showing comparing our f0 data to different posterior predictions, with and without RE (random effects).
+Figure 4.7: Interaction plots showing comparing our f0 data to different posterior predictions, with and without RE (random effects).
 </p>
 </div>
 </div>
@@ -817,14 +827,14 @@ adult:gender \sim t(3, 0, 100) \\
 <p>Recovering the predicted group means based on the coefficient values is straightforward, but a bit tedious: we must now either add or subtract the value of the interaction term (<code>adult1:gender1</code>) from each group. We can easily determine which to do for this model because the sign on the interaction term is the product of the signs on the relevant ‘main effects’ terms.</p>
 <p>Before doing this however, we need to talk about what <code>adult1:gender1</code> means. This can be read aloud as “the effect of <code>adult1</code> given (conditional on) <code>gender1</code>”. If we wanted to find the simple effect for being an adult (<code>adult1</code>) given femaleness (<code>gender1</code>) we should add the main effect for <code>adult1</code> to the conditional effect for <code>adult1</code> given <code>gender1</code> as in <code>adult1 + adult1:gender1</code>. In other words, the expected pitch for adults that are female considers the effects for adultness, butl also the unique effect that adultness has for female speakers.</p>
 <p>Importantly, <code>adult1:gender1</code> has the same value as <code>gender1:adult1</code> <em>would have if it existed</em>, but remember that is does not. This means that to find the simple effect of <code>gender1</code> given <code>adult1</code>, we also have to carry out an operation like <code>gender1 + adult1:gender1</code>. This is because, mathematically, this is equivalent to combining <code>gender1 + gender1:adult1</code> since <code>adult1:gender1</code> must equal <code>gender1:adult1</code>.</p>
-<p>Figure <a href="comparing-many-groups.html#fig:F4-interactionfig">4.6</a> presents an example of how our interaction plot can be built up from the components in our fixed effects above, and is very useful for understanding the geometry of main effects and interactions. In (a) we see that the intercept lifts up a line from 0 to the level of the overall mean f0 of 206 Hz. Then the effect for <code>adult1</code> (adult, -30 Hz) and <code>-adult1</code> (children, -(-30 Hz)) are added to this value, causing the separation between the lines indicating a ‘main effect’ for adultness. Notice that the lines are parallel, and also parallel to the x-axis. This is because we have not added either an effect for gender (indicated along the x axis), or an interaction between gender an adultness.</p>
+<p>Figure <a href="comparing-many-groups.html#fig:F4-interactionfig">4.8</a> presents an example of how our interaction plot can be built up from the components in our fixed effects above, and is very useful for understanding the geometry of main effects and interactions. In (a) we see that the intercept lifts up a line from 0 to the level of the overall mean f0 of 206 Hz. Then the effect for <code>adult1</code> (adult, -30 Hz) and <code>-adult1</code> (children, -(-30 Hz)) are added to this value, causing the separation between the lines indicating a ‘main effect’ for adultness. Notice that the lines are parallel, and also parallel to the x-axis. This is because we have not added either an effect for gender (indicated along the x axis), or an interaction between gender an adultness.</p>
 <p>In (b) we see the addition of the gender effect: <code>gender1</code> (female, 22 Hz), and <code>-gender1</code> (male, -22 Hz). Notice that the effect is added to one point on the x axis and subtracted to the other point in the x axis. The result is a slope, and the same slope for both lines (i.e. no interaction yet). Panel (c) shows the addition of all of the effects shown in the top row, and the results of a model that includes both main effects both no interaction.</p>
 <p>In (e) we add the gender interaction <code>adult1:gender1</code>, which was 21 Hz. Notice that the interaction effect has different when added to the same line, and also given a certain x axis position across lines. There is an obvious reason for why this <em>must</em> be the case, and why we only get one interaction term. Focus on the blue line in (e) and its average value, which represents the mean f0 produced by children in our sample. Whatever this average value, it is fixed for this data and <em>cannot</em> change. So, when we add <code>adult1:gender1</code> to the left end of the blue line, we must therefore subtract the same amount to the right end. Failure to do this would cause the blue line to <em>move up along the y axis</em>. This would mean the average f0 of children went up, which is not possible for this fixed set of data. Instead, the interactions can only make the blue line spin like a propeller around its fixed average value.</p>
 <p>Although it is a little harder to visualize with the way the interaction plots below are set up, the same sort of constraints mean that the interaction terms in the same x-axis location must also equal but have opposite signs. As a result, we can get only a single independent interaction term when we combine two factors with two levels each!</p>
 <div class="figure"><span id="fig:F4-interactionfig"></span>
 <img src="images/interactionplot.png" alt="An interaction plot built up from its individual components." width="100%" />
 <p class="caption">
-Figure 4.6: An interaction plot built up from its individual components.
+Figure 4.8: An interaction plot built up from its individual components.
 </p>
 </div>
 <p>Below, we use the <code>hypothesis</code> function provided in <code>brms</code> to reconstruct expected group means given the fixed effects above. The fifth hypothesis we are testing below is the simplest to understand, so we will start there. This hypothesis asks whether the sum of the <code>Intercept</code>, <code>adult1</code> (the effect for adults), <code>gender1</code> (the effect for femaleness), and <code>adult1:gender1</code> (the effect for adults given femaleness). Because of the specific combination of parameters values we combined, this results in the comparison of the ‘girl’ mean f0 to zero.</p>
@@ -899,7 +909,7 @@ Figure 4.6: An interaction plot built up from its individual components.
 <div class="figure"><span id="fig:interactionplot2"></span>
 <img src="04_files/figure-html/interactionplot2-1.png" alt="Interaction plots showing comparing our f0 data to posterior predictions, with and without interaction terms (neither contains Random Effects)." width="768" />
 <p class="caption">
-Figure 4.7: Interaction plots showing comparing our f0 data to posterior predictions, with and without interaction terms (neither contains Random Effects).
+Figure 4.9: Interaction plots showing comparing our f0 data to posterior predictions, with and without interaction terms (neither contains Random Effects).
 </p>
 </div>
 <p>For the first time, we have a model that really does a reasonably-good job of representing the information in our data. The model can capture the gender-dependent nature of age-based f0 differences, and separately estimates between group variation and between group variation.</p>
@@ -924,7 +934,7 @@ The standard information provided in the output of <code>brm</code> model summar
 <div class="figure"><span id="fig:brmsplot"></span>
 <img src="04_files/figure-html/brmsplot-1.png" alt="Horizontal and vertical plots of our fixed effects. Points indicate posterior means and lines indicate span of 95% credible intervals of the posterior distribution of the parameter." width="768" />
 <p class="caption">
-Figure 4.8: Horizontal and vertical plots of our fixed effects. Points indicate posterior means and lines indicate span of 95% credible intervals of the posterior distribution of the parameter.
+Figure 4.10: Horizontal and vertical plots of our fixed effects. Points indicate posterior means and lines indicate span of 95% credible intervals of the posterior distribution of the parameter.
 </p>
 </div>
 <p>Although these plots help to effectively communicate information about your model parameters, representations of the data such as the interaction plots above are also crucial to help the reader understand the patterns in your data.</p>
