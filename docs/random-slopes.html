@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-07-15" />
+<meta name="date" content="2021-07-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -310,7 +310,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5.3" data-path="random-slopes.html"><a href="random-slopes.html#the-independence-of-continuous-predictors"><i class="fa fa-check"></i><b>6.5.3</b> The independence of continuous predictors</a></li>
 </ul></li>
 <li class="chapter" data-level="6.6" data-path="random-slopes.html"><a href="random-slopes.html#answering-our-research-questions-1"><i class="fa fa-check"></i><b>6.6</b> Answering our research questions</a></li>
-<li class="chapter" data-level="6.7" data-path="random-slopes.html"><a href="random-slopes.html#lmer-corner"><i class="fa fa-check"></i><b>6.7</b> Lmer corner</a></li>
+<li class="chapter" data-level="6.7" data-path="random-slopes.html"><a href="random-slopes.html#frequentist-corner-3"><i class="fa fa-check"></i><b>6.7</b> Frequentist corner</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="random-slopes.html"><a href="random-slopes.html#bayesian-multilevel-modesl-vs.-lmer-3"><i class="fa fa-check"></i><b>6.7.1</b> Bayesian multilevel modesl vs. lmer</a></li>
+</ul></li>
 <li class="chapter" data-level="6.8" data-path="random-slopes.html"><a href="random-slopes.html#exercises-5"><i class="fa fa-check"></i><b>6.8</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="plot-code.html"><a href="plot-code.html"><i class="fa fa-check"></i><b>7</b> Plot Code</a></li>
@@ -336,11 +339,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="random-slopes" class="section level1" number="6">
 <h1><span class="header-section-number">Chapter 6</span> Random slopes</h1>
-<p>To this point we’ve been fitting realistic, but relatively simple models. In this chapter we’re going to build models that are more similar to the sorts that appear in published articles (i.e. more complicated). Fortunately, we’ve already discussed all of the component parts that make up our models. We’ll see that more complicated models are just made up of many smaller components, all working together.</p>
+<p>To this point we’ve been fitting realistic, but relatively simple models. In this chapter we’re going to learn the last model component we need to build models that are more similar to the sorts that appear in published articles (i.e. more complicated). Fortunately, we’ve already discussed all of the component parts that make up our models. We’ll see that more complicated models are just made up of many smaller components, all working together.</p>
 <div id="data-and-research-questions-5" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Data and research questions</h2>
 <p>In this chapter we’re going to flip the dependent and independent variables from last chapter. We’re going to consider variation in perceived height as a function of f0 (and other predictors).</p>
-<p>Our data consists of the results of a listening experiment carried out using the Hillenbrand et al. data. Ten listeners heard productions of ‘aw’ and ‘iy’ produced by all 139 speakers in the dataset. The stimuli consisted of /hVd/ words presented at random (n = 278). For each trial, listeners reported the height of the speaker (in feet and inches) and guessed whether the speaker was a boy, girl, man or woman.</p>
+<p>Our data consists of the results of a listening experiment carried out using the Hillenbrand et al. data. As described in the previous chapter, ten listeners heard productions of ‘hod’ and ‘heed’ produced by all 139 speakers in the dataset, presented at random. For each trial, listeners reported the height of the speaker (in feet and inches) and guessed whether the speaker was a boy, girl, man or woman.</p>
 <div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="random-slopes.html#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (brms)</span>
 <span id="cb134-2"><a href="random-slopes.html#cb134-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span> (<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&quot;contr.sum&quot;</span>,<span class="st">&quot;cont.sum&quot;</span>))</span>
 <span id="cb134-3"><a href="random-slopes.html#cb134-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -575,8 +578,8 @@ Figure 6.6: Distribution of perceived height responses as a function of f0 for a
 <p>The main difference between treating our random coefficients as a single variable rather than two variables is that when we do this, we also estimate the correlation between them. The easiest way to imagine this is by drawing a bivariate (2-dimensional) normal variable and plotting it. This is what I’ve done below, with simulated intercept and slope parameters drawn at random from a multivariate normal distribution.</p>
 <p>In the left column below I compare three bivariate normal variables along the two dimensions. In the absence of any correlation between variables, a plot of this distribution will be <em>spherical</em> (or circular in 2 dimensions). When there is a correlation between the two dimensions, the distribution starts looking more and more like a straight line. When there is a negative correlation, the line just points down rather than up.</p>
 <p>Note the the marginal (independent) distributions of the variables (the left and right histograms) don’t change as the correlation changes. The correlation is a reflection of the <em>joint</em> variation in the two variables and will not necessarily be evident in the marginal distributions of each variable.</p>
-<div class="figure"><span id="fig:unnamed-chunk-12"></span>
-<img src="06_files/figure-html/unnamed-chunk-12-1.png" alt="10,000 bivatiate normal draws of simulated intercept and slope coefficients from distributions with a mean of 0 and a standard deviation of 1. The correlation of the variables is 0 (top), 0.5 (middle) and 0.9 (bottom). The left column presents both variables together, the middle column presents intercepts and the right column presents slopes. " width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-13"></span>
+<img src="06_files/figure-html/unnamed-chunk-13-1.png" alt="10,000 bivatiate normal draws of simulated intercept and slope coefficients from distributions with a mean of 0 and a standard deviation of 1. The correlation of the variables is 0 (top), 0.5 (middle) and 0.9 (bottom). The left column presents both variables together, the middle column presents intercepts and the right column presents slopes. " width="672" />
 <p class="caption">
 Figure 6.7: 10,000 bivatiate normal draws of simulated intercept and slope coefficients from distributions with a mean of 0 and a standard deviation of 1. The correlation of the variables is 0 (top), 0.5 (middle) and 0.9 (bottom). The left column presents both variables together, the middle column presents intercepts and the right column presents slopes.
 </p>
@@ -955,8 +958,10 @@ Figure 6.13: Speaker random intercepts and credible intervals colored by group (
 <p>Remember, these ‘random’ effects are being modeled as being normally distributed with a mean of 0. The distribution of random effects clearly shows a systematic pattern according to speaker group. In general, boys and girls are perceived as smaller than expected given their f0, men are perceived as taller than expected given their f0, and women are perceived as being about as tall as expected given their f0.</p>
 <p>The speaker intercepts above show a remarkable amount of consistency within group. Keep in mind that listeners were not told the group the speaker belonged to, so either 1) listener guessed speaker group and used this to guess size, or 2) there are other acoustic cues that vary systematically between groups, and listeners used this to estimate size. In either case, this suggests that our model need to change in order to really capture how listeners are arriving at size judgments for these speakers.</p>
 </div>
-<div id="lmer-corner" class="section level2" number="6.7">
-<h2><span class="header-section-number">6.7</span> Lmer corner</h2>
+<div id="frequentist-corner-3" class="section level2" number="6.7">
+<h2><span class="header-section-number">6.7</span> Frequentist corner</h2>
+<div id="bayesian-multilevel-modesl-vs.-lmer-3" class="section level3" number="6.7.1">
+<h3><span class="header-section-number">6.7.1</span> Bayesian multilevel modesl vs. lmer</h3>
 <p>We can fit a ‘random slopes’ model with <code>lmer</code> using the code below:</p>
 <div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="random-slopes.html#cb154-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">=</span> lme4<span class="sc">::</span><span class="fu">lmer</span> (pheight <span class="sc">~</span> g0_c <span class="sc">+</span>  (g0_c<span class="sc">|</span>subj) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>speaker), <span class="at">data =</span> h95)</span></code></pre></div>
 <p>Below I recreate the middle part of the <code>lmer</code> model print statement, except I added numbers to some rows. This is because <code>lmer</code> and <code>brm</code> present much of the same information but with different labels and in a different order.</p>
@@ -1060,6 +1065,7 @@ Figure 6.15: Speaker random intercepts and credible intervals estimated using br
 ## g1_c:adult1  0.286 -0.034  0.176  0.071
 ## optimizer (nloptwrap) convergence code: 0 (OK)
 ## boundary (singular) fit: see ?isSingular</code></pre>
+</div>
 </div>
 <div id="exercises-5" class="section level2" number="6.8">
 <h2><span class="header-section-number">6.8</span> Exercises</h2>
