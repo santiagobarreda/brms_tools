@@ -115,7 +115,7 @@
 
 \title{Bayesian multilevel models in R: A conceptual and practical introduction for linguists}
 \author{Santiago Bareda}
-\date{2021-07-15}
+\date{2021-07-16}
 
 \begin{document}
 \maketitle
@@ -132,11 +132,21 @@ This book is currently under development and it may contain small errors, incons
 
 Repeated measures data is extremely common in linguistics, and the norm in many linguistic subfields (phonetics, variationist sociolinguistics, psycholinguistics, etc.). Bayesian multilevel models are perfectly suited for the analysis of repeated-measures data, and offer linguists flexibility and many exciting opportunities. Because of this, there is tremendous interest in using Bayesian multilevel models in linguistics despite the lack of available resources. This book is an introduction to the analysis of repeated-measures data using Bayesian multilevel regression models, specifically aimed at linguists with no background in statistics.
 
-This book is intended for an introductory statistics class for senior undergraduate or graduate students, and for faculty members and other researchers to use as a self-study guide. This book is aimed at 1) students who are looking for a conceptual framework to help understand multilevel Bayesian models, but not necessarily looking for `too-much' mathematical detail, and 2) researchers who are already experienced with frequentist modelling and are looking to `translate' their skillset over to a Bayesian framework.
+This book is intended for an introductory statistics class for senior undergraduate or graduate students, and for faculty members and other researchers to use as a self-study guide. This book is aimed at 1) students who are looking for a conceptual framework to help understand multilevel Bayesian models, but not necessarily looking for `too-much' mathematical detail, and 2) researchers who are already experienced with frequentist modeling and are looking to `translate' their skillset over to a Bayesian framework.
 
-To learn multilevel models, a student is usually first expected to learn `traditional' statistical approaches and designs, such as t-tests, ANOVAS, and ordinary least-squares (OLS) regression. After this foundation is laid, the student can then move to the sorts of models they can actually use for their work, mainly multilevel models that can handle repeated-measures data. This approach has several drawbacks: it takes a long time (which graduate students don't have), spends substantial energy on statistical approaches that most linguists will rarely if ever use in their work (e.g., OLS regression), and front-loads difficult and abstract concepts (e.g., degrees of freedom, p-values) before students can start working with data they really understand. As a result, students may become discouraged, may become convinced that they're `not good at math', and may not realize how much they already intuitively understand about statistics.
+Each chapter of the book presents a different regression model design concept:
 
-This book presents an introduction to modelling repeated-measures data using Bayesian multilevel regression models, and building bespoke Bayesian models that are equivalent to, and better than, their `off the shelf' frequentist equivalents using the `brms' package in R. This book will provide a conceptual introduction by adopting an accessible narrative style that introduces mathematical and modelling concepts in plain English. A focus will be placed on understanding concepts and the visual/geometric consequences of different regression model structures and changes in coefficients, leaving much of the statistical foundation and mathematical rigor to other books. Chapters are organized in terms of regression model components, and how these relate to experimental designs, statistical concepts, and the geometry of figures based on the data and model coefficients. We will then cover how to use these components to `build' models that suit your needs. In addition, each chapter feature the fully worked analysis of repeated-measures linguistic data resulting from either perceptual experiments or speech production experiments involving human subjects.
+Chapter 1: Basic introduction to regression models and statistics
+
+Chapter 2: Introduction to Bayesian multilevel models
+
+Chapter 3: Categorical predictors
+
+Chapter 4: Combining multiple categorical predictors (interactions)
+
+Chapter 5: Continuous predictors, and how these interact with categorical predictors
+
+Chapter 6: Random effects
 
 If you have any comments or suggestions please let me know, and if you find any errors definitely let me know!
 
@@ -801,17 +811,18 @@ The previous chapter was mostly introductory, it introduced some basic terminolo
 \hypertarget{data-and-research-questions-1}{%
 \section{Data and research questions}\label{data-and-research-questions-1}}
 
-The models discussed in this chapter can be used for data that comes from a single group of subjects. By a `single' group I just mean that you are not trying to compare things here, you are just trying to understand the average values of some variable for a single group of observations. The data:
+The models discussed in this chapter can be used for data that comes from a single group of subjects. By a `single' group I just mean that you are not trying to compare things here, you are just trying to understand the average values of some variable for a single group of observations. The figure below is a visual representation of the structure of this data. It's not really needed for data this simple, but we will be looking at these more later so we will talk about them now. Below, subjects are placed in a single group (the box). This group is labeled \(A_1\) and each subject gets a unique subscript. The group label is just a stand-in for however you want to label your group of participants or observations.
 
-\begin{itemize}
-\tightlist
-\item
-  comes from from one speaker/subject or many speakers/subjects.
-\item
-  each speaker/subject can contribute multiple data points, and the number does not need to be balanced across subjects.
-\end{itemize}
+\begin{figure}
 
-The `traditional' design equivalent to these models is a one-sample t-test, although the Bayesian approach has many advantages (as discussed at the end of the chapter).
+{\centering \includegraphics[width=0.5\linewidth]{./images/design_ch2} 
+
+}
+
+\caption{Data from a single group of subjects (S) put into a single group Labelled (A).}\label{fig:F2-interactionfig}
+\end{figure}
+
+To analyze this data in R, you will need it to be in a dataframe. One column should contain observations, one on each row, and another column should contain information about the source of this data. Usually, for linguists the `source' is a person, or perhaps it is a book or some other written source of the analysis is of a corpora or something like that.
 
 We're going to keep analyzing the female f0 data from the Hillenbrand et al.~(1995) dataset, discussed in chapter 1. These are 576 observations, 12 production collected from each of 48 women in the sample. So, our data comes from multiple speakers and we has multiple observations from each speaker, and the women are in the single group ``adult women form Michigan''. Of course, we could divide these women into any number of smaller groups based on hair color, handedness, and so on. These women are considered to be in a single group because our model, our \emph{conceptualization} of these speakers, places them in a single group.
 
@@ -1985,53 +1996,47 @@ Now the interval provided closely resembles that of our final, \texttt{multileve
 \hypertarget{comparing-two-groups-of-observations}{%
 \chapter{Comparing two groups of observations}\label{comparing-two-groups-of-observations}}
 
-In the previous chapter we focused on investigating values from a single group, which is basically the simplest kind data you can deal with. In this chapter we're going to compare data from two groups to see how similar/different they really are. The models we will discuss are similar to two-sample t-tests in the types of research questions they can help investigate (as will be discussed at the end of the chapter).
+In the previous chapter we focused on investigating values from a single group, which is basically the simplest kind of data you can deal with. In this chapter we will ask: Are two groups of observations different or are they the same? This kind of question comes very often in linguistic research. For example in phonetics, researchers ask questions like, have these vowels merged in this dialect (are these two things different)? Does visual information speed up speech perception or not (are two sets of reaction times the same)? The models we will discuss to investigate these questions are similar to t-tests in the types of research questions they can help investigate (as will be discussed at the end of the chapter).
 
 \hypertarget{data-and-research-questions-2}{%
 \section{Data and research questions}\label{data-and-research-questions-2}}
 
-The models discussed in this chapter can be used for data that compares observations across two groups. We are using the term `groups' loosely here. The designs in this chapter are appropriate for data from:
+The models discussed in this chapter can be used for data that compares observations across two groups. The figure below is a visual representation of three ways that this data can be structured: between-subjects, within-subjects, and an unnamed but possible configuration. We now have two groups that differ according to some category label. This category label is your \emph{predictor}, and we will refer to it as \(A\).
 
-\begin{itemize}
-\item
-  two groups of speakers/listeners that are grouped in different ways because they differ in some characteristic (e.g., gender), or in some experimental condition. Different speakers are in each group.
-\item
-  the same speakers/listeners are tested in two different experimental condition, with stimuli that vary in two groups, or something of the sort.
-\item
-  each speaker/subject can contribute multiple data points, and the number does not need to be balanced across subjects. Also speakers can be missing from one of the conditions (i.e., unbalanced data is ok).
-\end{itemize}
+Categorical predictors are called \emph{factors}. Factors can take on a limited number of values, called \emph{levels}. For example if your factor is ``word category'' you factor levels may be ``verb'' and ``noun'' (among others). If your factor is ``first language'' your levels may be ``Mandarin'' and ``Hindi''. The factors and factor levels are selected (and named) arbitrarily by you. In the image below, the groups are labelled \(A_1\) and \(A_2\). The subjects (S) in the groups are given unique numeric labels.
 
-To analyze data like this, you should have it in a datafram with one row for each observation. Then, one column should contain the dependent variable, the variable whose variation you're trying to predict. Another column should contain information about which group each observation belongs to. For the models later in the chapter, you will also need a column that indicates which speaker/listener/participant provided the datapoint.
+We can consider the designs below in terms of a hypothetical experiment. For example, let's imagine an experiment about whether caffeine makes people talk faster. Subjects are asked to drink either a cup of water or a cup of coffee. After a 15-minute wait they are asked to read a passage aloud and the duration of the reading is measured. In this case, I might call the factor ``drink'' and have two levels ``water'' (\(A_1\)), and ``coffee'' (\(A_1\)).
+
+In the first example we see what is called a \emph{within-subjects} design. This is because the grouping factor (\(A\)) varies \emph{within} subjects since each subject appear at both levels of \(A\). This design would occur if we measured all subjects at both levels, i.e., we first ask people to read the passage after drinking water, then, we ask them to do the same after drinking coffee.
+
+Within-subjects designs usually provide more reliable analyses because they allow you to measure the effect for each person. This lets you `average out' random differences between people. For example, what if you put an extremely fast talker in the coffee group. You may think the coffee had a huge effect but they may just speak fast. If you had also observed them in the water group you would know that.
+
+Although within-subject designs are in general preferable, they are not always possible or practical. For example, a speaker cannot be assigned to multiple first language groups since they have only one actual first language. Sometimes, practical considerations cause problems. For example, for our hypothetical experiment we can't give people coffee first and then water because then the coffee would still affect the water round. However, always asking them to do the water round second may make this faster due to rehearsal effects, so it is not a perfect solition.
+
+In the second example we see what is called a \emph{between-subjects} design. This is because the grouping Factor (\(A\)) varies \emph{between} subjects since each subject appear at only one level of \(A\). This design would occur if we only measured subjects in either the water condition or the caffeine condition, but not both.
+
+Finally, we have a design that doesn't really have a name (labelled ?). This would arise if you tested some people in both conditions, and other people in only one condition. This is not really `proper' design and cannot be analyzed with traditional approaches like t-tests and ANOVAs. Although there is no particular reason that you should design an experiment like this, you can fit data with this structure using Bayesian models.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{./images/design_ch3} 
+
+}
+
+\caption{Data from two groups of subjects (S), divided based on the factor A.}\label{fig:F3-interactionfig}
+\end{figure}
+
+We should discuss the logic of making `groups' to test for differences between them, and for the effect of the grouping variable. Consider the results of the experiment investigating caffeine and reading times outlined above. We can define a possible random variable called ``the amount of time it takes people to read this passage of text''. This variable has a range of possible values, and some unknown mean value we can call \(\mu_{water}\). There is potentially \emph{another} random variable called ``the amount of time it takes people to read this passage of text after drinking caffeine''. This variable also has a range of possible values, and some unknown mean value we can call \(\mu_{caffeine}\).
+
+When we design an experiment to test for differences between groups, what we are really saying is: are these observations coming from one random variable or from two? In other words, is ``the amount of time it takes people to read this passage of text'' \emph{the same thing} as ``the amount of time it takes people to read this passage of text after drinking caffeine''? Usually, we don't really focus on if the groups are identical in absolutely all respects and instead only really care about whether \(\mu_{water} = \mu_{caffeine}\).If so, then we may conclude that our two groups of observations are likely to represent the same variable, the same group, and the same population.
+
+Let's consider what happens if ``the amount of time it takes people to read this passage of text'' is \emph{not} the same thing as ``the amount of time it takes people to read this passage of text after drinking caffeine''. Some direct evidence of this would be finding that \(\mu_{water} ≠ \mu_{caffeine}\). If the groups of speakers were randomly assigned to conditions, there is no particular reason to expect that their reading times would be different \emph{in the absence} of the caffeine. Therefore, we may deduce that it is the caffeine (the grouping variable \(A\)) that has had the \emph{effect} of causing the increase in speaking rate.
+
+This same logic applies in situations where we do not randomly assign subjects to groups, as long as we are careful in creating equivalent groups. Consider the same experiment about speaking rate carried out with groups based on speaker gender rather than drinking coffee. In this case the question is ``is the amount of time it takes men to read this passage of text the same amount of time that it takes women to read this passage of text''. If the speakers are generally similar in important characteristics (e.g., dialect, age, cultural background) \emph{apart} from gender, then any group differences may be attributable to the \emph{effect} for gender on speaking rate.
+
+To analyze data representing data from two groups, you should have it in a dataframe with one row for each observation. One column should contain the dependent variable, the variable whose variation you're trying to predict. Another column should contain information about which group each observation belongs to. In general, you should also always have a column that indicates which speaker/listener/participant provided the datapoint.
 
 We're going to use the Hillenbrand et al.~f0 data we used in the other chapters. Previously we only considered the productions of adult females from Michigan, this time we're going to compare the f0 measurements for adult females to those of girls between 10-12 years of age.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# load brms}
-\FunctionTok{library}\NormalTok{ (brms)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Loading required package: Rcpp
-\end{verbatim}
-
-\begin{verbatim}
-## Loading 'brms' package (version 2.15.0). Useful instructions
-## can be found by typing help('brms'). A more detailed introduction
-## to the package is available through vignette('brms_overview').
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'brms'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:stats':
-## 
-##     ar
-\end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2043,11 +2048,7 @@ We're going to use the Hillenbrand et al.~f0 data we used in the other chapters.
 
 To be perfectly honest you won't really use single-group designs very much in your work. Research questions in linguistics most often require linguists to compare at least two conditions or groups of data. In a sense, even a single-group question carries an implicit comparison within it. Caring that the value of some variable is one value sort of presupposes that there is some other potential values of interest that is it not. What I mean by this is that simply saying ``the mean f0 produced by adult women from Michigan is 220 Hz'' indicates that the mean is \emph{not} 200 Hz, and it is \emph{not} 240 Hz, and thereby makes at least an implicit comparison.
 
-In this chapter we will directly ask: Are two groups of observations different or are they the same? This kind of question comes up all the time in linguistic research. For example in phonetics, researchers ask questions like, have these vowels merged in this dialect (are these two things different)? Does visual information speed up speech perception or not (are two sets of reaction times the same)?
-
-A good way to isolate a single difference is to create groups that differ primarily according to the characteristic you are interested in testing, but are otherwise the same `on average'. For the reaction-time example above, I might present the same listeners with very similar words in the same conditions, but where half of the words are presented with and half are presented without visual information. Any difference in reaction times between the groups should reflect the advantage provided by visual information. The question would then be, are reaction times with visual information \emph{the same thing} as reaction times without visual information? Are these two sets of observations groups sampled from the same population? Or is the set of observations ``reaction times for speech recognized \emph{with} visual information'' a different set of things than ``reaction times for speech recognized \emph{without} visual information''?
-
-In our data we have male and female talkers of the same dialect, who differ primarily in terms of age. Basically, these groups differ mostly in terms of `adultness', and so we can use the characteristics of these groups to investigate the effect of `adultness' on average f0. Below I present boxplots that highlight the effect of adultness on f0, first overall and then divided by speaker gender.
+In our data we have male and female talkers of the same dialect, who differ primarily in terms of age. Basically, these groups differ mostly in terms of `adultness' and should be expected to be about the same apart from that. As a result, we can use the characteristics of these groups to investigate the effect of `adultness' on average f0. Below I present boxplots that highlight the effect of adultness on f0, first overall and then divided by speaker gender.
 
 \begin{figure}
 \centering
@@ -2939,23 +2940,29 @@ Importantly however, the values we get from both approaches are nearly identical
 \hypertarget{comparing-many-groups}{%
 \chapter{Comparing many groups}\label{comparing-many-groups}}
 
-Last chapter we talked about comparing two groups. Although the comparison of two groups is very simple, it also comes up very often: more complicated problems are often broken down into several two-group questions. However, most real-world research designs don't usually \emph{begin} as two-group questions. In this chapter, we're going to talk about the comparison of multiple groups of observations/speakers. The models we will discuss are similar to one-way ANOVAs in the types of research questions they can help investigate.
+Last chapter we talked about comparing two groups. Although the comparison of two groups is very simple, it also comes up often. In addition, more complicated problems are often broken down into several two-group questions. However, most real-world research designs don't usually \emph{begin} as two-group questions. In this chapter, we're going to talk about the comparison of multiple groups of observations/speakers. The models we will discuss are similar to one-way ANOVAs in the types of research questions they can help investigate.
 
 \hypertarget{data-and-research-questions-3}{%
 \section{Data and research questions}\label{data-and-research-questions-3}}
 
-First, we are going to discuss models that compare observations across any number of groups. Again, we're using the term `groups' loosely here. These designs are appropriate for data from:
+First, we're going to discuss models that compare observations across any number of groups (levels) for a single factor. These designs have just one predictor factor but it can have any number of levels. Although it is not very common to have a design that \emph{only} consists of a multi-group comparison, the inclusion of multi-group comparisons is ubiquitous in linguistics. Examples of predictors with multiple levels are vowel phonemes, language, word classes, and ages. In addition, the manipulations linguists carry out in their experiments can vary across more than two groups.
 
-\begin{itemize}
-\item
-  groups of speakers/listeners that are grouped in different ways because they differ in some characteristic (e.g., first language), or in some experimental condition. Different speakers are in each group.
-\item
-  the same speakers/listeners are tested in multiple different experimental condition, with stimuli that vary in multiple groups, or something of the sort.
-\item
-  each speaker/subject can contribute multiple data points, and the number does not need to be balanced across subjects. Also speakers can be missing from one of the conditions (i.e., unbalanced data is ok).
-\end{itemize}
+For example, consider the example of the experiment investigating coffee in reading speed. We can continue discussing the hypothetical example of the reading experiment presented in Chapter 3. Subjects are asked to drink either a cup of water or a cup of coffee. After a 15-minute wait they are asked to read a passage aloud and the duration of the reading is measured. We might have 3 coffee groups rather than one, and vary the `dosage' of coffee between groups. Although the dose of coffee can be measured numerically, we could still treat this as a factor called ``drink'' with levels ``water'', ``coffee100ml'', ``coffee200ml'', and ``coffee300ml''.
 
-To analyze data like this, you should have it in a datafram with one row for each observation. Then, one column should contain the dependent variable, the variable whose variation you're trying to predict. Another column should contain information about which group each observation belongs to.
+Let's imagine that subjects were also divided into groups of male and female speakers. This design results in four different groups (2x2). These groups have an internal structure that our model does not recognize. What I mean by this is that half your groups are caffeine groups, but your model does not know this, and as a result it does not directly estimate any effects related to this. However, we will ignore this issue for now.
+
+In the first example we see the \emph{within-subjects} version of this design where each subject is tested at each level of \(A\). Next, we see the \emph{between-subjects} version of the design. Clearly, this is just a simple extrapolation of the sorts of designs presented in Chapter 2.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{./images/design_ch4_1} 
+
+}
+
+\caption{Data from a single group of subjects (S) divided according to a single grouping factor A.}\label{fig:F4-designfig}
+\end{figure}
+
+To analyze data like this, you should have it in a dataframe with one row for each observation. Then, one column should contain the dependent variable, the variable whose variation you're trying to predict. Another column should contain information about which group each observation belongs to (the factor).
 
 We're going to keep working with the Hillenbrand et al.~data, that we have been discussing in every chapter to this point. This time we're going to work with all four groups of speakers: \texttt{b} (boys), \texttt{g} (girls), \texttt{m} (men), and \texttt{w} (women).
 
@@ -3208,17 +3215,17 @@ We can see that the intercept is the average of the group means, and our coeffic
 
 \CommentTok{\# overall mean}
 \FunctionTok{mean}\NormalTok{ (means)}
-\DocumentationTok{\#\# [1] 206.5111}
+\DocumentationTok{\#\# [1] 206.51}
 
 \CommentTok{\# group means}
 \NormalTok{means}
-\DocumentationTok{\#\#        b        g        m        w }
-\DocumentationTok{\#\# 236.0741 238.3509 131.2185 220.4010}
+\DocumentationTok{\#\#      b      g      m      w }
+\DocumentationTok{\#\# 236.07 238.35 131.22 220.40}
 
 \CommentTok{\# centered means}
 \NormalTok{means }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{ (means)}
-\DocumentationTok{\#\#         b         g         m         w }
-\DocumentationTok{\#\#  29.56295  31.83975 {-}75.29261  13.88991}
+\DocumentationTok{\#\#       b       g       m       w }
+\DocumentationTok{\#\#  29.563  31.840 {-}75.293  13.890}
 
 \CommentTok{\# parameters = centered means}
 \NormalTok{brms}\SpecialCharTok{::}\FunctionTok{hypothesis}\NormalTok{ (model\_four\_groups, }
@@ -3227,12 +3234,12 @@ We can see that the intercept is the average of the group means, and our coeffic
                     \StringTok{"group2 = 0"}\NormalTok{,}
                     \StringTok{"group3 = 0"}\NormalTok{, }
                     \StringTok{"{-}(group1+group2+group3) = 0"}\NormalTok{))[[}\DecValTok{1}\NormalTok{]][,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}
-\DocumentationTok{\#\#                      Hypothesis  Estimate Est.Error   CI.Lower  CI.Upper}
-\DocumentationTok{\#\# 1               (Intercept) = 0 206.48607  1.928704 202.669676 210.21349}
-\DocumentationTok{\#\# 2                  (group1) = 0  29.53202  3.523919  22.783088  36.64507}
-\DocumentationTok{\#\# 3                  (group2) = 0  31.87791  3.976443  24.351030  39.68355}
-\DocumentationTok{\#\# 4                  (group3) = 0 {-}75.17590  2.903665 {-}80.888641 {-}69.61975}
-\DocumentationTok{\#\# 5 ({-}(group1+group2+group3)) = 0  13.76598  2.934586   7.923066  19.37857}
+\DocumentationTok{\#\#                      Hypothesis Estimate Est.Error CI.Lower CI.Upper}
+\DocumentationTok{\#\# 1               (Intercept) = 0  206.486    1.9287 202.6697  210.213}
+\DocumentationTok{\#\# 2                  (group1) = 0   29.532    3.5239  22.7831   36.645}
+\DocumentationTok{\#\# 3                  (group2) = 0   31.878    3.9764  24.3510   39.684}
+\DocumentationTok{\#\# 4                  (group3) = 0  {-}75.176    2.9037 {-}80.8886  {-}69.620}
+\DocumentationTok{\#\# 5 ({-}(group1+group2+group3)) = 0   13.766    2.9346   7.9231   19.379}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3241,8 +3248,8 @@ Whn you fit a more traditional model, you can't just compare any groups you want
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{brms}\SpecialCharTok{::}\FunctionTok{hypothesis}\NormalTok{ (model\_four\_groups, }\StringTok{"group1 {-} group2 = 0"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]][,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}
-\DocumentationTok{\#\#            Hypothesis  Estimate Est.Error  CI.Lower CI.Upper}
-\DocumentationTok{\#\# 1 (group1{-}group2) = 0 {-}2.345888  6.437511 {-}15.03817 10.28229}
+\DocumentationTok{\#\#            Hypothesis Estimate Est.Error CI.Lower CI.Upper}
+\DocumentationTok{\#\# 1 (group1{-}group2) = 0  {-}2.3459    6.4375  {-}15.038   10.282}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3251,24 +3258,34 @@ The result above suggests that the difference is very small (-2 Hz) and the 95\%
 \hypertarget{investigating-many-factors-simultaneously-analysis-of-variance}{%
 \section{Investigating many factors simultaneously: Analysis of Variance}\label{investigating-many-factors-simultaneously-analysis-of-variance}}
 
-Above, our model had a single `batch' of grops. Another way to look at it is that the model predicted variation along a single \emph{dimension}. We can categorize people along multiple dimensions simultaneously, and place them in more than one group at a time. So, a speaker may be an adult \emph{and} a woman, and not just and adult \emph{or} a women. This is because adultness and gender are independent dimensions and the value of one does not affect the value of the other.
+Above, our model had a single `batch' of groups. Another way to look at it is that the model predicted variation along a single \emph{dimension}. However, we can categorize people (or observations) along multiple dimensions simultaneously. So, a speaker may be an adult \emph{and} a woman, and not just and adult \emph{or} a women. This is because adultness and gender are independent dimensions and the value of one does not affect the value of the other.
 
-Our models can include any number of factors, and subjects can be \emph{crossed} with these factors, or nested between them. When two factors are crossed, this means that all levels of a factor appear at all levels of another factor. This is easiest to conceive of for participants (remember `participant' is just factor). Participants are `crossed' with a factor when these are tested at all levels of a factor. For example, we might test listeners on a lexical decision task for verbs and nouns. If we use word category as a predictor, then word category is crossed with subjects in our design.
+We can return to the example of the reading experiment presented above. Recall that we had four groups varying along two `dimensions': whether they drank coffee or water, and whether they were male or female. The figure below represents designs of this structure and shows three ways that these can be organized.
 
-Sometimes, factors cannot be crossed and must be \emph{nested}. For example, participants in an experiment cannot be tested as both adults and children because one person cannot be both at the same time. When one or more levels of a factor cannot be observed at all levels of another factor, then these are no longer crossed. Instead, since participants are only present in their one level (either child \textbf{or} adult), participant is said to be \emph{nested} within child. These distinctions are useful to understand conceptually but they do not much affect the structures of our model (from our perspective anyways!).
+The characteristics of \emph{within-subjects} and \emph{between-subjects} designs should be familiar by now. What is new is the `mixed' design. In a mixed design, one or more factors are between-subjects, and the others are within-subjects. In the example below, \(A\) is between-subjects but \(B\) is within-subjects. Actually, the caffeine experiment we have been discussing would have to be a mixed design: subjects can be tested at both levels of ``drink'' (water and coffee) but not at both levels of gender.
 
-The models discussed below can be used for data that compares observations across any number of factors, each with any number of levels. These designs are appropriate for data from:
+\begin{figure}
 
-\begin{itemize}
-\item
-  groups of speakers/listeners that are grouped in different ways because they differ in in one or more characteristics, or in one or more experimental conditions. Different speakers are in each group.
-\item
-  the same speakers/listeners are tested in multiple different experimental conditions that can be categorized in one or more ways, with stimuli that vary in multiple groups, or something of the sort.
-\item
-  each speaker/subject can contribute multiple data points, and the number does not need to be balanced across subjects. Also speakers can be missing from one of the conditions (i.e., unbalanced data is ok).
-\end{itemize}
+{\centering \includegraphics[width=1\linewidth]{./images/design_ch4_2} 
 
-To analyze data like this, you should have it in a dataframe with one row for each observation and one column for the dependent variable. However, your data should also now include another column for every other factor you wish to include in your model.
+}
+
+\caption{Data from a single group of subjects (S) divided according to a single grouping factor A.}\label{fig:F4-designfig2}
+\end{figure}
+
+Our models can include any number of factors, and these can be \emph{crossed} or \emph{nested}. When two factors are crossed, this means that all levels of a factor appear at all levels of another factor. This is easiest to conceive of for participants (remember `participant' is just factor!). Participants are `crossed' with a factor when these are tested at all levels of a factor. So, a factor that varies within-subject is crossed with subjects.
+
+When one or more levels of a factor cannot be observed at all levels of another factor, then these are no longer crossed. When levels of one factor appear exclusively at specific levels of the other factor they are said to be \emph{nested}. So, when different subsets of participants appear at different levels of a factor, the factor is crossed with subjects.
+
+In the images above, all of the examples cross \(A\) and \(B\). What would it look like for these factors to not be crossed? Well, one of the 'cells (boxes) would be completely missing observations. If this were to happen, we would lose the ability to make comparisons across groups involving the values in that cell.
+
+Designs where all the factors are crossed are sometimes called `factorial' or `orthogonal' designs. The name `orthogonal' is particularly telling. It means `at right angles, perpendicular' (from the greek stems ``ortho-'', meaning straight, right, and ``-gon-'', meaning side or angle). When you have orthogonal designs, that means that your `dimensions' (i.e., factors) can be estimated independently.
+
+Consider what would have happened if you ran the coffee and reading time experiment and gave coffee only to women and water only to men. How would you know if the coffee is responsible for the difference or if it should be attributed to gender. What if you gave water and coffee to women but only water to men. This would allow you to test the ``drink'' effect with accuracy for women but not for men. Is it \emph{necessary} that the results for women equal those of men? If so, why did we include gender as a predictor?
+
+The above example shows that if you want to be able to untangle the independent effects of gender and drink on reading time, you need to test all levels of gender at all levels of drink. In other words, estimating the independent effects of each factor, and the relationships between the factors, requires that factors be crossed so that the design is orthogonal.
+
+In addition, orthogonal designs allow us to `decompose' the variation in our data into individual components. If orthogonality lets us estimate the individual effects of different factors, we can divide the variation in our observations into that which can be attributed to the different factors in our design. This simple but extremely powerful idea is called the analysis of variance, discussed in more detail in the following section.
 
 \hypertarget{description-of-the-model-3}{%
 \subsection{Description of the model}\label{description-of-the-model-3}}
@@ -3364,10 +3381,10 @@ And we can inspect the model fixed effects:
 \begin{Highlighting}[]
 \CommentTok{\# inspect the fixed effects}
 \NormalTok{brms}\SpecialCharTok{::}\FunctionTok{fixef}\NormalTok{ (model\_both)}
-\DocumentationTok{\#\#            Estimate Est.Error      Q2.5     Q97.5}
-\DocumentationTok{\#\# Intercept 209.13407  2.660729 203.94751 214.37884}
-\DocumentationTok{\#\# adult1    {-}32.94761  2.731596 {-}38.37694 {-}27.65741}
-\DocumentationTok{\#\# gender1    30.49243  2.498048  25.49426  35.39410}
+\DocumentationTok{\#\#           Estimate Est.Error    Q2.5   Q97.5}
+\DocumentationTok{\#\# Intercept  209.134    2.6607 203.948 214.379}
+\DocumentationTok{\#\# adult1     {-}32.948    2.7316 {-}38.377 {-}27.657}
+\DocumentationTok{\#\# gender1     30.492    2.4980  25.494  35.394}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3383,19 +3400,19 @@ Below, we can see that the Intercept (209 Hz) is reasonably close to the mean of
 \NormalTok{means }\OtherTok{=} \FunctionTok{tapply}\NormalTok{ (h95}\SpecialCharTok{$}\NormalTok{f0, h95}\SpecialCharTok{$}\NormalTok{group, mean)}
 \CommentTok{\# overall mean in data }
 \FunctionTok{mean}\NormalTok{ (means)}
-\DocumentationTok{\#\# [1] 206.5111}
+\DocumentationTok{\#\# [1] 206.51}
 \CommentTok{\# group means}
 \NormalTok{means}
-\DocumentationTok{\#\#        b        g        m        w }
-\DocumentationTok{\#\# 236.0741 238.3509 131.2185 220.4010}
+\DocumentationTok{\#\#      b      g      m      w }
+\DocumentationTok{\#\# 236.07 238.35 131.22 220.40}
 \CommentTok{\# half the average adultness difference in data}
 \NormalTok{((means[}\StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{]}\SpecialCharTok{+}\NormalTok{means[}\StringTok{\textquotesingle{}g\textquotesingle{}}\NormalTok{])}\SpecialCharTok{/}\DecValTok{2} \SpecialCharTok{{-}}\NormalTok{ (means[}\StringTok{\textquotesingle{}m\textquotesingle{}}\NormalTok{]}\SpecialCharTok{+}\NormalTok{means[}\StringTok{\textquotesingle{}w\textquotesingle{}}\NormalTok{])}\SpecialCharTok{/}\DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \DecValTok{2}
-\DocumentationTok{\#\#        b }
-\DocumentationTok{\#\# 30.70135}
+\DocumentationTok{\#\#      b }
+\DocumentationTok{\#\# 30.701}
 \CommentTok{\# half the average gender difference in data}
 \NormalTok{((means[}\StringTok{\textquotesingle{}g\textquotesingle{}}\NormalTok{]}\SpecialCharTok{+}\NormalTok{means[}\StringTok{\textquotesingle{}w\textquotesingle{}}\NormalTok{])}\SpecialCharTok{/}\DecValTok{2} \SpecialCharTok{{-}}\NormalTok{ (means[}\StringTok{\textquotesingle{}m\textquotesingle{}}\NormalTok{]}\SpecialCharTok{+}\NormalTok{means[}\StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{])}\SpecialCharTok{/}\DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \DecValTok{2}
-\DocumentationTok{\#\#        g }
-\DocumentationTok{\#\# 22.86483}
+\DocumentationTok{\#\#      g }
+\DocumentationTok{\#\# 22.865}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3406,8 +3423,8 @@ For example, the second hypothesis we are testing below says \texttt{Intercept\ 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{tapply}\NormalTok{ (h95}\SpecialCharTok{$}\NormalTok{f0, h95}\SpecialCharTok{$}\NormalTok{group, mean)}
-\DocumentationTok{\#\#        b        g        m        w }
-\DocumentationTok{\#\# 236.0741 238.3509 131.2185 220.4010}
+\DocumentationTok{\#\#      b      g      m      w }
+\DocumentationTok{\#\# 236.07 238.35 131.22 220.40}
 
 \CommentTok{\# this hypothesis calculates the intercept, and }
 \CommentTok{\# the group means for boys, girls, men, women}
@@ -3419,11 +3436,11 @@ For example, the second hypothesis we are testing below says \texttt{Intercept\ 
                                  \StringTok{"Intercept +  adult1 +  gender1 = 0"}\NormalTok{))[[}\DecValTok{1}\NormalTok{]][,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}
 \NormalTok{means\_pred}
 \DocumentationTok{\#\#                         Hypothesis Estimate Est.Error CI.Lower CI.Upper}
-\DocumentationTok{\#\# 1                  (Intercept) = 0 209.1341  2.660729 203.9475 214.3788}
-\DocumentationTok{\#\# 2 (Intercept+{-}adult1+{-}gender1) = 0 211.5892  4.840349 202.1583 221.4233}
-\DocumentationTok{\#\# 3  (Intercept+{-}adult1+gender1) = 0 272.5741  5.390701 262.0859 283.0745}
-\DocumentationTok{\#\# 4  (Intercept+adult1+{-}gender1) = 0 145.6940  4.010808 137.7944 153.4169}
-\DocumentationTok{\#\# 5   (Intercept+adult1+gender1) = 0 206.6789  3.814463 199.1961 214.2051}
+\DocumentationTok{\#\# 1                  (Intercept) = 0   209.13    2.6607   203.95   214.38}
+\DocumentationTok{\#\# 2 (Intercept+{-}adult1+{-}gender1) = 0   211.59    4.8403   202.16   221.42}
+\DocumentationTok{\#\# 3  (Intercept+{-}adult1+gender1) = 0   272.57    5.3907   262.09   283.07}
+\DocumentationTok{\#\# 4  (Intercept+adult1+{-}gender1) = 0   145.69    4.0108   137.79   153.42}
+\DocumentationTok{\#\# 5   (Intercept+adult1+gender1) = 0   206.68    3.8145   199.20   214.21}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3621,7 +3638,7 @@ Below we fit the model which now includes an interaction term representing the c
 
 Remember that this line \texttt{set\_prior("student\_t(3,\ 0,\ 100)",\ class\ =\ "b")} sets the prior for all non-intercept `Population-Level' predictors. This allows you to efficiently set priors for the adult, gender, and adult:gender predictors in your model in a single line, and becomes more and more useful as our models grow more complex.
 
-A look at the model output above indicates that we have a large interaction term. In fact, our interaction is as large as the `main' effect for gender! In cases with large interactions we have to be very careful about interpreting the main effects. In other words, when the answer to a question is ``it really depends'', you should be wary of making blanket statements. For example: how good can a speaker get at a second language in one year? The interaction between age and language learning is so large that it doesn't even really make sense to answer this in a single way for all learners.
+A look at the model output above indicates that we have a large interaction term. In fact, our interaction is as large as the `main' effect for gender! Our interaction basically says that sometimes being a male \emph{and} being an adult results in a different f0 than can be predicted by maleness and adultness independently. In cases with large interactions we have to be very careful about interpreting the main effects. In other words, when the answer to a question is ``it really depends'', you should be wary of making blanket statements. For example: how good can a speaker get at a second language in one year? The interaction between age and language learning is so large that it doesn't even really make sense to answer this in a single way for all learners.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3631,24 +3648,36 @@ A look at the model output above indicates that we have a large interaction term
 \end{Shaded}
 
 \begin{verbatim}
-##                 Estimate Est.Error      Q2.5     Q97.5
-## Intercept      206.56112  1.913081 202.78344 210.27475
-## adult1         -30.66934  1.936608 -34.46529 -26.87641
-## gender1         22.89211  1.974245  18.93775  26.76101
-## adult1:gender1  21.71878  1.918765  17.86664  25.46130
+##                Estimate Est.Error    Q2.5   Q97.5
+## Intercept       206.561    1.9131 202.783 210.275
+## adult1          -30.669    1.9366 -34.465 -26.876
+## gender1          22.892    1.9742  18.938  26.761
+## adult1:gender1   21.719    1.9188  17.867  25.461
 \end{verbatim}
 
 We need to talk about why there is only a single interaction term. The reason for this is related to the same reason we can't get estimates for all our group effects (i.e., linear dependence). The number of terms you can estimate is generally one fewer than the number of levels. For interaction terms, the number of parameters is equal to (number of levels of factor A - 1)x(number of levels of factor B - 1). Since each of our factors have two levels, we can only estimate one parameter, (2-1)x(2-1)=1.
-
-Our interaction basically says that sometimes being a male \emph{and} being an adult results in a different f0 than can be predicted by maleness and adultness independently. So, you only need one coefficient to represent the extra combined effects of maleness \emph{and} adultness. This same coefficient can also represent the opposite case: not male and not adult. You don't need an interaction term to model the effect of maleness \emph{or} adultness since that is effectively what the main effects do (i.e., model the effect regardless of the difference of the other value).
 
 The interaction term is just another element of your prediction equation (i.e., \(\mu + x_1+x_2...\)) intended to help explain variation that can't be predicted by the independent effects of the other predictors in the model. If there is no interaction in your data, then the value of the interaction terms will be zero and your model will look just as if you had not even included the interaction at all.
 
 Recovering the predicted group means based on the coefficient values is straightforward, but a bit tedious: we must now either add or subtract the value of the interaction term (\texttt{adult1:gender1}) from each group. We can easily determine which to do for this model because the sign on the interaction term is the product of the signs on the relevant `main effects' terms.
 
-Before doing this hoewever, we need to talk about what \texttt{adult1:gender1} means. This can be read aloud as ``the effect of adult1 given (conditional on) gender 1''. If we wanted to find the simple effect for adult1 given gender 1 we could add the main effect for \texttt{adult1} to the conditional effect for \texttt{adult1} given \texttt{gender1} as in \texttt{adult1\ +\ adult1:gender1}.
+Before doing this however, we need to talk about what \texttt{adult1:gender1} means. This can be read aloud as ``the effect of \texttt{adult1} given (conditional on) \texttt{gender1}''. If we wanted to find the simple effect for being an adult (\texttt{adult1}) given femaleness (\texttt{gender1}) we should add the main effect for \texttt{adult1} to the conditional effect for \texttt{adult1} given \texttt{gender1} as in \texttt{adult1\ +\ adult1:gender1}. In other words, the expected pitch for adults that are female considers the effects for adultness, butl also the unique effect that adultness has for female speakers.
 
-The fifth hypothesis we are testing below is the simplest to understand, so we will start there. This hypothesis asks whether the sum of the \texttt{Intercept}, \texttt{adult1} (the effect for adults), \texttt{gender1} (the effect for femaleness), and \texttt{adult1:gender1} (the effect for adults given femaleness). Because of the specific combination of parameters values we combined, this results in the comparison of the `girl' mean f0 to zero.
+Importantly, \texttt{adult1:gender1} has the same value as \texttt{gender1:adult1} \emph{would have if it existed}, but remember that is does not. This means that to find the simple effect of \texttt{gender1} given \texttt{adult1}, we also have to carry out an operation like \texttt{gender1\ +\ adult1:gender1}. This is because, mathematically, this is equivalent to combining \texttt{gender1\ +\ gender1:adult1} since \texttt{adult1:gender1} must equal \texttt{gender1:adult1}.
+
+Figure \ref{fig:F4-interactionfig} presents an example of how our interaction plot can be built up from the components in our fixed effects above, and is very useful for understanding the geometry of main effects and interactions. In (a) we see that the intercept lifts up a line from 0 to the level of the overall mean f0 of 206 Hz. Then the effect for \texttt{adult1} (adult, -30 Hz) and \texttt{-adult1} (children, -(-30 Hz)) are added to this value, causing the separation between the lines indicating a `main effect' for adultness. Notice that the lines are parallel, and also parallel to the x-axis. This is because we have not added either an effect for gender (indicated along the x axis), or an interaction between gender an adultness.
+
+In (b) we see the addition of the gender effect: \texttt{gender1} (female, 22 Hz), and \texttt{-gender1} (male, -22 Hz). Notice that the effect is added to one point on the x axis and subtracted to the other point in the x axis. The result is a slope, and the same slope for both lines (i.e.~no interaction yet). Panel (c) shows the addition of all of the effects shown in the top row, and the results of a model that includes both main effects both no interaction.
+
+In (e) we add the gender interaction \texttt{adult1:gender1}, which was 21 Hz. Notice that the interaction effect has different when added to the same line, and also given a certain x axis position across lines. There is an obvious reason for why this \emph{must} be the case, and why we only get one interaction term. Focus on the blue line in (e) and its average value, which represents the mean f0 produced by children in our sample. Whatever this average value, it is fixed for this data and \emph{cannot} change. So, when we add \texttt{adult1:gender1} to the left end of the blue line, we must therefore subtract the same amount to the right end. Failure to do this would cause the blue line to \emph{move up along the y axis}. This would mean the average f0 of children went up, which is not possible for this fixed set of data. Instead, the interactions can only make the blue line spin like a propeller around its fixed average value.
+
+Although it is a little harder to visualize with the way the interaction plots below are set up, the same sort of constraints mean that the interaction terms in the same x-axis location must also equal but have opposite signs. As a result, we can get only a single independent interaction term when we combine two factors with two levels each!
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{./images/interactionplot} \caption{An interaction plot built up from its individual components.}\label{fig:F4-interactionfig}
+\end{figure}
+
+Below, we use the \texttt{hypothesis} function provided in \texttt{brms} to reconstruct expected group means given the fixed effects above. The fifth hypothesis we are testing below is the simplest to understand, so we will start there. This hypothesis asks whether the sum of the \texttt{Intercept}, \texttt{adult1} (the effect for adults), \texttt{gender1} (the effect for femaleness), and \texttt{adult1:gender1} (the effect for adults given femaleness). Because of the specific combination of parameters values we combined, this results in the comparison of the `girl' mean f0 to zero.
 
 The second hypothesis we are testing below says \texttt{Intercept\ +\ -adult1\ +\ -gender1\ +\ adult1:gender1\ =\ 0}. Since we have flipped the sign on \texttt{adult1} and \texttt{gender1}, these now correspond to the effects of the groups the were \emph{not} estimated, `child' and `male'. These coefficients \emph{would} be called \texttt{adult2} and \texttt{gender2}. However, since we cannot estimate these and these do not exist in our model, we flip the sign on the coefficients that \emph{are}present in our model. Since we combined the effects for male children, the second hypothesis below compares the mean f0 for `boys' to 0.
 
@@ -3658,8 +3687,8 @@ If you look at the hypotheses below, you will see that these generate the predic
 \begin{Highlighting}[]
 \CommentTok{\# actual data means}
 \FunctionTok{tapply}\NormalTok{ (h95}\SpecialCharTok{$}\NormalTok{f0, h95}\SpecialCharTok{$}\NormalTok{group, mean)}
-\DocumentationTok{\#\#        b        g        m        w }
-\DocumentationTok{\#\# 236.0741 238.3509 131.2185 220.4010}
+\DocumentationTok{\#\#      b      g      m      w }
+\DocumentationTok{\#\# 236.07 238.35 131.22 220.40}
 \CommentTok{\# intercept, boys, girls, men, women}
 \NormalTok{means\_pred\_interaction }\OtherTok{=}\NormalTok{ brms}\SpecialCharTok{::}\FunctionTok{hypothesis}\NormalTok{ (model\_interaction, }
               \FunctionTok{c}\NormalTok{(}\StringTok{"Intercept = 0"}\NormalTok{,}
@@ -3670,26 +3699,26 @@ If you look at the hypotheses below, you will see that these generate the predic
 \CommentTok{\# predictions with no interaction term}
 \NormalTok{means\_pred}
 \DocumentationTok{\#\#                         Hypothesis Estimate Est.Error CI.Lower CI.Upper}
-\DocumentationTok{\#\# 1                  (Intercept) = 0 209.1341  2.660729 203.9475 214.3788}
-\DocumentationTok{\#\# 2 (Intercept+{-}adult1+{-}gender1) = 0 211.5892  4.840349 202.1583 221.4233}
-\DocumentationTok{\#\# 3  (Intercept+{-}adult1+gender1) = 0 272.5741  5.390701 262.0859 283.0745}
-\DocumentationTok{\#\# 4  (Intercept+adult1+{-}gender1) = 0 145.6940  4.010808 137.7944 153.4169}
-\DocumentationTok{\#\# 5   (Intercept+adult1+gender1) = 0 206.6789  3.814463 199.1961 214.2051}
+\DocumentationTok{\#\# 1                  (Intercept) = 0   209.13    2.6607   203.95   214.38}
+\DocumentationTok{\#\# 2 (Intercept+{-}adult1+{-}gender1) = 0   211.59    4.8403   202.16   221.42}
+\DocumentationTok{\#\# 3  (Intercept+{-}adult1+gender1) = 0   272.57    5.3907   262.09   283.07}
+\DocumentationTok{\#\# 4  (Intercept+adult1+{-}gender1) = 0   145.69    4.0108   137.79   153.42}
+\DocumentationTok{\#\# 5   (Intercept+adult1+gender1) = 0   206.68    3.8145   199.20   214.21}
 
 \CommentTok{\# predictions with interaction term}
 \NormalTok{means\_pred\_interaction}
 \DocumentationTok{\#\#                                        Hypothesis Estimate Est.Error CI.Lower}
-\DocumentationTok{\#\# 1                                 (Intercept) = 0 206.5611  1.913081 202.7834}
-\DocumentationTok{\#\# 2 (Intercept+{-}adult1+{-}gender1+adult1:gender1) = 0 236.0571  4.190763 227.9085}
-\DocumentationTok{\#\# 3 (Intercept+{-}adult1+gender1+{-}adult1:gender1) = 0 238.4038  4.809069 229.0110}
-\DocumentationTok{\#\# 4 (Intercept+adult1+{-}gender1+{-}adult1:gender1) = 0 131.2809  3.184129 124.9046}
-\DocumentationTok{\#\# 5   (Intercept+adult1+gender1+adult1:gender1) = 0 220.5027  3.021626 214.4826}
+\DocumentationTok{\#\# 1                                 (Intercept) = 0   206.56    1.9131   202.78}
+\DocumentationTok{\#\# 2 (Intercept+{-}adult1+{-}gender1+adult1:gender1) = 0   236.06    4.1908   227.91}
+\DocumentationTok{\#\# 3 (Intercept+{-}adult1+gender1+{-}adult1:gender1) = 0   238.40    4.8091   229.01}
+\DocumentationTok{\#\# 4 (Intercept+adult1+{-}gender1+{-}adult1:gender1) = 0   131.28    3.1841   124.90}
+\DocumentationTok{\#\# 5   (Intercept+adult1+gender1+adult1:gender1) = 0   220.50    3.0216   214.48}
 \DocumentationTok{\#\#   CI.Upper}
-\DocumentationTok{\#\# 1 210.2747}
-\DocumentationTok{\#\# 2 244.4526}
-\DocumentationTok{\#\# 3 247.6442}
-\DocumentationTok{\#\# 4 137.3878}
-\DocumentationTok{\#\# 5 226.4404}
+\DocumentationTok{\#\# 1   210.27}
+\DocumentationTok{\#\# 2   244.45}
+\DocumentationTok{\#\# 3   247.64}
+\DocumentationTok{\#\# 4   137.39}
+\DocumentationTok{\#\# 5   226.44}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3698,11 +3727,11 @@ Below I print the estimates of the `fixed' effects in the model so we can focus 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{brms}\SpecialCharTok{::}\FunctionTok{fixef}\NormalTok{ (model\_interaction)}
-\DocumentationTok{\#\#                 Estimate Est.Error      Q2.5     Q97.5}
-\DocumentationTok{\#\# Intercept      206.56112  1.913081 202.78344 210.27475}
-\DocumentationTok{\#\# adult1         {-}30.66934  1.936608 {-}34.46529 {-}26.87641}
-\DocumentationTok{\#\# gender1         22.89211  1.974245  18.93775  26.76101}
-\DocumentationTok{\#\# adult1:gender1  21.71878  1.918765  17.86664  25.46130}
+\DocumentationTok{\#\#                Estimate Est.Error    Q2.5   Q97.5}
+\DocumentationTok{\#\# Intercept       206.561    1.9131 202.783 210.275}
+\DocumentationTok{\#\# adult1          {-}30.669    1.9366 {-}34.465 {-}26.876}
+\DocumentationTok{\#\# gender1          22.892    1.9742  18.938  26.761}
+\DocumentationTok{\#\# adult1:gender1   21.719    1.9188  17.867  25.461}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3737,15 +3766,15 @@ We can make more interaction plots using our data and our posterior predictions.
 \FunctionTok{par}\NormalTok{ (}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{))}
 
 \FunctionTok{plot.interaction}\NormalTok{ (h95}\SpecialCharTok{$}\NormalTok{gender, h95}\SpecialCharTok{$}\NormalTok{adult, h95}\SpecialCharTok{$}\NormalTok{f0, }\AttributeTok{col=}\DecValTok{3}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{130}\NormalTok{,}\DecValTok{280}\NormalTok{),}\AttributeTok{lwd=}\DecValTok{3}\NormalTok{,}
-                  \AttributeTok{type=}\StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{,}\AttributeTok{pch=}\FunctionTok{c}\NormalTok{(}\DecValTok{16}\NormalTok{,}\DecValTok{17}\NormalTok{),}\AttributeTok{cex=}\FloatTok{1.5}\NormalTok{,}\AttributeTok{main=}\StringTok{"Data"}\NormalTok{,}\AttributeTok{legend =} \ConstantTok{FALSE}\NormalTok{)}
+                  \AttributeTok{type=}\StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{,}\AttributeTok{pch=}\FunctionTok{c}\NormalTok{(}\DecValTok{16}\NormalTok{,}\DecValTok{17}\NormalTok{),}\AttributeTok{cex=}\FloatTok{1.5}\NormalTok{,}\AttributeTok{main=}\StringTok{"Data"}\NormalTok{,}\AttributeTok{legend =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{ylab =} \StringTok{\textquotesingle{}f0 (Hz)\textquotesingle{}}\NormalTok{)}
 
 \FunctionTok{plot.interaction}\NormalTok{ (h95}\SpecialCharTok{$}\NormalTok{gender, h95}\SpecialCharTok{$}\NormalTok{adult, y\_pred\_no\_re[,}\DecValTok{1}\NormalTok{],}\AttributeTok{col=}\DecValTok{3}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\AttributeTok{lwd=}\DecValTok{3}\NormalTok{,}
                   \AttributeTok{type =} \StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{, }\AttributeTok{pch =} \FunctionTok{c}\NormalTok{(}\DecValTok{16}\NormalTok{,}\DecValTok{17}\NormalTok{), }\AttributeTok{cex =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{130}\NormalTok{,}\DecValTok{280}\NormalTok{),}
-                  \AttributeTok{main=}\StringTok{"No Int. no RE"}\NormalTok{, }\AttributeTok{legend =} \ConstantTok{FALSE}\NormalTok{)}
+                  \AttributeTok{main=}\StringTok{"No Int. no RE"}\NormalTok{, }\AttributeTok{legend =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{ylab =} \StringTok{\textquotesingle{}f0 (Hz)\textquotesingle{}}\NormalTok{)}
 
 \FunctionTok{plot.interaction}\NormalTok{ (h95}\SpecialCharTok{$}\NormalTok{gender, h95}\SpecialCharTok{$}\NormalTok{adult, y\_pred\_no\_re\_int[,}\DecValTok{1}\NormalTok{],}\AttributeTok{col=}\DecValTok{3}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\AttributeTok{lwd=}\DecValTok{3}\NormalTok{,}
                   \AttributeTok{type =} \StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{, }\AttributeTok{pch =} \FunctionTok{c}\NormalTok{(}\DecValTok{16}\NormalTok{,}\DecValTok{17}\NormalTok{), }\AttributeTok{cex =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{130}\NormalTok{,}\DecValTok{280}\NormalTok{),}
-                  \AttributeTok{main=}\StringTok{"With Int. no RE"}\NormalTok{, }\AttributeTok{leg.x=}\FloatTok{1.8}\NormalTok{,}\AttributeTok{leg.y=}\DecValTok{270}\NormalTok{, }\AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(.}\DecValTok{95}\NormalTok{,}\FloatTok{2.3}\NormalTok{))}
+                  \AttributeTok{main=}\StringTok{"With Int. no RE"}\NormalTok{, }\AttributeTok{leg.x=}\FloatTok{1.8}\NormalTok{,}\AttributeTok{leg.y=}\DecValTok{270}\NormalTok{, }\AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(.}\DecValTok{95}\NormalTok{,}\FloatTok{2.3}\NormalTok{), }\AttributeTok{ylab =} \StringTok{\textquotesingle{}f0 (Hz)\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3811,24 +3840,24 @@ This is going to be a short one! The main shortcoming when it comes to \texttt{l
 \DocumentationTok{\#\# Formula: f0 \textasciitilde{} group + (1 | speaker)}
 \DocumentationTok{\#\#    Data: h95}
 \DocumentationTok{\#\# }
-\DocumentationTok{\#\# REML criterion at convergence: 13468.5}
+\DocumentationTok{\#\# REML criterion at convergence: 13468}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Scaled residuals: }
-\DocumentationTok{\#\#     Min      1Q  Median      3Q     Max }
-\DocumentationTok{\#\# {-}4.6436 {-}0.5611 {-}0.0857  0.4703  4.8079 }
+\DocumentationTok{\#\#    Min     1Q Median     3Q    Max }
+\DocumentationTok{\#\# {-}4.644 {-}0.561 {-}0.086  0.470  4.808 }
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Random effects:}
 \DocumentationTok{\#\#  Groups   Name        Variance Std.Dev.}
-\DocumentationTok{\#\#  speaker  (Intercept) 429.6    20.73   }
-\DocumentationTok{\#\#  Residual             140.6    11.86   }
+\DocumentationTok{\#\#  speaker  (Intercept) 430      20.7    }
+\DocumentationTok{\#\#  Residual             141      11.9    }
 \DocumentationTok{\#\# Number of obs: 1668, groups:  speaker, 139}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Fixed effects:}
 \DocumentationTok{\#\#             Estimate Std. Error t value}
-\DocumentationTok{\#\# (Intercept)  206.511      1.913 107.931}
-\DocumentationTok{\#\# group1        29.563      3.440   8.594}
-\DocumentationTok{\#\# group2        31.840      3.908   8.147}
-\DocumentationTok{\#\# group3       {-}75.293      2.927 {-}25.728}
+\DocumentationTok{\#\# (Intercept)   206.51       1.91  107.93}
+\DocumentationTok{\#\# group1         29.56       3.44    8.59}
+\DocumentationTok{\#\# group2         31.84       3.91    8.15}
+\DocumentationTok{\#\# group3        {-}75.29       2.93  {-}25.73}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Correlation of Fixed Effects:}
 \DocumentationTok{\#\#        (Intr) group1 group2}
@@ -3843,11 +3872,11 @@ The results provided by \texttt{lmer} are very similar to those provided by \tex
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{brms}\SpecialCharTok{::}\FunctionTok{fixef}\NormalTok{ (model\_four\_groups)}
-\DocumentationTok{\#\#            Estimate Est.Error      Q2.5     Q97.5}
-\DocumentationTok{\#\# Intercept 206.48607  1.928704 202.66968 210.21349}
-\DocumentationTok{\#\# group1     29.53202  3.523919  22.78309  36.64507}
-\DocumentationTok{\#\# group2     31.87791  3.976443  24.35103  39.68355}
-\DocumentationTok{\#\# group3    {-}75.17590  2.903665 {-}80.88864 {-}69.61975}
+\DocumentationTok{\#\#           Estimate Est.Error    Q2.5   Q97.5}
+\DocumentationTok{\#\# Intercept  206.486    1.9287 202.670 210.213}
+\DocumentationTok{\#\# group1      29.532    3.5239  22.783  36.645}
+\DocumentationTok{\#\# group2      31.878    3.9764  24.351  39.684}
+\DocumentationTok{\#\# group3     {-}75.176    2.9037 {-}80.889 {-}69.620}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3856,8 +3885,8 @@ Group 1 (boys) and group 2 (girls) have very similar effects to each other. Are 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{brms}\SpecialCharTok{::}\FunctionTok{hypothesis}\NormalTok{ (model\_four\_groups, }\StringTok{"group2 {-} group1 = 0"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]][,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}
-\DocumentationTok{\#\#            Hypothesis Estimate Est.Error  CI.Lower CI.Upper}
-\DocumentationTok{\#\# 1 (group2{-}group1) = 0 2.345888  6.437511 {-}10.28229 15.03817}
+\DocumentationTok{\#\#            Hypothesis Estimate Est.Error CI.Lower CI.Upper}
+\DocumentationTok{\#\# 1 (group2{-}group1) = 0   2.3459    6.4375  {-}10.282   15.038}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3872,24 +3901,24 @@ Unfortunately, there is no way to answer this question given the information pre
 \DocumentationTok{\#\# Formula: f0 \textasciitilde{} group + (1 | speaker)}
 \DocumentationTok{\#\#    Data: h95}
 \DocumentationTok{\#\# }
-\DocumentationTok{\#\# REML criterion at convergence: 13465.7}
+\DocumentationTok{\#\# REML criterion at convergence: 13466}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Scaled residuals: }
-\DocumentationTok{\#\#     Min      1Q  Median      3Q     Max }
-\DocumentationTok{\#\# {-}4.6436 {-}0.5611 {-}0.0857  0.4703  4.8079 }
+\DocumentationTok{\#\#    Min     1Q Median     3Q    Max }
+\DocumentationTok{\#\# {-}4.644 {-}0.561 {-}0.086  0.470  4.808 }
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Random effects:}
 \DocumentationTok{\#\#  Groups   Name        Variance Std.Dev.}
-\DocumentationTok{\#\#  speaker  (Intercept) 429.6    20.73   }
-\DocumentationTok{\#\#  Residual             140.6    11.86   }
+\DocumentationTok{\#\#  speaker  (Intercept) 430      20.7    }
+\DocumentationTok{\#\#  Residual             141      11.9    }
 \DocumentationTok{\#\# Number of obs: 1668, groups:  speaker, 139}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Fixed effects:}
 \DocumentationTok{\#\#             Estimate Std. Error t value}
-\DocumentationTok{\#\# (Intercept)  236.074      4.043  58.391}
-\DocumentationTok{\#\# groupg         2.277      6.291   0.362}
-\DocumentationTok{\#\# groupm      {-}104.856      5.114 {-}20.504}
-\DocumentationTok{\#\# groupw       {-}15.673      5.054  {-}3.101}
+\DocumentationTok{\#\# (Intercept)   236.07       4.04   58.39}
+\DocumentationTok{\#\# groupg          2.28       6.29    0.36}
+\DocumentationTok{\#\# groupm       {-}104.86       5.11  {-}20.50}
+\DocumentationTok{\#\# groupw        {-}15.67       5.05   {-}3.10}
 \DocumentationTok{\#\# }
 \DocumentationTok{\#\# Correlation of Fixed Effects:}
 \DocumentationTok{\#\#        (Intr) groupg groupm}
@@ -3924,7 +3953,7 @@ Obviously this situation is not ideal if you plan to compare many groups. In con
 \hypertarget{including-continuous-predictors-in-our-model}{%
 \chapter{Including continuous predictors in our model}\label{including-continuous-predictors-in-our-model}}
 
-Last chapter we talked about comparing many groups, and including interactions in our models. So far we have only discussed models that include nominal predictors, meaning predictors that split up our observations into discrete groups/categories. In this chapter we're going to talk about including continuous, numerical predictors in our models.
+Last chapter we talked about comparing many groups, and including interactions in our models. So far we have only discussed models that include nominal predictors (factors), meaning predictors that split up our observations into discrete groups/categories. In this chapter we're going to talk about including continuous, numerical predictors in our models.
 
 Just as in chapter 1, we're going to begin by talking about `single' level (\emph{not} multi-level) models. These models have no random effects, and so are not really appropriate for our data. We're going to focus on the interpretation of model coefficients and what these mean for the geometry of the lines we make, so we are not going to worry about the fact that the credible intervals in these models are not appropriate for inference.
 
@@ -3932,11 +3961,11 @@ Next chapter, armed with an understanding of the geometry of continuous predicto
 
 Before beginning this chapter, it's important to note that the modeling concepts presented below related to the geometric interpretation of different regression models are not specifically ``Bayesian''. In fact, the concepts presented below are shared by any approach to linear regression. This is to say, if the interpretation of coefficients discussed below seems abstract or complicated, this is unfortunately inherent to the subject matter (please don't blame \texttt{brms}!).
 
-Before continuing I just want to note that the researcher has a role to play in the complexity of the eventual analysis that they are faced with. Once when I was buying a backpack for traveling, I was looking for the biggest backpack possible. One of the reviews said ``1/5 stars, it was way too heavy when I filled it all the way up with my stuff''. However, if we fill a backpack up with heavy things, it doesn't seem fair to blame the poor backpack when it becomes difficult to manage.
+Before continuing, we should note that the researcher has a role to play in the complexity of the eventual analysis that they are faced with. Once when I was buying a backpack for traveling, I was looking for the biggest backpack possible. One of the reviews said ``1/5 stars, it was way too heavy when I filled it all the way up with my stuff''. However, if we fill a backpack up with heavy things, it doesn't seem fair to blame the poor backpack when it becomes difficult to manage.
 
 In the same way, if you are faced with an overly complex model that you then need to interpret, you shouldn't blame the model for your predicament! If you design an experiment with a complicated structure (i.e., lot of predictors or interactions), you may then be faced with a complicated interpretation.
 
-In order to avoid a situation where you end up with data you can't analyze or a model you don't know how to interpret it's worth considering the following questions before advancing to data collection: how will I analyze the data? Will I be able to? What will the model structure be? What would different results `mean'? What kind of results am I expecting, and how will this manifest in my regression model?
+In order to avoid a situation where you end up with data you can't analyze or a model you don't know how to interpret, it's worth considering the following questions before advancing to data collection: how will I analyze the data? Will I be able to? What will the model structure be? What would different results `mean'? What kind of results am I expecting, and how will this manifest in my regression model?
 
 \hypertarget{data-and-research-questions-4}{%
 \section{Data and research questions}\label{data-and-research-questions-4}}
@@ -3969,7 +3998,7 @@ This dataset has two response variables that we are interested in: the perceived
 \end{Highlighting}
 \end{Shaded}
 
-Rather than every individual response, this dataset contains only the average perceived height (and modal perceived group) for each unique stimulus in the experiment. We're going to begin by using perceived height as a predictor to see if we can use it to predict the f0 of tokens. Of course, this is causally backwards as the f0 `causes' the size perception and not vice versa. However, that doesn't really matter since we can still ask: given knowledge of the speaker size a person reported, can we predict the f0 they heard?
+Rather than every individual response, this dataset contains only the average perceived height (and modal perceived group) for each unique stimulus in the experiment. We're going to begin by using perceived height as a predictor to see if we can use it to guess the f0 of tokens. This asks: given knowledge of the speaker size a person reported, can we predict the f0 they heard? Of course, this is causally backwards as the f0 `causes' the size perception and not vice versa. However, that doesn't actually matter for a regression model as these simply investigate the relationships between variables: if x is linearly related to y then y is linearly related to x. Since we have built up some intuitions about the distribution of f0 between speakers, we will begin by considering this the dependent variable.
 
 \hypertarget{continuous-predictors-modeling-variation-along-lines}{%
 \section{Continuous predictors: modeling variation along lines}\label{continuous-predictors-modeling-variation-along-lines}}
@@ -4268,6 +4297,12 @@ In the previous sections we focused on models that imposed a single line for all
 \texttt{f0\ \textasciitilde{}\ group\ +\ pheight}
 
 The model above says: ``model f0 as a function of perceived height, allowing for group-specific variation in the intercept''. Note that our model does \emph{not} include the interaction between \texttt{pheight} and \texttt{group}. this is because this model includes only a single slope across all groups. As a result, these models represent our data with a set of parallel lines, one for each group.
+
+In order to investigate different characteristics for our lines as a function of group, we effectively need to `cross' our grouping variable with our continuous predictor. For example, imagine we are interested in the effect of lexical frequency on a lexical decision task, and we are interested in how this might vary as a function of age (teenagers vs.~retirees). In general, we expect that the high frequency words will be identified faster, resulting in a line with a negative slope. We also expect the teenagers to respond faster meaning their ``line'' should have a lower intercept. It is unclear a priori whether the slopes of the lines representing the two groups should be different.
+
+If we are interested in understanding if the lines \emph{are} the same between groups, then it is important that we observe the two groups at approximately the same range of values for the continuous predictor. Imagine that we give only high-frequency words to teens and only low-frequency words to retirees. This is clearly similar to the example of giving coffee only to women and water only to men in the previous chapter. Doing something like this will clearly result in uncertainly with respect to the \emph{source} of any differences between the groups. It is also important to provide a suitable range for the continuous predictor for all groups. There are an infinite number of lines that will go through any given point. The fewer points you have, and the closer together they are, the easier it is to draw lines that go through them.
+
+So, ensuring that your continuous predictors have approximately the same range across all levels of any factors in your experiment provides many of the benefits of crossing categorical predictors, and should be done when possible.
 
 \hypertarget{description-of-the-model-5}{%
 \subsection{Description of the model}\label{description-of-the-model-5}}
@@ -4675,14 +4710,14 @@ Below, we can see the incremental complexity of the models we have considered an
 \hypertarget{random-slopes}{%
 \chapter{Random slopes}\label{random-slopes}}
 
-To this point we've been fitting realistic, but relatively simple models. In this chapter we're going to build models that are more similar to the sorts that appear in published articles (i.e.~more complicated). Fortunately, we've already discussed all of the component parts that make up our models. We'll see that more complicated models are just made up of many smaller components, all working together.
+To this point we've been fitting realistic, but relatively simple models. In this chapter we're going to learn the last model component we need to build models that are more similar to the sorts that appear in published articles (i.e.~more complicated). Fortunately, we've already discussed all of the component parts that make up our models. We'll see that more complicated models are just made up of many smaller components, all working together.
 
 \hypertarget{data-and-research-questions-5}{%
 \section{Data and research questions}\label{data-and-research-questions-5}}
 
 In this chapter we're going to flip the dependent and independent variables from last chapter. We're going to consider variation in perceived height as a function of f0 (and other predictors).
 
-Our data consists of the results of a listening experiment carried out using the Hillenbrand et al.~data. Ten listeners heard productions of `aw' and `iy' produced by all 139 speakers in the dataset. The stimuli consisted of /hVd/ words presented at random (n = 278). For each trial, listeners reported the height of the speaker (in feet and inches) and guessed whether the speaker was a boy, girl, man or woman.
+Our data consists of the results of a listening experiment carried out using the Hillenbrand et al.~data. As described in the previous chapter, ten listeners heard productions of `hod' and `heed' produced by all 139 speakers in the dataset, presented at random. For each trial, listeners reported the height of the speaker (in feet and inches) and guessed whether the speaker was a boy, girl, man or woman.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5016,8 +5051,8 @@ Note the the marginal (independent) distributions of the variables (the left and
 
 \begin{figure}
 \centering
-\includegraphics{06_files/figure-latex/unnamed-chunk-12-1.pdf}
-\caption{\label{fig:unnamed-chunk-12}10,000 bivatiate normal draws of simulated intercept and slope coefficients from distributions with a mean of 0 and a standard deviation of 1. The correlation of the variables is 0 (top), 0.5 (middle) and 0.9 (bottom). The left column presents both variables together, the middle column presents intercepts and the right column presents slopes.}
+\includegraphics{06_files/figure-latex/unnamed-chunk-13-1.pdf}
+\caption{\label{fig:unnamed-chunk-13}10,000 bivatiate normal draws of simulated intercept and slope coefficients from distributions with a mean of 0 and a standard deviation of 1. The correlation of the variables is 0 (top), 0.5 (middle) and 0.9 (bottom). The left column presents both variables together, the middle column presents intercepts and the right column presents slopes.}
 \end{figure}
 
 When our dimensions are uncorrelated they are independent. The value of one does not help you understand the other. However, when the dimensions \emph{are} correlated we can use this to make better predictions using our data. For example, an intercept of 2 in the bottom row in the figure above is very likely to be paired with a slope of 2, but \emph{extremely} unlikely to be seen with a slope of -2. In contrast, in the top row a slope of 2 and -2 seem about equally likely given an intercept of 2. So, when we use multiple random predictors per grouping factor, we are really drawing from a multivariate normal distributions that acknowledges the relationships between random predictors in our data, within-cluster (e.g.~subject/participant/speaker).
@@ -5507,8 +5542,11 @@ Remember, these `random' effects are being modeled as being normally distributed
 
 The speaker intercepts above show a remarkable amount of consistency within group. Keep in mind that listeners were not told the group the speaker belonged to, so either 1) listener guessed speaker group and used this to guess size, or 2) there are other acoustic cues that vary systematically between groups, and listeners used this to estimate size. In either case, this suggests that our model need to change in order to really capture how listeners are arriving at size judgments for these speakers.
 
-\hypertarget{lmer-corner}{%
-\section{Lmer corner}\label{lmer-corner}}
+\hypertarget{frequentist-corner-3}{%
+\section{Frequentist corner}\label{frequentist-corner-3}}
+
+\hypertarget{bayesian-multilevel-modesl-vs.-lmer-3}{%
+\subsection{Bayesian multilevel modesl vs.~lmer}\label{bayesian-multilevel-modesl-vs.-lmer-3}}
 
 We can fit a `random slopes' model with \texttt{lmer} using the code below:
 

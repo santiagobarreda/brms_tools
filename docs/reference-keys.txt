@@ -112,10 +112,13 @@ fig:F6-8
 fig:p6-10
 fig:F6-10
 fig:F6-11
-eq:613
+eq:613a
+eq:613b
 eq:614
+eq:614b
 eq:615
 eq:616
+eq:616b
 fig:F6-12
 fig:F6-13
 fig:F6-14

@@ -1,7 +1,7 @@
 --- 
 title: "Bayesian multilevel models in R: A conceptual and practical introduction for linguists"
 author: "Santiago Bareda"
-date: "2021-07-16"
+date: "2021-07-17"
 site: bookdown::bookdown_site
 documentclass: book
 highlight: tango
