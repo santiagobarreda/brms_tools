@@ -158,7 +158,7 @@ frequentist-corner
 bayesian-multilevel-modesl-vs.-lmer
 bayesian-multilevel-modesl-vs.-the-one-sample-t-test
 exercises-1
-comparing-two-groups-of-observations
+comparing-two-groups-of-observations-factors-and-contrasts
 data-and-research-questions-2
 estimating-the-difference-between-two-means-with-brms
 fitting-the-model-1
@@ -179,7 +179,7 @@ simulating-the-two-group-model
 frequentist-corner-1
 bayesian-multilevel-modesl-vs.-lmer-1
 exercises-2
-comparing-many-groups
+comparing-many-groups-anova-and-interactions
 data-and-research-questions-3
 factors-as-batches-effects
 comparing-four-or-any-number-of-groups
@@ -197,7 +197,7 @@ making-plots
 frequentist-corner-2
 bayesian-multilevel-modesl-vs.-lmer-2
 exercises-3
-including-continuous-predictors-in-our-model
+continuous-predictors-and-their-interactions-with-factors
 data-and-research-questions-4
 continuous-predictors-modeling-variation-along-lines
 models-with-a-single-slope-and-intercept
@@ -216,14 +216,14 @@ description-of-the-model-6
 fitting-the-model-5
 interpreting-the-model-3
 exercises-4
-random-slopes
+including-random-slopes-and-multiple-random-effects
 data-and-research-questions-5
 repeated-measures-and-speaker-dependent-parameter-values
 description-of-the-model-7
 fitting-the-model-6
 interpreting-the-model-4
 random-effects-and-the-multivariate-normal-distribution
-random-slopes-1
+random-slopes
 description-of-the-model-8
 fitting-the-model-7
 interpreting-the-model-5
