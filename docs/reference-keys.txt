@@ -123,13 +123,14 @@ fig:F6-12
 fig:F6-13
 fig:F6-14
 fig:F6-15
-inspecting-a-single-group-of-observations
+inspecting-a-single-group-of-observations-introduction-to-regression-models
 data-and-research-questions
 inspecting-the-central-location-and-spread-of-values
 probability-distributions
 the-normal-distribution
 referring-to-the-normal-distribution-to-make-inferences
 probabilities-of-events-and-likelihoods-of-parameters
+calculating-likelihood-functions
 making-inferences-using-likelihoods
 bayesian-models
 what-are-regression-models
@@ -216,7 +217,7 @@ description-of-the-model-6
 fitting-the-model-5
 interpreting-the-model-3
 exercises-4
-including-random-slopes-and-multiple-random-effects
+random-slopes-and-multiple-random-effects
 data-and-research-questions-5
 repeated-measures-and-speaker-dependent-parameter-values
 description-of-the-model-7

@@ -1,7 +1,7 @@
 --- 
 title: "Bayesian multilevel models in R: A conceptual and practical introduction for linguists"
 author: "Santiago Bareda"
-date: "2021-07-17"
+date: "2021-07-18"
 site: bookdown::bookdown_site
 documentclass: book
 highlight: tango
@@ -21,17 +21,17 @@ This book is intended for an introductory statistics class for senior undergradu
 
 Each chapter of the book presents a different regression model design concept:
 
-Chapter 1: Basic introduction to regression models and statistics
+Chapter 1: Inspecting a single group of observations: Introduction to regression models
 
-Chapter 2: Introduction to Bayesian multilevel models
+Chapter 2: Inspecting a ‘single group’ of observations using a Bayesian multilevel model 
 
-Chapter 3: Categorical predictors
+Chapter 3: Comparing two groups of observations: Factors and contrasts 
 
-Chapter 4: Combining multiple categorical predictors (interactions)
+Chapter 4: Comparing many groups: ANOVA and interactions
 
-Chapter 5: Continuous predictors, and how these interact with categorical predictors
+Chapter 5: Continuous predictors and their interactions with factors
 
-Chapter 6: Random effects
+Chapter 6: Random slopes and multiple random effects
 
 
 If you have any comments or suggestions please let me know, and if you find any errors definitely let me know!
