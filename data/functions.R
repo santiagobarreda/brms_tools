@@ -241,7 +241,7 @@ banova = function (model, superpopulation = FALSE, collapse = TRUE){
     
     if (model$family$family == "gaussian" | model$family$family == "student"){
       sigma_finite = residuals (model, summary = FALSE)
-      sigma_finite = apply (sigma_finite, 1, sd)
+      sigma_finite = apply (sigma_finite, 1, sd, na.rm = TRUE)
       sigma_finite = brms::posterior_summary (sigma_finite)
       rownames(sigma_finite)[1] = "sigma"
       fixefs_finite = rbind(sigma_finite, fixefs_finite)
@@ -250,8 +250,8 @@ banova = function (model, superpopulation = FALSE, collapse = TRUE){
     res_summary = list()
     for (i in 1:length(res)){
       tmp = res[[i]]
-      if (dim(tmp)[3]>1) tmp = apply (tmp[,,],c(1,3),sd)
-      else tmp = apply (tmp[,,],1,sd)
+      if (dim(tmp)[3]>1) tmp = apply (tmp[,,],c(1,3),sd, na.rm = TRUE)
+      else tmp = apply (tmp[,,],1,sd, na.rm = TRUE)
       tmp = brms::posterior_summary (tmp)
       if (nrow (tmp)==1) rownames(tmp)[1] = "Intercept"
       res_summary[[i]] = tmp
