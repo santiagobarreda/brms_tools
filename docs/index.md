@@ -1,19 +1,17 @@
 --- 
-title: "Bayesian multilevel models in R: A conceptual and practical introduction for linguists"
+title: "Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R"
 author: "Santiago Bareda"
-date: "2021-07-19"
+date: "2021-08-27"
 site: bookdown::bookdown_site
 documentclass: book
 highlight: tango
 url: 'http\://santiagobarreda.com'
-description: "Bayesian Models for Linguists"
+description: "Bayesian Models for Repeated-Measures"
 geometry: margin=2cm
 always_allow_html: true
 ---
 
 # Introduction {-}
-
-This book is currently under development and it may contain small errors, inconsistencies, etc. It was used for a 10-week statistics class, but is being expanded and reorganized somewhat. 
 
 Repeated measures data is extremely common in linguistics, and the norm in many linguistic subfields (phonetics, variationist sociolinguistics, psycholinguistics, etc.). Bayesian multilevel models are perfectly suited for the analysis of repeated-measures data, and offer linguists flexibility and many exciting opportunities. Because of this, there is tremendous interest in using Bayesian multilevel models in linguistics despite the lack of available resources. This book is an introduction to the analysis of repeated-measures data using Bayesian multilevel regression models, specifically aimed at linguists with no background in statistics. 
 

@@ -4,27 +4,27 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 Inspecting a single group of observations: Introduction to regression models | Bayesian multilevel models in R: A conceptual and practical introduction for linguists</title>
-  <meta name="description" content="Bayesian Models for Linguists" />
+  <title>Chapter 1 Inspecting a single group of observations: Introduction to regression models | Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R</title>
+  <meta name="description" content="Bayesian Models for Repeated-Measures" />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 Inspecting a single group of observations: Introduction to regression models | Bayesian multilevel models in R: A conceptual and practical introduction for linguists" />
+  <meta property="og:title" content="Chapter 1 Inspecting a single group of observations: Introduction to regression models | Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="http://santiagobarreda.com" />
   
-  <meta property="og:description" content="Bayesian Models for Linguists" />
+  <meta property="og:description" content="Bayesian Models for Repeated-Measures" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 Inspecting a single group of observations: Introduction to regression models | Bayesian multilevel models in R: A conceptual and practical introduction for linguists" />
+  <meta name="twitter:title" content="Chapter 1 Inspecting a single group of observations: Introduction to regression models | Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R" />
   
-  <meta name="twitter:description" content="Bayesian Models for Linguists" />
+  <meta name="twitter:description" content="Bayesian Models for Repeated-Measures" />
   
 
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-07-19" />
+<meta name="date" content="2021-08-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -330,7 +330,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian multilevel models in R: A conceptual and practical introduction for linguists</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R</a>
           </h1>
         </div>
 
@@ -645,7 +645,7 @@ y_{[i]} = \mu + \mathcal{N}(0,\sigma)
 <li><p>A systematic component, <span class="math inline">\(\mu\)</span>, that contributes the same value to all instances of a variable.</p></li>
 <li><p>A random component, <span class="math inline">\(\mathcal{N}(0,\sigma)\)</span>, that causes unpredictable variation around <span class="math inline">\(\mu\)</span>.</p></li>
 </ol>
-<p>In terms of our data, I might express the distribution in either of the ways below. The first line says: draw random values around 224 Hz. The second one says draw random values around zero, and add 224 Hz to each value.</p>
+<p>In terms of our data, I might express the distribution in either of the ways below. The first line says: draw random values around 220.4 Hz. The second one says draw random values around zero, and add 220.4 Hz to each value.</p>
 <p><span class="math display" id="eq:3">\[
 f0_{[i]} = \mathcal{N}(220.4,23.2)
 \tag{1.3}
@@ -693,7 +693,7 @@ y_{[i]} = \alpha_1*\mathrm{x}_{1[i]} + \alpha_2*\mathrm{x}_{2[i]} + \alpha_3*\ma
 \tag{1.9}
 \]</span></p>
 <p>Notice that the error term <em>does</em> get a, <span class="math inline">\(i\)</span> subscript, as in <span class="math inline">\(\varepsilon_{[i]}\)</span>. That is because the exact value of the error changes from trial to trial, even of the general characteristics of the error (i.e., <span class="math inline">\(\mathcal{N}(0,\sigma)\)</span>) do not.</p>
-<p>When expressed in this manner, this is now a ‘regression equation’ or a ‘regression model’. ‘Fitting’ a regression model basically consists of trying to guess the most likely values of <span class="math inline">\(\alpha_1\)</span>, <span class="math inline">\(\alpha_2\)</span>, and <span class="math inline">\(\alpha_3\)</span> given our data.</p>
+<p>When expressed in this manner, this is now a ‘regression equation’ or a ‘regression model’. ‘Fitting’ a regression model basically consists of trying to guess the most likely values of <span class="math inline">\(\alpha_1\)</span>, <span class="math inline">\(\alpha_2\)</span>, and <span class="math inline">\(\alpha_3\)</span> given our data and model structure.</p>
 <p>Notice that the above formulation means that regression models do not require that our <em>data</em> be normally distributed, but only that the <em>random variation</em> in our data (<span class="math inline">\(\varepsilon\)</span>) be normally distributed. For example, in the left panel below I plot the distribution of f0 from among the entire Hillenbrand et al. data, including boys, girls, men and women. The data is not normally distributed, however, we can still use a regression based on normally-distributed data to model this as long as we expect that:</p>
 <ol style="list-style-type: decimal">
 <li><p>There is systematic variation in the <span class="math inline">\(\mu_{[i]}\)</span> of f0 across different groups, speakers, conditions, etc.</p></li>
