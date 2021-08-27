@@ -19,17 +19,17 @@ This book is intended for an introductory statistics class for senior undergradu
 
 Each chapter of the book presents a different regression model design concept:
 
-Chapter 1: Inspecting a single group of observations: Introduction to regression models
+Chapter 1: [Inspecting a single group of observations: Introduction to regression models]
 
-Chapter 2: Inspecting a ‘single group’ of observations using a Bayesian multilevel model 
+Chapter 2: [Inspecting a 'single group' of observations using a Bayesian multilevel model]
 
-Chapter 3: Comparing two groups of observations: Factors and contrasts 
+Chapter 3: [Comparing two groups of observations: Factors and contrasts]
 
-Chapter 4: Comparing many groups: ANOVA and interactions
+Chapter 4: [Comparing many groups: ANOVA and interactions]
 
-Chapter 5: Continuous predictors and their interactions with factors
+Chapter 5: [Continuous predictors and their interactions with factors]
 
-Chapter 6: Random slopes and multiple random effects
+Chapter 6: [Random slopes and multiple random effects]
 
 
 If you have any comments or suggestions please let me know, and if you find any errors definitely let me know!
