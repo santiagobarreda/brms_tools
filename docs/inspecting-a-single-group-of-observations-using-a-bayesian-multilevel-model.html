@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Inspecting a ‘single group’ of observations using a Bayesian multilevel model | Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R</title>
+  <title>Chapter 2 Inspecting a ‘single group’ of observations using a Bayesian multilevel model | Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R</title>
   <meta name="description" content="Bayesian Models for Repeated-Measures" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24.4 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Inspecting a ‘single group’ of observations using a Bayesian multilevel model | Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R" />
+  <meta property="og:title" content="Chapter 2 Inspecting a ‘single group’ of observations using a Bayesian multilevel model | Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="http://santiagobarreda.com" />
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Inspecting a ‘single group’ of observations using a Bayesian multilevel model | Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R" />
+  <meta name="twitter:title" content="Chapter 2 Inspecting a ‘single group’ of observations using a Bayesian multilevel model | Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R" />
   
   <meta name="twitter:description" content="Bayesian Models for Repeated-Measures" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-11-11" />
+<meta name="date" content="2022-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 <link rel="prev" href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"/>
 <link rel="next" href="comparing-two-groups-of-observations-factors-and-contrasts.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,7 +43,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -137,188 +137,191 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Bayesian Models for Linguists</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="1" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
-<li class="chapter" data-level="2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><i class="fa fa-check"></i><b>2</b> Inspecting a single group of observations: Introduction to regression models</a>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#data-and-research-questions"><i class="fa fa-check"></i><b>2.1</b> Data and research questions</a>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#structure-of-book"><i class="fa fa-check"></i><b>0.1</b> Structure of book</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#statistics-as-procedural-knowledge"><i class="fa fa-check"></i><b>0.2</b> Statistics as Procedural knowledge</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><i class="fa fa-check"></i><b>1</b> Inspecting a single group of observations: Introduction to regression models</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#inspecting-the-central-location-and-spread-of-values"><i class="fa fa-check"></i><b>2.1.1</b> Inspecting the central location and spread of values</a></li>
-</ul></li>
-<li class="chapter" data-level="2.2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#probability-distributions"><i class="fa fa-check"></i><b>2.2</b> Probability Distributions</a>
+<li class="chapter" data-level="1.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#data-and-research-questions"><i class="fa fa-check"></i><b>1.1</b> Data and research questions</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#the-normal-distribution"><i class="fa fa-check"></i><b>2.2.1</b> The normal distribution</a></li>
-<li class="chapter" data-level="2.2.2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#referring-to-the-normal-distribution-to-make-inferences"><i class="fa fa-check"></i><b>2.2.2</b> Referring to the normal distribution to make inferences</a></li>
+<li class="chapter" data-level="1.1.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#inspecting-the-central-location-and-spread-of-values"><i class="fa fa-check"></i><b>1.1.1</b> Inspecting the central location and spread of values</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#probabilities-of-events-and-likelihoods-of-parameters"><i class="fa fa-check"></i><b>2.3</b> Probabilities of events and likelihoods of parameters</a>
+<li class="chapter" data-level="1.2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#probability-distributions"><i class="fa fa-check"></i><b>1.2</b> Probability Distributions</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#calculating-likelihood-functions"><i class="fa fa-check"></i><b>2.3.1</b> Calculating likelihood functions</a></li>
-<li class="chapter" data-level="2.3.2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#making-inferences-using-likelihoods"><i class="fa fa-check"></i><b>2.3.2</b> Making inferences using likelihoods</a></li>
+<li class="chapter" data-level="1.2.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#the-normal-distribution"><i class="fa fa-check"></i><b>1.2.1</b> The normal distribution</a></li>
+<li class="chapter" data-level="1.2.2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#referring-to-the-normal-distribution-to-make-inferences"><i class="fa fa-check"></i><b>1.2.2</b> Referring to the normal distribution to make inferences</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#bayesian-models"><i class="fa fa-check"></i><b>2.4</b> Bayesian models</a>
+<li class="chapter" data-level="1.3" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#probabilities-of-events-and-likelihoods-of-parameters"><i class="fa fa-check"></i><b>1.3</b> Probabilities of events and likelihoods of parameters</a>
 <ul>
-<li class="chapter" data-level="2.4.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#what-are-regression-models"><i class="fa fa-check"></i><b>2.4.1</b> What are regression models?</a></li>
-<li class="chapter" data-level="2.4.2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#whats-bayesian-about-these-models"><i class="fa fa-check"></i><b>2.4.2</b> What’s ‘Bayesian’ about these models?</a></li>
+<li class="chapter" data-level="1.3.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#calculating-likelihood-functions"><i class="fa fa-check"></i><b>1.3.1</b> Calculating likelihood functions</a></li>
+<li class="chapter" data-level="1.3.2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#making-inferences-using-likelihoods"><i class="fa fa-check"></i><b>1.3.2</b> Making inferences using likelihoods</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#posterior-distributions"><i class="fa fa-check"></i><b>2.5</b> Posterior distributions</a>
+<li class="chapter" data-level="1.4" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#bayesian-models"><i class="fa fa-check"></i><b>1.4</b> Bayesian models</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#sampling-from-the-posterior"><i class="fa fa-check"></i><b>2.5.1</b> Sampling from the posterior</a></li>
+<li class="chapter" data-level="1.4.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#what-are-regression-models"><i class="fa fa-check"></i><b>1.4.1</b> What are regression models?</a></li>
+<li class="chapter" data-level="1.4.2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#whats-bayesian-about-these-models"><i class="fa fa-check"></i><b>1.4.2</b> What’s ‘Bayesian’ about these models?</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#exercises"><i class="fa fa-check"></i><b>2.6</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><i class="fa fa-check"></i><b>3</b> Inspecting a ‘single group’ of observations using a Bayesian multilevel model</a>
+<li class="chapter" data-level="1.5" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#posterior-distributions"><i class="fa fa-check"></i><b>1.5</b> Posterior distributions</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#data-and-research-questions-1"><i class="fa fa-check"></i><b>3.1</b> Data and research questions</a></li>
-<li class="chapter" data-level="3.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#estimating-a-single-mean-with-the-brms-package"><i class="fa fa-check"></i><b>3.2</b> Estimating a single mean with the <code>brms</code> package</a>
+<li class="chapter" data-level="1.5.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#sampling-from-the-posterior"><i class="fa fa-check"></i><b>1.5.1</b> Sampling from the posterior</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#exercises"><i class="fa fa-check"></i><b>1.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><i class="fa fa-check"></i><b>2</b> Inspecting a ‘single group’ of observations using a Bayesian multilevel model</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#description-of-the-model"><i class="fa fa-check"></i><b>3.2.1</b> Description of the model</a></li>
-<li class="chapter" data-level="3.2.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#the-model-formula"><i class="fa fa-check"></i><b>3.2.2</b> The model formula</a></li>
-<li class="chapter" data-level="3.2.3" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#fitting-the-model-calling-the-brm-function"><i class="fa fa-check"></i><b>3.2.3</b> Fitting the model: Calling the <code>brm</code> function</a></li>
-<li class="chapter" data-level="3.2.4" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#interpreting-the-model-the-print-statement"><i class="fa fa-check"></i><b>3.2.4</b> Interpreting the model: the print statement</a></li>
-<li class="chapter" data-level="3.2.5" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#seeing-the-samples"><i class="fa fa-check"></i><b>3.2.5</b> Seeing the samples</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#repeated-measures-data"><i class="fa fa-check"></i><b>3.3</b> Repeated measures data</a>
+<li class="chapter" data-level="2.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#data-and-research-questions-1"><i class="fa fa-check"></i><b>2.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="2.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#estimating-a-single-mean-with-the-brms-package"><i class="fa fa-check"></i><b>2.2</b> Estimating a single mean with the <code>brms</code> package</a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#multilevel-models"><i class="fa fa-check"></i><b>3.3.1</b> Multilevel models</a></li>
+<li class="chapter" data-level="2.2.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#description-of-the-model"><i class="fa fa-check"></i><b>2.2.1</b> Description of the model</a></li>
+<li class="chapter" data-level="2.2.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#the-model-formula"><i class="fa fa-check"></i><b>2.2.2</b> The model formula</a></li>
+<li class="chapter" data-level="2.2.3" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#fitting-the-model-calling-the-brm-function"><i class="fa fa-check"></i><b>2.2.3</b> Fitting the model: Calling the <code>brm</code> function</a></li>
+<li class="chapter" data-level="2.2.4" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#interpreting-the-model-the-print-statement"><i class="fa fa-check"></i><b>2.2.4</b> Interpreting the model: the print statement</a></li>
+<li class="chapter" data-level="2.2.5" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#seeing-the-samples"><i class="fa fa-check"></i><b>2.2.5</b> Seeing the samples</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#estimating-a-multilevel-model-with-brms"><i class="fa fa-check"></i><b>3.4</b> Estimating a multilevel model with <code>brms</code></a>
+<li class="chapter" data-level="2.3" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#repeated-measures-data"><i class="fa fa-check"></i><b>2.3</b> Repeated measures data</a>
 <ul>
-<li class="chapter" data-level="3.4.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#description-of-the-model-1"><i class="fa fa-check"></i><b>3.4.1</b> Description of the model</a></li>
-<li class="chapter" data-level="3.4.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#fitting-the-model"><i class="fa fa-check"></i><b>3.4.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="2.3.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#multilevel-models"><i class="fa fa-check"></i><b>2.3.1</b> Multilevel models</a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#checking-model-convergence"><i class="fa fa-check"></i><b>3.5</b> Checking model convergence</a></li>
-<li class="chapter" data-level="3.6" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#specifying-prior-probabilities"><i class="fa fa-check"></i><b>3.6</b> Specifying prior probabilities</a></li>
-<li class="chapter" data-level="3.7" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#answering-our-research-questions"><i class="fa fa-check"></i><b>3.7</b> Answering our research questions</a></li>
-<li class="chapter" data-level="3.8" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#simulating-data-using-our-model-parameters"><i class="fa fa-check"></i><b>3.8</b> Simulating data using our model parameters</a></li>
-<li class="chapter" data-level="3.9" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#frequentist-corner"><i class="fa fa-check"></i><b>3.9</b> Frequentist corner</a>
+<li class="chapter" data-level="2.4" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#estimating-a-multilevel-model-with-brms"><i class="fa fa-check"></i><b>2.4</b> Estimating a multilevel model with <code>brms</code></a>
 <ul>
-<li class="chapter" data-level="3.9.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#bayesian-multilevel-modesl-vs.-lmer"><i class="fa fa-check"></i><b>3.9.1</b> Bayesian multilevel modesl vs. lmer</a></li>
-<li class="chapter" data-level="3.9.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#bayesian-multilevel-modesl-vs.-the-one-sample-t-test"><i class="fa fa-check"></i><b>3.9.2</b> Bayesian multilevel modesl vs. the one-sample t-test</a></li>
+<li class="chapter" data-level="2.4.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#description-of-the-model-1"><i class="fa fa-check"></i><b>2.4.1</b> Description of the model</a></li>
+<li class="chapter" data-level="2.4.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#fitting-the-model"><i class="fa fa-check"></i><b>2.4.2</b> Fitting the model</a></li>
 </ul></li>
-<li class="chapter" data-level="3.10" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#exercises-1"><i class="fa fa-check"></i><b>3.10</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html"><i class="fa fa-check"></i><b>4</b> Comparing two groups of observations: Factors and contrasts</a>
+<li class="chapter" data-level="2.5" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#checking-model-convergence"><i class="fa fa-check"></i><b>2.5</b> Checking model convergence</a></li>
+<li class="chapter" data-level="2.6" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#specifying-prior-probabilities"><i class="fa fa-check"></i><b>2.6</b> Specifying prior probabilities</a></li>
+<li class="chapter" data-level="2.7" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#answering-our-research-questions"><i class="fa fa-check"></i><b>2.7</b> Answering our research questions</a></li>
+<li class="chapter" data-level="2.8" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#simulating-data-using-our-model-parameters"><i class="fa fa-check"></i><b>2.8</b> Simulating data using our model parameters</a></li>
+<li class="chapter" data-level="2.9" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#frequentist-corner"><i class="fa fa-check"></i><b>2.9</b> Frequentist corner</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#data-and-research-questions-2"><i class="fa fa-check"></i><b>4.1</b> Data and research questions</a></li>
-<li class="chapter" data-level="4.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#estimating-the-difference-between-two-means-with-brms"><i class="fa fa-check"></i><b>4.2</b> Estimating the difference between two means with ‘brms’</a>
+<li class="chapter" data-level="2.9.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#bayesian-multilevel-modesl-vs.-lmer"><i class="fa fa-check"></i><b>2.9.1</b> Bayesian multilevel modesl vs. lmer</a></li>
+<li class="chapter" data-level="2.9.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#bayesian-multilevel-modesl-vs.-the-one-sample-t-test"><i class="fa fa-check"></i><b>2.9.2</b> Bayesian multilevel modesl vs. the one-sample t-test</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#exercises-1"><i class="fa fa-check"></i><b>2.10</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html"><i class="fa fa-check"></i><b>3</b> Comparing two groups of observations: Factors and contrasts</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#fitting-the-model-1"><i class="fa fa-check"></i><b>4.2.1</b> Fitting the model</a></li>
-<li class="chapter" data-level="4.2.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#interpreting-the-model"><i class="fa fa-check"></i><b>4.2.2</b> Interpreting the model</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#contrasts"><i class="fa fa-check"></i><b>4.3</b> Contrasts</a>
+<li class="chapter" data-level="3.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#data-and-research-questions-2"><i class="fa fa-check"></i><b>3.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="3.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#estimating-the-difference-between-two-means-with-brms"><i class="fa fa-check"></i><b>3.2</b> Estimating the difference between two means with ‘brms’</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#treatment-coding"><i class="fa fa-check"></i><b>4.3.1</b> Treatment coding</a></li>
-<li class="chapter" data-level="4.3.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#sum-coding"><i class="fa fa-check"></i><b>4.3.2</b> Sum coding</a></li>
-<li class="chapter" data-level="4.3.3" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#comparison-of-sum-and-treatment-coding"><i class="fa fa-check"></i><b>4.3.3</b> Comparison of sum and treatment coding</a></li>
+<li class="chapter" data-level="3.2.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#fitting-the-model-1"><i class="fa fa-check"></i><b>3.2.1</b> Fitting the model</a></li>
+<li class="chapter" data-level="3.2.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#interpreting-the-model"><i class="fa fa-check"></i><b>3.2.2</b> Interpreting the model</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#refitting-the-model-with-sum-coding"><i class="fa fa-check"></i><b>4.4</b> Refitting the model with sum coding</a>
+<li class="chapter" data-level="3.3" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#contrasts"><i class="fa fa-check"></i><b>3.3</b> Contrasts</a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#fitting-the-model-2"><i class="fa fa-check"></i><b>4.4.1</b> Fitting the model</a></li>
-<li class="chapter" data-level="4.4.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#description-of-the-model-2"><i class="fa fa-check"></i><b>4.4.2</b> Description of the model</a></li>
-<li class="chapter" data-level="4.4.3" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#interpreting-the-model-1"><i class="fa fa-check"></i><b>4.4.3</b> Interpreting the model</a></li>
+<li class="chapter" data-level="3.3.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#treatment-coding"><i class="fa fa-check"></i><b>3.3.1</b> Treatment coding</a></li>
+<li class="chapter" data-level="3.3.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#sum-coding"><i class="fa fa-check"></i><b>3.3.2</b> Sum coding</a></li>
+<li class="chapter" data-level="3.3.3" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#comparison-of-sum-and-treatment-coding"><i class="fa fa-check"></i><b>3.3.3</b> Comparison of sum and treatment coding</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#random-effects"><i class="fa fa-check"></i><b>4.5</b> ‘Random’ Effects</a>
+<li class="chapter" data-level="3.4" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#refitting-the-model-with-sum-coding"><i class="fa fa-check"></i><b>3.4</b> Refitting the model with sum coding</a>
 <ul>
-<li class="chapter" data-level="4.5.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#random-effects-priors-and-pooling"><i class="fa fa-check"></i><b>4.5.1</b> Random effects, priors and pooling</a></li>
-<li class="chapter" data-level="4.5.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#inspecting-the-random-effects"><i class="fa fa-check"></i><b>4.5.2</b> Inspecting the random effects</a></li>
+<li class="chapter" data-level="3.4.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#fitting-the-model-2"><i class="fa fa-check"></i><b>3.4.1</b> Fitting the model</a></li>
+<li class="chapter" data-level="3.4.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#description-of-the-model-2"><i class="fa fa-check"></i><b>3.4.2</b> Description of the model</a></li>
+<li class="chapter" data-level="3.4.3" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#interpreting-the-model-1"><i class="fa fa-check"></i><b>3.4.3</b> Interpreting the model</a></li>
 </ul></li>
-<li class="chapter" data-level="4.6" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#but-what-does-it-all-mean"><i class="fa fa-check"></i><b>4.6</b> But what does it all mean?</a></li>
-<li class="chapter" data-level="4.7" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#simulating-the-two-group-model"><i class="fa fa-check"></i><b>4.7</b> Simulating the two-group model</a></li>
-<li class="chapter" data-level="4.8" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#frequentist-corner-1"><i class="fa fa-check"></i><b>4.8</b> Frequentist corner</a>
+<li class="chapter" data-level="3.5" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#random-effects"><i class="fa fa-check"></i><b>3.5</b> ‘Random’ Effects</a>
 <ul>
-<li class="chapter" data-level="4.8.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#bayesian-multilevel-modesl-vs.-lmer-1"><i class="fa fa-check"></i><b>4.8.1</b> Bayesian multilevel modesl vs. lmer</a></li>
+<li class="chapter" data-level="3.5.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#random-effects-priors-and-pooling"><i class="fa fa-check"></i><b>3.5.1</b> Random effects, priors and pooling</a></li>
+<li class="chapter" data-level="3.5.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#inspecting-the-random-effects"><i class="fa fa-check"></i><b>3.5.2</b> Inspecting the random effects</a></li>
 </ul></li>
-<li class="chapter" data-level="4.9" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#exercises-2"><i class="fa fa-check"></i><b>4.9</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html"><i class="fa fa-check"></i><b>5</b> Comparing many groups: ANOVA and interactions</a>
+<li class="chapter" data-level="3.6" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#but-what-does-it-all-mean"><i class="fa fa-check"></i><b>3.6</b> But what does it all mean?</a></li>
+<li class="chapter" data-level="3.7" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#simulating-the-two-group-model"><i class="fa fa-check"></i><b>3.7</b> Simulating the two-group model</a></li>
+<li class="chapter" data-level="3.8" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#frequentist-corner-1"><i class="fa fa-check"></i><b>3.8</b> Frequentist corner</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#data-and-research-questions-3"><i class="fa fa-check"></i><b>5.1</b> Data and research questions</a>
+<li class="chapter" data-level="3.8.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#bayesian-multilevel-modesl-vs.-lmer-1"><i class="fa fa-check"></i><b>3.8.1</b> Bayesian multilevel modesl vs. lmer</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#exercises-2"><i class="fa fa-check"></i><b>3.9</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html"><i class="fa fa-check"></i><b>4</b> Comparing many groups: ANOVA and interactions</a>
 <ul>
-<li class="chapter" data-level="5.1.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#factors-as-batches-effects"><i class="fa fa-check"></i><b>5.1.1</b> Factors as ‘batches’ effects</a></li>
-</ul></li>
-<li class="chapter" data-level="5.2" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#comparing-four-or-any-number-of-groups"><i class="fa fa-check"></i><b>5.2</b> Comparing four (or any number of) groups</a>
+<li class="chapter" data-level="4.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#data-and-research-questions-3"><i class="fa fa-check"></i><b>4.1</b> Data and research questions</a>
 <ul>
-<li class="chapter" data-level="5.2.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#the-model"><i class="fa fa-check"></i><b>5.2.1</b> The model</a></li>
+<li class="chapter" data-level="4.1.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#factors-as-batches-effects"><i class="fa fa-check"></i><b>4.1.1</b> Factors as ‘batches’ effects</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#investigating-many-factors-simultaneously-analysis-of-variance"><i class="fa fa-check"></i><b>5.3</b> Investigating many factors simultaneously: Analysis of Variance</a>
+<li class="chapter" data-level="4.2" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#comparing-four-or-any-number-of-groups"><i class="fa fa-check"></i><b>4.2</b> Comparing four (or any number of) groups</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#description-of-the-model-3"><i class="fa fa-check"></i><b>5.3.1</b> Description of the model</a></li>
-<li class="chapter" data-level="5.3.2" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#fitting-the-model-and-interpreting-the-results"><i class="fa fa-check"></i><b>5.3.2</b> Fitting the model and interpreting the results</a></li>
+<li class="chapter" data-level="4.2.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#the-model"><i class="fa fa-check"></i><b>4.2.1</b> The model</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#investigating-model-fit"><i class="fa fa-check"></i><b>5.4</b> Investigating model fit</a></li>
-<li class="chapter" data-level="5.5" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#interactions-and-interaction-plots"><i class="fa fa-check"></i><b>5.5</b> Interactions and interaction plots</a>
+<li class="chapter" data-level="4.3" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#investigating-many-factors-simultaneously-analysis-of-variance"><i class="fa fa-check"></i><b>4.3</b> Investigating many factors simultaneously: Analysis of Variance</a>
 <ul>
-<li class="chapter" data-level="5.5.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#interactions-in-our-f0-data"><i class="fa fa-check"></i><b>5.5.1</b> Interactions in our f0 data</a></li>
+<li class="chapter" data-level="4.3.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#description-of-the-model-3"><i class="fa fa-check"></i><b>4.3.1</b> Description of the model</a></li>
+<li class="chapter" data-level="4.3.2" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#fitting-the-model-and-interpreting-the-results"><i class="fa fa-check"></i><b>4.3.2</b> Fitting the model and interpreting the results</a></li>
 </ul></li>
-<li class="chapter" data-level="5.6" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#investigating-interactions-with-a-model"><i class="fa fa-check"></i><b>5.6</b> Investigating interactions with a model</a>
+<li class="chapter" data-level="4.4" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#investigating-model-fit"><i class="fa fa-check"></i><b>4.4</b> Investigating model fit</a></li>
+<li class="chapter" data-level="4.5" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#interactions-and-interaction-plots"><i class="fa fa-check"></i><b>4.5</b> Interactions and interaction plots</a>
 <ul>
-<li class="chapter" data-level="5.6.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#fitting-the-model-and-interpreting-the-results-1"><i class="fa fa-check"></i><b>5.6.1</b> Fitting the model and interpreting the results</a></li>
-<li class="chapter" data-level="5.6.2" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#assessing-model-fit"><i class="fa fa-check"></i><b>5.6.2</b> Assessing model fit</a></li>
-<li class="chapter" data-level="5.6.3" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#making-plots"><i class="fa fa-check"></i><b>5.6.3</b> Making plots</a></li>
+<li class="chapter" data-level="4.5.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#interactions-in-our-f0-data"><i class="fa fa-check"></i><b>4.5.1</b> Interactions in our f0 data</a></li>
 </ul></li>
-<li class="chapter" data-level="5.7" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#frequentist-corner-2"><i class="fa fa-check"></i><b>5.7</b> Frequentist corner</a>
+<li class="chapter" data-level="4.6" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#investigating-interactions-with-a-model"><i class="fa fa-check"></i><b>4.6</b> Investigating interactions with a model</a>
 <ul>
-<li class="chapter" data-level="5.7.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#bayesian-multilevel-modesl-vs.-lmer-2"><i class="fa fa-check"></i><b>5.7.1</b> Bayesian multilevel modesl vs. lmer</a></li>
+<li class="chapter" data-level="4.6.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#fitting-the-model-and-interpreting-the-results-1"><i class="fa fa-check"></i><b>4.6.1</b> Fitting the model and interpreting the results</a></li>
+<li class="chapter" data-level="4.6.2" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#assessing-model-fit"><i class="fa fa-check"></i><b>4.6.2</b> Assessing model fit</a></li>
+<li class="chapter" data-level="4.6.3" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#making-plots"><i class="fa fa-check"></i><b>4.6.3</b> Making plots</a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#exercises-3"><i class="fa fa-check"></i><b>5.8</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html"><i class="fa fa-check"></i><b>6</b> Continuous predictors and their interactions with factors</a>
+<li class="chapter" data-level="4.7" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#frequentist-corner-2"><i class="fa fa-check"></i><b>4.7</b> Frequentist corner</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#data-and-research-questions-4"><i class="fa fa-check"></i><b>6.1</b> Data and research questions</a></li>
-<li class="chapter" data-level="6.2" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#continuous-predictors-modeling-variation-along-lines"><i class="fa fa-check"></i><b>6.2</b> Continuous predictors: modeling variation along lines</a></li>
-<li class="chapter" data-level="6.3" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#models-with-a-single-slope-and-intercept"><i class="fa fa-check"></i><b>6.3</b> Models with a single slope and intercept</a>
+<li class="chapter" data-level="4.7.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#bayesian-multilevel-modesl-vs.-lmer-2"><i class="fa fa-check"></i><b>4.7.1</b> Bayesian multilevel modesl vs. lmer</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#exercises-3"><i class="fa fa-check"></i><b>4.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html"><i class="fa fa-check"></i><b>5</b> Continuous predictors and their interactions with factors</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#description-of-the-model-4"><i class="fa fa-check"></i><b>6.3.1</b> Description of the model</a></li>
-<li class="chapter" data-level="6.3.2" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#fitting-the-model-3"><i class="fa fa-check"></i><b>6.3.2</b> Fitting the model</a></li>
-<li class="chapter" data-level="6.3.3" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#interpreting-the-model-2"><i class="fa fa-check"></i><b>6.3.3</b> Interpreting the model</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#centering-predictors"><i class="fa fa-check"></i><b>6.4</b> Centering predictors</a></li>
-<li class="chapter" data-level="6.5" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#interactions-in-our-line-parameters"><i class="fa fa-check"></i><b>6.5</b> Interactions in our line parameters</a></li>
-<li class="chapter" data-level="6.6" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#models-with-group-dependent-intercepts-but-shared-slopes"><i class="fa fa-check"></i><b>6.6</b> Models with group-dependent intercepts, but shared slopes</a>
+<li class="chapter" data-level="5.1" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#data-and-research-questions-4"><i class="fa fa-check"></i><b>5.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="5.2" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#continuous-predictors-modeling-variation-along-lines"><i class="fa fa-check"></i><b>5.2</b> Continuous predictors: modeling variation along lines</a></li>
+<li class="chapter" data-level="5.3" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#models-with-a-single-slope-and-intercept"><i class="fa fa-check"></i><b>5.3</b> Models with a single slope and intercept</a>
 <ul>
-<li class="chapter" data-level="6.6.1" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#description-of-the-model-5"><i class="fa fa-check"></i><b>6.6.1</b> Description of the model</a></li>
-<li class="chapter" data-level="6.6.2" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#fitting-the-model-4"><i class="fa fa-check"></i><b>6.6.2</b> Fitting the model</a></li>
-<li class="chapter" data-level="6.6.3" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#the-effect-of-including-a-slope"><i class="fa fa-check"></i><b>6.6.3</b> The effect of including a slope</a></li>
-<li class="chapter" data-level="6.6.4" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#interpreting-group-effects-in-the-presence-of-a-continuous-predictor"><i class="fa fa-check"></i><b>6.6.4</b> Interpreting group effects in the presence of a continuous predictor</a></li>
+<li class="chapter" data-level="5.3.1" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#description-of-the-model-4"><i class="fa fa-check"></i><b>5.3.1</b> Description of the model</a></li>
+<li class="chapter" data-level="5.3.2" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#fitting-the-model-3"><i class="fa fa-check"></i><b>5.3.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="5.3.3" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#interpreting-the-model-2"><i class="fa fa-check"></i><b>5.3.3</b> Interpreting the model</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#models-with-group-dependent-slopes-and-intercepts"><i class="fa fa-check"></i><b>6.7</b> Models with group-dependent slopes and intercepts</a>
+<li class="chapter" data-level="5.4" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#centering-predictors"><i class="fa fa-check"></i><b>5.4</b> Centering predictors</a></li>
+<li class="chapter" data-level="5.5" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#interactions-in-our-line-parameters"><i class="fa fa-check"></i><b>5.5</b> Interactions in our line parameters</a></li>
+<li class="chapter" data-level="5.6" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#models-with-group-dependent-intercepts-but-shared-slopes"><i class="fa fa-check"></i><b>5.6</b> Models with group-dependent intercepts, but shared slopes</a>
 <ul>
-<li class="chapter" data-level="6.7.1" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#description-of-the-model-6"><i class="fa fa-check"></i><b>6.7.1</b> Description of the model</a></li>
-<li class="chapter" data-level="6.7.2" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#fitting-the-model-5"><i class="fa fa-check"></i><b>6.7.2</b> Fitting the model</a></li>
-<li class="chapter" data-level="6.7.3" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#interpreting-the-model-3"><i class="fa fa-check"></i><b>6.7.3</b> Interpreting the model</a></li>
+<li class="chapter" data-level="5.6.1" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#description-of-the-model-5"><i class="fa fa-check"></i><b>5.6.1</b> Description of the model</a></li>
+<li class="chapter" data-level="5.6.2" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#fitting-the-model-4"><i class="fa fa-check"></i><b>5.6.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="5.6.3" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#the-effect-of-including-a-slope"><i class="fa fa-check"></i><b>5.6.3</b> The effect of including a slope</a></li>
+<li class="chapter" data-level="5.6.4" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#interpreting-group-effects-in-the-presence-of-a-continuous-predictor"><i class="fa fa-check"></i><b>5.6.4</b> Interpreting group effects in the presence of a continuous predictor</a></li>
 </ul></li>
-<li class="chapter" data-level="6.8" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#exercises-4"><i class="fa fa-check"></i><b>6.8</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html"><i class="fa fa-check"></i><b>7</b> Random slopes and multiple random effects</a>
+<li class="chapter" data-level="5.7" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#models-with-group-dependent-slopes-and-intercepts"><i class="fa fa-check"></i><b>5.7</b> Models with group-dependent slopes and intercepts</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#data-and-research-questions-5"><i class="fa fa-check"></i><b>7.1</b> Data and research questions</a></li>
-<li class="chapter" data-level="7.2" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#repeated-measures-and-speaker-dependent-parameter-values"><i class="fa fa-check"></i><b>7.2</b> Repeated measures and speaker-dependent parameter values</a>
+<li class="chapter" data-level="5.7.1" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#description-of-the-model-6"><i class="fa fa-check"></i><b>5.7.1</b> Description of the model</a></li>
+<li class="chapter" data-level="5.7.2" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#fitting-the-model-5"><i class="fa fa-check"></i><b>5.7.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="5.7.3" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#interpreting-the-model-3"><i class="fa fa-check"></i><b>5.7.3</b> Interpreting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#exercises-4"><i class="fa fa-check"></i><b>5.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html"><i class="fa fa-check"></i><b>6</b> Random slopes and multiple random effects</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#description-of-the-model-7"><i class="fa fa-check"></i><b>7.2.1</b> Description of the model</a></li>
-<li class="chapter" data-level="7.2.2" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#fitting-the-model-6"><i class="fa fa-check"></i><b>7.2.2</b> Fitting the model</a></li>
-<li class="chapter" data-level="7.2.3" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#interpreting-the-model-4"><i class="fa fa-check"></i><b>7.2.3</b> Interpreting the model</a></li>
-</ul></li>
-<li class="chapter" data-level="7.3" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#random-effects-and-the-multivariate-normal-distribution"><i class="fa fa-check"></i><b>7.3</b> Random effects and the multivariate normal distribution</a></li>
-<li class="chapter" data-level="7.4" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#random-slopes"><i class="fa fa-check"></i><b>7.4</b> Random slopes</a>
+<li class="chapter" data-level="6.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#data-and-research-questions-5"><i class="fa fa-check"></i><b>6.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="6.2" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#repeated-measures-and-speaker-dependent-parameter-values"><i class="fa fa-check"></i><b>6.2</b> Repeated measures and speaker-dependent parameter values</a>
 <ul>
-<li class="chapter" data-level="7.4.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#description-of-the-model-8"><i class="fa fa-check"></i><b>7.4.1</b> Description of the model</a></li>
-<li class="chapter" data-level="7.4.2" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#fitting-the-model-7"><i class="fa fa-check"></i><b>7.4.2</b> Fitting the model</a></li>
-<li class="chapter" data-level="7.4.3" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#interpreting-the-model-5"><i class="fa fa-check"></i><b>7.4.3</b> Interpreting the model</a></li>
+<li class="chapter" data-level="6.2.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#description-of-the-model-7"><i class="fa fa-check"></i><b>6.2.1</b> Description of the model</a></li>
+<li class="chapter" data-level="6.2.2" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#fitting-the-model-6"><i class="fa fa-check"></i><b>6.2.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="6.2.3" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#interpreting-the-model-4"><i class="fa fa-check"></i><b>6.2.3</b> Interpreting the model</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#more-predictors-and-more-random-slopes"><i class="fa fa-check"></i><b>7.5</b> More predictors and more random slopes</a>
+<li class="chapter" data-level="6.3" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#random-effects-and-the-multivariate-normal-distribution"><i class="fa fa-check"></i><b>6.3</b> Random effects and the multivariate normal distribution</a></li>
+<li class="chapter" data-level="6.4" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#random-slopes"><i class="fa fa-check"></i><b>6.4</b> Random slopes</a>
 <ul>
-<li class="chapter" data-level="7.5.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#adding-another-random-slope"><i class="fa fa-check"></i><b>7.5.1</b> Adding another random slope</a></li>
-<li class="chapter" data-level="7.5.2" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#adding-random-factors"><i class="fa fa-check"></i><b>7.5.2</b> Adding random factors</a></li>
-<li class="chapter" data-level="7.5.3" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#the-independence-of-continuous-predictors"><i class="fa fa-check"></i><b>7.5.3</b> The independence of continuous predictors</a></li>
+<li class="chapter" data-level="6.4.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#description-of-the-model-8"><i class="fa fa-check"></i><b>6.4.1</b> Description of the model</a></li>
+<li class="chapter" data-level="6.4.2" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#fitting-the-model-7"><i class="fa fa-check"></i><b>6.4.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="6.4.3" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#interpreting-the-model-5"><i class="fa fa-check"></i><b>6.4.3</b> Interpreting the model</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#answering-our-research-questions-1"><i class="fa fa-check"></i><b>7.6</b> Answering our research questions</a></li>
-<li class="chapter" data-level="7.7" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#frequentist-corner-3"><i class="fa fa-check"></i><b>7.7</b> Frequentist corner</a>
+<li class="chapter" data-level="6.5" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#more-predictors-and-more-random-slopes"><i class="fa fa-check"></i><b>6.5</b> More predictors and more random slopes</a>
 <ul>
-<li class="chapter" data-level="7.7.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#bayesian-multilevel-modesl-vs.-lmer-3"><i class="fa fa-check"></i><b>7.7.1</b> Bayesian multilevel modesl vs. lmer</a></li>
+<li class="chapter" data-level="6.5.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#adding-another-random-slope"><i class="fa fa-check"></i><b>6.5.1</b> Adding another random slope</a></li>
+<li class="chapter" data-level="6.5.2" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#adding-random-factors"><i class="fa fa-check"></i><b>6.5.2</b> Adding random factors</a></li>
+<li class="chapter" data-level="6.5.3" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#the-independence-of-continuous-predictors"><i class="fa fa-check"></i><b>6.5.3</b> The independence of continuous predictors</a></li>
 </ul></li>
-<li class="chapter" data-level="7.8" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#exercises-5"><i class="fa fa-check"></i><b>7.8</b> Exercises</a></li>
+<li class="chapter" data-level="6.6" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#answering-our-research-questions-1"><i class="fa fa-check"></i><b>6.6</b> Answering our research questions</a></li>
+<li class="chapter" data-level="6.7" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#frequentist-corner-3"><i class="fa fa-check"></i><b>6.7</b> Frequentist corner</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#bayesian-multilevel-modesl-vs.-lmer-3"><i class="fa fa-check"></i><b>6.7.1</b> Bayesian multilevel modesl vs. lmer</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="plot-code.html"><a href="plot-code.html"><i class="fa fa-check"></i><b>8</b> Plot Code</a></li>
+<li class="chapter" data-level="6.8" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#exercises-5"><i class="fa fa-check"></i><b>6.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="plot-code.html"><a href="plot-code.html"><i class="fa fa-check"></i><b>7</b> Plot Code</a></li>
 <li class="divider"></li>
 <li><a href="http://www.santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
 
@@ -339,16 +342,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model" class="section level1" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Inspecting a ‘single group’ of observations using a Bayesian multilevel model</h1>
+<div id="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model" class="section level1" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Inspecting a ‘single group’ of observations using a Bayesian multilevel model</h1>
 <p>The previous chapter introduced some basic terminology and concepts that are required to begin talking about models. In this chapter we’re going to return to questions like ‘what is the average value of <span class="math inline">\(x\)</span>’, however, we’re going to answer these questions using Bayesian multilevel regression models in R using the <code>brms</code> package.</p>
-<div id="data-and-research-questions-1" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Data and research questions</h2>
+<div id="data-and-research-questions-1" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Data and research questions</h2>
 <p>The models discussed in this chapter can be used for data that comes from a single group of subjects. By a ‘single’ group I just mean that you are not trying to compare things here, you’re just trying to understand the average values of some variable for a single group of observations. The figure below is a visual representation of the structure of this data. It’s not really needed for data this simple, but they will become more useful later so we will start talking about them now. Below, subjects are placed in a single group (the box). This group is labeled <span class="math inline">\(A_1\)</span> and each subject gets a unique subscript. The group label is just a stand-in for whatever label you have applied to your group of participants or observations.</p>
-<div class="figure" style="text-align: center"><span id="fig:F2-interactionfig"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:F2-interactionfig"></span>
 <img src="images/design_ch2.png" alt="Data from a single group of subjects (S) put into a single group Labelled (A)." width="50%" />
 <p class="caption">
-Figure 3.1: Data from a single group of subjects (S) put into a single group Labelled (A).
+Figure 2.1: Data from a single group of subjects (S) put into a single group Labelled (A).
 </p>
 </div>
 <p>To analyze this data in R, you will need it to be in a dataframe. One column should contain observations, one on each row, and another column should contain information about the source of this data. Usually, for linguists the ‘source’ is a person, or perhaps it is a book or some other written source if one is analyzing a corpus.</p>
@@ -360,12 +363,12 @@ Figure 3.1: Data from a single group of subjects (S) put into a single group Lab
 </ol>
 <p>However, this time we are going to do this with a Bayesian multilevel model. We’re going to see how the model provides us with the same information we got in the last chapter, in addition to providing us with additional useful information.</p>
 </div>
-<div id="estimating-a-single-mean-with-the-brms-package" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Estimating a single mean with the <code>brms</code> package</h2>
+<div id="estimating-a-single-mean-with-the-brms-package" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Estimating a single mean with the <code>brms</code> package</h2>
 <p>The <code>brms</code> <a href="https://github.com/paul-buerkner/brms">(‘Bayesian regression models’)</a> package in R lets you fit Bayesian models using the STAN probabilistic programming language using R. The package is really amazing and makes Bayesian multilevel modeling easy and accessible for anyone. It also includes a lot of helper functions that make working with these models very convenient.</p>
 <p><code>brms</code> should be installed in R so that the models described below will work. Make sure you have the latest version of R (and Rstudio) and the latest version of the <code>brms</code> package installed. Sometimes using older versions can cause R to crash when fitting models. Anecdotal experience suggests that if all of the sudden trying to fit these models causes crashes or mysterious errors, it’s time to update one or more of R, Rstudio, or <code>brms</code>.</p>
-<div id="description-of-the-model" class="section level3" number="3.2.1">
-<h3><span class="header-section-number">3.2.1</span> Description of the model</h3>
+<div id="description-of-the-model" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Description of the model</h3>
 <p>We’re going to learn to read and write formal descriptions of our models. The notation we will learn will help us describe our models efficiently, and it will help us understand the models used by other people.</p>
 <p>The relationship between statistical concepts and the formal notation used to represent them is very similar to the ability to play music and musical notation. Someone who can play a song undoubtedly <em>knows</em> that song. However, in the absence of formal musical training that same person might not recognize sheet music representing the song. This person would also lack the vocabulary to discuss components of the song, and may find it difficult to learn to play new pieces. In the same way, most people have an excellent intuitive understanding of many statistical concepts such as slopes, interactions, error, and so on. However, they lack the notational knowledge to understand these relations when expressed in the formal notation often used to express these ideas.
 Recall from Chapter 1 that our ‘model’ for a single group of normally distributed values can be thought of in one of two two ways:</p>
@@ -375,23 +378,23 @@ Recall from Chapter 1 that our ‘model’ for a single group of normally distri
 y_{[i]} = \mu_{[i]} + \varepsilon_{[i]} \\ \\
 y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\
 \end{split}
-\tag{3.1}
+\tag{2.1}
 \end{equation}\]</span></p>
 <p>The top line says that your observed variable for any given trial <span class="math inline">\(y_{[i]}\)</span> is the sum of some of some average expected value for that trial, (<span class="math inline">\(\mu_{[i]}\)</span>) and some specific random error for that trial (<span class="math inline">\(\varepsilon_{[i]}\)</span>). The random error is expected to be normally distributed with a mean of 0 and some unknown standard deviation (as in: <span class="math inline">\(\varepsilon_{[i]} \sim \mathcal{N}(0,\sigma)\)</span>). The second line presents the <span class="math inline">\(y\)</span> variable as being a normally-distributed variable with a trial-specific mean of <span class="math inline">\(\mu_i\)</span>, and a fixed standard deviation <span class="math inline">\(\sigma\)</span></p>
 <p>In general, we use regression models to understand orderly variation in <span class="math inline">\(\mu_{[i]}\)</span> from trial to trial by breaking it up into predictors (<span class="math inline">\(\mathrm{x}_{1}, \mathrm{x}_{2},...\)</span>) that are combined using some weights (<span class="math inline">\(\alpha_1, \alpha_2,...\)</span>). If this statement makes no sense please see Chapter 1!.</p>
 <p><span class="math display" id="eq:22">\[
 \mu_{[i]} = \alpha_1*\mathrm{x}_{1{[i]}} + \alpha_2*\mathrm{x}_{2i}+...+\alpha_j*\mathrm{x}_{j{[i]}}
-\tag{3.2}
+\tag{2.2}
 \]</span></p>
 <p>‘Fitting’ a regression model consists of trying to ‘guess’ the values of the weighing factors (<span class="math inline">\(\alpha\)</span>), called the <em>model coefficients</em>. When we are only trying to estimate a single average, we don’t have any predictors to explain variation in <span class="math inline">\(\mu_{[i]}\)</span>. In fact, our model structure suggests we expect no variation in <span class="math inline">\(\mu_{[i]}\)</span> from trial to trial.</p>
 <p>Mathematically, we can’t just say ‘we have no predictor’ since everything needs to be represented by a number. As a result, we use a single ‘predictor’ <span class="math inline">\(\mathrm{x}\)</span> with a value of 1 so that our regression equation is:</p>
 <p><span class="math display" id="eq:23">\[
 \mu_{[i]} = \alpha_1*1
-\tag{3.3}
+\tag{2.3}
 \]</span></p>
 <p>Now our model is trying to guess the value of a single coefficient (<span class="math inline">\(\alpha_1\)</span>), and we expect this coefficient to be equal to <span class="math inline">\(\mu_{[i]}\)</span> since it is being multiplied by a ‘predictor’ with a constant value of 1.</p>
 <p>This kind of model is called an ‘Intercept only’ model. Regression models are really about representing <em>differences</em>, differences between groups and across conditions. When you are encoding differences, you need an overall reference point. For example, saying that something is 5 miles north is only interpretable given some reference point. The ‘reference point’ used by your model is called your ‘Intercept’, and it is the center of your model’s universe.</p>
-<p>Basically, our model consists <em>only</em> of a single reference point, and the <span class="math inline">\(\alpha_1\)</span> parameter reflects its value (as shown in Equation <a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#eq:23">(3.3)</a>). As a result, the <span class="math inline">\(\alpha_1\)</span> coefficient is called the ‘intercept’ in our model. When a coefficient is just being multiplied by a ‘fake’ predictor that just equals 1, we can omit it from the regression model (but its still secretly there).</p>
+<p>Basically, our model consists <em>only</em> of a single reference point, and the <span class="math inline">\(\alpha_1\)</span> parameter reflects its value (as shown in Equation <a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#eq:23">(2.3)</a>). As a result, the <span class="math inline">\(\alpha_1\)</span> coefficient is called the ‘intercept’ in our model. When a coefficient is just being multiplied by a ‘fake’ predictor that just equals 1, we can omit it from the regression model (but its still secretly there).</p>
 <p>Based on the above, our model investigating the f0 produced by adult women from Michigan can be thought of like this:</p>
 <p><span class="math display" id="eq:24">\[\begin{equation}
 \begin{split}
@@ -399,7 +402,7 @@ y_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\
 f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\ 
 \mu_{[i]} = Intercept \\ \\
 \end{split}
-\tag{3.4}
+\tag{2.4}
 \end{equation}\]</span></p>
 <p>Put in plain English, each line in the model says the following:</p>
 <ul>
@@ -409,21 +412,21 @@ f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\
 <p>What the model also implicitly says that the error is drawn from a normal distribution with a mean of 0 and a standard deviation of <span class="math inline">\(\sigma\)</span>. This distribution represents all deviations in f0 around the mean f0 for the sample (<span class="math inline">\(\mu_{[i]}\)</span>). In other words, the error for this model is expected to look like:</p>
 <p><span class="math display" id="eq:25">\[
 \varepsilon_{[i]} \sim \mathcal{N}(0,\sigma)
-\tag{3.5}
+\tag{2.5}
 \]</span></p>
 </div>
-<div id="the-model-formula" class="section level3" number="3.2.2">
-<h3><span class="header-section-number">3.2.2</span> The model formula</h3>
+<div id="the-model-formula" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> The model formula</h3>
 <p>Model structures are expressed in R using a very specific syntax. Think of writing a model formula as writing a language within R. Generally, model formulas in R have the form:</p>
 <p><code>y ~ predictors</code></p>
 <p>The variable we are interested in understanding (<span class="math inline">\(y\)</span>) goes on the left hand side of the <span class="math inline">\(\sim\)</span>, and on our predictors go on the right hand side. Notice that the random term (<span class="math inline">\(\varepsilon\)</span>) is not included in the model formula.</p>
 <p>The formula above can be read as ‘y is distributed according to some predictor’, which really means “we think there is systematic variation in our y variable that can be understood by considering its joint variation with our predictor variable(s).”</p>
-<p>For intercept only models, the number <code>1</code> is included in the model formula to indicate that a single constant value is being estimated (as in <a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#eq:23">(3.3)</a>). As a result, our model formula will have the form:</p>
+<p>For intercept only models, the number <code>1</code> is included in the model formula to indicate that a single constant value is being estimated (as in <a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#eq:23">(2.3)</a>). As a result, our model formula will have the form:</p>
 <p><code>f0 ~ 1</code></p>
 <p>This model could be said out loud like “we are trying to estimate the mean of f0” or “we are predicting mean f0 given only an intercept”.</p>
 </div>
-<div id="fitting-the-model-calling-the-brm-function" class="section level3" number="3.2.3">
-<h3><span class="header-section-number">3.2.3</span> Fitting the model: Calling the <code>brm</code> function</h3>
+<div id="fitting-the-model-calling-the-brm-function" class="section level3" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Fitting the model: Calling the <code>brm</code> function</h3>
 <p>Below, I load the <code>brms</code> package, which contains the <code>brm</code> function. The <code>brm</code> function takes a model specification, data and some other information, and fits a model that estimates all the model parameters. Unless otherwise specified, <code>brm</code> assumes that the error component (<span class="math inline">\(\varepsilon\)</span>) of your model is normally distributed. The first argument in the function call is the model formula, and the second argument tells the function where to find the data (a dataframe called <code>w</code>). The other arguments tell the function to estimate a single set of samples (chains = 1) using a single processor on your CPU (cores = 1). These arguments will be discussed more later.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from course website</span></span>
 <span id="cb9-2"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb9-2" aria-hidden="true" tabindex="-1"></a>url1 <span class="ot">=</span> <span class="st">&quot;https://raw.githubusercontent.com/santiagobarreda&quot;</span></span>
@@ -468,8 +471,8 @@ f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\
 <span id="cb10-3"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># and load after placing in working directory</span></span>
 <span id="cb10-4"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb10-4" aria-hidden="true" tabindex="-1"></a>model <span class="ot">=</span> <span class="fu">readRDS</span> (<span class="st">&#39;2_model.RDS&#39;</span>)</span></code></pre></div>
 </div>
-<div id="interpreting-the-model-the-print-statement" class="section level3" number="3.2.4">
-<h3><span class="header-section-number">3.2.4</span> Interpreting the model: the print statement</h3>
+<div id="interpreting-the-model-the-print-statement" class="section level3" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> Interpreting the model: the print statement</h3>
 <p>Typing the model name into the console and hitting enter prints the default <code>brms</code> model print statement:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect model</span></span>
 <span id="cb11-2"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-2" aria-hidden="true" tabindex="-1"></a>model</span>
@@ -477,18 +480,18 @@ f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\
 <span id="cb11-4"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   Links: mu = identity; sigma = identity </span></span>
 <span id="cb11-5"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Formula: f0 ~ 1 </span></span>
 <span id="cb11-6"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    Data: w (Number of observations: 576) </span></span>
-<span id="cb11-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Samples: 1 chains, each with iter = 2000; warmup = 1000; thin = 1;</span></span>
-<span id="cb11-8"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">##          total post-warmup samples = 1000</span></span>
+<span id="cb11-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   Draws: 1 chains, each with iter = 2000; warmup = 1000; thin = 1;</span></span>
+<span id="cb11-8"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">##          total post-warmup draws = 1000</span></span>
 <span id="cb11-9"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb11-10"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Population-Level Effects: </span></span>
 <span id="cb11-11"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="do">##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span></span>
-<span id="cb11-12"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept   220.40      0.97   218.33   222.30 1.00      851      557</span></span>
+<span id="cb11-12"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept   220.40      0.97   218.33   222.30 1.00      852      557</span></span>
 <span id="cb11-13"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb11-14"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Family Specific Parameters: </span></span>
 <span id="cb11-15"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="do">##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span></span>
 <span id="cb11-16"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="do">## sigma    23.24      0.69    21.99    24.61 1.00      653      550</span></span>
 <span id="cb11-17"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb11-18"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS</span></span>
+<span id="cb11-18"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS</span></span>
 <span id="cb11-19"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="do">## and Tail_ESS are effective sample size measures, and Rhat is the potential</span></span>
 <span id="cb11-20"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="do">## scale reduction factor on split chains (at convergence, Rhat = 1).</span></span></code></pre></div>
 <p>The first part just tells you some technical details that we don’t have to worry about for now (though some are obvious).</p>
@@ -522,23 +525,24 @@ f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\
 <span id="cb16-2"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="do">## and Tail_ESS are effective sample size measures, and Rhat is the potential</span></span>
 <span id="cb16-3"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="do">## scale reduction factor on split chains (at convergence, Rhat = 1).</span></span></code></pre></div>
 </div>
-<div id="seeing-the-samples" class="section level3" number="3.2.5">
-<h3><span class="header-section-number">3.2.5</span> Seeing the samples</h3>
+<div id="seeing-the-samples" class="section level3" number="2.2.5">
+<h3><span class="header-section-number">2.2.5</span> Seeing the samples</h3>
 <p>In Chapter 1 I discussed that Bayesian modeling software (like <code>brm</code>, or STAN) takes <em>samples</em> of the posterior distributions of parameters given the data and model structure. Our inferences are then based on the distribution of these <em>posterior samples</em>.</p>
 <p>It’s helpful to see that this is quite literally what is happening, and that the print statement above just summarizes the information contained in the posterior samples. Actually, one of the great things about Bayesian models is that you can make your own summaries of the posterior samples, and summarize them in several ways as required.</p>
 <p>Below I get the posterior samples from the model we fit above. We have 1000 samples, as indicated in the model output above. The first column represents the model intercept (<code>b_Intercept</code>), the middle column is the error (<code>sigma</code>), and the third column is a statistic related to model fit (<code>lp__</code>).</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get posterior samples from model</span></span>
 <span id="cb17-2"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb17-2" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">=</span> brms<span class="sc">::</span><span class="fu">posterior_samples</span> (model)</span>
-<span id="cb17-3"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span> (samples)</span>
-<span id="cb17-4"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    1000 obs. of  3 variables:</span></span>
-<span id="cb17-5"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ b_Intercept: num  221 221 220 222 220 ...</span></span>
-<span id="cb17-6"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ sigma      : num  22.1 21.9 23.2 21.9 22.9 ...</span></span>
-<span id="cb17-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ lp__       : num  -2635 -2635 -2634 -2637 -2634 ...</span></span></code></pre></div>
+<span id="cb17-3"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning: Method &#39;posterior_samples&#39; is deprecated. Please see ?as_draws for recommended alternatives.</span></span>
+<span id="cb17-4"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span> (samples)</span>
+<span id="cb17-5"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    1000 obs. of  3 variables:</span></span>
+<span id="cb17-6"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ b_Intercept: num  221 221 220 222 220 ...</span></span>
+<span id="cb17-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ sigma      : num  22.1 21.9 23.2 21.9 22.9 ...</span></span>
+<span id="cb17-8"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ lp__       : num  -2635 -2635 -2634 -2637 -2634 ...</span></span></code></pre></div>
 <p>We can plot the individual samples for the mean parameter on the left below. On the right I plot a histogram of the same samples, superimposed with the theoretical distribution of the likelihood we calculated in Chapter 1.</p>
-<div class="figure"><span id="fig:F2-1"></span>
+<div class="figure"><span style="display:block;" id="fig:F2-1"></span>
 <img src="_main_files/figure-html/F2-1-1.png" alt="(left) Individual samples from posterior of mean f0 parameter. (right) a histogram of the same samples." width="768" />
 <p class="caption">
-Figure 3.2: (left) Individual samples from posterior of mean f0 parameter. (right) a histogram of the same samples.
+Figure 2.2: (left) Individual samples from posterior of mean f0 parameter. (right) a histogram of the same samples.
 </p>
 </div>
 <p>Recall that our model output provides information about expected values for the mean parameter:</p>
@@ -559,28 +563,28 @@ Figure 3.2: (left) Individual samples from posterior of mean f0 parameter. (righ
 <p>Let’s take a second to think about why this works. Recall that the probability is the odds that something will occur out of all the possible outcomes. Our vector <code>samples[,"b_Intercept"]</code> represents 1000 observations of a random variable, 1000 possible values of the average f0 produced by adult women from Michigan. If we find the total number of these observations that were below 221 Hz and then divide by the total number of observations (1000), we are calculating the probability of observing a mean estimate below 221 Hz. As a result, the calculation above says that there is a 0.74 probability (a 74% chance) that the mean f0 for female speakers in this population is under 221 Hz, given our data and model structure. We come to this conclusion by finding that 74% of the posterior samples of the parameter of interest are below 221 Hz.</p>
 </div>
 </div>
-<div id="repeated-measures-data" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Repeated measures data</h2>
+<div id="repeated-measures-data" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Repeated measures data</h2>
 <p>The model we fit above is a reasonable starting point, but it has many weaknesses. Importantly, our data consists of 12 productions from each speaker in our sample. This means that have what is called ‘repeated measures data’, data where multiple observations can come from the same person/source. However, our model does not contain this information an thinks that the 576 observations in our data are entirely independent. Treating repeated measures data as if it were <em>not</em> repeated measures data can cause problems for our inferences. This is because it can give us a warped perspective of how much variability there really is in the sample.</p>
 <p>For example, if I told you I had 1,000,000 samples of speech from male speakers from Los Angeles, you may be confident that I can estimate the average f0 male speakers from Los Angeles very accurately. But what if I told you that all these samples were from only three different people? You know instinctively that this makes my data less reliable for making inferences about Los Angeles in general, although it may provide excellent information about these three speakers.</p>
 <p>The reason repeated-measures data can cause problems is because the measurements are correlated: multiple measurements from the same person are obviously going to be related to each other. If you measure the height of a tall person today, they will still be tall tomorrow. This can be seen quite clearly below. The top panel shows the distribution of all our f0 measurements. The bottom panel shows speaker boxplots (one for each speaker’s data). If we were to ‘push down’ on the bottom panel and collapse all our boxplots into a single distribution, we would end up with the boxplot in the top panel.</p>
 <p>These boxplots shows that each speaker has their own average f0, and that their productions tend to vary around their ‘natural average. As a result, we might have something closer to 48 independent observations (one average value per speaker) than 576. For example, if we look at the top boxplot there appear to be ’outliers’ around 150 Hz. In the bottom plot we see that these productions all come from one speaker, and actually reflect her average f0. As a result, it seems that the <em>speaker</em> is the outlier, and that the values are actually perfectly average for this speaker.</p>
-<div class="figure"><span id="fig:F2-2"></span>
+<div class="figure"><span style="display:block;" id="fig:F2-2"></span>
 <img src="_main_files/figure-html/F2-2-1.png" alt="(top) Boxplot of overall distribution. (bottom) Speaker-specific boxplot of our f0 data." width="768" />
 <p class="caption">
-Figure 3.3: (top) Boxplot of overall distribution. (bottom) Speaker-specific boxplot of our f0 data.
+Figure 2.3: (top) Boxplot of overall distribution. (bottom) Speaker-specific boxplot of our f0 data.
 </p>
 </div>
-<div id="multilevel-models" class="section level3" number="3.3.1">
-<h3><span class="header-section-number">3.3.1</span> Multilevel models</h3>
+<div id="multilevel-models" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Multilevel models</h3>
 <p>In linguistics (and many other similar fields) almost all of our data is repeated measures data. The methods most commonly-used by linguists (e.g., experiments, interviews, corpora, … etc.) yield many observations per person, and typically all involve data from multiple people/sources. As a result, the analysis of this data requires that models be able to account for within <em>and</em> between speaker variation in our data. Multilevel models address the correlated nature of repeated measures data by estimating multiple sources of variation simultaneously.</p>
 <p>We can think about how this applies to our f0 sample. Each person picked at random has some average f0 they produce. This is <em>between-speaker</em> variation: If you pick to people at random they will differ. However, each person also produces a different random f0 every time they speak, so that they will never produce exactly their average f0: this is <em>within-speaker</em> variation.</p>
 <p>Repeated-measures data leads to random variation in parameters that is <em>indistinguishable</em> from that of our ‘data’. For example, consider the figure below. First we consider a single speaker’s production (left) and produce a histogram that suggests a normal distribution reminiscent in shape to the overall aggregated data. In the middle, we see individual boxplots showing variation in speaker averages. Here we see that although each speakers productions are a distribution, variation in the distribution of the speaker averages is its own sort of distribution. Finally, on the right we see a histogram of the speaker averages and see that these are also normally distributed.</p>
 <p>To a large extent, whether something is a parameter or a data point depends somewhat on your perspective. For example, consider the figure below. If you are trying to estimate a speaker’s mean f0, then the individual productions might be ‘data’ and the mean can be thought of as a ‘parameter’. If you were instead only interested in the population average, maybe now your subject mean is actually just a single data point, and the <em>population</em> mean is actually your ‘parameter’.</p>
-<div class="figure"><span id="fig:F2-3"></span>
+<div class="figure"><span style="display:block;" id="fig:F2-3"></span>
 <img src="_main_files/figure-html/F2-3-1.png" alt="(top left) All the f0 data (top right) A boxplot of the same data. (bottom left) Speaker-specific boxplots, with a vertical line for speaker 107. (bottom right) The histogram of data produced by speaker 107." width="768" />
 <p class="caption">
-Figure 3.4: (top left) All the f0 data (top right) A boxplot of the same data. (bottom left) Speaker-specific boxplots, with a vertical line for speaker 107. (bottom right) The histogram of data produced by speaker 107.
+Figure 2.4: (top left) All the f0 data (top right) A boxplot of the same data. (bottom left) Speaker-specific boxplots, with a vertical line for speaker 107. (bottom right) The histogram of data produced by speaker 107.
 </p>
 </div>
 <p>A multilevel model is able to simultaneously estimate variation at multiple ‘levels’. This is actually why it’s called a <em>multilevel</em> model! For our f0 data, our ‘levels’ are:</p>
@@ -592,11 +596,11 @@ Figure 3.4: (top left) All the f0 data (top right) A boxplot of the same data. (
 <p>Basically, each subject’s productions form a little normal distribution around their average, and the mix of these little distributions results in the overall ‘big’ distribution of data across all subjects. By using multilevel models, we can estimate the effects of multiple sources of variation at the same time.</p>
 </div>
 </div>
-<div id="estimating-a-multilevel-model-with-brms" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Estimating a multilevel model with <code>brms</code></h2>
+<div id="estimating-a-multilevel-model-with-brms" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Estimating a multilevel model with <code>brms</code></h2>
 <p>We’re now going to fit the same model we fit above, but with a structure that reflects the repeated-measures nature of the data. Whereas the last model was a pedagogical device, this model structure is actually appropriate to analyze this particular dataset.</p>
-<div id="description-of-the-model-1" class="section level3" number="3.4.1">
-<h3><span class="header-section-number">3.4.1</span> Description of the model</h3>
+<div id="description-of-the-model-1" class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Description of the model</h3>
 <p>We’re going to keep working on developing an intuitive understanding for model notation, and using it to describe models. Just keep in mind that this is nothing more than an efficient way to denote the concepts being discussed in the text.</p>
 <p>To specify a multilevel model, you need to write a slightly more complicated model formula. This explanation assumes that you have a dataframe or matrix where one column contains the variable you are interested in predicting (in this case <code>f0</code>), and another column contains a vector containing unique labels for each speaker/listener/participant (in this case a unique speaker label <code>speaker</code>).</p>
 <p>To indicate that your model contains an ‘upper’ level where you have clusters of data coming from different individuals, you have to put another model <em>inside</em> your main model. Before, the model formula looked like this:</p>
@@ -613,7 +617,7 @@ f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\
 \mu_{[i]} = Intercept + \alpha_{[speaker_{[i]}]} \\
 \\
 \end{split}
-\tag{3.6}
+\tag{2.6}
 \end{equation}\]</span></p>
 <p>In plain English, the model above says: we expect f0 to be normally distributed. The f0 value we expect for any given token is equal to some overall average (<span class="math inline">\(Intercept\)</span>), and some value associated with the individual speaker (<span class="math inline">\(\alpha_{[speaker_{[i]}]}\)</span>) who uttered the trial.</p>
 <p>We now have another term <span class="math inline">\(\alpha_{[speaker]}\)</span>, in addition to the intercept. This coefficient is actually a set of coefficients since it has a different value for each speaker (it’s a vector). We will discuss coefficients like these in more detail later, we don’t really need to worry about it for now.</p>
@@ -622,14 +626,14 @@ f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma) \\ \\
 <p>A careful consideration of the model in equation 2.4 suggests that the (<span class="math inline">\(\alpha_{[speaker]}\)</span>) coefficients can’t actually be exactly equal to <span class="math inline">\(\mu_{speaker}\)</span>, the average f0 for a speaker. If the overall mean (the intercept) is 220 Hz and a speaker’s average is 230, this would suggest a predicted average of 450 (<span class="math inline">\(Intercept + \mu_{speaker}\)</span>) for this speaker. Clearly that is not how the model should be working.</p>
 <p>Recall that regression models encode <em>differences</em>, rather than absolute values. Our model already represents the overall data average in the intercept parameter. Thus, the speaker-specific averages only need to contain information about <em>differences</em> to this reference value. As a result, coefficients such as <span class="math inline">\(\alpha_{[speaker]}\)</span> are modeled as being normally distributed with a mean of 0, and with some population-specific standard deviation.</p>
 <p>Since our model coefficients reflect speaker-specific <em>deviations</em> rather than the actual mean f0 of different speakers, people often use this symbol, <span class="math inline">\(\gamma\)</span>, for them instead of <span class="math inline">\(\mu\)</span>, where <span class="math inline">\(\gamma\)</span> reflects the difference between a speaker mean and the mean for the population of speakers, <span class="math inline">\(\gamma_{speaker} = \mu_{speaker} - \mu_{population}\)</span>.</p>
-<p>We can show the expected distribution of this variable below, where <span class="math inline">\(\sigma_{speakers}\)</span> is a population-specific standard deviation term. Note the similarity of this to the expected variation in our original data in Equation <a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#eq:24">(3.4)</a>.</p>
+<p>We can show the expected distribution of this variable below, where <span class="math inline">\(\sigma_{speakers}\)</span> is a population-specific standard deviation term. Note the similarity of this to the expected variation in our original data in Equation <a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#eq:24">(2.4)</a>.</p>
 <p><span class="math display" id="eq:27">\[\begin{equation}
 \begin{split}
 \\
 \gamma_{speaker} \sim \mathcal{N}(0,\sigma_{speakers}) \\ \\ 
 \gamma_{speaker} = \alpha_{[speaker]} \\ \\
 \end{split}
-\tag{3.7}
+\tag{2.7}
 \end{equation}\]</span></p>
 <p>Our overall model is now as shown below, made specific for the data we have, and using expected parameter names.</p>
 <p><span class="math display" id="eq:28">\[\begin{equation}
@@ -639,7 +643,7 @@ f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\ \\
 \mu_{[i]} = Intercept + \alpha_{[speaker_{[i]}]} \\ \\
 \alpha_{[speaker]} \sim \mathcal{N}(0,\sigma_{speakers}) \\ \\
 \end{split}
-\tag{3.8}
+\tag{2.8}
 \end{equation}\]</span></p>
 <p>Each line in the model says the following:</p>
 <ul>
@@ -648,26 +652,26 @@ f0_{[i]} \sim \mathcal{N}(\mu_{[i]},\sigma_{error}) \\ \\
 <li><p>the speaker effects (<span class="math inline">\(\alpha_{[speaker]}\)</span>) are also drawn from a normal distribution with a mean of 0 and a standard deviation of <span class="math inline">\(\sigma_{speakers}\)</span>. This distribution represents the random, but systematic, between-speaker variation in average productions that exists within any population of speakers.</p></li>
 </ul>
 <p>All of this information can be seen in the speaker boxplots below. The model intercept (horizontal dotted line) represents the overall mean. The variation in <span class="math inline">\(\alpha_{[speaker]}\)</span> is the between-speaker variation that causes the middle of each little box to differ from the intercept. Finally, the error causes there to be a spread, a <em>distribution</em>, around each speaker’s individual mean.</p>
-<div class="figure"><span id="fig:F2-4"></span>
+<div class="figure"><span style="display:block;" id="fig:F2-4"></span>
 <img src="_main_files/figure-html/F2-4-1.png" alt="Speaker-specific boxplots for the f0 data." width="768" />
 <p class="caption">
-Figure 3.5: Speaker-specific boxplots for the f0 data.
+Figure 2.5: Speaker-specific boxplots for the f0 data.
 </p>
 </div>
 <p>There is a very important difference in how the first and second models we fit view and partition the variation in our model. The initial model we fit broke down the total variation in the model (<span class="math inline">\(\sigma_{total}\)</span>) like this:</p>
 <p><span class="math display" id="eq:29">\[
 \sigma_{total} = \sigma_{error}
-\tag{3.9}
+\tag{2.9}
 \]</span></p>
 <p>In other words, all variation was error. We don’t know why values vary from the mean. Our multilevel model views the variation in our data like this:</p>
 <p><span class="math display" id="eq:210">\[
 \sigma_{total} = \sigma_{speaker} + \sigma_{error}
-\tag{3.10}
+\tag{2.10}
 \]</span></p>
 <p>From the perspective of this model, only the variation <em>within</em> a speaker’s individual boxplot is error. The differences from box to box represent random (but systematic) between-speaker variation in f0.</p>
 </div>
-<div id="fitting-the-model" class="section level3" number="3.4.2">
-<h3><span class="header-section-number">3.4.2</span> Fitting the model</h3>
+<div id="fitting-the-model" class="section level3" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Fitting the model</h3>
 <p>We can fit a model with a formula that appropriately specifies the clustering we expect in our data. As a result, this model can estimate both between- and within-speaker variability.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model yourself, or</span></span>
 <span id="cb22-2"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span> (<span class="dv">1</span>)</span>
@@ -684,8 +688,8 @@ Figure 3.5: Speaker-specific boxplots for the f0 data.
 <span id="cb23-4"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   Links: mu = identity; sigma = identity </span></span>
 <span id="cb23-5"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Formula: f0 ~ (1 | uspeaker) </span></span>
 <span id="cb23-6"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    Data: w (Number of observations: 576) </span></span>
-<span id="cb23-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Samples: 1 chains, each with iter = 2000; warmup = 1000; thin = 1;</span></span>
-<span id="cb23-8"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="do">##          total post-warmup samples = 1000</span></span>
+<span id="cb23-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   Draws: 1 chains, each with iter = 2000; warmup = 1000; thin = 1;</span></span>
+<span id="cb23-8"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="do">##          total post-warmup draws = 1000</span></span>
 <span id="cb23-9"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb23-10"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Group-Level Effects: </span></span>
 <span id="cb23-11"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="do">## ~uspeaker (Number of levels: 48) </span></span>
@@ -700,7 +704,7 @@ Figure 3.5: Speaker-specific boxplots for the f0 data.
 <span id="cb23-20"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="do">##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span></span>
 <span id="cb23-21"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="do">## sigma    12.54      0.39    11.83    13.34 1.01      400      700</span></span>
 <span id="cb23-22"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-22" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb23-23"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS</span></span>
+<span id="cb23-23"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS</span></span>
 <span id="cb23-24"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-24" aria-hidden="true" tabindex="-1"></a><span class="do">## and Tail_ESS are effective sample size measures, and Rhat is the potential</span></span>
 <span id="cb23-25"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb23-25" aria-hidden="true" tabindex="-1"></a><span class="do">## scale reduction factor on split chains (at convergence, Rhat = 1).</span></span></code></pre></div>
 <p>This new model contains one new chunk its print statement. This section tells us about the standard deviation for the Intercept (<code>sd(Intercept)</code>) for the <code>~speaker</code> cluster:</p>
@@ -728,16 +732,16 @@ Figure 3.5: Speaker-specific boxplots for the f0 data.
 <span id="cb25-17"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span> (speaker_sigmas<span class="sc">$</span>f0)</span>
 <span id="cb25-18"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 11.6791</span></span></code></pre></div>
 <p>We’re going to discuss the calculations we made above in terms of what they represent in the boxplots below. The overall mean f0 in our data (220.4) corresponds quite well to our model estimate of 220.4. This reflects the central location of the overall distribution below (the horizontal line in the figure below). The standard deviation of the speaker means (20.1) is again very similar to our model estimate (sd(Intercept) = 20.2). This reflects the average distance from each speaker’s average to the overall average. Finally, the average of the within speaker standard deviation in our data (11.7) corresponds closely to our model’s error estimate (sigma = 12.5). This reflects the average spread of each speaker’s data relative to their own mean, within their own little boxplot. We can see that the information provided by <code>brms</code> is quite similar to what we can estimate directly using our data. However, <em>brms</em> does this all for us, in addition to giving us a lot more information.</p>
-<div class="figure"><span id="fig:F2-5"></span>
+<div class="figure"><span style="display:block;" id="fig:F2-5"></span>
 <img src="_main_files/figure-html/F2-5-1.png" alt="Speaker-specific boxplots for the f0 data we are analyzing." width="768" />
 <p class="caption">
-Figure 3.6: Speaker-specific boxplots for the f0 data we are analyzing.
+Figure 2.6: Speaker-specific boxplots for the f0 data we are analyzing.
 </p>
 </div>
 </div>
 </div>
-<div id="checking-model-convergence" class="section level2" number="3.5">
-<h2><span class="header-section-number">3.5</span> Checking model convergence</h2>
+<div id="checking-model-convergence" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Checking model convergence</h2>
 <p>Remember that our parameter estimates are based of a set of samples from the posterior distribution of a parameter. As with any other inference based on samples, our parameter estimates will be unreliable if we don’t have enough samples.</p>
 <p>For this reason, it’s important to look at the ESS values (the ‘expected sample size’), and the ‘Rhat’ values provided by <code>brm</code>. ESS tells you about how many independent samples you have taken from the likelihood. Bulk ESS is how many samples the sampler took in the thick part of the density, and Tail ESS reflects how much time the sampler spent in the thin part, the ‘tails’. Rhat tells you about whether your ‘chains’ have converged (more on this later). As noted above, values of Rhat near 1 are good, and values higher than around 1.1 are a bad sign.</p>
 <p>We haven’t really taken many samples here, so we can’t be confident in our parameter estimates. Ideally we would like several hundred samples (at least) for mean estimates, and thousands to be confident in the 95% confidence intervals. If you fit a model and get a warning message like this:</p>
@@ -769,8 +773,8 @@ Figure 3.6: Speaker-specific boxplots for the f0 data we are analyzing.
 <span id="cb29-4"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   Links: mu = identity; sigma = identity </span></span>
 <span id="cb29-5"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Formula: f0 ~ 1 + (1 | uspeaker) </span></span>
 <span id="cb29-6"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    Data: w (Number of observations: 576) </span></span>
-<span id="cb29-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;</span></span>
-<span id="cb29-8"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="do">##          total post-warmup samples = 4000</span></span>
+<span id="cb29-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;</span></span>
+<span id="cb29-8"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="do">##          total post-warmup draws = 4000</span></span>
 <span id="cb29-9"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb29-10"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Group-Level Effects: </span></span>
 <span id="cb29-11"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="do">## ~uspeaker (Number of levels: 48) </span></span>
@@ -785,7 +789,7 @@ Figure 3.6: Speaker-specific boxplots for the f0 data we are analyzing.
 <span id="cb29-20"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-20" aria-hidden="true" tabindex="-1"></a><span class="do">##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span></span>
 <span id="cb29-21"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="do">## sigma    12.54      0.39    11.81    13.34 1.00     3427     2943</span></span>
 <span id="cb29-22"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb29-23"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS</span></span>
+<span id="cb29-23"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS</span></span>
 <span id="cb29-24"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-24" aria-hidden="true" tabindex="-1"></a><span class="do">## and Tail_ESS are effective sample size measures, and Rhat is the potential</span></span>
 <span id="cb29-25"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb29-25" aria-hidden="true" tabindex="-1"></a><span class="do">## scale reduction factor on split chains (at convergence, Rhat = 1).</span></span></code></pre></div>
 <p>If we compare the ESS for this new model to the previous model, we see that using 4 chains has substantially increased our ESS, without taking up any more computing time.</p>
@@ -809,28 +813,28 @@ Figure 3.6: Speaker-specific boxplots for the f0 data we are analyzing.
 <span id="cb31-4"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   Links: mu = identity; sigma = identity </span></span>
 <span id="cb31-5"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Formula: f0 ~ 1 + (1 | uspeaker) </span></span>
 <span id="cb31-6"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    Data: w (Number of observations: 576) </span></span>
-<span id="cb31-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Samples: 4 chains, each with iter = 11000; warmup = 1000; thin = 10;</span></span>
-<span id="cb31-8"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="do">##          total post-warmup samples = 4000</span></span>
+<span id="cb31-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   Draws: 4 chains, each with iter = 1100; warmup = 100; thin = 10;</span></span>
+<span id="cb31-8"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="do">##          total post-warmup draws = 400</span></span>
 <span id="cb31-9"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb31-10"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Group-Level Effects: </span></span>
 <span id="cb31-11"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="do">## ~uspeaker (Number of levels: 48) </span></span>
 <span id="cb31-12"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="do">##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span></span>
-<span id="cb31-13"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="do">## sd(Intercept)    20.06      2.23    16.24    24.98 1.00     2775     3392</span></span>
+<span id="cb31-13"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="do">## sd(Intercept)    20.06      2.23    16.24    24.98 1.00     2774     3392</span></span>
 <span id="cb31-14"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb31-15"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Population-Level Effects: </span></span>
 <span id="cb31-16"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="do">##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span></span>
-<span id="cb31-17"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept   220.40      2.95   214.57   226.19 1.00     1987     2625</span></span>
+<span id="cb31-17"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept   220.40      2.95   214.57   226.19 1.00     1986     2625</span></span>
 <span id="cb31-18"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb31-19"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Family Specific Parameters: </span></span>
 <span id="cb31-20"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-20" aria-hidden="true" tabindex="-1"></a><span class="do">##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span></span>
 <span id="cb31-21"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-21" aria-hidden="true" tabindex="-1"></a><span class="do">## sigma    12.54      0.38    11.81    13.31 1.00     3908     3891</span></span>
 <span id="cb31-22"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-22" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb31-23"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS</span></span>
+<span id="cb31-23"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS</span></span>
 <span id="cb31-24"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-24" aria-hidden="true" tabindex="-1"></a><span class="do">## and Tail_ESS are effective sample size measures, and Rhat is the potential</span></span>
 <span id="cb31-25"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb31-25" aria-hidden="true" tabindex="-1"></a><span class="do">## scale reduction factor on split chains (at convergence, Rhat = 1).</span></span></code></pre></div>
 </div>
-<div id="specifying-prior-probabilities" class="section level2" number="3.6">
-<h2><span class="header-section-number">3.6</span> Specifying prior probabilities</h2>
+<div id="specifying-prior-probabilities" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Specifying prior probabilities</h2>
 <p>In Chapter 1 we discussed that Bayesian models require that prior probabilities be specified for all parameters. You may have noticed that to this point I haven’t discussed priors at all.</p>
 <p>If you don’t specify prior probabilities for your parameters, <code>brm</code> will use a ‘flat/uniform’ prior for all parameters. When you do this, you are basically relying only on the likelihood for your analysis. You are also telling your model that, a priori, <em>any</em> value of average f0 is equally believable. Empirically, this is almost always false. As a practical matter this can cause problems for samplers like STAN (which is what <code>brm</code> relies on). Basically, in the absence of proper priors the sampler has a harder time figuring out the most likely values when you tell it to look anywhere from positive to negative infinity. Even a bit of guidance can help.</p>
 <p><code>brms</code> makes it really easy to specify prior probabilities for specific parameters or whole groups of parameters. Below, I set priors for whole classes of parameters. In the example below, I use this information to set reasonable bounds on the parameters in the model. I do this by class of parameter:</p>
@@ -852,10 +856,10 @@ Figure 3.6: Speaker-specific boxplots for the f0 data we are analyzing.
 <p>Finally, the prior for the random error is also <code>student_t(3, 0, 100)</code>. Again, this says that we expect that the standard deviation of our random error to be less than 200 Hz. Since our random error is within-speaker variation, this is a again a large overestimation of the likely magnitude of the random error in this data. However, it is still in the ballpark. We could have put 10,000 there instead of 100 if we wanted a prior that provided even weaker prior information to our model.</p>
 <p>The left panel below compares the t distribution we used (blue) to the equivalent normal distribution (red). Although it may not seem like much of a difference, the t distribution can tolerate more extreme values because of its ‘fatter’ (more dense) tails. As we will discuss later, using t distributions can make our models more robust to outliers. This is really important in linguistics where subjects/speakers sometimes do weird stuff! As we can see, the prior distribution we used for the intercept is much broader (more vague) than the data distribution so that it will have basically no effect on our results (but will help our model fit properly).</p>
 <p>The right panel compares the prior for the standard deviation parameters to the absolute value of the centered f0 data. This presentation shows how far each observation is from the mean f0 (at 220 Hz). Obviously, people can’t differ from each other by more than deviations differ from the mean. As a result, we see that the prior distribution we have assigned for the <code>sigma</code> (i.e., <span class="math inline">\(\sigma_{error}\)</span>) and speaker <code>sd(Intercept)</code> parameter (i.e., <span class="math inline">\(\sigma_{speaker}\)</span>) are much broader than these parameters could be, given the data. As a result, neither of these priors is going to have much of an effect on our parameter estimates.</p>
-<div class="figure"><span id="fig:F2-6"></span>
+<div class="figure"><span style="display:block;" id="fig:F2-6"></span>
 <img src="_main_files/figure-html/F2-6-1.png" alt="(left) A comparison of the densities of normal and t distributions with the same means and sigma parameters. The histogram shows our f0 data. (right) The distribution of absolute deviations from the mean for our f0 data, compared to the prior distributions of our standard deviation parameters in our model." width="768" />
 <p class="caption">
-Figure 3.7: (left) A comparison of the densities of normal and t distributions with the same means and sigma parameters. The histogram shows our f0 data. (right) The distribution of absolute deviations from the mean for our f0 data, compared to the prior distributions of our standard deviation parameters in our model.
+Figure 2.7: (left) A comparison of the densities of normal and t distributions with the same means and sigma parameters. The histogram shows our f0 data. (right) The distribution of absolute deviations from the mean for our f0 data, compared to the prior distributions of our standard deviation parameters in our model.
 </p>
 </div>
 <p>We can fit this new model below, and inspect the output. If we compare the output of this model to <code>multilevel_thinned</code>, we see that specifying a prior has has no noticeable effect on our results. This is because the prior matters less and less when you have a lot of data, and because we have set wide priors that are appropriate (but vague) given our data. Although the priors may not matter much for models as simple as these, they can be very important when working with more complex data, and are a necessary component of Bayesian modeling.</p>
@@ -878,8 +882,8 @@ Figure 3.7: (left) A comparison of the densities of normal and t distributions w
 <span id="cb34-4"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   Links: mu = identity; sigma = identity </span></span>
 <span id="cb34-5"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Formula: f0 ~ 1 + (1 | uspeaker) </span></span>
 <span id="cb34-6"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    Data: w (Number of observations: 576) </span></span>
-<span id="cb34-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Samples: 4 chains, each with iter = 11000; warmup = 1000; thin = 10;</span></span>
-<span id="cb34-8"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="do">##          total post-warmup samples = 4000</span></span>
+<span id="cb34-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   Draws: 4 chains, each with iter = 1100; warmup = 100; thin = 10;</span></span>
+<span id="cb34-8"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="do">##          total post-warmup draws = 400</span></span>
 <span id="cb34-9"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb34-10"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Group-Level Effects: </span></span>
 <span id="cb34-11"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="do">## ~uspeaker (Number of levels: 48) </span></span>
@@ -888,18 +892,18 @@ Figure 3.7: (left) A comparison of the densities of normal and t distributions w
 <span id="cb34-14"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb34-15"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Population-Level Effects: </span></span>
 <span id="cb34-16"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="do">##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span></span>
-<span id="cb34-17"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept   220.42      2.97   214.44   226.38 1.00     1796     2841</span></span>
+<span id="cb34-17"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept   220.42      2.97   214.44   226.38 1.00     1795     2841</span></span>
 <span id="cb34-18"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-18" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb34-19"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Family Specific Parameters: </span></span>
 <span id="cb34-20"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-20" aria-hidden="true" tabindex="-1"></a><span class="do">##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span></span>
-<span id="cb34-21"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-21" aria-hidden="true" tabindex="-1"></a><span class="do">## sigma    12.54      0.39    11.81    13.34 1.00     3968     3972</span></span>
+<span id="cb34-21"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-21" aria-hidden="true" tabindex="-1"></a><span class="do">## sigma    12.54      0.39    11.81    13.34 1.00     3967     3972</span></span>
 <span id="cb34-22"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-22" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb34-23"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS</span></span>
+<span id="cb34-23"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS</span></span>
 <span id="cb34-24"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-24" aria-hidden="true" tabindex="-1"></a><span class="do">## and Tail_ESS are effective sample size measures, and Rhat is the potential</span></span>
 <span id="cb34-25"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb34-25" aria-hidden="true" tabindex="-1"></a><span class="do">## scale reduction factor on split chains (at convergence, Rhat = 1).</span></span></code></pre></div>
 </div>
-<div id="answering-our-research-questions" class="section level2" number="3.7">
-<h2><span class="header-section-number">3.7</span> Answering our research questions</h2>
+<div id="answering-our-research-questions" class="section level2" number="2.7">
+<h2><span class="header-section-number">2.7</span> Answering our research questions</h2>
 <p>Let’s return to the research questions we posed initially in Chapoter 1, and again at the beginning of this chapter:</p>
 <ol style="list-style-type: decimal">
 <li><p>What is the average f0 of the whole <em>population</em> likely to be?</p></li>
@@ -911,18 +915,18 @@ Figure 3.7: (left) A comparison of the densities of normal and t distributions w
 <span id="cb35-3"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   Links: mu = identity; sigma = identity </span></span>
 <span id="cb35-4"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Formula: f0 ~ 1 </span></span>
 <span id="cb35-5"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    Data: w (Number of observations: 576) </span></span>
-<span id="cb35-6"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Samples: 1 chains, each with iter = 2000; warmup = 1000; thin = 1;</span></span>
-<span id="cb35-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="do">##          total post-warmup samples = 1000</span></span>
+<span id="cb35-6"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   Draws: 1 chains, each with iter = 2000; warmup = 1000; thin = 1;</span></span>
+<span id="cb35-7"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="do">##          total post-warmup draws = 1000</span></span>
 <span id="cb35-8"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb35-9"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Population-Level Effects: </span></span>
 <span id="cb35-10"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="do">##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span></span>
-<span id="cb35-11"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept   220.40      0.97   218.33   222.30 1.00      851      557</span></span>
+<span id="cb35-11"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept   220.40      0.97   218.33   222.30 1.00      852      557</span></span>
 <span id="cb35-12"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb35-13"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Family Specific Parameters: </span></span>
 <span id="cb35-14"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="do">##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span></span>
 <span id="cb35-15"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="do">## sigma    23.24      0.69    21.99    24.61 1.00      653      550</span></span>
 <span id="cb35-16"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb35-17"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS</span></span>
+<span id="cb35-17"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS</span></span>
 <span id="cb35-18"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-18" aria-hidden="true" tabindex="-1"></a><span class="do">## and Tail_ESS are effective sample size measures, and Rhat is the potential</span></span>
 <span id="cb35-19"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="do">## scale reduction factor on split chains (at convergence, Rhat = 1).</span></span>
 <span id="cb35-20"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-20" aria-hidden="true" tabindex="-1"></a></span>
@@ -931,8 +935,8 @@ Figure 3.7: (left) A comparison of the densities of normal and t distributions w
 <span id="cb35-23"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-23" aria-hidden="true" tabindex="-1"></a><span class="do">##   Links: mu = identity; sigma = identity </span></span>
 <span id="cb35-24"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Formula: f0 ~ 1 + (1 | uspeaker) </span></span>
 <span id="cb35-25"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-25" aria-hidden="true" tabindex="-1"></a><span class="do">##    Data: w (Number of observations: 576) </span></span>
-<span id="cb35-26"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-26" aria-hidden="true" tabindex="-1"></a><span class="do">## Samples: 4 chains, each with iter = 11000; warmup = 1000; thin = 10;</span></span>
-<span id="cb35-27"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-27" aria-hidden="true" tabindex="-1"></a><span class="do">##          total post-warmup samples = 4000</span></span>
+<span id="cb35-26"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-26" aria-hidden="true" tabindex="-1"></a><span class="do">##   Draws: 4 chains, each with iter = 1100; warmup = 100; thin = 10;</span></span>
+<span id="cb35-27"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-27" aria-hidden="true" tabindex="-1"></a><span class="do">##          total post-warmup draws = 400</span></span>
 <span id="cb35-28"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-28" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb35-29"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-29" aria-hidden="true" tabindex="-1"></a><span class="do">## Group-Level Effects: </span></span>
 <span id="cb35-30"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-30" aria-hidden="true" tabindex="-1"></a><span class="do">## ~uspeaker (Number of levels: 48) </span></span>
@@ -941,13 +945,13 @@ Figure 3.7: (left) A comparison of the densities of normal and t distributions w
 <span id="cb35-33"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-33" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb35-34"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-34" aria-hidden="true" tabindex="-1"></a><span class="do">## Population-Level Effects: </span></span>
 <span id="cb35-35"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-35" aria-hidden="true" tabindex="-1"></a><span class="do">##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span></span>
-<span id="cb35-36"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-36" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept   220.42      2.97   214.44   226.38 1.00     1796     2841</span></span>
+<span id="cb35-36"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-36" aria-hidden="true" tabindex="-1"></a><span class="do">## Intercept   220.42      2.97   214.44   226.38 1.00     1795     2841</span></span>
 <span id="cb35-37"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-37" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb35-38"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-38" aria-hidden="true" tabindex="-1"></a><span class="do">## Family Specific Parameters: </span></span>
 <span id="cb35-39"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-39" aria-hidden="true" tabindex="-1"></a><span class="do">##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS</span></span>
-<span id="cb35-40"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-40" aria-hidden="true" tabindex="-1"></a><span class="do">## sigma    12.54      0.39    11.81    13.34 1.00     3968     3972</span></span>
+<span id="cb35-40"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-40" aria-hidden="true" tabindex="-1"></a><span class="do">## sigma    12.54      0.39    11.81    13.34 1.00     3967     3972</span></span>
 <span id="cb35-41"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-41" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb35-42"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-42" aria-hidden="true" tabindex="-1"></a><span class="do">## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS</span></span>
+<span id="cb35-42"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-42" aria-hidden="true" tabindex="-1"></a><span class="do">## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS</span></span>
 <span id="cb35-43"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-43" aria-hidden="true" tabindex="-1"></a><span class="do">## and Tail_ESS are effective sample size measures, and Rhat is the potential</span></span>
 <span id="cb35-44"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb35-44" aria-hidden="true" tabindex="-1"></a><span class="do">## scale reduction factor on split chains (at convergence, Rhat = 1).</span></span></code></pre></div>
 <p>Our initial model (<code>model</code>) and our final model (<code>multilevel_priors</code>) agree on what the average f0 is. However, they disagree on a credible interval for that parameter. Our initial model did not specify information about repeated measures. This causes our model to think that it has more independent observations than it does, and so it returns an overly-precise estimate.</p>
@@ -958,15 +962,15 @@ Figure 3.7: (left) A comparison of the densities of normal and t distributions w
 </blockquote>
 <p>I’m again including the speaker boxplots below because I think this image basically presents the same information as the paragraph above, but in visual form. In general, any data relationship or result can be presented in a figure, and the relationships presented in a figure can also be expressed as a mathematical model.</p>
 <p>When you’re thinking about the relationships in your data, or that you expect in your data, it’s a good idea to think: what kind of picture could illustrate this relationship? Conversely, if you see a figure of your results that you feel really expresses something interesting about your data you should think, how can these relationships be represented in a model?</p>
-<div class="figure"><span id="fig:F2-7"></span>
+<div class="figure"><span style="display:block;" id="fig:F2-7"></span>
 <img src="_main_files/figure-html/F2-7-1.png" alt="Speaker-specific boxplots for the f0 data." width="768" />
 <p class="caption">
-Figure 3.8: Speaker-specific boxplots for the f0 data.
+Figure 2.8: Speaker-specific boxplots for the f0 data.
 </p>
 </div>
 </div>
-<div id="simulating-data-using-our-model-parameters" class="section level2" number="3.8">
-<h2><span class="header-section-number">3.8</span> Simulating data using our model parameters</h2>
+<div id="simulating-data-using-our-model-parameters" class="section level2" number="2.8">
+<h2><span class="header-section-number">2.8</span> Simulating data using our model parameters</h2>
 <p>One way to think about what all these numbers mean is to simulate data that has the same characteristics, and build fake data from the individual component parts. The code chunk below does exactly this for the data we have been discussing thus far.</p>
 <p>First, there is an intercept equal to 220.4 Hz. Then, I create effects representing 48 simulated ‘female talkers’ from a population just like our observed population. These effects are stored in a vector called <code>alpha_speaker</code>, and they represent the values of <span class="math inline">\(\alpha_{[speaker]}\)</span> for our different speakers. These speaker effects come from a population with a mean of 0 and a standard deviation (<span class="math inline">\(\sigma_{speaker}\)</span>) equal to 20.4 (like our data). Each of these simulated speakers produces 12 productions, and so we need a <code>speakers</code> vector with values that repeat 12 times each to index the <code>alpha_speaker</code> vector containing the effects.</p>
 <p>I also draw our error, <span class="math inline">\(\varepsilon\)</span>. This error comes from a distribution with a mean of 0 and a standard deviation equal to <span class="math inline">\(\sigma_{error}\)</span>. It’s important to note that the error is just 48x12 random draws from this population. There is no distinction between one person’s productions and another when it comes to the error. If there were, this would indicate differences in sigma between speakers! Our model assumes a single error population for all speakers (but it doesn’t <em>have</em> to be this way).</p>
@@ -984,10 +988,10 @@ Figure 3.8: Speaker-specific boxplots for the f0 data.
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the sum of an intercept, speaker deflections and random error makes our fake data</span></span>
 <span id="cb37-2"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb37-2" aria-hidden="true" tabindex="-1"></a>f0_rep <span class="ot">=</span> Intercept <span class="sc">+</span> alpha_speaker[speaker] <span class="sc">+</span> epsilon</span></code></pre></div>
 <p>Below I compare the results of our simulation to our real data. If you didn’t have a clear impression of what the data looked like, I doubt you could tell which is the real data. This tells us our model is a good reflection of the data.</p>
-<div class="figure"><span id="fig:F2-8"></span>
+<div class="figure"><span style="display:block;" id="fig:F2-8"></span>
 <img src="_main_files/figure-html/F2-8-1.png" alt="Comparison of real and simulated f0 production data." width="768" />
 <p class="caption">
-Figure 3.9: Comparison of real and simulated f0 production data.
+Figure 2.9: Comparison of real and simulated f0 production data.
 </p>
 </div>
 <p>Below I make two datasets that are ‘incomplete’ with respect to the variation in our data. The first contains the intercept and noise only, the second contains the intercept and speaker effects only.</p>
@@ -999,18 +1003,18 @@ Figure 3.9: Comparison of real and simulated f0 production data.
 <p>However, notice that each little box is not centered at 0. Although the error distribution is centered at 0, the small number of errors added to the speaker mean are <strong>extremely</strong> unlikely to add up to exactly 0. So, error contributes some unknown amount to each speaker’s apparent average. This makes estimations of the <em>real</em> speaker effects impossible in practice.</p>
 <p>In the middle plot, the figure shows only between-speaker variation (<span class="math inline">\(\alpha_{[speaker]}, \sigma_{speaker}\)</span>) but no within-speaker variation (i.e., no noise/error). Now we see that speakers vary from the intercept, but this representation does not show the fact that speakers also vary relative to their own average.</p>
 <p>The final plot is the combination of the variation in the top two figures. The final plot shows the simulated data: the sum of the intercept, the within speaker variation and the between-speaker variation reflected in the values of the speaker intercepts.</p>
-<div class="figure" style="text-align: center"><span id="fig:F2-9"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:F2-9"></span>
 <img src="_main_files/figure-html/F2-9-1.png" alt="(top) Simulated error variation around the intercept. (middle) Simulated between-speaker variation, but no production error. (bottom) Simulated data containing both within and between-speaker variation in f0." width="672" />
 <p class="caption">
-Figure 3.10: (top) Simulated error variation around the intercept. (middle) Simulated between-speaker variation, but no production error. (bottom) Simulated data containing both within and between-speaker variation in f0.
+Figure 2.10: (top) Simulated error variation around the intercept. (middle) Simulated between-speaker variation, but no production error. (bottom) Simulated data containing both within and between-speaker variation in f0.
 </p>
 </div>
 </div>
-<div id="frequentist-corner" class="section level2" number="3.9">
-<h2><span class="header-section-number">3.9</span> Frequentist corner</h2>
+<div id="frequentist-corner" class="section level2" number="2.9">
+<h2><span class="header-section-number">2.9</span> Frequentist corner</h2>
 <p>We’re going to compare the output of <code>brms</code> to some more ‘traditional’ approaches. I’m not going to talk about the traditional models in any detail, the focus of this section is simply to highlight the similarities between different approaches, and to point out where to find equivalent information in the different models. As a result, this section will mostly be useful for people familiar with the traditional approaches.</p>
-<div id="bayesian-multilevel-modesl-vs.-lmer" class="section level3" number="3.9.1">
-<h3><span class="header-section-number">3.9.1</span> Bayesian multilevel modesl vs. lmer</h3>
+<div id="bayesian-multilevel-modesl-vs.-lmer" class="section level3" number="2.9.1">
+<h3><span class="header-section-number">2.9.1</span> Bayesian multilevel modesl vs. lmer</h3>
 <p>First, we will compare the output of our multilevel Bayesian modesl to the output of the <code>lmer</code> (“linear mixed-effects regression”) function, a very popular function for fitting multilevel models in the <code>lme4</code> R package.</p>
 <p>Below we fit a model just like our <code>multilevel_priors</code> model. Note that the model syntax is identical and that, actually, the whole function call is quite similar to how we would fit the model using <code>brm</code>. This is a good thing, it means that much of the material we use in this book can also be used to work with the <code>lmer</code> function, should you find this more convenient.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (lme4)</span>
@@ -1071,8 +1075,8 @@ Figure 3.10: (top) Simulated error variation around the intercept. (middle) Simu
 <p>In section (4) <code>lmer</code> and <code>brm</code> presents the model intercept. We see that the <code>Std. Error</code> estimate provided by <code>lmer</code> (2.897) corresponds closely to the standard deviation of the posterior distribution of the intercept parameter provided by <code>brm</code> (3.00). In addition, <code>brm</code> provides an interval around the intercept whereas <code>lmer</code> does not. Finally, in section (5) <code>brm</code> presnts some boilerplate that will look almost the same every time you fit a model.</p>
 <p>In general, we see that <code>lmer</code> provides a subset of the information provided by <code>brm</code>, and that the two approaches provide basically the same values for estimates. This is because in both cases, results are being dominated by the likelihoods of different parameters. Although it is to be expected it is still reassuring, we wouldn’t want there to be huge differences in our results just by being ‘Bayesian’.</p>
 </div>
-<div id="bayesian-multilevel-modesl-vs.-the-one-sample-t-test" class="section level3" number="3.9.2">
-<h3><span class="header-section-number">3.9.2</span> Bayesian multilevel modesl vs. the one-sample t-test</h3>
+<div id="bayesian-multilevel-modesl-vs.-the-one-sample-t-test" class="section level3" number="2.9.2">
+<h3><span class="header-section-number">2.9.2</span> Bayesian multilevel modesl vs. the one-sample t-test</h3>
 <p>We can fit a one-sample t-test to our f0 vector.</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span> (w<span class="sc">$</span>f0)</span></code></pre></div>
 <pre><code>## 
@@ -1104,8 +1108,8 @@ Figure 3.10: (top) Simulated error variation around the intercept. (middle) Simu
 <p>Now the interval provided closely resembles that of our final, <code>multilevel_priors</code> model (<code>214.55   226.18</code>). So, if all we care about is estimating a mean and an interval around the mean, then a one-sample t-test will help us do that. However, our <code>multilevel_priors</code> clearly provides us with substantially more information than is returned by the t-test.</p>
 </div>
 </div>
-<div id="exercises-1" class="section level2" number="3.10">
-<h2><span class="header-section-number">3.10</span> Exercises</h2>
+<div id="exercises-1" class="section level2" number="2.10">
+<h2><span class="header-section-number">2.10</span> Exercises</h2>
 <ol style="list-style-type: decimal">
 <li><p>Use the code below to fit the final model we considered to the f0s produced by another group of speakers. See if you can get all of the same information out of the model that we considered above. Make a plot of this new data using the plot code provided.</p></li>
 <li><p>See if you can use the information from your new data to update the simulated data created above. This entails finding the intercept, within-speaker, and between-speaker variation estimates in your new data and using this to generate a new batch of fake/replicated data.</p></li>
@@ -1165,7 +1169,6 @@ alt="Web Analytics"></a></div></noscript>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1205,6 +1208,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

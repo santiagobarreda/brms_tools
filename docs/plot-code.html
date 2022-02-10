@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 Plot Code | Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R</title>
+  <title>Chapter 7 Plot Code | Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R</title>
   <meta name="description" content="Bayesian Models for Repeated-Measures" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24.4 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 Plot Code | Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R" />
+  <meta property="og:title" content="Chapter 7 Plot Code | Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="http://santiagobarreda.com" />
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 Plot Code | Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R" />
+  <meta name="twitter:title" content="Chapter 7 Plot Code | Bayesian multilevel models for repeated-measures data: A conceptual and practical introduction in R" />
   
   <meta name="twitter:description" content="Bayesian Models for Repeated-Measures" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Santiago Bareda" />
 
 
-<meta name="date" content="2021-11-11" />
+<meta name="date" content="2022-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 <link rel="prev" href="random-slopes-and-multiple-random-effects.html"/>
 
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,7 +43,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -137,188 +137,191 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Bayesian Models for Linguists</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="1" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
-<li class="chapter" data-level="2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><i class="fa fa-check"></i><b>2</b> Inspecting a single group of observations: Introduction to regression models</a>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#data-and-research-questions"><i class="fa fa-check"></i><b>2.1</b> Data and research questions</a>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#structure-of-book"><i class="fa fa-check"></i><b>0.1</b> Structure of book</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#statistics-as-procedural-knowledge"><i class="fa fa-check"></i><b>0.2</b> Statistics as Procedural knowledge</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><i class="fa fa-check"></i><b>1</b> Inspecting a single group of observations: Introduction to regression models</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#inspecting-the-central-location-and-spread-of-values"><i class="fa fa-check"></i><b>2.1.1</b> Inspecting the central location and spread of values</a></li>
-</ul></li>
-<li class="chapter" data-level="2.2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#probability-distributions"><i class="fa fa-check"></i><b>2.2</b> Probability Distributions</a>
+<li class="chapter" data-level="1.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#data-and-research-questions"><i class="fa fa-check"></i><b>1.1</b> Data and research questions</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#the-normal-distribution"><i class="fa fa-check"></i><b>2.2.1</b> The normal distribution</a></li>
-<li class="chapter" data-level="2.2.2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#referring-to-the-normal-distribution-to-make-inferences"><i class="fa fa-check"></i><b>2.2.2</b> Referring to the normal distribution to make inferences</a></li>
+<li class="chapter" data-level="1.1.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#inspecting-the-central-location-and-spread-of-values"><i class="fa fa-check"></i><b>1.1.1</b> Inspecting the central location and spread of values</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#probabilities-of-events-and-likelihoods-of-parameters"><i class="fa fa-check"></i><b>2.3</b> Probabilities of events and likelihoods of parameters</a>
+<li class="chapter" data-level="1.2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#probability-distributions"><i class="fa fa-check"></i><b>1.2</b> Probability Distributions</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#calculating-likelihood-functions"><i class="fa fa-check"></i><b>2.3.1</b> Calculating likelihood functions</a></li>
-<li class="chapter" data-level="2.3.2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#making-inferences-using-likelihoods"><i class="fa fa-check"></i><b>2.3.2</b> Making inferences using likelihoods</a></li>
+<li class="chapter" data-level="1.2.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#the-normal-distribution"><i class="fa fa-check"></i><b>1.2.1</b> The normal distribution</a></li>
+<li class="chapter" data-level="1.2.2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#referring-to-the-normal-distribution-to-make-inferences"><i class="fa fa-check"></i><b>1.2.2</b> Referring to the normal distribution to make inferences</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#bayesian-models"><i class="fa fa-check"></i><b>2.4</b> Bayesian models</a>
+<li class="chapter" data-level="1.3" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#probabilities-of-events-and-likelihoods-of-parameters"><i class="fa fa-check"></i><b>1.3</b> Probabilities of events and likelihoods of parameters</a>
 <ul>
-<li class="chapter" data-level="2.4.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#what-are-regression-models"><i class="fa fa-check"></i><b>2.4.1</b> What are regression models?</a></li>
-<li class="chapter" data-level="2.4.2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#whats-bayesian-about-these-models"><i class="fa fa-check"></i><b>2.4.2</b> What’s ‘Bayesian’ about these models?</a></li>
+<li class="chapter" data-level="1.3.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#calculating-likelihood-functions"><i class="fa fa-check"></i><b>1.3.1</b> Calculating likelihood functions</a></li>
+<li class="chapter" data-level="1.3.2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#making-inferences-using-likelihoods"><i class="fa fa-check"></i><b>1.3.2</b> Making inferences using likelihoods</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#posterior-distributions"><i class="fa fa-check"></i><b>2.5</b> Posterior distributions</a>
+<li class="chapter" data-level="1.4" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#bayesian-models"><i class="fa fa-check"></i><b>1.4</b> Bayesian models</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#sampling-from-the-posterior"><i class="fa fa-check"></i><b>2.5.1</b> Sampling from the posterior</a></li>
+<li class="chapter" data-level="1.4.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#what-are-regression-models"><i class="fa fa-check"></i><b>1.4.1</b> What are regression models?</a></li>
+<li class="chapter" data-level="1.4.2" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#whats-bayesian-about-these-models"><i class="fa fa-check"></i><b>1.4.2</b> What’s ‘Bayesian’ about these models?</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#exercises"><i class="fa fa-check"></i><b>2.6</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><i class="fa fa-check"></i><b>3</b> Inspecting a ‘single group’ of observations using a Bayesian multilevel model</a>
+<li class="chapter" data-level="1.5" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#posterior-distributions"><i class="fa fa-check"></i><b>1.5</b> Posterior distributions</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#data-and-research-questions-1"><i class="fa fa-check"></i><b>3.1</b> Data and research questions</a></li>
-<li class="chapter" data-level="3.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#estimating-a-single-mean-with-the-brms-package"><i class="fa fa-check"></i><b>3.2</b> Estimating a single mean with the <code>brms</code> package</a>
+<li class="chapter" data-level="1.5.1" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#sampling-from-the-posterior"><i class="fa fa-check"></i><b>1.5.1</b> Sampling from the posterior</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="inspecting-a-single-group-of-observations-introduction-to-regression-models.html"><a href="inspecting-a-single-group-of-observations-introduction-to-regression-models.html#exercises"><i class="fa fa-check"></i><b>1.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><i class="fa fa-check"></i><b>2</b> Inspecting a ‘single group’ of observations using a Bayesian multilevel model</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#description-of-the-model"><i class="fa fa-check"></i><b>3.2.1</b> Description of the model</a></li>
-<li class="chapter" data-level="3.2.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#the-model-formula"><i class="fa fa-check"></i><b>3.2.2</b> The model formula</a></li>
-<li class="chapter" data-level="3.2.3" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#fitting-the-model-calling-the-brm-function"><i class="fa fa-check"></i><b>3.2.3</b> Fitting the model: Calling the <code>brm</code> function</a></li>
-<li class="chapter" data-level="3.2.4" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#interpreting-the-model-the-print-statement"><i class="fa fa-check"></i><b>3.2.4</b> Interpreting the model: the print statement</a></li>
-<li class="chapter" data-level="3.2.5" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#seeing-the-samples"><i class="fa fa-check"></i><b>3.2.5</b> Seeing the samples</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#repeated-measures-data"><i class="fa fa-check"></i><b>3.3</b> Repeated measures data</a>
+<li class="chapter" data-level="2.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#data-and-research-questions-1"><i class="fa fa-check"></i><b>2.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="2.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#estimating-a-single-mean-with-the-brms-package"><i class="fa fa-check"></i><b>2.2</b> Estimating a single mean with the <code>brms</code> package</a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#multilevel-models"><i class="fa fa-check"></i><b>3.3.1</b> Multilevel models</a></li>
+<li class="chapter" data-level="2.2.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#description-of-the-model"><i class="fa fa-check"></i><b>2.2.1</b> Description of the model</a></li>
+<li class="chapter" data-level="2.2.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#the-model-formula"><i class="fa fa-check"></i><b>2.2.2</b> The model formula</a></li>
+<li class="chapter" data-level="2.2.3" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#fitting-the-model-calling-the-brm-function"><i class="fa fa-check"></i><b>2.2.3</b> Fitting the model: Calling the <code>brm</code> function</a></li>
+<li class="chapter" data-level="2.2.4" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#interpreting-the-model-the-print-statement"><i class="fa fa-check"></i><b>2.2.4</b> Interpreting the model: the print statement</a></li>
+<li class="chapter" data-level="2.2.5" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#seeing-the-samples"><i class="fa fa-check"></i><b>2.2.5</b> Seeing the samples</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#estimating-a-multilevel-model-with-brms"><i class="fa fa-check"></i><b>3.4</b> Estimating a multilevel model with <code>brms</code></a>
+<li class="chapter" data-level="2.3" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#repeated-measures-data"><i class="fa fa-check"></i><b>2.3</b> Repeated measures data</a>
 <ul>
-<li class="chapter" data-level="3.4.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#description-of-the-model-1"><i class="fa fa-check"></i><b>3.4.1</b> Description of the model</a></li>
-<li class="chapter" data-level="3.4.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#fitting-the-model"><i class="fa fa-check"></i><b>3.4.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="2.3.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#multilevel-models"><i class="fa fa-check"></i><b>2.3.1</b> Multilevel models</a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#checking-model-convergence"><i class="fa fa-check"></i><b>3.5</b> Checking model convergence</a></li>
-<li class="chapter" data-level="3.6" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#specifying-prior-probabilities"><i class="fa fa-check"></i><b>3.6</b> Specifying prior probabilities</a></li>
-<li class="chapter" data-level="3.7" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#answering-our-research-questions"><i class="fa fa-check"></i><b>3.7</b> Answering our research questions</a></li>
-<li class="chapter" data-level="3.8" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#simulating-data-using-our-model-parameters"><i class="fa fa-check"></i><b>3.8</b> Simulating data using our model parameters</a></li>
-<li class="chapter" data-level="3.9" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#frequentist-corner"><i class="fa fa-check"></i><b>3.9</b> Frequentist corner</a>
+<li class="chapter" data-level="2.4" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#estimating-a-multilevel-model-with-brms"><i class="fa fa-check"></i><b>2.4</b> Estimating a multilevel model with <code>brms</code></a>
 <ul>
-<li class="chapter" data-level="3.9.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#bayesian-multilevel-modesl-vs.-lmer"><i class="fa fa-check"></i><b>3.9.1</b> Bayesian multilevel modesl vs. lmer</a></li>
-<li class="chapter" data-level="3.9.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#bayesian-multilevel-modesl-vs.-the-one-sample-t-test"><i class="fa fa-check"></i><b>3.9.2</b> Bayesian multilevel modesl vs. the one-sample t-test</a></li>
+<li class="chapter" data-level="2.4.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#description-of-the-model-1"><i class="fa fa-check"></i><b>2.4.1</b> Description of the model</a></li>
+<li class="chapter" data-level="2.4.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#fitting-the-model"><i class="fa fa-check"></i><b>2.4.2</b> Fitting the model</a></li>
 </ul></li>
-<li class="chapter" data-level="3.10" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#exercises-1"><i class="fa fa-check"></i><b>3.10</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html"><i class="fa fa-check"></i><b>4</b> Comparing two groups of observations: Factors and contrasts</a>
+<li class="chapter" data-level="2.5" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#checking-model-convergence"><i class="fa fa-check"></i><b>2.5</b> Checking model convergence</a></li>
+<li class="chapter" data-level="2.6" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#specifying-prior-probabilities"><i class="fa fa-check"></i><b>2.6</b> Specifying prior probabilities</a></li>
+<li class="chapter" data-level="2.7" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#answering-our-research-questions"><i class="fa fa-check"></i><b>2.7</b> Answering our research questions</a></li>
+<li class="chapter" data-level="2.8" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#simulating-data-using-our-model-parameters"><i class="fa fa-check"></i><b>2.8</b> Simulating data using our model parameters</a></li>
+<li class="chapter" data-level="2.9" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#frequentist-corner"><i class="fa fa-check"></i><b>2.9</b> Frequentist corner</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#data-and-research-questions-2"><i class="fa fa-check"></i><b>4.1</b> Data and research questions</a></li>
-<li class="chapter" data-level="4.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#estimating-the-difference-between-two-means-with-brms"><i class="fa fa-check"></i><b>4.2</b> Estimating the difference between two means with ‘brms’</a>
+<li class="chapter" data-level="2.9.1" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#bayesian-multilevel-modesl-vs.-lmer"><i class="fa fa-check"></i><b>2.9.1</b> Bayesian multilevel modesl vs. lmer</a></li>
+<li class="chapter" data-level="2.9.2" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#bayesian-multilevel-modesl-vs.-the-one-sample-t-test"><i class="fa fa-check"></i><b>2.9.2</b> Bayesian multilevel modesl vs. the one-sample t-test</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html"><a href="inspecting-a-single-group-of-observations-using-a-bayesian-multilevel-model.html#exercises-1"><i class="fa fa-check"></i><b>2.10</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html"><i class="fa fa-check"></i><b>3</b> Comparing two groups of observations: Factors and contrasts</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#fitting-the-model-1"><i class="fa fa-check"></i><b>4.2.1</b> Fitting the model</a></li>
-<li class="chapter" data-level="4.2.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#interpreting-the-model"><i class="fa fa-check"></i><b>4.2.2</b> Interpreting the model</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#contrasts"><i class="fa fa-check"></i><b>4.3</b> Contrasts</a>
+<li class="chapter" data-level="3.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#data-and-research-questions-2"><i class="fa fa-check"></i><b>3.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="3.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#estimating-the-difference-between-two-means-with-brms"><i class="fa fa-check"></i><b>3.2</b> Estimating the difference between two means with ‘brms’</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#treatment-coding"><i class="fa fa-check"></i><b>4.3.1</b> Treatment coding</a></li>
-<li class="chapter" data-level="4.3.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#sum-coding"><i class="fa fa-check"></i><b>4.3.2</b> Sum coding</a></li>
-<li class="chapter" data-level="4.3.3" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#comparison-of-sum-and-treatment-coding"><i class="fa fa-check"></i><b>4.3.3</b> Comparison of sum and treatment coding</a></li>
+<li class="chapter" data-level="3.2.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#fitting-the-model-1"><i class="fa fa-check"></i><b>3.2.1</b> Fitting the model</a></li>
+<li class="chapter" data-level="3.2.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#interpreting-the-model"><i class="fa fa-check"></i><b>3.2.2</b> Interpreting the model</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#refitting-the-model-with-sum-coding"><i class="fa fa-check"></i><b>4.4</b> Refitting the model with sum coding</a>
+<li class="chapter" data-level="3.3" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#contrasts"><i class="fa fa-check"></i><b>3.3</b> Contrasts</a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#fitting-the-model-2"><i class="fa fa-check"></i><b>4.4.1</b> Fitting the model</a></li>
-<li class="chapter" data-level="4.4.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#description-of-the-model-2"><i class="fa fa-check"></i><b>4.4.2</b> Description of the model</a></li>
-<li class="chapter" data-level="4.4.3" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#interpreting-the-model-1"><i class="fa fa-check"></i><b>4.4.3</b> Interpreting the model</a></li>
+<li class="chapter" data-level="3.3.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#treatment-coding"><i class="fa fa-check"></i><b>3.3.1</b> Treatment coding</a></li>
+<li class="chapter" data-level="3.3.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#sum-coding"><i class="fa fa-check"></i><b>3.3.2</b> Sum coding</a></li>
+<li class="chapter" data-level="3.3.3" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#comparison-of-sum-and-treatment-coding"><i class="fa fa-check"></i><b>3.3.3</b> Comparison of sum and treatment coding</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#random-effects"><i class="fa fa-check"></i><b>4.5</b> ‘Random’ Effects</a>
+<li class="chapter" data-level="3.4" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#refitting-the-model-with-sum-coding"><i class="fa fa-check"></i><b>3.4</b> Refitting the model with sum coding</a>
 <ul>
-<li class="chapter" data-level="4.5.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#random-effects-priors-and-pooling"><i class="fa fa-check"></i><b>4.5.1</b> Random effects, priors and pooling</a></li>
-<li class="chapter" data-level="4.5.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#inspecting-the-random-effects"><i class="fa fa-check"></i><b>4.5.2</b> Inspecting the random effects</a></li>
+<li class="chapter" data-level="3.4.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#fitting-the-model-2"><i class="fa fa-check"></i><b>3.4.1</b> Fitting the model</a></li>
+<li class="chapter" data-level="3.4.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#description-of-the-model-2"><i class="fa fa-check"></i><b>3.4.2</b> Description of the model</a></li>
+<li class="chapter" data-level="3.4.3" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#interpreting-the-model-1"><i class="fa fa-check"></i><b>3.4.3</b> Interpreting the model</a></li>
 </ul></li>
-<li class="chapter" data-level="4.6" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#but-what-does-it-all-mean"><i class="fa fa-check"></i><b>4.6</b> But what does it all mean?</a></li>
-<li class="chapter" data-level="4.7" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#simulating-the-two-group-model"><i class="fa fa-check"></i><b>4.7</b> Simulating the two-group model</a></li>
-<li class="chapter" data-level="4.8" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#frequentist-corner-1"><i class="fa fa-check"></i><b>4.8</b> Frequentist corner</a>
+<li class="chapter" data-level="3.5" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#random-effects"><i class="fa fa-check"></i><b>3.5</b> ‘Random’ Effects</a>
 <ul>
-<li class="chapter" data-level="4.8.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#bayesian-multilevel-modesl-vs.-lmer-1"><i class="fa fa-check"></i><b>4.8.1</b> Bayesian multilevel modesl vs. lmer</a></li>
+<li class="chapter" data-level="3.5.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#random-effects-priors-and-pooling"><i class="fa fa-check"></i><b>3.5.1</b> Random effects, priors and pooling</a></li>
+<li class="chapter" data-level="3.5.2" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#inspecting-the-random-effects"><i class="fa fa-check"></i><b>3.5.2</b> Inspecting the random effects</a></li>
 </ul></li>
-<li class="chapter" data-level="4.9" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#exercises-2"><i class="fa fa-check"></i><b>4.9</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html"><i class="fa fa-check"></i><b>5</b> Comparing many groups: ANOVA and interactions</a>
+<li class="chapter" data-level="3.6" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#but-what-does-it-all-mean"><i class="fa fa-check"></i><b>3.6</b> But what does it all mean?</a></li>
+<li class="chapter" data-level="3.7" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#simulating-the-two-group-model"><i class="fa fa-check"></i><b>3.7</b> Simulating the two-group model</a></li>
+<li class="chapter" data-level="3.8" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#frequentist-corner-1"><i class="fa fa-check"></i><b>3.8</b> Frequentist corner</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#data-and-research-questions-3"><i class="fa fa-check"></i><b>5.1</b> Data and research questions</a>
+<li class="chapter" data-level="3.8.1" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#bayesian-multilevel-modesl-vs.-lmer-1"><i class="fa fa-check"></i><b>3.8.1</b> Bayesian multilevel modesl vs. lmer</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="comparing-two-groups-of-observations-factors-and-contrasts.html"><a href="comparing-two-groups-of-observations-factors-and-contrasts.html#exercises-2"><i class="fa fa-check"></i><b>3.9</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html"><i class="fa fa-check"></i><b>4</b> Comparing many groups: ANOVA and interactions</a>
 <ul>
-<li class="chapter" data-level="5.1.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#factors-as-batches-effects"><i class="fa fa-check"></i><b>5.1.1</b> Factors as ‘batches’ effects</a></li>
-</ul></li>
-<li class="chapter" data-level="5.2" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#comparing-four-or-any-number-of-groups"><i class="fa fa-check"></i><b>5.2</b> Comparing four (or any number of) groups</a>
+<li class="chapter" data-level="4.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#data-and-research-questions-3"><i class="fa fa-check"></i><b>4.1</b> Data and research questions</a>
 <ul>
-<li class="chapter" data-level="5.2.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#the-model"><i class="fa fa-check"></i><b>5.2.1</b> The model</a></li>
+<li class="chapter" data-level="4.1.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#factors-as-batches-effects"><i class="fa fa-check"></i><b>4.1.1</b> Factors as ‘batches’ effects</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#investigating-many-factors-simultaneously-analysis-of-variance"><i class="fa fa-check"></i><b>5.3</b> Investigating many factors simultaneously: Analysis of Variance</a>
+<li class="chapter" data-level="4.2" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#comparing-four-or-any-number-of-groups"><i class="fa fa-check"></i><b>4.2</b> Comparing four (or any number of) groups</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#description-of-the-model-3"><i class="fa fa-check"></i><b>5.3.1</b> Description of the model</a></li>
-<li class="chapter" data-level="5.3.2" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#fitting-the-model-and-interpreting-the-results"><i class="fa fa-check"></i><b>5.3.2</b> Fitting the model and interpreting the results</a></li>
+<li class="chapter" data-level="4.2.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#the-model"><i class="fa fa-check"></i><b>4.2.1</b> The model</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#investigating-model-fit"><i class="fa fa-check"></i><b>5.4</b> Investigating model fit</a></li>
-<li class="chapter" data-level="5.5" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#interactions-and-interaction-plots"><i class="fa fa-check"></i><b>5.5</b> Interactions and interaction plots</a>
+<li class="chapter" data-level="4.3" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#investigating-many-factors-simultaneously-analysis-of-variance"><i class="fa fa-check"></i><b>4.3</b> Investigating many factors simultaneously: Analysis of Variance</a>
 <ul>
-<li class="chapter" data-level="5.5.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#interactions-in-our-f0-data"><i class="fa fa-check"></i><b>5.5.1</b> Interactions in our f0 data</a></li>
+<li class="chapter" data-level="4.3.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#description-of-the-model-3"><i class="fa fa-check"></i><b>4.3.1</b> Description of the model</a></li>
+<li class="chapter" data-level="4.3.2" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#fitting-the-model-and-interpreting-the-results"><i class="fa fa-check"></i><b>4.3.2</b> Fitting the model and interpreting the results</a></li>
 </ul></li>
-<li class="chapter" data-level="5.6" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#investigating-interactions-with-a-model"><i class="fa fa-check"></i><b>5.6</b> Investigating interactions with a model</a>
+<li class="chapter" data-level="4.4" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#investigating-model-fit"><i class="fa fa-check"></i><b>4.4</b> Investigating model fit</a></li>
+<li class="chapter" data-level="4.5" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#interactions-and-interaction-plots"><i class="fa fa-check"></i><b>4.5</b> Interactions and interaction plots</a>
 <ul>
-<li class="chapter" data-level="5.6.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#fitting-the-model-and-interpreting-the-results-1"><i class="fa fa-check"></i><b>5.6.1</b> Fitting the model and interpreting the results</a></li>
-<li class="chapter" data-level="5.6.2" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#assessing-model-fit"><i class="fa fa-check"></i><b>5.6.2</b> Assessing model fit</a></li>
-<li class="chapter" data-level="5.6.3" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#making-plots"><i class="fa fa-check"></i><b>5.6.3</b> Making plots</a></li>
+<li class="chapter" data-level="4.5.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#interactions-in-our-f0-data"><i class="fa fa-check"></i><b>4.5.1</b> Interactions in our f0 data</a></li>
 </ul></li>
-<li class="chapter" data-level="5.7" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#frequentist-corner-2"><i class="fa fa-check"></i><b>5.7</b> Frequentist corner</a>
+<li class="chapter" data-level="4.6" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#investigating-interactions-with-a-model"><i class="fa fa-check"></i><b>4.6</b> Investigating interactions with a model</a>
 <ul>
-<li class="chapter" data-level="5.7.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#bayesian-multilevel-modesl-vs.-lmer-2"><i class="fa fa-check"></i><b>5.7.1</b> Bayesian multilevel modesl vs. lmer</a></li>
+<li class="chapter" data-level="4.6.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#fitting-the-model-and-interpreting-the-results-1"><i class="fa fa-check"></i><b>4.6.1</b> Fitting the model and interpreting the results</a></li>
+<li class="chapter" data-level="4.6.2" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#assessing-model-fit"><i class="fa fa-check"></i><b>4.6.2</b> Assessing model fit</a></li>
+<li class="chapter" data-level="4.6.3" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#making-plots"><i class="fa fa-check"></i><b>4.6.3</b> Making plots</a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#exercises-3"><i class="fa fa-check"></i><b>5.8</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html"><i class="fa fa-check"></i><b>6</b> Continuous predictors and their interactions with factors</a>
+<li class="chapter" data-level="4.7" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#frequentist-corner-2"><i class="fa fa-check"></i><b>4.7</b> Frequentist corner</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#data-and-research-questions-4"><i class="fa fa-check"></i><b>6.1</b> Data and research questions</a></li>
-<li class="chapter" data-level="6.2" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#continuous-predictors-modeling-variation-along-lines"><i class="fa fa-check"></i><b>6.2</b> Continuous predictors: modeling variation along lines</a></li>
-<li class="chapter" data-level="6.3" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#models-with-a-single-slope-and-intercept"><i class="fa fa-check"></i><b>6.3</b> Models with a single slope and intercept</a>
+<li class="chapter" data-level="4.7.1" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#bayesian-multilevel-modesl-vs.-lmer-2"><i class="fa fa-check"></i><b>4.7.1</b> Bayesian multilevel modesl vs. lmer</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="comparing-many-groups-anova-and-interactions.html"><a href="comparing-many-groups-anova-and-interactions.html#exercises-3"><i class="fa fa-check"></i><b>4.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html"><i class="fa fa-check"></i><b>5</b> Continuous predictors and their interactions with factors</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#description-of-the-model-4"><i class="fa fa-check"></i><b>6.3.1</b> Description of the model</a></li>
-<li class="chapter" data-level="6.3.2" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#fitting-the-model-3"><i class="fa fa-check"></i><b>6.3.2</b> Fitting the model</a></li>
-<li class="chapter" data-level="6.3.3" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#interpreting-the-model-2"><i class="fa fa-check"></i><b>6.3.3</b> Interpreting the model</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#centering-predictors"><i class="fa fa-check"></i><b>6.4</b> Centering predictors</a></li>
-<li class="chapter" data-level="6.5" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#interactions-in-our-line-parameters"><i class="fa fa-check"></i><b>6.5</b> Interactions in our line parameters</a></li>
-<li class="chapter" data-level="6.6" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#models-with-group-dependent-intercepts-but-shared-slopes"><i class="fa fa-check"></i><b>6.6</b> Models with group-dependent intercepts, but shared slopes</a>
+<li class="chapter" data-level="5.1" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#data-and-research-questions-4"><i class="fa fa-check"></i><b>5.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="5.2" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#continuous-predictors-modeling-variation-along-lines"><i class="fa fa-check"></i><b>5.2</b> Continuous predictors: modeling variation along lines</a></li>
+<li class="chapter" data-level="5.3" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#models-with-a-single-slope-and-intercept"><i class="fa fa-check"></i><b>5.3</b> Models with a single slope and intercept</a>
 <ul>
-<li class="chapter" data-level="6.6.1" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#description-of-the-model-5"><i class="fa fa-check"></i><b>6.6.1</b> Description of the model</a></li>
-<li class="chapter" data-level="6.6.2" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#fitting-the-model-4"><i class="fa fa-check"></i><b>6.6.2</b> Fitting the model</a></li>
-<li class="chapter" data-level="6.6.3" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#the-effect-of-including-a-slope"><i class="fa fa-check"></i><b>6.6.3</b> The effect of including a slope</a></li>
-<li class="chapter" data-level="6.6.4" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#interpreting-group-effects-in-the-presence-of-a-continuous-predictor"><i class="fa fa-check"></i><b>6.6.4</b> Interpreting group effects in the presence of a continuous predictor</a></li>
+<li class="chapter" data-level="5.3.1" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#description-of-the-model-4"><i class="fa fa-check"></i><b>5.3.1</b> Description of the model</a></li>
+<li class="chapter" data-level="5.3.2" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#fitting-the-model-3"><i class="fa fa-check"></i><b>5.3.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="5.3.3" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#interpreting-the-model-2"><i class="fa fa-check"></i><b>5.3.3</b> Interpreting the model</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#models-with-group-dependent-slopes-and-intercepts"><i class="fa fa-check"></i><b>6.7</b> Models with group-dependent slopes and intercepts</a>
+<li class="chapter" data-level="5.4" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#centering-predictors"><i class="fa fa-check"></i><b>5.4</b> Centering predictors</a></li>
+<li class="chapter" data-level="5.5" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#interactions-in-our-line-parameters"><i class="fa fa-check"></i><b>5.5</b> Interactions in our line parameters</a></li>
+<li class="chapter" data-level="5.6" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#models-with-group-dependent-intercepts-but-shared-slopes"><i class="fa fa-check"></i><b>5.6</b> Models with group-dependent intercepts, but shared slopes</a>
 <ul>
-<li class="chapter" data-level="6.7.1" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#description-of-the-model-6"><i class="fa fa-check"></i><b>6.7.1</b> Description of the model</a></li>
-<li class="chapter" data-level="6.7.2" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#fitting-the-model-5"><i class="fa fa-check"></i><b>6.7.2</b> Fitting the model</a></li>
-<li class="chapter" data-level="6.7.3" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#interpreting-the-model-3"><i class="fa fa-check"></i><b>6.7.3</b> Interpreting the model</a></li>
+<li class="chapter" data-level="5.6.1" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#description-of-the-model-5"><i class="fa fa-check"></i><b>5.6.1</b> Description of the model</a></li>
+<li class="chapter" data-level="5.6.2" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#fitting-the-model-4"><i class="fa fa-check"></i><b>5.6.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="5.6.3" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#the-effect-of-including-a-slope"><i class="fa fa-check"></i><b>5.6.3</b> The effect of including a slope</a></li>
+<li class="chapter" data-level="5.6.4" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#interpreting-group-effects-in-the-presence-of-a-continuous-predictor"><i class="fa fa-check"></i><b>5.6.4</b> Interpreting group effects in the presence of a continuous predictor</a></li>
 </ul></li>
-<li class="chapter" data-level="6.8" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#exercises-4"><i class="fa fa-check"></i><b>6.8</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html"><i class="fa fa-check"></i><b>7</b> Random slopes and multiple random effects</a>
+<li class="chapter" data-level="5.7" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#models-with-group-dependent-slopes-and-intercepts"><i class="fa fa-check"></i><b>5.7</b> Models with group-dependent slopes and intercepts</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#data-and-research-questions-5"><i class="fa fa-check"></i><b>7.1</b> Data and research questions</a></li>
-<li class="chapter" data-level="7.2" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#repeated-measures-and-speaker-dependent-parameter-values"><i class="fa fa-check"></i><b>7.2</b> Repeated measures and speaker-dependent parameter values</a>
+<li class="chapter" data-level="5.7.1" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#description-of-the-model-6"><i class="fa fa-check"></i><b>5.7.1</b> Description of the model</a></li>
+<li class="chapter" data-level="5.7.2" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#fitting-the-model-5"><i class="fa fa-check"></i><b>5.7.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="5.7.3" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#interpreting-the-model-3"><i class="fa fa-check"></i><b>5.7.3</b> Interpreting the model</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="continuous-predictors-and-their-interactions-with-factors.html"><a href="continuous-predictors-and-their-interactions-with-factors.html#exercises-4"><i class="fa fa-check"></i><b>5.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html"><i class="fa fa-check"></i><b>6</b> Random slopes and multiple random effects</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#description-of-the-model-7"><i class="fa fa-check"></i><b>7.2.1</b> Description of the model</a></li>
-<li class="chapter" data-level="7.2.2" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#fitting-the-model-6"><i class="fa fa-check"></i><b>7.2.2</b> Fitting the model</a></li>
-<li class="chapter" data-level="7.2.3" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#interpreting-the-model-4"><i class="fa fa-check"></i><b>7.2.3</b> Interpreting the model</a></li>
-</ul></li>
-<li class="chapter" data-level="7.3" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#random-effects-and-the-multivariate-normal-distribution"><i class="fa fa-check"></i><b>7.3</b> Random effects and the multivariate normal distribution</a></li>
-<li class="chapter" data-level="7.4" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#random-slopes"><i class="fa fa-check"></i><b>7.4</b> Random slopes</a>
+<li class="chapter" data-level="6.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#data-and-research-questions-5"><i class="fa fa-check"></i><b>6.1</b> Data and research questions</a></li>
+<li class="chapter" data-level="6.2" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#repeated-measures-and-speaker-dependent-parameter-values"><i class="fa fa-check"></i><b>6.2</b> Repeated measures and speaker-dependent parameter values</a>
 <ul>
-<li class="chapter" data-level="7.4.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#description-of-the-model-8"><i class="fa fa-check"></i><b>7.4.1</b> Description of the model</a></li>
-<li class="chapter" data-level="7.4.2" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#fitting-the-model-7"><i class="fa fa-check"></i><b>7.4.2</b> Fitting the model</a></li>
-<li class="chapter" data-level="7.4.3" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#interpreting-the-model-5"><i class="fa fa-check"></i><b>7.4.3</b> Interpreting the model</a></li>
+<li class="chapter" data-level="6.2.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#description-of-the-model-7"><i class="fa fa-check"></i><b>6.2.1</b> Description of the model</a></li>
+<li class="chapter" data-level="6.2.2" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#fitting-the-model-6"><i class="fa fa-check"></i><b>6.2.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="6.2.3" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#interpreting-the-model-4"><i class="fa fa-check"></i><b>6.2.3</b> Interpreting the model</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#more-predictors-and-more-random-slopes"><i class="fa fa-check"></i><b>7.5</b> More predictors and more random slopes</a>
+<li class="chapter" data-level="6.3" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#random-effects-and-the-multivariate-normal-distribution"><i class="fa fa-check"></i><b>6.3</b> Random effects and the multivariate normal distribution</a></li>
+<li class="chapter" data-level="6.4" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#random-slopes"><i class="fa fa-check"></i><b>6.4</b> Random slopes</a>
 <ul>
-<li class="chapter" data-level="7.5.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#adding-another-random-slope"><i class="fa fa-check"></i><b>7.5.1</b> Adding another random slope</a></li>
-<li class="chapter" data-level="7.5.2" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#adding-random-factors"><i class="fa fa-check"></i><b>7.5.2</b> Adding random factors</a></li>
-<li class="chapter" data-level="7.5.3" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#the-independence-of-continuous-predictors"><i class="fa fa-check"></i><b>7.5.3</b> The independence of continuous predictors</a></li>
+<li class="chapter" data-level="6.4.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#description-of-the-model-8"><i class="fa fa-check"></i><b>6.4.1</b> Description of the model</a></li>
+<li class="chapter" data-level="6.4.2" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#fitting-the-model-7"><i class="fa fa-check"></i><b>6.4.2</b> Fitting the model</a></li>
+<li class="chapter" data-level="6.4.3" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#interpreting-the-model-5"><i class="fa fa-check"></i><b>6.4.3</b> Interpreting the model</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#answering-our-research-questions-1"><i class="fa fa-check"></i><b>7.6</b> Answering our research questions</a></li>
-<li class="chapter" data-level="7.7" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#frequentist-corner-3"><i class="fa fa-check"></i><b>7.7</b> Frequentist corner</a>
+<li class="chapter" data-level="6.5" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#more-predictors-and-more-random-slopes"><i class="fa fa-check"></i><b>6.5</b> More predictors and more random slopes</a>
 <ul>
-<li class="chapter" data-level="7.7.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#bayesian-multilevel-modesl-vs.-lmer-3"><i class="fa fa-check"></i><b>7.7.1</b> Bayesian multilevel modesl vs. lmer</a></li>
+<li class="chapter" data-level="6.5.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#adding-another-random-slope"><i class="fa fa-check"></i><b>6.5.1</b> Adding another random slope</a></li>
+<li class="chapter" data-level="6.5.2" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#adding-random-factors"><i class="fa fa-check"></i><b>6.5.2</b> Adding random factors</a></li>
+<li class="chapter" data-level="6.5.3" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#the-independence-of-continuous-predictors"><i class="fa fa-check"></i><b>6.5.3</b> The independence of continuous predictors</a></li>
 </ul></li>
-<li class="chapter" data-level="7.8" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#exercises-5"><i class="fa fa-check"></i><b>7.8</b> Exercises</a></li>
+<li class="chapter" data-level="6.6" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#answering-our-research-questions-1"><i class="fa fa-check"></i><b>6.6</b> Answering our research questions</a></li>
+<li class="chapter" data-level="6.7" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#frequentist-corner-3"><i class="fa fa-check"></i><b>6.7</b> Frequentist corner</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#bayesian-multilevel-modesl-vs.-lmer-3"><i class="fa fa-check"></i><b>6.7.1</b> Bayesian multilevel modesl vs. lmer</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="plot-code.html"><a href="plot-code.html"><i class="fa fa-check"></i><b>8</b> Plot Code</a></li>
+<li class="chapter" data-level="6.8" data-path="random-slopes-and-multiple-random-effects.html"><a href="random-slopes-and-multiple-random-effects.html#exercises-5"><i class="fa fa-check"></i><b>6.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="plot-code.html"><a href="plot-code.html"><i class="fa fa-check"></i><b>7</b> Plot Code</a></li>
 <li class="divider"></li>
 <li><a href="http://www.santiagobarreda.com" target="blank">Written by Santiago Barreda</a></li>
 
@@ -339,8 +342,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="plot-code" class="section level1" number="8">
-<h1><span class="header-section-number">Chapter 8</span> Plot Code</h1>
+<div id="plot-code" class="section level1" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Plot Code</h1>
 <p>Coming Soon (its all available in the Rmd files in the course GitHub for now).</p>
 
 </div>
@@ -370,7 +373,6 @@ alt="Web Analytics"></a></div></noscript>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -410,6 +412,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
