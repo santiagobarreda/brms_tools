@@ -51,7 +51,7 @@ fig:F3-final-analysis
 fig:F3-simulated
 fig:F3-sim-incomplete-1
 fig:F3-sim-incomplete-2
-fig:unnamed-chunk-80
+fig:unnamed-chunk-81
 fig:F4-designfig
 fig:F4-datacomparison
 fig:F4-speakerboxplots
@@ -100,7 +100,7 @@ fig:f6-3
 fig:f6-4
 fig:F6-5
 fig:F6-6
-fig:unnamed-chunk-148
+fig:unnamed-chunk-149
 eq:66
 eq:67
 eq:672
@@ -124,7 +124,8 @@ fig:F6-12
 fig:F6-13
 fig:F6-14
 fig:F6-15
-preface
+structure-of-book
+statistics-as-procedural-knowledge
 inspecting-a-single-group-of-observations-introduction-to-regression-models
 data-and-research-questions
 inspecting-the-central-location-and-spread-of-values
