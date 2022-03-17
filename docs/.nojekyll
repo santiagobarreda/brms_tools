@@ -1,0 +1,90 @@
+// generated with brms 2.16.3
+functions {
+}
+data {
+  int<lower=1> N;  // total number of observations
+  int<lower=1> N_f1;  // number of observations
+  vector[N_f1] Y_f1;  // response variable
+  int<lower=1> K_f1;  // number of population-level effects
+  matrix[N_f1, K_f1] X_f1;  // population-level design matrix
+  int<lower=1> N_f2;  // number of observations
+  vector[N_f2] Y_f2;  // response variable
+  int<lower=1> K_f2;  // number of population-level effects
+  matrix[N_f2, K_f2] X_f2;  // population-level design matrix
+  int<lower=1> nresp;  // number of responses
+  int nrescor;  // number of residual correlations
+  int prior_only;  // should the likelihood be ignored?
+}
+transformed data {
+  int Kc_f1 = K_f1 - 1;
+  matrix[N_f1, Kc_f1] Xc_f1;  // centered version of X_f1 without an intercept
+  vector[Kc_f1] means_X_f1;  // column means of X_f1 before centering
+  int Kc_f2 = K_f2 - 1;
+  matrix[N_f2, Kc_f2] Xc_f2;  // centered version of X_f2 without an intercept
+  vector[Kc_f2] means_X_f2;  // column means of X_f2 before centering
+  vector[nresp] Y[N];  // response array
+  for (i in 2:K_f1) {
+    means_X_f1[i - 1] = mean(X_f1[, i]);
+    Xc_f1[, i - 1] = X_f1[, i] - means_X_f1[i - 1];
+  }
+  for (i in 2:K_f2) {
+    means_X_f2[i - 1] = mean(X_f2[, i]);
+    Xc_f2[, i - 1] = X_f2[, i] - means_X_f2[i - 1];
+  }
+  for (n in 1:N) {
+    Y[n] = transpose([Y_f1[n], Y_f2[n]]);
+  }
+}
+parameters {
+  vector[Kc_f1] b_f1;  // population-level effects
+  real Intercept_f1;  // temporary intercept for centered predictors
+  real<lower=0> sigma_f1;  // dispersion parameter
+  vector[Kc_f2] b_f2;  // population-level effects
+  real Intercept_f2;  // temporary intercept for centered predictors
+  real<lower=0> sigma_f2;  // dispersion parameter
+  cholesky_factor_corr[nresp] Lrescor;  // parameters for multivariate linear models
+}
+transformed parameters {
+}
+model {
+  // likelihood including constants
+  if (!prior_only) {
+    // initialize linear predictor term
+    vector[N_f1] mu_f1 = Intercept_f1 + Xc_f1 * b_f1;
+    // initialize linear predictor term
+    vector[N_f2] mu_f2 = Intercept_f2 + Xc_f2 * b_f2;
+    // multivariate predictor array
+    vector[nresp] Mu[N];
+    vector[nresp] sigma = transpose([sigma_f1, sigma_f2]);
+    // cholesky factor of residual covariance matrix
+    matrix[nresp, nresp] LSigma = diag_pre_multiply(sigma, Lrescor);
+    // combine univariate parameters
+    for (n in 1:N) {
+      Mu[n] = transpose([mu_f1[n], mu_f2[n]]);
+    }
+    target += multi_normal_cholesky_lpdf(Y | Mu, LSigma);
+  }
+  // priors including constants
+  target += student_t_lpdf(Intercept_f1 | 3, 0.3, 2.5);
+  target += student_t_lpdf(sigma_f1 | 3, 0, 2.5)
+    - 1 * student_t_lccdf(0 | 3, 0, 2.5);
+  target += student_t_lpdf(Intercept_f2 | 3, 0.5, 2.5);
+  target += student_t_lpdf(sigma_f2 | 3, 0, 2.5)
+    - 1 * student_t_lccdf(0 | 3, 0, 2.5);
+  target += lkj_corr_cholesky_lpdf(Lrescor | 1);
+}
+generated quantities {
+  // actual population-level intercept
+  real b_f1_Intercept = Intercept_f1 - dot_product(means_X_f1, b_f1);
+  // actual population-level intercept
+  real b_f2_Intercept = Intercept_f2 - dot_product(means_X_f2, b_f2);
+  // residual correlations
+  corr_matrix[nresp] Rescor = multiply_lower_tri_self_transpose(Lrescor);
+  vector<lower=-1,upper=1>[nrescor] rescor;
+  // extract upper diagonal of correlation matrix
+  for (k in 1:nresp) {
+    for (j in 1:(k - 1)) {
+      rescor[choose(k - 1, 2) + j] = Rescor[j, k];
+    }
+  }
+}
